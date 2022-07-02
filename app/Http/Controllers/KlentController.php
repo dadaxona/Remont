@@ -78,7 +78,6 @@ class KlentController extends KlentController2
         $data = array(
             'table_data'  => $output,
         );
-
         echo json_encode($data);
         }
     }
