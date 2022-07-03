@@ -253,7 +253,31 @@
                                     <span class="pcoded-mcaret"></span>
                                 </a>
                             </li>
-                          </ul>                              
+                          </ul>
+                          @elseif ($brends->login == "Admin2")
+                          <ul class="pcoded-item pcoded-left-item">
+                            <li class="active">
+                                <a href="/glavninachal" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-home"></i><b>Д</b></span>
+                                    <span class="pcoded-mtext" data-i18n="nav.dash.main">Дашборд</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="{{ route('edit3') }}" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Создать Товар</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="{{ route('clents') }}" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Создать Клиент</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                        </ul>
                           @else
                           <ul class="pcoded-item pcoded-left-item">
                             <li class="active">
@@ -379,6 +403,122 @@
                                                     </div>
                                                 </div>
                                                 <div class="card-footer bg-c-red">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-9">
+                                                            <p class="text-white m-b-0">Бошкару панел</p>
+                                                        </div>
+                                                        <div class="col-3 text-right">
+                                                            <i class="fa fa-line-chart text-white f-16"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                               </a>
+                                                </div>
+                                            </div>
+                                            @elseif($brends->login == "Admin2")
+                                            <div class="col-xl-3 col-md-6">
+                                                <div class="card">
+                                                    <a href="/glavninachal">
+                                                    <div class="card-block">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-10">
+                                                                <h5 class="text-c-purple">Продажи</h5>
+                                                            </div>
+                                                            <div class="col-2 text-right">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
+                                                                    <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
+                                                                    <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"/>
+                                                                    <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1H1z"/>
+                                                                    <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"/>
+                                                                  </svg>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                        <div class="card-footer bg-c-purple">
+                                                            <div class="row align-items-center">
+                                                                <div class="col-9">
+                                                                    <p class="text-white m-b-0">Сотув булими</p>
+                                                                </div>
+                                                                <div class="col-3 text-right">
+                                                                    <i class="fa fa-line-chart text-white f-16"></i>
+                                                                </div>
+                                                            </div>            
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-md-6">
+                                                <div class="card">
+                                                    <a href="{{ route('ombor') }}">
+                                                    <div class="card-block">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-10">
+                                                                <h5 class="text-c-green">Складские операции</h5>
+                                                            </div>
+                                                            <div class="col-2 text-right">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-server" viewBox="0 0 16 16">
+                                                                    <path d="M1.333 2.667C1.333 1.194 4.318 0 8 0s6.667 1.194 6.667 2.667V4c0 1.473-2.985 2.667-6.667 2.667S1.333 5.473 1.333 4V2.667z"/>
+                                                                    <path d="M1.333 6.334v3C1.333 10.805 4.318 12 8 12s6.667-1.194 6.667-2.667V6.334a6.51 6.51 0 0 1-1.458.79C11.81 7.684 9.967 8 8 8c-1.966 0-3.809-.317-5.208-.876a6.508 6.508 0 0 1-1.458-.79z"/>
+                                                                    <path d="M14.667 11.668a6.51 6.51 0 0 1-1.458.789c-1.4.56-3.242.876-5.21.876-1.966 0-3.809-.316-5.208-.876a6.51 6.51 0 0 1-1.458-.79v1.666C1.333 14.806 4.318 16 8 16s6.667-1.194 6.667-2.667v-1.665z"/>
+                                                                  </svg>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-footer bg-c-green">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-9">
+                                                                <p class="text-white m-b-0">Омборхона операциялари</p>
+                                                            </div>
+                                                            <div class="col-3 text-right">
+                                                                <i class="fa fa-line-chart text-white f-16"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                   </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-md-6">
+                                                <div class="card">
+                                               <a href="{{ route('adress') }}">
+                                                <div class="card-block">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-10">
+                                                            <h5 class="text-c-blue">Справочники</h5>
+                                                        </div>
+                                                        <div class="col-2 text-right">
+                                                            <i class="fa fa-calendar-check-o f-28"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer bg-c-blue">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-9">
+                                                            <p class="text-white m-b-0">Маълумотлар</p>
+                                                        </div>
+                                                        <div class="col-3 text-right">
+                                                            <i class="fa fa-line-chart text-white f-16"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                               </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-md-6">
+                                                <div class="card">
+                                               <a href="#">
+                                                <div class="card-block">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-10">
+                                                            <h5 class="">Сервисе</h5>
+                                                        </div>
+                                                        <div class="col-2 text-right">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
+                                                                <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+                                                              </svg>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer blask">
                                                     <div class="row align-items-center">
                                                         <div class="col-9">
                                                             <p class="text-white m-b-0">Бошкару панел</p>

@@ -35,7 +35,8 @@
     margin-top: 26px;
   }
 </style>
-
+@if ($brends->login =="Admin")
+    
 <div id="AAAAAAAA" class="card ui-widget-content">
   <div class="card-block tab-icon">
     <div class="col-12">
@@ -223,6 +224,197 @@
   </div>
 </div>
 
+@else
+    
+<div id="AAAAAAAA" class="card ui-widget-content">
+  Admin2
+  <div class="card-block tab-icon">
+    <div class="col-12">
+      <ul class="nav nav-tabs md-tabs " role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#home7" role="tab" aria-expanded="true"><i class="icofont icofont-home"></i>Клент</a>
+            <div class="slide"></div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#profile7" role="tab" aria-expanded="false"><i class="icofont icofont-ui-user "></i>Бирламчи</a>
+            <div class="slide"></div>
+        </li>
+      </ul>
+      <div class="tab-content card-block">
+        <div class="tab-pane active" id="home7" role="tabpanel" aria-expanded="true">
+            <div class="row">
+              <div class="col-2 bor">
+                <div class="table-responsive">
+                  <div class="ext scrolll2">
+                    <div class="rty2">
+                      <table class="tab table-hover" id="">
+
+                          <thead>
+                            <th>
+                              <button id="vseclent" class="btn btn-success">
+                                Все
+                              </button>
+                            </th>
+                          </thead>
+                          <tbody id="clent_tip">
+          
+                          </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 bor">
+                <div class="table-responsive">
+                  <div class="ext scrolll2">
+                    <div class="rty2">
+                      <table class="tab table-hover">
+
+                        <thead>
+                          <tr>
+                            <th>Клент</th>
+                            <th>Товар</th>
+                            <th>Штрих код</th>
+                            <th>Шт</th>
+                            <th>Цена продажи</th>
+                            <th>Скидка</th>
+                            <th>Итого</th>
+                            <th>Последняя дата</th>
+                          </tr>             
+                      </thead>
+                          <tbody id="savdo">
+          
+                          </tbody>
+                      </table>
+                    </div> 
+                  </div>
+                </div> 
+              </div>
+              <div class="col-4">
+                <div class="table-responsive">
+                  <div class="ext scrolll2">
+                    <div class="rty2">
+                      <table class="tab table-hover">
+
+                        <thead>
+                          <tr>
+                            <th>Клент</th>
+                            <th>Итого</th>
+                            <th>Наличные</th>
+                            <th>Карта</th>
+                            <th>Безнал</th>
+                            <th>Долг</th>
+                            <th>Последняя дата</th>
+                          </tr>             
+                      </thead>
+                          <tbody id="dolg">
+          
+                          </tbody>
+                      </table>
+                    </div> 
+                  </div>
+                </div> 
+              </div>
+              <div class="col-12 m-0 p-0 borders">
+                <div class="row">
+                  <div class="col-2 bor1">
+                    <input type="text" id="tavarshtuk2" class="form-control sifra" placeholder="Товар шт">
+                    <input type="text" id="shtuk2" class="form-control sifra" placeholder="Шт">  
+                  </div>
+                  <div class="col-2 bor1">
+                    <input type="text" id="foiz2" class="form-control sifra" placeholder="Товар протсент">
+                    <input type="text" id="itoge2" class="form-control sifra" placeholder="Итого">  
+                  </div>
+                  <div class="col-3 mx-5 bor1">
+                    <input type="text" id="clentname" class="form-control sifra2" placeholder="Клент имя">  
+                  </div>
+                  <div class="col-4 mt-4">
+                    <form>
+                      @csrf
+                    <input type="hidden" id="oydi">
+          
+                      <div class="d-flex">
+                        <select name="tavar_id" id="tavar_id" class="form-control bor2">
+                          <option value="">--Тип--</option>
+                          @foreach ($tavar as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                          @endforeach
+                        </select>
+                        <input class="form-control mx-2" style="width: 37%" type="date" id="date" name="date">
+                        <input class="form-control" style="width: 37%" type="date" id="date2" name="date2">
+                          {{-- <div class="input-group-append">
+                          <button type="submit" class="btn btn-primary buts" id="submithendel">
+                              Поиск
+                          </button>
+                        </div> --}}
+                      </div>
+                    </form>
+                </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="profile7" role="tabpanel" aria-expanded="false">
+            <div class="row">
+              <div class="col-12 bor">
+                <div class="table-responsive">
+                  <div class="ext scrolll2">
+                    <div class="rty2">
+                      <table class="tab table-hover">
+                        <thead>
+                          <tr>
+                            <th>Товар</th>
+                            <th>Штрих код</th>
+                            <th>Шт</th>
+                            <th>Цена продажи</th>
+                            <th>Скидка</th>
+                            <th>Итого</th>
+                            <th>Последняя дата</th>
+                          </tr>             
+                      </thead>
+                          <tbody id="savdobirlamchi">
+          
+                          </tbody>
+                      </table>
+                    </div> 
+                  </div>
+                </div> 
+              </div>
+              <div class="col-12 m-0 p-0 borders">
+                <div class="row">
+                  <div class="col-2 bor1">
+                    <input type="text" id="tavarshtuk2s" class="form-control sifra" placeholder="Товар шт">
+                    <input type="text" id="shtuk2s" class="form-control sifra" placeholder="Шт">  
+                  </div>
+                  <div class="col-2 mt-3 bor1">
+                    <br>
+                    <input type="text" id="itoge2s" class="form-control sifra" placeholder="Итого">
+                  </div>
+                  <div class="col-8 mt-4">
+                    <form>
+                      @csrf
+                      <div class="d-flex">
+                        <select name="tavar_id" id="tavar_ids" class="form-control bor2">
+                          <option value="">--Тип--</option>
+                          @foreach ($tavar as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                          @endforeach
+                        </select>
+                        <input class="form-control mx-2" style="width: 37%" type="date" id="datem">
+                        <input class="form-control" style="width: 37%" type="date" id="datem2">                      
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@endif
 <script>
     $.ajaxSetup({
       headers: {

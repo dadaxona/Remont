@@ -102,6 +102,12 @@ class AuthController extends Controller
                     'itogs'=>$foo,
                     'clents'=>$clents
                 ]);
+            }elseif($brends->login == "Admin2"){
+                return view('sotuv',[
+                    'brends'=>$brends,
+                    'itogs'=>$foo,
+                    'clents'=>$clents
+                ]);
             }else{
                 $data = Usere::paginate(20);
                 $datae = Usta::all();

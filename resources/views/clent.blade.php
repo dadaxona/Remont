@@ -1,86 +1,172 @@
 @extends('welcome')
 @section('content')
+@if ($brends->login == "Admin")
 <div class="card p-0">
-        <div class="card-header">
-                <button type="button" class="btn btn-primary" onclick="addPost()">Клиент Яратиш</button>
-              <div class="row">
-                {{-- <div class="col-12"> --}}
-                 <table class="tab table-hover" id="laravel_crud">
-                    <thead>
-                    <tr>
-                        <th>Исм</th>
-                        <th>Телефон</th>
-                        <th>Фирма Номи</th>
-                        <th>Фирма ИНН</th>
-                        <th>Управление</th>
-                    </tr>
-                    </thead>
-                    <tbody id="clent">
+  <div class="card-header">
+          <button type="button" class="btn btn-primary" onclick="addPost()">Клиент Яратиш</button>
+        <div class="row">
+          {{-- <div class="col-12"> --}}
+            <table class="tab table-hover" id="laravel_crud">
+              <thead>
+              <tr>
+                  <th>Исм</th>
+                  <th>Телефон</th>
+                  <th>Фирма Номи</th>
+                  <th>Фирма ИНН</th>
+                  <th>Управление</th>
+              </tr>
+              </thead>
+              <tbody id="clent">
 
-                    </tbody>               
-                </table>
-              </div>
-            </div>
-        </div>
-        
-      <div class="modal fade" id="post-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Клиент Яратиш</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form id="userForm" action="{{ route('store') }}" method="POST">
-                  @csrf
-                  <input type="hidden" name="id" id="id">
-                <div class="mb-3">
-                  <label for="recipient-name" class="col-form-label">Клиент номи</label>
-                  <input type="text" class="form-control" name="name" id="name">
-                  <span class="text-danger error-text name_error"></span>
-                </div>
-                <div class="mb-3">
-                  <label for="message-text" class="col-form-label">Тел..</label>
-                  <input type="number" class="form-control" name="tel"  id="tel">
-                  <span class="text-danger error-text tel_error"></span>
-                </div>
-                <div class="mb-3">
-                    <label for="message-text" class="col-form-label">Фирма номи</label>
-                    <input type="text" class="form-control" name="firma" id="firma">
-                    <span class="text-danger error-text firma_error"></span>
-                  </div>
-                  <div class="mb-3">
-                    <label for="message-text" class="col-form-label">Фирма ИНН</label>
-                    <input type="text" class="form-control" name="inn" id="inn">
-                    <span class="text-danger error-text inn_error"></span>
-                  </div>             
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Назад</button>
-              <button type="submit" class="btn btn-primary">Сохранить</button>
-            </div>
-          </form>
-          </div>
+              </tbody>               
+          </table>
         </div>
       </div>
-
-      <div class="modal fade" id="post-modal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Товарни очириш</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" name="id5" id="id5">
-              </div>
-              <div class="text-center pb-4">
-                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Нет</button>
-                  <button type="submit" onclick="dele2()" class="btn btn-success">Да</button>
-              </div>
+  </div>
+  
+<div class="modal fade" id="post-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Клиент Яратиш</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="userForm" action="{{ route('store') }}" method="POST">
+            @csrf
+            <input type="hidden" name="id" id="id">
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Клиент номи</label>
+            <input type="text" class="form-control" name="name" id="name">
+            <span class="text-danger error-text name_error"></span>
           </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Тел..</label>
+            <input type="number" class="form-control" name="tel"  id="tel">
+            <span class="text-danger error-text tel_error"></span>
+          </div>
+          <div class="mb-3">
+              <label for="message-text" class="col-form-label">Фирма номи</label>
+              <input type="text" class="form-control" name="firma" id="firma">
+              <span class="text-danger error-text firma_error"></span>
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Фирма ИНН</label>
+              <input type="text" class="form-control" name="inn" id="inn">
+              <span class="text-danger error-text inn_error"></span>
+            </div>             
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Назад</button>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="post-modal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Товарни очириш</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <input type="hidden" name="id5" id="id5">
+        </div>
+        <div class="text-center pb-4">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Нет</button>
+            <button type="submit" onclick="dele2()" class="btn btn-success">Да</button>
+        </div>
+    </div>
+  </div>
+</div>
+@else
+<div class="card p-0">
+  Admin2
+  <div class="card-header">
+          <button type="button" class="btn btn-primary" onclick="addPost()">Клиент Яратиш</button>
+        <div class="row">
+          {{-- <div class="col-12"> --}}
+            <table class="tab table-hover" id="laravel_crud">
+              <thead>
+              <tr>
+                  <th>Исм</th>
+                  <th>Телефон</th>
+                  <th>Фирма Номи</th>
+                  <th>Фирма ИНН</th>
+                  <th>Управление</th>
+              </tr>
+              </thead>
+              <tbody id="clent">
+
+              </tbody>               
+          </table>
         </div>
       </div>
+  </div>
+  
+<div class="modal fade" id="post-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Клиент Яратиш</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="userForm" action="{{ route('store') }}" method="POST">
+            @csrf
+            <input type="hidden" name="id" id="id">
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Клиент номи</label>
+            <input type="text" class="form-control" name="name" id="name">
+            <span class="text-danger error-text name_error"></span>
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Тел..</label>
+            <input type="number" class="form-control" name="tel"  id="tel">
+            <span class="text-danger error-text tel_error"></span>
+          </div>
+          <div class="mb-3">
+              <label for="message-text" class="col-form-label">Фирма номи</label>
+              <input type="text" class="form-control" name="firma" id="firma">
+              <span class="text-danger error-text firma_error"></span>
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Фирма ИНН</label>
+              <input type="text" class="form-control" name="inn" id="inn">
+              <span class="text-danger error-text inn_error"></span>
+            </div>             
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Назад</button>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="post-modal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Товарни очириш</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <input type="hidden" name="id5" id="id5">
+        </div>
+        <div class="text-center pb-4">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Нет</button>
+            <button type="submit" onclick="dele2()" class="btn btn-success">Да</button>
+        </div>
+    </div>
+  </div>
+</div>
+@endif
+
 <script>
     $.ajaxSetup({
       headers: {
