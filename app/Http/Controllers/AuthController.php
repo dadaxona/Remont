@@ -28,6 +28,15 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class AuthController extends Controller
 {
+    public function typpe()
+    {
+        $num = 3.14; 
+        $num2 = 3.15; 
+        $int = (float)$num2;
+        $float = (float)$num;
+
+        echo var_dump($float + $int);
+    }
     public function exports() 
     {
         return Excel::download(new InvoicesExport, 'invoices.xlsx');

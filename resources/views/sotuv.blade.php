@@ -219,7 +219,7 @@
                 <input type="text" name="search" id="search" class="form-control" placeholder="Поиск" /> 
             </div>
             <div class="form-check form-switch col-3 mt-1">
-                <input class="form-check-input" type="checkbox" role="switch" id="on">
+                <input class="form-check-input" type="checkbox"  role="switch" id="on">
                 <label class="form-check-label" for="">Склад 2</label>
             </div>
         </div>
@@ -259,22 +259,22 @@
         <div class="row">
             <div class="col-6 mb-3">
                 <label for="message-text" class="col-form-label">Тавар сони</label>
-                <input type="number" class="form-control form-con" name="son" id="son">
+                <input type="text" class="form-control form-con" name="son" id="son">
             </div>
             <div class="col-6 mb-3">
                 <label for="message-text" class="col-form-label">Сотилиш сумма</label>
-                <input type="number" class="form-control form-con" name="summo" id="summo">
+                <input type="text" class="form-control form-con" name="summo" id="summo">
                 <input type="hidden" id="summ2">
             </div>
         </div>
         <div class="mb-3">
             <label for="message-text" class="col-form-label">Тавар суммаси</label>
-            <input type="number" class="form-control form-con" name="summ" id="summ">
+            <input type="text" class="form-control form-con" name="summ" id="summ">
             <input type="hidden" id="sum2">
         </div>
         <div class="mb-3">
             <label for="message-text" class="col-form-label">Чегирма</label>
-            <input type="number" class="form-control form-con" name="cheg" id="cheg">
+            <input type="text" class="form-control form-con" name="cheg" id="cheg">
         </div>          
     </div>
     <div class="modal-footer">
@@ -296,7 +296,7 @@
     <div class="modal-body">
             @csrf
             <div class="mb-3">
-                <input type="number" class="form-control form-con" name="usdkurd" id="usdkurd">
+                <input type="text" class="form-control form-con" name="usdkurd" id="usdkurd">
             </div>          
         </div>
     <div class="modal-footer">
@@ -322,7 +322,7 @@
                     <h5 class="mt-2 mx-2">Итого:</h5>
                 </div>
                 <div class="col-8">
-                    <input type="number" class="form-control text-right itogsw" name="itogs" id="itogs" disabled>
+                    <input type="text" class="form-control text-right itogsw" name="itogs" id="itogs" disabled>
                 </div>
             </div>
             <div class="mb-3 d-flex">
@@ -330,7 +330,7 @@
                     <h5 class="mt-2 mx-2">Наличные:</h5>
                 </div>                    
                <div class="col-8">
-                <input type="number" class="form-control text-right itogsw" name="naqt" id="naqt">
+                <input type="text" class="form-control text-right itogsw" name="naqt" id="naqt">
                </div>
             </div>
             <div class="mb-3 d-flex">
@@ -338,7 +338,7 @@
                     <h5 class="mt-2 mx-2">Карта:</h5> 
                 </div>
                 <div class="col-8">
-                    <input type="number" class="form-control text-right itogsw" name="plastik" id="plastik">
+                    <input type="text" class="form-control text-right itogsw" name="plastik" id="plastik">
                 </div>
             </div>  
             <div class="mb-3 d-flex">
@@ -346,7 +346,7 @@
                     <h5 class="mt-2 mx-2">Безнал:</h5>    
                 </div>
                 <div class="col-8">
-                    <input type="number" class="form-control text-right itogsw" name="bank" id="bank">
+                    <input type="text" class="form-control text-right itogsw" name="bank" id="bank">
                 </div>
             </div>
             <div class="mb-3 d-flex">
@@ -354,7 +354,7 @@
                     <h5 class="mt-2 mx-2">Долг:</h5>    
                 </div>
                 <div class="col-8">
-                    <input type="number" class="form-control text-right itogsw" name="karzs" id="karzs" disabled>
+                    <input type="text" class="form-control text-right itogsw" name="karzs" id="karzs" disabled>
                 </div>
             </div>
             <div class="mb-3 d-flex">
@@ -594,22 +594,22 @@
         <div class="row">
             <div class="col-6 mb-3">
                 <label for="message-text" class="col-form-label">Тавар сони</label>
-                <input type="number" class="form-control form-con" name="son" id="sondok">
+                <input type="text" class="form-control form-con" name="son" id="sondok">
             </div>
             <div class="col-6 mb-3">
                 <label for="message-text" class="col-form-label">Сотилиш сумма</label>
-                <input type="number" class="form-control form-con" name="summo" id="summodok">
+                <input type="text" class="form-control form-con" name="summo" id="summodok">
                 <input type="hidden" id="summ2dok">
             </div>
         </div>
         <div class="mb-3">
             <label for="message-text" class="col-form-label">Тавар суммаси</label>
-            <input type="number" class="form-control form-con" name="summ" id="summdok">
+            <input type="text" class="form-control form-con" name="summ" id="summdok">
             <input type="hidden" id="sum2dok">
         </div>
         <div class="mb-3">
             <label for="message-text" class="col-form-label">Чегирма</label>
-            <input type="number" class="form-control form-con" name="cheg" id="chegdok">
+            <input type="text" class="form-control form-con" name="cheg" id="chegdok">
         </div>          
     </div>
     <div class="modal-footer">
@@ -631,7 +631,7 @@
     <div class="modal-body">
             @csrf
             <div class="mb-3">
-                <input type="number" class="form-control form-con" name="usdkurd" id="usdkurddok">
+                <input type="text" class="form-control form-con" name="usdkurd" id="usdkurddok">
             </div>          
         </div>
     <div class="modal-footer">
@@ -657,7 +657,7 @@
                     <h5 class="mt-2 mx-2">Итого:</h5>
                 </div>
                 <div class="col-8">
-                    <input type="number" class="form-control text-right itogsw" name="itogs" id="itogsdok" disabled>
+                    <input type="text" class="form-control text-right itogsw" name="itogs" id="itogsdok" disabled>
                 </div>
             </div>
             <div class="mb-3 d-flex">
@@ -665,7 +665,7 @@
                     <h5 class="mt-2 mx-2">Наличные:</h5>
                 </div>                    
                <div class="col-8">
-                <input type="number" class="form-control text-right itogsw" name="naqt" id="naqtdok">
+                <input type="text" class="form-control text-right itogsw" name="naqt" id="naqtdok">
                </div>
             </div>
             <div class="mb-3 d-flex">
@@ -673,7 +673,7 @@
                     <h5 class="mt-2 mx-2">Карта:</h5> 
                 </div>
                 <div class="col-8">
-                    <input type="number" class="form-control text-right itogsw" name="plastik" id="plastikdok">
+                    <input type="text" class="form-control text-right itogsw" name="plastik" id="plastikdok">
                 </div>
             </div>  
             <div class="mb-3 d-flex">
@@ -681,7 +681,7 @@
                     <h5 class="mt-2 mx-2">Безнал:</h5>    
                 </div>
                 <div class="col-8">
-                    <input type="number" class="form-control text-right itogsw" name="bank" id="bankdok">
+                    <input type="text" class="form-control text-right itogsw" name="bank" id="bankdok">
                 </div>
             </div>
             <div class="mb-3 d-flex">
@@ -689,7 +689,7 @@
                     <h5 class="mt-2 mx-2">Долг:</h5>    
                 </div>
                 <div class="col-8">
-                    <input type="number" class="form-control text-right itogsw" name="karzs" id="karzsdok" disabled>
+                    <input type="text" class="form-control text-right itogsw" name="karzs" id="karzsdok" disabled>
                 </div>
             </div>
             <div class="mb-3 d-flex">

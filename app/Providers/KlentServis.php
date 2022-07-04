@@ -823,10 +823,13 @@ class KlentServis extends KlentServis2
 
     public function usdkurd2($request)
     {
+        $kurs = (float)$request->kurs;
         $row = Ichkitavar::all();
         foreach ($row as $value) {
-            $dat = $value->summa2 * $request->kurs;
-            $dat2 = $value->summa3 * $request->kurs;
+            $summa2 = (int)$value->summa2;
+            $summa3 = (int)$value->summa3;
+            $dat = $summa2 * $kurs;
+            $dat2 = $summa3 * $kurs;
             Ichkitavar::find($value->id)->update([
                 'kurs'=>$dat,
                 'kurs2'=>$dat2

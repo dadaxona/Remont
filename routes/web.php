@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('a', [AuthController::class,'typpe'])->name('typpe');
 Route::get('exports', [AuthController::class,'exports'])->name('exports');
 Route::post('imports', [AuthController::class,'imports'])->name('imports');
 Route::post('storeishchi', [KlentController::class, 'storeishchi'])->name('storeishchi');
