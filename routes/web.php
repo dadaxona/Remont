@@ -41,7 +41,7 @@ Route::get('live_clent', [KlentController::class, 'live_clent'])->name('live_cle
 Route::get('live_clentdok', [KlentController::class, 'live_clentdok'])->name('live_clentdok');
 Route::get('index', [KlentController::class, 'index'])->name('index');
 Route::get('indextip', [KlentController::class, 'indextip'])->name('indextip');
-Route::post('store', [KlentController::class, 'store'])->name('store');
+Route::post('storead', [KlentController::class, 'storead'])->name('storead');
 Route::post('storedok', [KlentController::class, 'storedok'])->name('storedok');
 Route::get('show/{id}', [KlentController::class, 'show']);
 Route::get('showdok/{id}', [KlentController::class, 'showdok']);
@@ -97,6 +97,7 @@ Route::get('usdkurd2dok', [KlentController::class, 'usdkurd2dok'])->name('usdkur
 Route::get('/sotuv',[KlentController::class, 'sotuv'])->name('sotuv');
 Route::get('/sotuvdok',[KlentController::class, 'sotuvdok'])->name('sotuvdok');
 Route::get('/live_search',[KlentController::class, 'live_search'])->name('live_search');
+Route::get('/live_searchdokon',[KlentController::class, 'live_searchdokon'])->name('live_searchdokon');
 Route::get('/live_searchdok',[KlentController::class, 'live_searchdok'])->name('live_searchdok');
 Route::get('/sqladiskizapas',[KlentController::class, 'sqladiskizapas'])->name('sqladiskizapas');
 Route::get('/sqladiskizapas2',[KlentController::class, 'sqladiskizapas2'])->name('sqladiskizapas2');

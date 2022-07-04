@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('naqt')->nullable();
             $table->string('plastik')->nullable();
             $table->string('bank')->nullable();
-            $table->integer('karzs')->nullable();
+            $table->float('karzs')->nullable();
             $table->timestamps();
         });
     }

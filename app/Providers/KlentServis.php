@@ -33,7 +33,7 @@ use App\Models\Zakazdok;
 use Illuminate\Support\Facades\Session;
 class KlentServis extends KlentServis2
 {
-    public function store($request)
+    public function storead($request)
     {
         if($request->id){
             return $this->update($request);        
@@ -488,7 +488,7 @@ class KlentServis extends KlentServis2
         ]);
         Updatetavrdok::create([
             'ichkitavardok_id'=>$a->id,
-            'name'=>$data->raqam,
+            'name'=>$data->name,
             'raqam'=>$data->raqam,
             'hajm'=>$data->hajm, 
             'summa'=>$data->summa,

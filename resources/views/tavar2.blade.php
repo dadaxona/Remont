@@ -344,8 +344,7 @@
           </a>
           <button type="button" class="btn btn-secondary" id="nazadclick">Назад</button>
           <button type="submit" class="btn btn-primary">Сохранить</button>
-        </div>
-  
+        </div>  
   </form>
 </div>
 
@@ -853,7 +852,7 @@
     var i = 0;
     $("#add").click(function(){            
             ++i;
-        $("#dynamicTable tbody").append('<tr><td><select name="addmore['+d+'][tavar_id]" id="" class="form-control mx-2">@foreach ($data as $item)<option value="{{ $item->id }}">{{ $item->name }}</option>@endforeach</select></td><td><select name="addmore['+i+'][adress]" id="" class="form-control mx-2">@foreach ($adress as $item)<option value="{{ $item->adress }}">{{ $item->adress }}</option>@endforeach</select></td><td><select name="addmore['+i+'][tavar2_id]" id="" class="form-control mx-2">@foreach ($datatip as $item)<option value="{{ $item->id }}">{{ $item->name }}</option>@endforeach</select></td><td><input type="number" name="addmore['+i+'][raqam]" id="" class="form-control mx-2" placeholder="Предупрежденние"></td><td><input type="number" name="addmore['+i+'][hajm]" id="" class="form-control mx-2" placeholder="Шт"></td><td><input type="text" name="addmore['+i+'][summa]" id="" class="form-control mx-2" placeholder="Закупочная цена"></td><td><input type="text" name="addmore['+i+'][summa2]" id="" class="form-control mx-2" placeholder="Оптовая цена"><td><input type="text" name="addmore['+i+'][summa3]" id="" class="form-control mx-2" placeholder="Розничная цена"></td><td><button type="button" class="btn btn-danger remove-tr">Удалить</button></td></tr>');
+        $("#dynamicTable tbody").append('<tr><td><select name="addmore['+i+'][tavar_id]" id="" class="form-control mx-2">@foreach ($data as $item)<option value="{{ $item->id }}">{{ $item->name }}</option>@endforeach</select></td><td><select name="addmore['+i+'][adress]" id="" class="form-control mx-2">@foreach ($adress as $item)<option value="{{ $item->adress }}">{{ $item->adress }}</option>@endforeach</select></td><td><select name="addmore['+i+'][tavar2_id]" id="" class="form-control mx-2">@foreach ($datatip as $item)<option value="{{ $item->id }}">{{ $item->name }}</option>@endforeach</select></td><td><input type="number" name="addmore['+i+'][raqam]" id="" class="form-control mx-2" placeholder="Предупрежденние"></td><td><input type="number" name="addmore['+i+'][hajm]" id="" class="form-control mx-2" placeholder="Шт"></td><td><input type="text" name="addmore['+i+'][summa]" id="" class="form-control mx-2" placeholder="Закупочная цена"></td><td><input type="text" name="addmore['+i+'][summa2]" id="" class="form-control mx-2" placeholder="Оптовая цена"><td><input type="text" name="addmore['+i+'][summa3]" id="" class="form-control mx-2" placeholder="Розничная цена"></td><td><button type="button" class="btn btn-danger remove-tr">Удалить</button></td></tr>');
     }); 
 
     var d = 0;
@@ -1178,6 +1177,57 @@
     });
   }
 
+  function editPost3(id) {
+    $.ajax({
+      url: "{{ route('edit4') }}",
+      type: "GET",
+      data: {
+        id: id
+      },
+      success: function(response) {
+          $("#ichki_id").val(response.ichkitavar_id);
+          $("#tavar_id").val(response.tavar_id);
+          $("#adress").val(response.adress);
+          $("#tavar2_id").val(response.tavar2_id);
+          $("#name").val(response.name);
+          $("#raqam2").val(response.raqam);
+          $("#hajm2").val(response.hajm);
+          $("#summa12").val(response.summa);
+          $("#summa22").val(response.summa2);
+          $("#summa223").val(response.summa3);
+          $('#updates2').modal('show');
+      }
+    });
+  }
+
+  $('#TavarFormTable').on('submit', function(e) {
+    e.preventDefault();
+    var form = this;
+    $.ajax({
+      url:$(form).attr('action'),
+      method:$(form).attr('method'),
+      data:new FormData(form),
+      processData:false,
+      dataType:'json',
+      contentType:false,
+      beforeSend:function(){
+        $(form).find('span.error-text').text('');
+      },
+      success:function(data){
+        if(data.code == 200){
+          toastr.success(data.msg);
+          location.reload(true);
+        }
+        if(data.code == 0){
+          $.each(data.error, function(prefix, val){
+            $(form).find('span.'+prefix+'_error').text(val[0]);
+          });
+          toastr.error(data.msg);
+        }      
+      }
+    });
+  });
+
   $('#TavarFormTabledok').on('submit', function(e) {
     e.preventDefault();
     var form = this;
@@ -1202,6 +1252,35 @@
           });
           toastr.error(data.msg);
         }      
+      }
+    });
+  });
+
+  
+  $('#updates').on('submit', function(e) {
+    e.preventDefault();
+    var form = this;
+    $.ajax({
+      url:$(form).attr('action'),
+      method:$(form).attr('method'),
+      data:new FormData(form),
+      processData:false,
+      dataType:'json',
+      contentType:false,
+      beforeSend:function(){
+        $(form).find('span.error-text').text('');
+      },
+      success:function(data){
+        if(data.code == 0){
+          $.each(data.error, function(prefix, val){
+            $(form).find('span.'+prefix+'_error').text(val[0]);
+          });
+          toastr.error(data.msg);
+        }
+        if(data.code == 201){
+          toastr.success(data.msg);
+          location.reload(true);
+        }
       }
     });
   });
@@ -1258,7 +1337,48 @@
     });
   }
 
-  function tiklashdok(id){
+  function deletePost3(id) {
+    $("#iddel").val(id);
+    $('#tavar2delete').modal('show');
+  }
+
+  function deleet() {
+    var id = $("#iddel").val();
+    let _url = `delete3/${id}`;
+    let _token   = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+      url: _url,
+      type: 'POST',
+      data: {
+        _token: _token
+      },
+      success: function(data) {
+        $("#row_"+id).remove();
+        $('#tavar2delete').modal('hide');
+        toastr.success(data.msg);
+        location.reload(true);
+      }
+    });
+  }
+  
+  function tiklash(id){
+      let _url = `tiklash/${id}`;
+      let _token   = $('meta[name="csrf-token"]').attr('content');
+      $.ajax({
+        url: _url,
+        type: 'POST',
+        data: {
+          _token: _token
+        },
+        success: function(data) {
+          $("#row2_"+id).remove();
+          toastr.success(data.msg);
+          location.reload(true);
+        }
+      });
+    }
+
+    function tiklashdok(id){
       let _url = `tiklashdok/${id}`;
       let _token   = $('meta[name="csrf-token"]').attr('content');
       $.ajax({
@@ -1274,6 +1394,30 @@
         }
       });
     }
+
+    function deletePro3(id) {
+      $("#iddelsss").val(id);
+      $('#tavar2delete2').modal('show');
+    }
+
+  function deleetemnu() {
+    var id = $("#iddelsss").val();
+    let _url = `deleetemnu/${id}`;
+    let _token   = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+      url: _url,
+      type: 'POST',
+      data: {
+        _token: _token
+      },
+      success: function(data) {
+        $("#row2_"+id).remove();
+        $('#tavar2delete2').modal('hide');
+        toastr.success(data.msg);
+      }
+    });
+  }
+
     function deletePro3dok(id) {
       $("#iddelsssdok").val(id);
       $('#tavar2delete2dok').modal('show');

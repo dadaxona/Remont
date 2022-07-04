@@ -213,8 +213,15 @@
 <div class="row">
 <div class="card col-10">
     <div class="card-header">
-        <div class="card-header-left">
-            <input type="text" name="search" id="search" class="form-control" placeholder="Поиск" />
+        <input type="hidden" id="onval" value="0">
+          <div class="row col-5">
+            <div class="col-5 mr-4">
+                <input type="text" name="search" id="search" class="form-control" placeholder="Поиск" /> 
+            </div>
+            <div class="form-check form-switch col-3 mt-1">
+                <input class="form-check-input" type="checkbox" role="switch" id="on">
+                <label class="form-check-label" for="">Склад 2</label>
+            </div>
         </div>
     </div>
         <div class="table-responsive mailbox-messages">
@@ -782,6 +789,42 @@
     
 @endif
 <script type="text/javascript">
+$(document).on('click', '#on', function(){
+    var a = $("#onval").val();
+    if(a == 0){
+        $("#onval").val(1);
+        fetch_customer_data3();
+        function fetch_customer_data3(query = '')
+        {
+            $.ajax({
+                url:"{{ route('live_searchdokon') }}",
+                method:'GET',
+                data:{query:query},
+                dataType:'json',
+                success:function(data)
+                {
+                    $('#tbody2').html(data.table_data);                    
+                }
+            });
+        }
+    }else{
+        $("#onval").val(0);
+        fetch_customer_data3();
+        function fetch_customer_data3(query = '')
+        {
+            $.ajax({
+                url:"{{ route('live_search') }}",
+                method:'GET',
+                data:{query:query},
+                dataType:'json',
+                success:function(data)
+                {
+                    $('#tbody2').html(data.table_data);                    
+                }
+            });
+        }
+    }
+});
 
 function kursm(){
         let _token = $('meta[name="csrf-token"]').attr('content');
@@ -1343,7 +1386,21 @@ function kursm(){
     
     $(document).on('keyup', '#search', function(){
             var query = $(this).val();
-            fetch_customer_data2(query);
+            var ser = $("#onval").val();
+            if(ser == 0){
+                fetch_customer_data2(query);
+            }else{           
+                $.ajax({
+                    url:"{{ route('live_searchdokon') }}",
+                    method:'GET',
+                    data:{query:query},
+                    dataType:'json',
+                    success:function(data)
+                    {
+                        $('#tbody2').html(data.table_data);                    
+                    }
+                });                
+            }
         });
     });
   

@@ -357,7 +357,7 @@ class KlentController extends KlentController2
         }
     }
 
-    public function store(Request $request, KlentServis $model)
+    public function storead(Request $request, KlentServis $model)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
@@ -366,7 +366,7 @@ class KlentController extends KlentController2
             'inn' => 'required',
         ]);
         if($validator->passes()){
-            return $model->store($request);
+            return $model->storead($request);
         }else{            
             return response()->json(['code'=>0, 'msg'=>'Малумотларни толдирилмаган', 'error'=>$validator->errors()->toArray()]);
         }
@@ -1001,6 +1001,51 @@ class KlentController extends KlentController2
         }
     }
     
+    function live_searchdokon(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '')
+        {
+        $data = Ichkitavardok::where('name', 'like', '%'.$query.'%')->orderBy('id', 'DESC')->get();            
+        }
+        else
+        {
+        $data = Ichkitavardok::orderBy('id', 'DESC')->get();
+        }
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr style="border-bottom: 1px solid;">
+                <td>'.$row->name.'</td>
+                <td>'.$row->hajm.'</td>
+                <td>'.$row->summa2.'</td>
+                <td>'.$row->summa3.'</td>
+                </tr>
+                ';
+            }
+        }
+        else
+        {
+        $output = '
+        <tr>
+            <td align="center" colspan="5">No Data Found</td>
+        </tr>
+        ';
+        }
+        $data = array(
+        'table_data'  => $output,
+        );
+
+        echo json_encode($data);
+        }
+    }
+
     function live_search(Request $request)
     {
         if($request->ajax())
