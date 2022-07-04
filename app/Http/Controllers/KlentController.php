@@ -18,9 +18,14 @@ use App\Models\Updatetavr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\KlentController2;
+use App\Models\Ichkitavardok;
+use App\Models\Itogodok;
+use App\Models\Karzinadok;
 use App\Models\Sqladpoytaxt;
 use App\Models\Tavar2;
 use App\Models\Tayyorsqlad;
+use App\Models\Updatetavrdok;
+use App\Models\Userdok;
 
 class KlentController extends KlentController2
 {
@@ -197,6 +202,70 @@ class KlentController extends KlentController2
         echo json_encode($data);
         }
     }
+    
+    public function live_clentdok(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '')
+        {
+        $data = DB::table('userdoks')
+            ->where('adress', 'like', '%'.$query.'%')
+            ->orderBy('id', 'DESC')
+            ->get();
+            
+        }
+        else
+        {
+        $data = DB::table('userdoks')
+            ->orderBy('id', 'DESC')
+            ->get();
+        }
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr id="rowdok_'.$row->id.'" style="border-bottom: 1px solid;">
+                <td>'.$row->name.'</td>
+                <td>'.$row->tel.'</td>
+                <td>'.$row->firma.'</td>
+                <td>'.$row->inn.'</td>
+            
+                <td>
+                  <a href="javascript:void(0)" onclick="editPostdok('.$row->id.')" style="color: green">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+                      <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+                    </svg>
+                  </a>                            
+                  <a href="javascript:void(0)" onclick="deletePostdok('.$row->id.')" class="mx-3" style="color: red">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                      <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+              ';
+            }
+        }
+        else
+        {
+        $output = '
+            <tr>
+                <td align="center" colspan="5">No Data Found</td>
+            </tr>
+            ';
+        }
+        $data = array(
+            'table_data'  => $output,
+        );
+
+        echo json_encode($data);
+        }
+    }
 
     public function live_clent(Request $request)
     {
@@ -256,7 +325,6 @@ class KlentController extends KlentController2
         }
         $data = array(
             'table_data'  => $output,
-            'total_data'  => $total_row
         );
 
         echo json_encode($data);
@@ -304,12 +372,33 @@ class KlentController extends KlentController2
         }
     }
 
+    public function storedok(Request $request, KlentServis $model)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'tel' => 'required',
+            'firma' => 'required',
+            'inn' => 'required',
+        ]);
+        if($validator->passes()){
+            return $model->storedok($request);
+        }else{            
+            return response()->json(['code'=>0, 'msg'=>'Малумотларни толдирилмаган', 'error'=>$validator->errors()->toArray()]);
+        }
+    }
+    
     public function show($id)
     {
         $post = User::find($id);    
         return response()->json($post);
     }
 
+    public function showdok($id)
+    {
+        $post = Userdok::find($id);    
+        return response()->json($post);
+    }
+    
     public function live_admin(Request $request)
     {
         if($request->ajax())
@@ -430,6 +519,11 @@ class KlentController extends KlentController2
         return $model->delete($id);
     }
 
+    public function destroydok($id, KlentServis $model)
+    {
+        return $model->deletedok($id);
+    }
+
     public function store2(Request $request, KlentServis $model)
     {
         $validator = Validator::make($request->all(), [
@@ -537,6 +631,23 @@ class KlentController extends KlentController2
         }
     }
 
+    public function store3dok(Request $request, KlentServis $model)
+    {
+        $validator = Validator::make($request->all(), [
+            'addmore.*.name' => 'required',
+            'addmore.*.raqam' => 'nullable',
+            'addmore.*.hajm' => 'required',
+            'addmore.*.summa' => 'required',
+            'addmore.*.summa2' => 'required',
+            'addmore.*.summa3' => 'required',
+        ]);
+        if($validator->passes()){
+            return $model->store3dok($request);
+        }else{            
+            return response()->json(['code'=>0, 'msg'=>'Малумотларни толдирилмаган', 'error'=>$validator->errors()->toArray()]);
+        }
+    }
+    
     public function updates(Request $request, KlentServis $model)
     {
         $validator = Validator::make($request->all(), [
@@ -556,25 +667,63 @@ class KlentController extends KlentController2
         }
     }
 
+    public function updatesdok(Request $request, KlentServis $model)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'raqam' => 'nullable',
+            'hajm' => 'required',
+            'summa' => 'required',
+            'summa2' => 'required',
+            'summa3' => 'required',
+        ]);
+        if($validator->passes()){
+            return $model->updatesdok($request);
+        }else{            
+            return response()->json(['code'=>0, 'msg'=>'Малумотларни толдирилмаган', 'error'=>$validator->errors()->toArray()]);
+        }
+    }
+    
     public function edit4(Request $request)
     {
         $post = Updatetavr::where('ichkitavar_id', $request->id)->first();    
         return response()->json($post);
     }
 
+    public function edit4dok(Request $request)
+    {
+        $post = Updatetavrdok::where('ichkitavardok_id', $request->id)->first();    
+        return response()->json($post);
+    }
+    
     public function delete3($id, KlentServis $model)
     {
         return $model->delete3($id);
     }
 
+    public function delete3dok($id, KlentServis $model)
+    {
+        return $model->delete3dok($id);
+    }
+    
     public function tiklash($id, KlentServis $model)
     {
         return $model->tiklash($id);
     }
 
+    public function tiklashdok($id, KlentServis $model)
+    {
+        return $model->tiklashdok($id);
+    }
+
     public function deleetemnu($id, KlentServis $model)
     {
         return $model->deleetemnu($id);
+    }
+
+    public function deleetemnudok($id, KlentServis $model)
+    {
+        return $model->deleetemnudok($id);
     }
 
     public function edit5(Request $request)
@@ -717,9 +866,19 @@ class KlentController extends KlentController2
         return $model->sazdat($request);
     }
 
+    public function sazdatdok(Request $request, KlentServis $model)
+    {
+        return $model->sazdatdok($request);
+    }
+    
     public function belgila(Request $request)
     {
         $post = Karzina::find($request->id);    
+        return response()->json($post);
+    }
+    public function belgiladok(Request $request)
+    {
+        $post = Karzinadok::find($request->id);    
         return response()->json($post);
     }
 
@@ -729,15 +888,73 @@ class KlentController extends KlentController2
         return response()->json($post);
     }
 
+    public function belgi2dok(Request $request)
+    {
+        $post = Karzinadok::find($request->id);    
+        return response()->json($post);
+    }
+
     public function kursm()
     {
         $post = Itogo::find(1);    
         return response()->json($post);
     }
 
+    public function kursmdok()
+    {
+        $post = Itogodok::find(1);    
+        return response()->json($post);
+    }
+    
     public function usdkurd2(Request $request, KlentServis $model)
     {
         return $model->usdkurd2($request);
+    }
+    
+    public function usdkurd2dok(Request $request, KlentServis $model)
+    {
+        return $model->usdkurd2dok($request);
+    }
+
+    public function sotuvdok(Request $request)
+    {
+        if($request->ajax())
+        {
+         $output = '';
+         $query = $request->get('query');
+         if($query != '')
+         {
+          $data = Karzinadok::where('name', 'like', '%'.$query.'%')
+                            ->orderBy('id', 'DESC')
+                            ->get();
+         }
+         else
+         {
+          $data = Karzinadok::orderBy('id', 'DESC')->get();
+         }
+         $total_row = $data->count();
+         if($total_row > 0)
+         {
+          foreach($data as $row)
+          {
+           $output .= '
+           <tr onclick="belgilashdok('.$row->id.')" style="border-bottom: 1px solid;">  
+            <td>'.$row->name.'</td>
+            <td>'.number_format($row->summa2, 3).'</td>
+            <td>'.$row->soni.'</td>
+            <td>'.$row->chegirma.'</td>
+            <td>'.number_format($row->itog, 3).'</td>
+            <td>'.$row->hajm.'</td>
+           </tr>
+           ';
+          }
+         }
+         $data = array(
+          'table_data'  => $output,
+          'total_data'  => $total_row
+         );   
+         echo json_encode($data);
+        }
     }
 
     public function sotuv(Request $request)
@@ -783,7 +1000,7 @@ class KlentController extends KlentController2
          echo json_encode($data);
         }
     }
-
+    
     function live_search(Request $request)
     {
         if($request->ajax())
@@ -805,6 +1022,52 @@ class KlentController extends KlentController2
             {
                 $output .= '
                 <tr ondblclick="plus('.$row->id.')" style="border-bottom: 1px solid;" id="asdsad">
+                <td>'.$row->name.'</td>
+                <td>'.$row->hajm.'</td>
+                <td>'.$row->summa2.'</td>
+                <td>'.$row->summa3.'</td>
+                </tr>
+                ';
+            }
+        }
+        else
+        {
+        $output = '
+        <tr>
+            <td align="center" colspan="5">No Data Found</td>
+        </tr>
+        ';
+        }
+        $data = array(
+        'table_data'  => $output,
+        'total_data'  => $total_row
+        );
+
+        echo json_encode($data);
+        }
+    }
+
+    function live_searchdok(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '')
+        {
+        $data = Ichkitavardok::where('name', 'like', '%'.$query.'%')->orderBy('id', 'DESC')->get();            
+        }
+        else
+        {
+        $data = Ichkitavardok::orderBy('id', 'DESC')->get();
+        }
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr ondblclick="plusdok('.$row->id.')" style="border-bottom: 1px solid;" id="asdsaddok">
                 <td>'.$row->name.'</td>
                 <td>'.$row->hajm.'</td>
                 <td>'.$row->summa2.'</td>
@@ -992,14 +1255,42 @@ class KlentController extends KlentController2
         return $model->plus($request);
     }
 
+    public function plusdok(Request $request, KlentServis $model)
+    {
+        return $model->plusdok($request);
+    }
+
     public function minus(Request $request, KlentServis $model)
     {
         return $model->minus($request);
     }
-
+    public function minusdok(Request $request, KlentServis $model)
+    {
+        return $model->minusdok($request);
+    }
+    
     public function udalit(Request $request, KlentServis $model)
     {
         return $model->udalit($request);
+    }
+
+    public function udalitdok(Request $request, KlentServis $model)
+    {
+        return $model->udalitdok($request);
+    }
+
+    public function yangilashdok(Request $request, KlentServis $model)
+    {
+        $validator = Validator::make($request->all(), [
+            'soni' => 'required',
+            'summo' => 'required',
+            'summ' => 'required'
+        ]);
+        if($validator->passes()){
+            return $model->yangilashdok($request);
+        }else{            
+            return response()->json(['code'=>0, 'msg'=>'Малумотни киритинг', 'error'=>$validator->errors()->toArray()]);
+        }
     }
 
     public function yangilash(Request $request, KlentServis $model)
@@ -1021,12 +1312,23 @@ class KlentController extends KlentController2
         return $model->tugle($request);
     }
 
+    public function tugledok(Request $request, KlentServis $model)
+    {
+        return $model->tugledok($request);
+    }
+    
     public function rachot()
     {
         $data = Itogo::find(1);
         return response()->json($data);
     }
 
+    public function rachotdok()
+    {
+        $data = Itogodok::find(1);
+        return response()->json($data);
+    }
+    
     public function oplata(Request $request, KlentServis $model)
     {
         if($request->naqt){
@@ -1040,8 +1342,27 @@ class KlentController extends KlentController2
         }
     }
 
+    public function oplatadok(Request $request, KlentServis $model)
+    {
+        if($request->naqt){
+            return $model->oplatadok($request);
+        }elseif($request->plastik){
+            return $model->oplatadok($request);
+        }elseif($request->bank){
+            return $model->oplatadok($request);
+        }else{
+            return response()->json(['code'=>0, 'msg'=>'Барча устунлар бош']);
+        }
+    }
+
+
     public function zakazayt(Request $request, KlentServis $model)
     {
         return $model->zakazayt($request);
+    }
+
+    public function zakazaytdok(Request $request, KlentServis $model)
+    {
+        return $model->zakazaytdok($request);
     }
 }

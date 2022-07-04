@@ -4,21 +4,32 @@ namespace App\Providers;
 
 use App\Models\Adress;
 use App\Models\Arxiv;
+use App\Models\Arxivdok;
 use App\Models\Deletkarzina;
+use App\Models\Deletkarzinadok;
 use App\Models\Drektor;
 use App\Models\Ichkitavar;
+use App\Models\Ichkitavardok;
 use App\Models\Tavar;
 use App\Models\Umumiy;
 use App\Models\Updatetavr;
 use App\Models\User;
 use App\Providers\KlentServis2;
 use App\Models\Itogo;
+use App\Models\Itogodok;
 use App\Models\Karzina;
 use App\Models\Karzina2;
+use App\Models\Karzina2dok;
 use App\Models\Karzina3;
+use App\Models\Karzina3dok;
+use App\Models\Karzinadok;
 use App\Models\Tavar2;
+use App\Models\Updatetavrdok;
+use App\Models\Userdok;
 use App\Models\Zakaz;
 use App\Models\Zakaz2;
+use App\Models\Zakaz2dok;
+use App\Models\Zakazdok;
 use Illuminate\Support\Facades\Session;
 class KlentServis extends KlentServis2
 {
@@ -34,6 +45,18 @@ class KlentServis extends KlentServis2
         }
     }
 
+    public function storedok($request)
+    {
+        if($request->id){
+            return $this->updatedok($request);        
+        }else{
+            $data = Userdok::create($request->all());
+            if($data){
+                return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);
+            }
+        }
+    }
+    
     public function update($request)
     {
         User::find($request->id)->update($request->all());
@@ -41,13 +64,24 @@ class KlentServis extends KlentServis2
         return response()->json(['code'=>201, 'msg'=>'Мувофакиятли янгиланди','data' => $data], 201);
     }
 
+    public function updatedok($request)
+    {
+        Userdok::find($request->id)->update($request->all());
+        $data = Userdok::find($request->id);
+        return response()->json(['code'=>201, 'msg'=>'Мувофакиятли янгиланди','data' => $data], 201);
+    }
+    
     public function delete($id)
     {
         User::find($id)->delete($id);
         return response()->json(['msg'=>'Мувофакиятли очирилди']);
     }
 
-
+    public function deletedok($id)
+    {
+        Userdok::find($id)->delete($id);
+        return response()->json(['msg'=>'Мувофакиятли очирилди']);
+    }
     // 2
     public function store2($request)
     {
@@ -144,25 +178,104 @@ class KlentServis extends KlentServis2
     public function edit3()
     {
         $ichkitavar = Ichkitavar::all();
+        $ichkitavardok = Ichkitavardok::all();
         $data = Tavar::all();
         $datatip = Tavar2::all();
         $adress = Adress::all();
         $tiklash = Deletkarzina::all();
+        $tiklashdok = Deletkarzinadok::all();
         $umumiy = Umumiy::find(1);
         if(Session::has('IDIE')){
           $brends = Drektor::where('id','=',Session::get('IDIE'))->first();
           return view('tavar2',[
               'brends'=>$brends,
               'ichkitavar'=>$ichkitavar,
+              'ichkitavardok'=>$ichkitavardok,
               'data'=>$data,
               'datatip'=>$datatip,
               'tiklash'=>$tiklash,
+              'tiklashdok'=>$tiklashdok,
               'adress'=>$adress,
               'umumiy'=>$umumiy??[]
           ]);
         }else{
             return redirect('/logaut');
         }
+    }
+
+    public function store3dok($request)
+    {
+        foreach ($request->addmore as $value) {
+            $foo = Ichkitavardok::where('name', $value["name"])->first();
+            if($foo){
+                $a = $foo->hajm + $value["hajm"];
+                $b = $value["summa"] - $foo->summa;
+                $c = $foo->summa + $b / 2;
+                Ichkitavardok::where('name', $value["name"])
+                        ->update([
+                            'raqam' => $value["raqam"],
+                            'hajm' => $a, 
+                            'summa' => $c,
+                            'summa2' => $value["summa2"],
+                            'summa3' => $value["summa3"],
+                        ]);
+                $data = Ichkitavardok::where('name', $value["name"])->first();
+                $res = Updatetavrdok::where('ichkitavardok_id', $data->id)->first();
+                if($res){
+                    Updatetavrdok::where('ichkitavardok_id', $data->id)
+                    ->update([
+                        'name'=>$value["name"],
+                        'raqam'=>$value["raqam"],
+                        'hajm'=>$value["hajm"],
+                        'summa'=>$value["summa"],
+                        'summa2'=>$value["summa2"],
+                        'summa3'=>$value["summa3"],
+                    ]);
+                }else{
+                    Updatetavrdok::create([
+                        'ichkitavardok_id'=>$data->id,
+                        'name'=>$value["name"],
+                        'raqam'=>$value["raqam"],
+                        'hajm'=>$value["hajm"],
+                        'summa'=>$value["summa"],
+                        'summa2'=>$value["summa2"],
+                        'summa3'=>$value["summa3"],
+                    ]);
+                }
+            }else{
+                $data = Ichkitavardok::create([
+                    'name'=>$value["name"],
+                    'raqam'=>$value["raqam"],
+                    'hajm'=>$value["hajm"],
+                    'summa'=>$value["summa"],
+                    'summa2'=>$value["summa2"],
+                    'summa3'=>$value["summa3"],
+                ]);
+                $res = Updatetavrdok::where('ichkitavardok_id', $data->id)->first();
+                if($res){
+                    Updatetavrdok::where('ichkitavardok_id', $data->id)
+                    ->update([
+                        'name'=>$value["name"],
+                        'raqam'=>$value["raqam"],
+                        'hajm'=>$value["hajm"],
+                        'summa'=>$value["summa"],
+                        'summa2'=>$value["summa2"],
+                        'summa3'=>$value["summa3"],
+                    ]);
+                }else{
+                    Updatetavrdok::create([
+                        'ichkitavardok_id'=>$data->id,
+                        'name'=>$value["name"],
+                        'raqam'=>$value["raqam"],
+                        'hajm'=>$value["hajm"],
+                        'summa'=>$value["summa"],
+                        'summa2'=>$value["summa2"],
+                        'summa3'=>$value["summa3"],
+                    ]);
+                }
+            }
+        }
+        return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);
     }
 
     public function store3($request)
@@ -231,6 +344,32 @@ class KlentServis extends KlentServis2
         }
         return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);
     }
+    
+    public function updatesdok($request)
+    {
+        $updatetavr = Updatetavrdok::where('ichkitavardok_id', $request->id)->first();
+        $foo = Ichkitavardok::find($request->id);
+        $h1 = $foo->hajm - $updatetavr->hajm + $request->hajm;
+        $sum2 = $foo->summa2 - $updatetavr->summa2 + $request->summa2;
+        $sum3 = $foo->summa3 - $updatetavr->summa3 + $request->summa3;        
+        $data = Ichkitavardok::find($request->id)->update([
+            'name'=>$request->name,
+            'raqam'=>$request->raqam,
+            'hajm'=>$h1,
+            'summa'=>$request->summa,
+            'summa2'=>$sum2,
+            'summa3'=>$sum3,
+        ]);
+        Updatetavrdok::where('ichkitavardok_id', $request->id)->update([
+            'name'=>$request->name,
+            'raqam'=>$request->raqam,
+            'hajm'=>$request->hajm, 
+            'summa'=>$request->summa,
+            'summa2'=>$request->summa2,
+            'summa3'=>$request->summa3,
+        ]);
+        return response()->json(['code'=>201, 'msg'=>'Мувофакиятли янгиланди','data' => $data], 201);
+    }
 
     public function updates($request)
     {
@@ -286,6 +425,23 @@ class KlentServis extends KlentServis2
         return response()->json(['msg'=>'Мувофакиятли очирилди']);
     }
 
+    public function delete3dok($id)
+    {
+        $data = Ichkitavardok::find($id);
+        Deletkarzinadok::create([
+            'name'=>$data->name,
+            'raqam'=>$data->raqam,
+            'hajm'=>$data->hajm, 
+            'summa'=>$data->summa,
+            'summa2'=>$data->summa2,
+            'summa3'=>$data->summa3,
+            'kurs'=>$data->kurs, 
+            'kurs2'=>$data->kurs2
+        ]);
+        Ichkitavardok::find($id)->delete($id);
+        return response()->json(['msg'=>'Мувофакиятли очирилди']);
+    }
+
     public function tiklash($id)
     {
         $data = Deletkarzina::find($id);
@@ -317,9 +473,41 @@ class KlentServis extends KlentServis2
         return response()->json(['msg'=>'Мувофакиятли тикланди']);
     }
 
+    public function tiklashdok($id)
+    {
+        $data = Deletkarzinadok::find($id);
+        $a = Ichkitavardok::create([
+            'name'=>$data->name,
+            'raqam'=>$data->raqam,
+            'hajm'=>$data->hajm, 
+            'summa'=>$data->summa,
+            'summa2'=>$data->summa2,
+            'summa3'=>$data->summa3,
+            'kurs'=>$data->kurs, 
+            'kurs2'=>$data->kurs2
+        ]);
+        Updatetavrdok::create([
+            'ichkitavardok_id'=>$a->id,
+            'name'=>$data->raqam,
+            'raqam'=>$data->raqam,
+            'hajm'=>$data->hajm, 
+            'summa'=>$data->summa,
+            'summa2'=>$data->summa2,
+            'summa3'=>$data->summa3
+        ]);
+        Deletkarzinadok::find($id)->delete($id);
+        return response()->json(['msg'=>'Мувофакиятли тикланди']);
+    }
+
     public function deleetemnu($id)
     {
         Deletkarzina::find($id)->delete($id);
+        return response()->json(['msg'=>'Мувофакиятли очирилди']);
+    }
+
+    public function deleetemnudok($id)
+    {
+        Deletkarzinadok::find($id)->delete($id);
         return response()->json(['msg'=>'Мувофакиятли очирилди']);
     }
 
@@ -507,6 +695,132 @@ class KlentServis extends KlentServis2
         }
     }
 
+    public function sazdatdok($request)
+    {
+        $valyuta = Itogodok::find(1);
+        if($request->radio == "option1"){
+            if($valyuta->usd == 0){
+                $foo = Ichkitavardok::find($request->id);
+                $dat = Karzinadok::create([
+                    'ichkitavardok_id' => $foo->id,
+                    'name' => $foo->name,
+                    'raqam' => $foo->raqam,
+                    'soni' => 1,
+                    'hajm' => $foo->hajm,
+                    'summa' => $foo->summa3,
+                    'summa2' => $foo->kurs2,
+                    'chegirma' => 0,
+                    'itog' => $foo->kurs2,
+                ]);
+                $ito = Itogodok::find(1);
+                if($ito){
+                    $j = $ito->itogo + $foo->kurs2;
+                    Itogodok::find(1)->update([
+                        'itogo'=>$j,
+                    ]);
+                    $ito2 = Itogodok::find(1);
+                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
+        
+                }else{
+                    Itogodok::create([
+                        'itogo'=>$foo->kurs2,
+                    ]);
+                    $ito3 = Itogodok::find(1);
+                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
+                }
+            }else{
+                $foo = Ichkitavardok::find($request->id);
+                $dat = Karzinadok::create([
+                    'ichkitavardok_id' => $foo->id,
+                    'name' => $foo->name,
+                    'raqam' => $foo->raqam,
+                    'soni' => 1,
+                    'hajm' => $foo->hajm,
+                    'summa' => $foo->summa3 / $valyuta->kurs,
+                    'summa2' => $foo->kurs2 / $valyuta->kurs,
+                    'chegirma' => 0,
+                    'itog' => $foo->kurs2 / $valyuta->kurs,
+                ]);
+                $ito = Itogodok::find(1);
+                if($ito){
+                    $j = $ito->itogo + $foo->kurs2 / $valyuta->kurs;
+                    Itogodok::find(1)->update([
+                        'itogo'=>$j,
+                    ]);
+                    $ito2 = Itogodok::find(1);
+                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
+        
+                }else{
+                    Itogodok::create([
+                        'itogo'=>$foo->kurs2 / $valyuta->kurs,
+                    ]);
+                    $ito3 = Itogodok::find(1);
+                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
+                }
+            }
+        }else{
+            if($valyuta->usd == 0){
+                $foo = Ichkitavardok::find($request->id);
+                $dat = Karzinadok::create([
+                    'ichkitavardok_id' => $foo->id,
+                    'name' => $foo->name,
+                    'raqam' => $foo->raqam,
+                    'soni' => 1,
+                    'hajm' => $foo->hajm,
+                    'summa' => $foo->summa2,
+                    'summa2' => $foo->kurs,
+                    'chegirma' => 0,
+                    'itog' => $foo->kurs,
+                ]);
+                $ito = Itogodok::find(1);
+                if($ito){
+                    $j = $ito->itogo + $foo->kurs;
+                    Itogodok::find(1)->update([
+                        'itogo'=>$j,
+                    ]);
+                    $ito2 = Itogodok::find(1);
+                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
+        
+                }else{
+                    Itogodok::create([
+                        'itogo'=>$foo->kurs,
+                    ]);
+                    $ito3 = Itogodok::find(1);
+                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
+                }
+            }else{
+                $foo = Ichkitavardok::find($request->id);
+                $dat = Karzinadok::create([
+                    'ichkitavardok_id' => $foo->id,
+                    'name' => $foo->name,
+                    'raqam' => $foo->raqam,
+                    'soni' => 1,
+                    'hajm' => $foo->hajm,
+                    'summa' => $foo->summa2 / $valyuta->kurs,
+                    'summa2' => $foo->kurs / $valyuta->kurs,
+                    'chegirma' => 0,
+                    'itog' => $foo->kurs / $valyuta->kurs,
+                ]);
+                $ito = Itogodok::find(1);
+                if($ito){
+                    $j = $ito->itogo + $foo->kurs / $valyuta->kurs;
+                    Itogodok::find(1)->update([
+                        'itogo'=>$j,
+                    ]);
+                    $ito2 = Itogodok::find(1);
+                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
+        
+                }else{
+                    Itogodok::create([
+                        'itogo'=>$foo->kurs / $valyuta->kurs,
+                    ]);
+                    $ito3 = Itogodok::find(1);
+                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
+                }
+            }
+        }
+    }
+
     public function usdkurd2($request)
     {
         $row = Ichkitavar::all();
@@ -531,6 +845,33 @@ class KlentServis extends KlentServis2
             ]);
         }
         $b2 = Itogo::find(1);
+        return response()->json(['msg'=>'Киритилди', 'data'=>$b2]);
+    }
+
+    public function usdkurd2dok($request)
+    {
+        $row = Ichkitavardok::all();
+        foreach ($row as $value) {
+            $dat = $value->summa2 * $request->kurs;
+            $dat2 = $value->summa3 * $request->kurs;
+            Ichkitavardok::find($value->id)->update([
+                'kurs'=>$dat,
+                'kurs2'=>$dat2
+            ]);
+        }
+        $a = Itogodok::find(1);
+        if($a){
+            Itogodok::find(1)->update([
+                'kurs'=>$request->kurs
+            ]);
+        }else{
+            Itogodok::create([
+                'itogo'=>0,
+                'kurs'=>$request->kurs,
+                'usd'=>0
+            ]);
+        }
+        $b2 = Itogodok::find(1);
         return response()->json(['msg'=>'Киритилди', 'data'=>$b2]);
     }
 
@@ -609,6 +950,87 @@ class KlentServis extends KlentServis2
                         'itogo'=>$j,
                     ]);
                     $b2 = Itogo::find(1);
+                    return response()->json(['data'=>$foo3, 'data2'=>$b2]);
+                }
+            }
+        }
+    }
+
+    public function plusdok($request)
+    {
+        $foo1 = Karzinadok::find($request->id);
+        $row = Ichkitavardok::find($foo1->ichkitavardok_id);
+        $valyuta = Itogodok::find(1);
+        $a = $foo1->soni + 1;
+        if($a > $row->hajm){
+            return response()->json(['msg'=>'Тавар етарли емас', 'error'=>400]);
+        }else{
+            if($valyuta->usd == 0){
+                if($request->radio == "option2"){
+                    $itog = $foo1->itog + $row->kurs;
+                    $itog2 = $foo1->summa + $row->summa2;
+                    Karzinadok::find($request->id)->update([
+                        'soni'=>$a,
+                        'itog'=>$itog,
+                        'summa'=>$itog2,
+                    ]);
+                    $foo3 = Karzinadok::find($request->id);
+                    $b = Itogodok::find(1);
+                    $j = $b->itogo + $row->kurs;
+                    Itogodok::find(1)->update([
+                        'itogo'=>$j,
+                    ]);
+                    $b2 = Itogodok::find(1);
+                    return response()->json(['data'=>$foo3, 'data2'=>$b2]);
+                }else{
+                    $itog = $foo1->itog + $row->kurs2;
+                    $itog2 = $foo1->summa + $row->summa3;
+                    Karzinadok::find($request->id)->update([
+                        'soni'=>$a,
+                        'itog'=>$itog,
+                        'summa'=>$itog2,
+                    ]);
+                    $foo3 = Karzinadok::find($request->id);
+                    $b = Itogodok::find(1);
+                    $j = $b->itogo + $row->kurs2;
+                    Itogodok::find(1)->update([
+                        'itogo'=>$j,
+                    ]);
+                    $b2 = Itogodok::find(1);
+                    return response()->json(['data'=>$foo3, 'data2'=>$b2]);
+                }
+            }else{
+                if($request->radio == "option2"){
+                    $itog = $foo1->itog + $row->kurs / $valyuta->kurs;
+                    $itog2 = $foo1->summa + $row->summa2 / $valyuta->kurs;
+                    Karzinadok::find($request->id)->update([
+                        'soni'=>$a,
+                        'itog'=>$itog,
+                        'summa'=>$itog2,
+                    ]);
+                    $foo3 = Karzinadok::find($request->id);
+                    $b = Itogodok::find(1);
+                    $j = $b->itogo + $row->kurs / $valyuta->kurs;
+                    Itogodok::find(1)->update([
+                        'itogo'=>$j,
+                    ]);
+                    $b2 = Itogodok::find(1);
+                    return response()->json(['data'=>$foo3, 'data2'=>$b2]);
+                }else{
+                    $itog = $foo1->itog + $row->kurs2 / $valyuta->kurs;
+                    $itog2 = $foo1->summa + $row->summa3 / $valyuta->kurs;
+                    Karzinadok::find($request->id)->update([
+                        'soni'=>$a,
+                        'itog'=>$itog,
+                        'summa'=>$itog2,
+                    ]);
+                    $foo3 = Karzinadok::find($request->id);
+                    $b = Itogodok::find(1);
+                    $j = $b->itogo + $row->kurs2 / $valyuta->kurs;
+                    Itogodok::find(1)->update([
+                        'itogo'=>$j,
+                    ]);
+                    $b2 = Itogodok::find(1);
                     return response()->json(['data'=>$foo3, 'data2'=>$b2]);
                 }
             }
@@ -696,6 +1118,86 @@ class KlentServis extends KlentServis2
         }
     }
 
+    public function minusdok($request)
+    {
+        $foo1 = Karzinadok::find($request->id);
+        $row = Ichkitavardok::find($foo1->ichkitavardok_id);
+        $valyuta = Itogodok::find(1);
+        $a = $foo1->soni - 1;
+        if($a < 1){
+            return $this->delminus($request, $row, $valyuta);
+        }else{
+            if($valyuta->usd == 0){
+                if($request->radio == "option2"){
+                    $itog = $foo1->itog - $row->kurs;
+                    $itog2 = $foo1->summa - $row->summa2;
+                    Karzinadok::find($request->id)->update([
+                        'soni'=>$a,
+                        'itog'=>$itog,
+                        'summa'=>$itog2,
+                    ]);
+                    $foo3 = Karzinadok::find($request->id);
+                    $b = Itogodok::find(1);
+                    $j = $b->itogo - $row->kurs;
+                    Itogodok::find(1)->update([
+                        'itogo'=>$j,
+                    ]);
+                    $b2 = Itogodok::find(1);
+                    return response()->json(['data'=>$foo3, 'data2'=>$b2]);
+                }else{
+                    $itog = $foo1->itog - $row->kurs2;
+                    $itog2 = $foo1->summa - $row->summa3;
+                    Karzinadok::find($request->id)->update([
+                        'soni'=>$a,
+                        'itog'=>$itog,
+                        'summa'=>$itog2,
+                    ]);
+                    $foo3 = Karzinadok::find($request->id);
+                    $b = Itogodok::find(1);
+                    $j = $b->itogo - $row->kurs2;
+                    Itogodok::find(1)->update([
+                        'itogo'=>$j,
+                    ]);
+                    $b2 = Itogodok::find(1);
+                    return response()->json(['data'=>$foo3, 'data2'=>$b2]);
+                }
+            }else{
+                if($request->radio == "option2"){
+                    $itog = $foo1->itog - $row->kurs / $valyuta->kurs;
+                    $itog2 = $foo1->summa - $row->summa2 / $valyuta->kurs;
+                    Karzinadok::find($request->id)->update([
+                        'soni'=>$a,
+                        'itog'=>$itog,
+                        'summa'=>$itog2,
+                    ]);
+                    $foo3 = Karzinadok::find($request->id);
+                    $b = Itogodok::find(1);
+                    $j = $b->itogo - $row->kurs / $valyuta->kurs;
+                    Itogodok::find(1)->update([
+                        'itogo'=>$j,
+                    ]);
+                    $b2 = Itogodok::find(1);
+                    return response()->json(['data'=>$foo3, 'data2'=>$b2]);
+                }else{
+                    $itog = $foo1->itog - $row->kurs2 / $valyuta->kurs;
+                    $itog2 = $foo1->summa - $row->summa3 / $valyuta->kurs;
+                    Karzinadok::find($request->id)->update([
+                        'soni'=>$a,
+                        'itog'=>$itog,
+                        'summa'=>$itog2,
+                    ]);
+                    $foo3 = Karzinadok::find($request->id);
+                    $b = Itogodok::find(1);
+                    $j = $b->itogo - $row->kurs2 / $valyuta->kurs;
+                    Itogodok::find(1)->update([
+                        'itogo'=>$j,
+                    ]);
+                    $b2 = Itogodok::find(1);
+                    return response()->json(['data'=>$foo3, 'data2'=>$b2]);
+                }
+            }
+        }
+    }
     public function delminus($request, $row, $valyuta)
     {
         $b = Itogo::find(1);
@@ -715,6 +1217,28 @@ class KlentServis extends KlentServis2
             return response()->json(['msg'=>'Тавар олиб ташланди', 'data'=>$foo3, 'data2'=>$b3, 'error'=>400]);
         }else{
             return response()->json(['msg'=>'Тавар олиб ташланди', 'data'=>$foo3, 'data2'=>$b2, 'error'=>400]);
+        }
+    }
+    
+    public function udalitdok($request)
+    {
+        $foo1 = Karzinadok::find($request->id);
+        $b = Itogodok::find(1);
+        $j = $b->itogo - $foo1->itog;
+        Itogodok::find(1)->update([
+            'itogo'=>$j,
+        ]);
+        $b2 = Itogodok::find(1);
+        Karzinadok::find($request->id)->delete($request->id);
+        $iff = Karzinadok::count();
+        if ($iff == 0) {
+            Itogodok::find(1)->update([
+                'itogo'=>0,
+            ]);
+            $b3 = Itogodok::find(1);
+            return response()->json(['msg'=>'Очирилди', 'data'=>$foo1, 'data2'=>$b3]);
+        }else{
+            return response()->json(['msg'=>'Очирилди', 'data'=>$foo1, 'data2'=>$b2]);
         }
     }
 
@@ -737,6 +1261,30 @@ class KlentServis extends KlentServis2
             return response()->json(['msg'=>'Очирилди', 'data'=>$foo1, 'data2'=>$b3]);
         }else{
             return response()->json(['msg'=>'Очирилди', 'data'=>$foo1, 'data2'=>$b2]);
+        }
+    }
+    public function yangilashdok($request)
+    {
+        $foo1 = Karzinadok::find($request->id);
+        $row = Ichkitavardok::find($foo1->ichkitavar_id);
+        if($request->soni > $row->hajm){
+            return response()->json(['msg'=>'Тавар етарли емас', 'code'=>0]);
+        }else{
+            $b = Itogodok::find(1);
+            $pool = $b->itogo - $foo1->itog;
+            $poo2 = $pool + $request->summ;
+            Itogodok::find(1)->update([
+                'itogo'=>$poo2
+            ]);
+            Karzinadok::find($request->id)->update([
+                'soni'=>$request->soni,
+                'summa2'=>$request->summo,
+                'chegirma'=>$request->cheg,
+                'itog'=>$request->summ,
+            ]);
+            $foo3 = Karzinadok::find($request->id);
+            $b2 = Itogodok::find(1);
+            return response()->json(['msg'=>'Янгиланди', 'data'=>$foo3, 'data2'=>$b2]);
         }
     }
 
@@ -762,6 +1310,31 @@ class KlentServis extends KlentServis2
             $foo3 = Karzina::find($request->id);
             $b2 = Itogo::find(1);
             return response()->json(['msg'=>'Янгиланди', 'data'=>$foo3, 'data2'=>$b2]);
+        }
+    }
+
+    public function tugledok($request)
+    {
+        unset($request["_tokin"]);
+        $row = Karzinadok::all();
+        $b23 = Itogodok::find(1);
+        if($b23->usd == 0){
+            foreach ($row as $value) {
+                $dat = $value->summa2 / $b23->kurs;
+                $dat2 = $value->itog / $b23->kurs;
+                Karzinadok::find($value->id)->update([
+                    'summa2'=>$dat,
+                    'itog'=>$dat2
+                ]);
+            }
+            Itogodok::find(1)->update([
+                'itogo' => $b23->itogo / $b23->kurs,
+                'usd' => 1,
+            ]);
+            $b2 = Itogodok::find(1);
+            return response()->json(['msg'=>'Киритилди', 'data'=>$b2]);
+        }else{
+            return $this->tuglesomdok($b23);
         }
     }
 
@@ -807,6 +1380,156 @@ class KlentServis extends KlentServis2
         ]);
         $b2 = Itogo::find(1);
         return response()->json(['msg'=>'Киритилди', 'data'=>$b2]);        
+    }
+
+    public function tuglesomdok($b23)
+    {
+        $row = Karzinadok::all();
+        foreach ($row as $value) {
+            $dat = $value->summa2 * $b23->kurs;
+            $dat2 = $value->itog * $b23->kurs;
+            Karzinadok::find($value->id)->update([
+                'summa2'=>$dat,
+                'itog'=>$dat2
+            ]);
+        }
+        Itogodok::find(1)->update([
+            'itogo' => $b23->itogo * $b23->kurs,
+            'usd' => 0
+        ]);
+        $b2 = Itogodok::find(1);
+        return response()->json(['msg'=>'Киритилди', 'data'=>$b2]);        
+    }
+    
+    public function oplatadok($request)
+    {
+        $usd = Itogodok::find(1);
+        if ($usd->usd == 1) {
+            if($request->id){
+                $variable = Karzinadok::all();
+                $arxiv = Arxivdok::create([
+                    'userdok_id'=>$request->id,
+                    'itogs'=>$request->itogs,
+                    'naqt'=>$request->naqt,
+                    'plastik'=>$request->plastik,
+                    'bank'=>$request->bank,
+                    'karzs'=>$request->karzs,
+                ]);
+                foreach ($variable as $value) {
+                    Karzina2dok::create([
+                        'userdok_id'=> $request->id,
+                        'ichkitavardok_id'=> $value->ichkitavardok_id,
+                        'clentra' => $arxiv->clentra,
+                        'name'=> $value->name, 
+                        'soni'=> $value->soni,  
+                        'hajm'=> $value->hajm, 
+                        'summa'=> $value->summa, 
+                        'summa2'=> $value->summa2, 
+                        'chegirma'=> $value->chegirma, 
+                        'itog'=> $value->itog,
+                    ]);
+                    $foo = Ichkitavardok::find($value->ichkitavardok_id);
+                    $foo2 = $foo->hajm - $value->soni;
+                    Ichkitavardok::find($value->ichkitavardok_id)->update([
+                        'hajm'=>$foo2
+                    ]);
+                }
+                Itogodok::find(1)->update([
+                    'itogo'=>0,
+                ]);
+                $b2 = Itogodok::find(1);
+                Karzinadok::where('id',">",0)->delete();
+                return response()->json(['data'=>$b2]);
+            }else{
+                $variable = Karzinadok::all();
+                foreach ($variable as $value) {
+                    Karzina3dok::create([
+                        'tavar_id'=> $value->tavar_id,
+                        'ichkitavardok_id'=> $value->ichkitavardok_id,
+                        'name'=> $value->name, 
+                        'soni'=> $value->soni,  
+                        'hajm'=> $value->hajm, 
+                        'summa'=> $value->summa, 
+                        'summa2'=> $value->summa2, 
+                        'chegirma'=> $value->chegirma, 
+                        'itog'=> $value->itog,
+                    ]);
+                    $foo = Ichkitavardok::find($value->ichkitavardok_id);
+                    $foo2 = $foo->hajm - $value->soni;
+                    Ichkitavardok::find($value->ichkitavardok_id)->update([
+                        'hajm'=>$foo2
+                    ]);
+                }
+                Itogodok::find(1)->update([
+                    'itogo'=>0,
+                ]);
+                $b2 = Itogodok::find(1);
+                Karzinadok::where('id',">",0)->delete();
+                return response()->json(['data'=>$b2]);
+            }
+        }else{
+            if($request->id){
+                $variable = Karzinadok::all();
+                $arxiv = Arxivdok::create([
+                    'user_id'=>$request->id,
+                    'itogs'=>$request->itogs / $usd->kurs,
+                    'naqt'=>$request->naqt / $usd->kurs,
+                    'plastik'=>$request->plastik / $usd->kurs,
+                    'bank'=>$request->bank / $usd->kurs,
+                    'karzs'=>$request->karzs / $usd->kurs,
+                ]);
+                foreach ($variable as $value) {
+                    Karzina2dok::create([
+                        'userdok_id'=> $request->id,
+                        'ichkitavardok_id'=> $value->ichkitavardok_id,
+                        'clentra' => $arxiv->clentra,
+                        'name'=> $value->name, 
+                        'soni'=> $value->soni,  
+                        'hajm'=> $value->hajm, 
+                        'summa'=> $value->summa / $usd->kurs, 
+                        'summa2'=> $value->summa2 / $usd->kurs, 
+                        'chegirma'=> $value->chegirma, 
+                        'itog'=> $value->itog / $usd->kurs,
+                    ]);
+                    $foo = Ichkitavardok::find($value->ichkitavardok_id);
+                    $foo2 = $foo->hajm - $value->soni;
+                    Ichkitavardok::find($value->ichkitavardok_id)->update([
+                        'hajm'=>$foo2
+                    ]);
+                }
+                Itogodok::find(1)->update([
+                    'itogo'=>0,
+                ]);
+                $b2 = Itogodok::find(1);
+                Karzinadok::where('id',">",0)->delete();
+                return response()->json(['data'=>$b2]);
+            }else{
+                $variable = Karzinadok::all();
+                foreach ($variable as $value) {
+                    Karzina3dok::create([
+                        'ichkitavardok_id'=> $value->ichkitavardok_id,
+                        'name'=> $value->name,
+                        'soni'=> $value->soni,
+                        'hajm'=> $value->hajm,
+                        'summa'=> $value->summa / $usd->kurs,
+                        'summa2'=> $value->summa2 / $usd->kurs,
+                        'chegirma'=> $value->chegirma,
+                        'itog'=> $value->itog / $usd->kurs,
+                    ]);
+                    $foo = Ichkitavardok::find($value->ichkitavardok_id);
+                    $foo2 = $foo->hajm - $value->soni;
+                    Ichkitavardok::find($value->ichkitavardok_id)->update([
+                        'hajm'=>$foo2
+                    ]);
+                }
+                Itogodok::find(1)->update([
+                    'itogo'=>0,
+                ]);
+                $b2 = Itogodok::find(1);
+                Karzinadok::where('id',">",0)->delete();
+                return response()->json(['data'=>$b2]);
+            }
+        }
     }
 
     public function oplata($request)
@@ -943,6 +1666,133 @@ class KlentServis extends KlentServis2
         }
     }
 
+    public function zakazaytdok($request)
+    {
+        $usd = Itogodok::find(1);
+        if ($usd->usd == 1) {
+            if($request->id){
+                $variable = Karzinadok::all();
+                Arxivdok::create([
+                    'userdok_id'=>$request->id,
+                    'itogs'=>$request->itogs,
+                    'naqt'=>$request->naqt,
+                    'plastik'=>$request->plastik,
+                    'bank'=>$request->bank,
+                    'karzs'=>$request->karzs,
+                ]);
+                foreach ($variable as $value) {
+                    Karzina2dok::create([
+                        'userdok_id'=> $request->id,
+                        'ichkitavardok_id'=> $value->ichkitavardok_id,
+                        'name'=> $value->name, 
+                        'soni'=> $value->soni,  
+                        'hajm'=> $value->hajm, 
+                        'summa'=> $value->summa, 
+                        'summa2'=> $value->summa2, 
+                        'chegirma'=> $value->chegirma,
+                        'itog'=> $value->itog,
+                        'zakaz'=> $request->checks,
+                    ]);
+                }
+                Itogodok::find(1)->update([
+                    'itogo'=>0,
+                ]);
+                $b2 = Itogodok::find(1);
+                Karzinadok::where('id',">",0)->delete();
+                return response()->json(['data'=>$b2]);
+            }else{
+                $variable = Karzinadok::all();
+                $fooo = Zakazdok::create([
+                    'malumot'=>$request->malumot,
+                    'itogs'=>$request->itogs,
+                    'naqt'=>$request->naqt,
+                    'plastik'=>$request->plastik,
+                    'bank'=>$request->bank,
+                    'karzs'=>$request->karzs,
+                ]);
+                foreach ($variable as $value) {
+                    Zakaz2dok::create([
+                        'zakazdok_id'=> $fooo->id,
+                        'ichkitavardok_id'=> $value->ichkitavardok_id,
+                        'name'=> $value->name, 
+                        'soni'=> $value->soni,  
+                        'hajm'=> $value->hajm, 
+                        'summa'=> $value->summa, 
+                        'summa2'=> $value->summa2, 
+                        'chegirma'=> $value->chegirma, 
+                        'itog'=> $value->itog,
+                    ]);
+                }
+                Itogodok::find(1)->update([
+                    'itogo'=>0,
+                ]);
+                $b2 = Itogodok::find(1);
+                Karzinadok::where('id',">",0)->delete();
+                return response()->json(['data'=>$b2]);
+            }
+        }else{
+            if($request->id){
+                $variable = Karzinadok::all();          
+                $fooo = Arxivdok::create([
+                    'userdok_id'=>$request->id,
+                    'itogs'=>$request->itogs / $usd->kurs,
+                    'naqt'=>$request->naqt / $usd->kurs,
+                    'plastik'=>$request->plastik / $usd->kurs,
+                    'bank'=>$request->bank / $usd->kurs,
+                    'karzs'=>$request->karzs / $usd->kurs,
+                ]);
+                foreach ($variable as $value) {
+                    Karzina2dok::create([
+                        'userdok_id'=> $request->id,
+                        'ichkitavardok_id'=> $value->ichkitavardok_id,
+                        'name'=> $value->name,
+                        'soni'=> $value->soni,  
+                        'hajm'=> $value->hajm, 
+                        'summa'=> $value->summa / $usd->kurs, 
+                        'summa2'=> $value->summa2 / $usd->kurs, 
+                        'chegirma'=> $value->chegirma,
+                        'itog'=> $value->itog / $usd->kurs,
+                        'zakaz'=> $request->checks,
+                    ]);
+                }
+                Itogodok::find(1)->update([
+                    'itogo'=>0,
+                ]);
+                $b2 = Itogodok::find(1);
+                Karzinadok::where('id',">",0)->delete();
+                return response()->json(['data'=>$b2]);
+            }else{
+                $variable = Karzinadok::all();
+                $fooo = Zakazdok::create([
+                    'malumot'=>$request->malumot,
+                    'itogs'=>$request->itogs / $usd->kurs,
+                    'naqt'=>$request->naqt / $usd->kurs,
+                    'plastik'=>$request->plastik / $usd->kurs,
+                    'bank'=>$request->bank / $usd->kurs,
+                    'karzs'=>$request->karzs / $usd->kurs,
+                ]);
+                foreach ($variable as $value) {
+                    Zakaz2dok::create([
+                        'zakazdok_id'=> $fooo->id,
+                        'ichkitavardok_id'=> $value->ichkitavardok_id,
+                        'name'=> $value->name, 
+                        'soni'=> $value->soni,  
+                        'hajm'=> $value->hajm, 
+                        'summa'=> $value->summa / $usd->kurs, 
+                        'summa2'=> $value->summa2 / $usd->kurs, 
+                        'chegirma'=> $value->chegirma, 
+                        'itog'=> $value->itog / $usd->kurs,
+                    ]);
+                }
+                Itogodok::find(1)->update([
+                    'itogo'=>0,
+                ]);
+                $b2 = Itogodok::find(1);
+                Karzinadok::where('id',">",0)->delete();
+                return response()->json(['data'=>$b2]);
+            }
+        }        
+    }
     public function zakazayt($request)
     {
         $usd = Itogo::find(1);

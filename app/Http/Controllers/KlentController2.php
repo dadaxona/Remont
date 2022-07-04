@@ -11,21 +11,32 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Admin;
 use App\Models\Adress;
 use App\Models\Arxiv;
+use App\Models\Arxivdok;
 use App\Models\Clentitog;
+use App\Models\Clentitogdok;
 use App\Models\Data;
+use App\Models\Datadok;
 use App\Models\Drektor;
 use App\Models\Ichkitavar;
+use App\Models\Ichkitavardok;
 use App\Models\Itogo;
+use App\Models\Itogodok;
 use App\Models\Karzina;
 use App\Models\Karzina2;
+use App\Models\Karzina2dok;
 use App\Models\Karzina3;
+use App\Models\Karzina3dok;
+use App\Models\Karzinadok;
 use App\Models\Sqladpoytaxt;
 use App\Models\Tavar2;
 use App\Models\Tayyorsqlad;
 use App\Models\Umumiy;
 use App\Models\Updatetavr;
+use App\Models\Userdok;
 use App\Models\Zakaz;
 use App\Models\Zakaz2;
+use App\Models\Zakaz2dok;
+use App\Models\Zakazdok;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -74,6 +85,48 @@ class KlentController2 extends Controller
         }
     }
 
+    public function tavar_tipdok(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '')
+        {
+        $data = Ichkitavardok::where('name', 'like', '%'.$query.'%')->get();
+        }
+        else
+        {
+        $data = Ichkitavardok::all();
+        }
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr data-id="'.$row->id.'" id="datadok" style="cursor: pointer;" style="border-bottom: 1px solid;">
+                    <td>'.$row->name.'</td>
+                </tr>
+                ';
+            }
+        }
+        else
+        {
+        $output = '
+            <tr>
+                <td align="center" colspan="5">No Data Found</td>
+            </tr>
+            ';
+        }
+        $data = array(
+            'table_data'  => $output,
+        );
+
+        return response()->json($data);
+        }
+    }
+
     public function zzzz(Request $request)
     {
         if($request->ajax())
@@ -95,6 +148,43 @@ class KlentController2 extends Controller
             {
                 $output .= '
                 <tr data-id="'.$row->id.'" id="data2" style="cursor: pointer;" style="border-bottom: 1px solid;">
+                    <td>'.$row->malumot.'</td>
+                </tr>
+                ';
+            }
+        }
+        else
+        {
+        $output = '
+            <tr>
+                <td align="center" colspan="5">No Data Found</td>
+            </tr>
+            ';
+        }
+        return response()->json($output);
+        }
+    }
+    public function zzzzdok(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '')
+        {
+        $data = Zakazdok::where('malumot', 'like', '%'.$query.'%')->get();
+        }
+        else
+        {
+        $data = Zakazdok::all();
+        }
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr data-id="'.$row->id.'" id="data2dog" style="cursor: pointer;" style="border-bottom: 1px solid;">
                     <td>'.$row->malumot.'</td>
                 </tr>
                 ';
@@ -140,6 +230,79 @@ class KlentController2 extends Controller
         $output = '
             <tr>
                 <td align="center" colspan="6">No Data Found</td>
+            </tr>
+            ';
+        }
+        return response()->json($output);
+        }
+    }
+        
+    public function zzzzclidok(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output='';
+        $data = Zakaz2dok::where('zakazdok_id', $request->id)->get();
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr style="border-bottom: 1px solid;">
+                    <td>'.$row->zakazdok->malumot.'</td>
+                    <td>'.$row->name.'</td>
+                    <td>'.$row->summa2.'</td>
+                    <td>'.$row->soni.'</td>
+                    <td>'.$row->chegirma.'</td>
+                    <td>'.$row->itog.'</td>
+                </tr>
+                ';
+            }
+        }
+        else
+        {
+        $output = '
+            <tr>
+                <td align="center" colspan="6">No Data Found</td>
+            </tr>
+            ';
+        }
+        return response()->json($output);
+        }
+    }
+        
+    public function zzzzaaaadok(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '')
+        {
+        $data = Userdok::where('name', 'like', '%'.$query.'%')->get();
+        }
+        else
+        {
+        $data = Userdok::all();
+        }
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr data-id="'.$row->id.'" id="data22dok" style="cursor: pointer;" style="border-bottom: 1px solid;">
+                    <td>'.$row->name.'</td>
+                </tr>
+                ';
+            }
+        }
+        else
+        {
+        $output = '
+            <tr>
+                <td align="center" colspan="5">No Data Found</td>
             </tr>
             ';
         }
@@ -221,6 +384,42 @@ class KlentController2 extends Controller
         }
     }
 
+    public function zzzzclickdok(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output='';
+        $da = Userdok::find($request->id);
+        $data = Karzina2dok::where('userdok_id', $da->id)->where('zakaz', 1)->get();
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr style="border-bottom: 1px solid;">
+                    <td>'.$row->userdok->name.'</td>
+                    <td>'.$row->name.'</td>
+                    <td>'.$row->summa2.'</td>
+                    <td>'.$row->soni.'</td>
+                    <td>'.$row->chegirma.'</td>
+                    <td>'.$row->itog.'</td>
+                </tr>
+                ';
+            }
+        }
+        else
+        {
+        $output = '
+            <tr>
+                <td align="center" colspan="6">No Data Found</td>
+            </tr>
+            ';
+        }
+        return response()->json($output);
+        }
+    }
+
     public function submitckicked(Request $request)
     {
         if($request->doimiy == 1){
@@ -230,6 +429,15 @@ class KlentController2 extends Controller
         }
     }
 
+    public function submitckickeddok(Request $request)
+    {
+        if($request->doimiy == 1){
+            return $this->doimiyclentdok($request);
+        }else{
+            return $this->birlamchiclentdok($request);
+        }
+    }
+    
     public function doimiyclent($request)
     {
         $foo = Karzina2::where('user_id', $request->id)->where('zakaz', 1)->get();
@@ -256,6 +464,63 @@ class KlentController2 extends Controller
             }
         }
         Karzina2::where('user_id', $request->id)->where('zakaz', 1)->delete();
+        return response()->json(['msg'=>'Отказилди', 'data'=>$ito2]);
+    }
+
+    public function doimiyclentdok($request)
+    {
+        $foo = Karzina2dok::where('userdok_id', $request->id)->where('zakaz', 1)->get();
+        foreach ($foo as $value) {
+            Karzinadok::create([
+                'ichkitavardok_id' => $value->ichkitavardok_id,
+                'name' => $value->name,
+                'raqam' => $value->raqam,
+                'soni' => $value->soni,
+                'hajm' => $value->hajm,
+                'summa' => $value->summa,
+                'summa2' => $value->summa2,
+                'chegirma' =>$value->chegirma,
+                'itog' => $value->itog,
+            ]);
+            $ito = Itogodok::find(1);
+            if($ito){
+                $j = $ito->itogo + $value->itog;
+                Itogodok::find(1)->update([
+                    'itogo'=>$j,
+                ]);
+                $ito2 = Itogodok::find(1);
+            }
+        }
+        Karzina2dok::where('userdok_id', $request->id)->where('zakaz', 1)->delete();
+        return response()->json(['msg'=>'Отказилди', 'data'=>$ito2]);
+    }
+
+    public function birlamchiclentdok($request)
+    {
+        $foo = Zakaz2dok::where('zakazdok_id', $request->id)->get();
+        foreach ($foo as $value) {
+            Karzina::create([
+                'ichkitavardok_id' => $value->ichkitavardok_id,
+                'name' => $value->name,
+                'raqam' => $value->raqam,
+                'soni' => $value->soni,
+                'hajm' => $value->hajm,
+                'summa' => $value->summa,
+                'summa2' => $value->summa2,
+                'chegirma' =>$value->chegirma,
+                'itog' => $value->itog,
+            ]);
+            $ito = Itogodok::find(1);
+            if($ito){
+                $j = $ito->itogo + $value->itog;
+                Itogodok::find(1)->update([
+                    'itogo'=>$j,
+                ]);
+                $ito2 = Itogodok::find(1);
+            }
+        }
+        Zakaz2dok::where('zakazdok_id', $request->id)->delete();
+        Zakazdok::find($request->id)->delete($request->id);
         return response()->json(['msg'=>'Отказилди', 'data'=>$ito2]);
     }
 
@@ -287,6 +552,47 @@ class KlentController2 extends Controller
         Zakaz2::where('zakaz_id', $request->id)->delete();
         Zakaz::find($request->id)->delete($request->id);
         return response()->json(['msg'=>'Отказилди', 'data'=>$ito2]);
+    }
+
+    public function clent_tipdok(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '')
+        {
+        $data = Userdok::where('name', 'like', '%'.$query.'%')->get();
+        }
+        else
+        {
+        $data = Userdok::get();
+        }
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr data-id="'.$row->id.'" id="datadok" style="cursor: pointer;" style="border-bottom: 1px solid;">
+                    <td>'.$row->name.'</td>
+                </tr>
+                ';
+            }
+        }
+        else
+        {
+        $output = '
+            <tr>
+                <td align="center" colspan="5">No Data Found</td>
+            </tr>
+            ';
+        }
+        $data = array(
+            'table_data'  => $output,
+        );
+        return response()->json($data);
+        }
     }
 
     public function clent_tip(Request $request)
@@ -330,6 +636,53 @@ class KlentController2 extends Controller
         }
     }
 
+    public function savdobirlamchidok(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '')
+        {
+        $data = Karzina3dok::where('name', 'like', '%'.$query.'%')->get();
+        }
+        else
+        {
+        $data = Karzina3dok::all();
+        }
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr style="border-bottom: 1px solid;">
+                    <td>'.$row->name.'</td>
+                    <td>'.$row->raqam.'</td>
+                    <td>'.$row->soni.'</td>
+                    <td>'.$row->summa2.'</td>
+                    <td>'.$row->chegirma.'</td>
+                    <td>'.$row->itog.'</td>
+                    <td>'.$row->updated_at.'</td>
+                </tr>
+                ';
+            }
+        }
+        else
+        {
+        $output = '
+            <tr>
+                <td align="center" colspan="7">No Data Found</td>
+            </tr>
+            ';
+        }
+        $data = array(
+            'table_data'  => $output,
+        );
+        return response()->json($data);
+        }
+    }
+    
     public function savdobirlamchi(Request $request)
     {
         if($request->ajax())
@@ -488,6 +841,231 @@ class KlentController2 extends Controller
             ]);
         }
     }
+    
+    public function vseclentdok(Request $request)
+    {
+        if($request->ajax())
+        {
+            $output = '';
+            $output2 = '';
+            $data = Karzina2dok::all();     
+            $data222 = Arxivdok::all();     
+            $total_row = $data->count();
+            if($total_row > 0)
+            {
+                foreach($data as $row)
+                {
+                    $output .= '
+                    <tr style="border-bottom: 1px solid;">
+                        <td>'.$row->userdok->name.'</td>
+                        <td>'.$row->ichkitavardok->name.'</td>
+                        <td>'.$row->raqam.'</td>
+                        <td>'.$row->soni.'</td>
+                        <td>'.$row->summa2.'</td>
+                        <td>'.$row->chegirma.'</td>
+                        <td>'.$row->itog.'</td>
+                        <td>'.$row->updated_at.'</td>
+                    </tr>
+                    ';
+                }
+                foreach($data222 as $row)
+                {
+                    $output2 .= '
+                    <tr style="border-bottom: 1px solid;">
+                        <td>'.$row->userdok->name.'</td>
+                        <td>'.$row->itogs.'</td>
+                        <td>'.$row->naqt.'</td>
+                        <td>'.$row->plastik.'</td>
+                        <td>'.$row->bank.'</td>
+                        <td>'.$row->karzs.'</td>
+                        <td>'.$row->updated_at.'</td>
+                    </tr>
+                    ';
+                }
+            }
+            $foo = Clentitogdok::find(1);
+            if($foo){
+                $foo->tavarshtuk = 0;
+                $foo->shtuk = 0;
+                $foo->foiz = 0;
+                $foo->itog = 0;
+                $foo->opshi = 0;
+                $foo->save();
+                foreach ($data as $value) {
+                    $fool = Clentitogdok::find(1);
+                    $shtuk = $fool->shtuk + $value->soni;
+                    Clentitogdok::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk,
+                    ]);
+                }
+                foreach ($data222 as $value) {
+                    $fool2 = Clentitogdok::find(1);
+                    $a = $fool2->foiz + $value->karzs;
+                    Clentitogdok::find(1)->update([
+                        'foiz'=>$a,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool2 = Clentitogdok::find(1);
+                    $a = $fool2->opshi + $value->itog;
+                    Clentitogdok::find(1)->update([
+                        'opshi'=>$a,
+                    ]);
+                }
+            }else{
+                Clentitogdok::create([
+                    'tavarshtuk'=>0,
+                    'shtuk'=>0,
+                    'foiz'=>0,
+                    'itog'=>0,
+                    'opshi'=>0
+                ]);
+                foreach ($data as $value) {
+                    $foo = Clentitogdok::find(1);        
+                    $shtuk2 = $foo->shtuk + $value->soni;
+                    Clentitogdok::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk2,
+                    ]);
+                }
+                foreach ($data222 as $value) {
+                    $fool2 = Clentitogdok::find(1);
+                    $a = $fool2->foiz + $value->karzs;
+                    Clentitogdok::find(1)->update([
+                        'foiz'=>$a,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool3 = Clentitogdok::find(1);
+                    $a1 = $fool3->opshi + $value->itog;
+                    Clentitogdok::find(1)->update([
+                        'opshi'=>$a1,
+                    ]);
+                }
+            }
+            $foo2 = Clentitogdok::find(1);
+            return response()->json([
+                'output'=>$output,
+                'output2'=>$output2,
+                'clent'=>"Все Клент",
+                'foo2'=>$foo2??[],
+            ]);
+        }
+    }
+    
+    public function clents2dok(Request $request)
+    {
+        if($request->ajax())
+        {
+            $output = '';
+            $output2 = '';
+            $da = Userdok::find($request->id);   
+            $data = Karzina2dok::where('userdok_id', $da->id)->get();     
+            $data222 = Arxivdok::where('userdok_id', $da->id)->get();     
+            $total_row = $data->count();
+            if($total_row > 0)
+            {
+                foreach($data as $row)
+                {
+                    $output .= '
+                    <tr style="border-bottom: 1px solid;">
+                        <td>'.$row->userdok->name.'</td>
+                        <td>'.$row->ichkitavardok->name.'</td>
+                        <td>'.$row->raqam.'</td>
+                        <td>'.$row->soni.'</td>
+                        <td>'.$row->summa2.'</td>
+                        <td>'.$row->chegirma.'</td>
+                        <td>'.$row->itog.'</td>
+                        <td>'.$row->updated_at.'</td>
+                    </tr>
+                    ';
+                }
+                foreach($data222 as $row)
+                {
+                    $output2 .= '
+                    <tr style="border-bottom: 1px solid;">
+                        <td>'.$row->userdok->name.'</td>
+                        <td>'.$row->itogs.'</td>
+                        <td>'.$row->naqt.'</td>
+                        <td>'.$row->plastik.'</td>
+                        <td>'.$row->bank.'</td>
+                        <td>'.$row->karzs.'</td>
+                        <td>'.$row->updated_at.'</td>
+                    </tr>
+                    ';
+                }
+            }
+            $foo = Clentitogdok::find(1);
+            if($foo){
+                $foo->tavarshtuk = 0;
+                $foo->shtuk = 0;
+                $foo->foiz = 0;
+                $foo->itog = 0;
+                $foo->opshi = 0;
+                $foo->save();
+                foreach ($data as $value) {            
+                    $fool = Clentitogdok::find(1);
+                    $shtuk = $fool->shtuk + $value->soni;
+                    Clentitogdok::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk,
+                    ]);
+                }
+                foreach ($data222 as $value) {
+                    $fool2 = Clentitogdok::find(1);
+                    $a = $fool2->foiz + $value->karzs;
+                    Clentitogdok::find(1)->update([
+                        'foiz'=>$a,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool2 = Clentitogdok::find(1);
+                    $a = $fool2->opshi + $value->itog;
+                    Clentitogdok::find(1)->update([
+                        'opshi'=>$a,
+                    ]);
+                }
+            }else{
+                Clentitogdok::create([
+                    'tavarshtuk'=>0,
+                    'shtuk'=>0,
+                    'foiz'=>0,
+                    'itog'=>0,
+                    'opshi'=>0
+                ]);
+                foreach ($data as $value) {
+                    $foo = Clentitogdok::find(1);        
+                    $shtuk2 = $foo->shtuk + $value->soni;
+                    Clentitogdok::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk2,
+                    ]);
+                }
+                foreach ($data222 as $value) {
+                    $fool2 = Clentitogdok::find(1);
+                    $a = $fool2->foiz + $value->karzs;
+                    Clentitogdok::find(1)->update([
+                        'foiz'=>$a,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool3 = Clentitogdok::find(1);
+                    $a1 = $fool3->opshi + $value->itog;
+                    Clentitogdok::find(1)->update([
+                        'opshi'=>$a1,
+                    ]);
+                }
+            }
+            $foo2 = Clentitogdok::find(1);
+            return response()->json([
+                'output'=>$output,
+                'output2'=>$output2,
+                'clent'=>$da,
+                'foo2'=>$foo2??[],
+            ]);
+        }
+    }
 
     public function clents2(Request $request)
     {
@@ -618,6 +1196,23 @@ class KlentController2 extends Controller
             // return $this->clents2($request);
         }
     }
+    public function clents3dok(Request $request)
+    {
+        if($request->tavar_id){
+            return $this->clents4dok($request);
+        }elseif($request->tavar_id && $request->date){
+            return $this->clents5dok($request);
+        }elseif($request->tavar_id && $request->date && $request->date2){
+            return $this->clents5dok($request);
+        }elseif($request->date){
+            return $this->clents6dok($request);
+        }elseif($request->date && $request->date2){
+            return $this->clents6dok($request);
+        }else{
+            // return $this->clents2($request);
+        }
+    }
+    
     public function brlamclient(Request $request)
     {
         if($request->tavar_id){
@@ -632,6 +1227,137 @@ class KlentController2 extends Controller
             return $this->clents06($request);
         }else{
             // return $this->savdobirlamchi($request);
+        }
+    }
+    public function brlamclientdok(Request $request)
+    {
+        if($request->tavar_id){
+            return $this->clents04dok($request);
+        }elseif($request->tavar_id && $request->date){
+            return $this->clents05dok($request);
+        }elseif($request->tavar_id && $request->date && $request->date2){
+            return $this->clents05dok($request);
+        }elseif($request->date){
+            return $this->clents06dok($request);
+        }elseif($request->date && $request->date2){
+            return $this->clents06dok($request);
+        }else{
+            // return $this->savdobirlamchi($request);
+        }
+    }
+    
+    public function clents4dok($request)
+    {
+        if($request->ajax())
+        {
+            $output = '';
+            $output2 = '';
+            $da = Userdok::find($request->id);   
+            $data = Karzina2dok::where('userdok_id', $da->id)
+                            ->where('ichkitavardok_id', $request->tavar_id)
+                            ->get();
+            $data222 = Arxivdok::where('userdok_id', $da->id)->get();
+            $total_row = $data->count();
+            if($total_row > 0)
+            {
+                foreach($data as $row)
+                {
+                    $output .= '
+                    <tr style="border-bottom: 1px solid;">
+                        <td>'.$row->userdok->name.'</td>
+                        <td>'.$row->ichkitavardok->name.'</td>
+                        <td>'.$row->raqam.'</td>
+                        <td>'.$row->soni.'</td>
+                        <td>'.$row->summa2.'</td>
+                        <td>'.$row->chegirma.'</td>
+                        <td>'.$row->itog.'</td>
+                        <td>'.$row->updated_at.'</td>
+                    </tr>
+                    ';
+                }
+                foreach($data222 as $row)
+                {
+                    $output2 .= '
+                    <tr style="border-bottom: 1px solid;">
+                        <td>'.$row->userdok->name.'</td>
+                        <td>'.$row->itogs.'</td>
+                        <td>'.$row->naqt.'</td>
+                        <td>'.$row->plastik.'</td>
+                        <td>'.$row->bank.'</td>
+                        <td>'.$row->karzs.'</td>
+                        <td>'.$row->updated_at.'</td>
+                    </tr>
+                    ';
+                }
+            }
+            $foo = Clentitogdok::find(1);
+            if($foo){
+                $foo->tavarshtuk = 0;
+                $foo->shtuk = 0;
+                $foo->foiz = 0;
+                $foo->itog = 0;
+                $foo->opshi = 0;
+                $foo->save();
+                foreach ($data as $value) {            
+                    $fool = Clentitogdok::find(1);
+                    $shtuk = $fool->shtuk + $value->soni;
+                    Clentitogdok::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk,
+                    ]);
+                }
+                foreach ($data222 as $value) {
+                    $fool2 = Clentitogdok::find(1);
+                    $a = $fool2->foiz + $value->karzs;
+                    Clentitogdok::find(1)->update([
+                        'foiz'=>$a,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool2 = Clentitogdok::find(1);
+                    $a = $fool2->opshi + $value->itog;
+                    Clentitogdok::find(1)->update([
+                        'opshi'=>$a,
+                    ]);
+                }
+            }else{
+                Clentitogdok::create([
+                    'tavarshtuk'=>0,
+                    'shtuk'=>0,
+                    'foiz'=>0,
+                    'itog'=>0,
+                    'opshi'=>0
+                ]);
+                foreach ($data as $value) {
+                    $foo = Clentitogdok::find(1);        
+                    $shtuk2 = $foo->shtuk + $value->soni;
+                    Clentitogdok::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk2,
+                    ]);
+                }
+                foreach ($data222 as $value) {
+                    $fool2 = Clentitogdok::find(1);
+                    $a = $fool2->foiz + $value->karzs;
+                    Clentitogdok::find(1)->update([
+                        'foiz'=>$a,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool3 = Clentitogdok::find(1);
+                    $a1 = $fool3->opshi + $value->itog;
+                    Clentitogdok::find(1)->update([
+                        'opshi'=>$a1,
+                    ]);
+                }
+            }
+            $foo2 = Clentitogdok::find(1);
+            return response()->json([
+                'output'=>$output,
+                'output2'=>$output2,
+                'clent'=>$da,
+                'foo2'=>$foo2??[],
+            ]);
         }
     }
 
@@ -749,7 +1475,7 @@ class KlentController2 extends Controller
             ]);
         }
     }
-
+    
     public function clents5($request)
     {
         if($request->ajax())
@@ -865,6 +1591,349 @@ class KlentController2 extends Controller
             ]);
         }
     }
+    public function clents5dok($request)
+    {
+        if($request->ajax())
+        {
+            $output = '';
+            $output2 = '';
+            $da = Userdok::find($request->id);   
+            $data = Karzina2dok::where('userdok_id', $da->id)
+                            ->where('ichkitavardok_id', $request->tavar_id)
+                            ->whereBetween('updated_at', [$request->date, $request->date2])
+                            ->get(); 
+            $data222 = Arxivdok::where('userdok_id', $da->id)->whereBetween('updated_at', [$request->date, $request->date2])->get();
+            $total_row = $data->count();
+            if($total_row > 0)
+            {
+                foreach($data as $row)
+                {
+                    $output .= '
+                    <tr style="border-bottom: 1px solid;">
+                        <td>'.$row->userdok->name.'</td>
+                        <td>'.$row->ichkitavardok->name.'</td>
+                        <td>'.$row->raqam.'</td>
+                        <td>'.$row->soni.'</td>
+                        <td>'.$row->summa2.'</td>
+                        <td>'.$row->chegirma.'</td>
+                        <td>'.$row->itog.'</td>
+                        <td>'.$row->updated_at.'</td>
+                    </tr>
+                    ';
+                }
+                foreach($data222 as $row)
+                {
+                    $output2 .= '
+                    <tr style="border-bottom: 1px solid;">
+                        <td>'.$row->userdok->name.'</td>
+                        <td>'.$row->itogs.'</td>
+                        <td>'.$row->naqt.'</td>
+                        <td>'.$row->plastik.'</td>
+                        <td>'.$row->bank.'</td>
+                        <td>'.$row->karzs.'</td>
+                        <td>'.$row->updated_at.'</td>
+                    </tr>
+                    ';
+                }
+            }
+            $foo = Clentitogdok::find(1);
+            if($foo){
+                $foo->tavarshtuk = 0;
+                $foo->shtuk = 0;
+                $foo->foiz = 0;
+                $foo->itog = 0;
+                $foo->opshi = 0;
+                $foo->save();
+                foreach ($data as $value) {            
+                    $fool = Clentitogdok::find(1);
+                    $shtuk = $fool->shtuk + $value->soni;
+                    Clentitogdok::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk,
+                    ]);
+                }
+                foreach ($data222 as $value) {
+                    $fool2 = Clentitogdok::find(1);
+                    $a = $fool2->foiz + $value->karzs;
+                    Clentitogdok::find(1)->update([
+                        'foiz'=>$a,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool2 = Clentitogdok::find(1);
+                    $a = $fool2->opshi + $value->itog;
+                    Clentitogdok::find(1)->update([
+                        'opshi'=>$a,
+                    ]);
+                }
+            }else{
+                Clentitogdok::create([
+                    'tavarshtuk'=>0,
+                    'shtuk'=>0,
+                    'foiz'=>0,
+                    'itog'=>0,
+                    'opshi'=>0
+                ]);
+                foreach ($data as $value) {
+                    $foo = Clentitogdok::find(1);        
+                    $shtuk2 = $foo->shtuk + $value->soni;
+                    Clentitogdok::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk2,
+                    ]);
+                }
+                foreach ($data222 as $value) {
+                    $fool2 = Clentitogdok::find(1);
+                    $a = $fool2->foiz + $value->karzs;
+                    Clentitogdok::find(1)->update([
+                        'foiz'=>$a,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool3 = Clentitogdok::find(1);
+                    $a1 = $fool3->opshi + $value->itog;
+                    Clentitogdok::find(1)->update([
+                        'opshi'=>$a1,
+                    ]);
+                }
+            }
+            $foo2 = Clentitogdok::find(1);
+            return response()->json([
+                'output'=>$output,
+                'output2'=>$output2,
+                'clent'=>$da,
+                'foo2'=>$foo2??[],
+            ]);
+        }
+    }
+
+    public function clents6dok($request)
+    {
+        if($request->id){
+            if($request->ajax())
+            {
+                $output = '';
+                $output2 = '';
+                $da = Userdok::find($request->id);   
+                $data = Karzina2dok::where('userdok_id', $da->id)
+                                ->whereBetween('updated_at', [$request->date, $request->date2])
+                                ->get();
+                $data222 = Arxivdok::where('userdok_id', $da->id)->whereBetween('updated_at', [$request->date, $request->date2])->get();
+                $total_row = $data->count();
+                if($total_row > 0)
+                {
+                    foreach($data as $row)
+                    {
+                        $output .= '
+                        <tr style="border-bottom: 1px solid;">
+                            <td>'.$row->userdok->name.'</td>
+                            <td>'.$row->ichkitavardok->name.'</td>
+                            <td>'.$row->raqam.'</td>
+                            <td>'.$row->soni.'</td>
+                            <td>'.$row->summa2.'</td>
+                            <td>'.$row->chegirma.'</td>
+                            <td>'.$row->itog.'</td>
+                            <td>'.$row->updated_at.'</td>
+                        </tr>
+                        ';
+                    }
+                    foreach($data222 as $row)
+                    {
+                        $output2 .= '
+                        <tr style="border-bottom: 1px solid;">
+                            <td>'.$row->userdok->name.'</td>
+                            <td>'.$row->itogs.'</td>
+                            <td>'.$row->naqt.'</td>
+                            <td>'.$row->plastik.'</td>
+                            <td>'.$row->bank.'</td>
+                            <td>'.$row->karzs.'</td>
+                            <td>'.$row->updated_at.'</td>
+                        </tr>
+                        ';
+                    }
+                }
+                $foo = Clentitogdok::find(1);
+                if($foo){
+                    $foo->tavarshtuk = 0;
+                    $foo->shtuk = 0;
+                    $foo->foiz = 0;
+                    $foo->itog = 0;
+                    $foo->opshi = 0;
+                    $foo->save();
+                    foreach ($data as $value) {            
+                        $fool = Clentitogdok::find(1);
+                        $shtuk = $fool->shtuk + $value->soni;
+                        Clentitogdok::find(1)->update([
+                            'tavarshtuk'=>$total_row,
+                            'shtuk'=>$shtuk,
+                        ]);
+                    }
+                    foreach ($data222 as $value) {
+                        $fool2 = Clentitogdok::find(1);
+                        $a = $fool2->foiz + $value->karzs;
+                        Clentitogdok::find(1)->update([
+                            'foiz'=>$a,
+                        ]);
+                    }
+                    foreach ($data as $value) {
+                        $fool2 = Clentitogdok::find(1);
+                        $a = $fool2->opshi + $value->itog;
+                        Clentitogdok::find(1)->update([
+                            'opshi'=>$a,
+                        ]);
+                    }
+                }else{
+                    Clentitogdok::create([
+                        'tavarshtuk'=>0,
+                        'shtuk'=>0,
+                        'foiz'=>0,
+                        'itog'=>0,
+                        'opshi'=>0
+                    ]);
+                    foreach ($data as $value) {
+                        $foo = Clentitogdok::find(1);        
+                        $shtuk2 = $foo->shtuk + $value->soni;
+                        Clentitogdok::find(1)->update([
+                            'tavarshtuk'=>$total_row,
+                            'shtuk'=>$shtuk2,
+                        ]);
+                    }
+                    foreach ($data222 as $value) {
+                        $fool2 = Clentitogdok::find(1);
+                        $a = $fool2->foiz + $value->karzs;
+                        Clentitogdok::find(1)->update([
+                            'foiz'=>$a,
+                        ]);
+                    }
+                    foreach ($data as $value) {
+                        $fool3 = Clentitogdok::find(1);
+                        $a1 = $fool3->opshi + $value->itog;
+                        Clentitogdok::find(1)->update([
+                            'opshi'=>$a1,
+                        ]);
+                    }
+                }
+                $foo2 = Clentitogdok::find(1);
+                return response()->json([
+                    'output'=>$output,
+                    'output2'=>$output2,
+                    'clent'=>$da,
+                    'foo2'=>$foo2??[],
+                ]);
+            }
+        }else{
+            if($request->ajax())
+            {
+                $output = '';
+                $output2 = '';
+                $da = Userdok::find($request->id);   
+                $data = Karzina2dok::whereBetween('updated_at', [$request->date, $request->date2])->get();
+                $data222 = Arxivdok::whereBetween('updated_at', [$request->date, $request->date2])->get();
+                $total_row = $data->count();
+                if($total_row > 0)
+                {
+                    foreach($data as $row)
+                    {
+                        $output .= '
+                        <tr style="border-bottom: 1px solid;">
+                            <td>'.$row->userdok->name.'</td>
+                            <td>'.$row->ichkitavardok->name.'</td>
+                            <td>'.$row->raqam.'</td>
+                            <td>'.$row->soni.'</td>
+                            <td>'.$row->summa2.'</td>
+                            <td>'.$row->chegirma.'</td>
+                            <td>'.$row->itog.'</td>
+                            <td>'.$row->updated_at.'</td>
+                        </tr>
+                        ';
+                    }
+                    foreach($data222 as $row)
+                    {
+                        $output2 .= '
+                        <tr style="border-bottom: 1px solid;">
+                            <td>'.$row->userdok->name.'</td>
+                            <td>'.$row->itogs.'</td>
+                            <td>'.$row->naqt.'</td>
+                            <td>'.$row->plastik.'</td>
+                            <td>'.$row->bank.'</td>
+                            <td>'.$row->karzs.'</td>
+                            <td>'.$row->updated_at.'</td>
+                        </tr>
+                        ';
+                    }
+                }
+                $foo = Clentitogdok::find(1);
+                if($foo){
+                    $foo->tavarshtuk = 0;
+                    $foo->shtuk = 0;
+                    $foo->foiz = 0;
+                    $foo->itog = 0;
+                    $foo->opshi = 0;
+                    $foo->save();
+                    foreach ($data as $value) {            
+                        $fool = Clentitogdok::find(1);
+                        $shtuk = $fool->shtuk + $value->soni;
+                        Clentitogdok::find(1)->update([
+                            'tavarshtuk'=>$total_row,
+                            'shtuk'=>$shtuk,
+                        ]);
+                    }
+                    foreach ($data222 as $value) {
+                        $fool2 = Clentitogdok::find(1);
+                        $a = $fool2->foiz + $value->karzs;
+                        Clentitogdok::find(1)->update([
+                            'foiz'=>$a,
+                        ]);
+                    }
+                    foreach ($data as $value) {
+                        $fool2 = Clentitogdok::find(1);
+                        $a = $fool2->opshi + $value->itog;
+                        Clentitogdok::find(1)->update([
+                            'opshi'=>$a,
+                        ]);
+                    }
+                }else{
+                    Clentitogdok::create([
+                        'tavarshtuk'=>0,
+                        'shtuk'=>0,
+                        'foiz'=>0,
+                        'itog'=>0,
+                        'opshi'=>0
+                    ]);
+                    foreach ($data as $value) {
+                        $foo = Clentitogdok::find(1);        
+                        $shtuk2 = $foo->shtuk + $value->soni;
+                        Clentitogdok::find(1)->update([
+                            'tavarshtuk'=>$total_row,
+                            'shtuk'=>$shtuk2,
+                        ]);
+                    }
+                    foreach ($data222 as $value) {
+                        $fool2 = Clentitogdok::find(1);
+                        $a = $fool2->foiz + $value->karzs;
+                        Clentitogdok::find(1)->update([
+                            'foiz'=>$a,
+                        ]);
+                    }
+                    foreach ($data as $value) {
+                        $fool3 = Clentitogdok::find(1);
+                        $a1 = $fool3->opshi + $value->itog;
+                        Clentitogdok::find(1)->update([
+                            'opshi'=>$a1,
+                        ]);
+                    }
+                }
+                $foo2 = Clentitogdok::find(1);
+                return response()->json([
+                    'output'=>$output,
+                    'output2'=>$output2,
+                    'clent'=>"Все клент",
+                    'foo2'=>$foo2??[],
+                ]);
+            }
+        }
+    }
+
     public function clents6($request)
     {
         if($request->id){
@@ -1091,6 +2160,88 @@ class KlentController2 extends Controller
             }
         }
     }
+
+    public function clents04dok($request)
+    {
+        if($request->ajax())
+        {
+            $output = '';
+            $output2 = '';  
+            $data = Karzina3dok::where('ichkitavardok_id', $request->tavar_id)->get();
+            $total_row = $data->count();
+            if($total_row > 0)
+            {
+                foreach($data as $row)
+                {
+                    $output .= '
+                    <tr style="border-bottom: 1px solid;">
+                        <td>'.$row->name.'</td>
+                        <td>'.$row->raqam.'</td>
+                        <td>'.$row->soni.'</td>
+                        <td>'.$row->summa2.'</td>
+                        <td>'.$row->chegirma.'</td>
+                        <td>'.$row->itog.'</td>
+                        <td>'.$row->updated_at.'</td>
+                    </tr>
+                    ';
+                }
+            }
+            $foo = Clentitogdok::find(1);
+            if($foo){
+                $foo->tavarshtuk = 0;
+                $foo->shtuk = 0;
+                $foo->foiz = 0;
+                $foo->itog = 0;
+                $foo->opshi = 0;
+                $foo->save();
+                foreach ($data as $value) {            
+                    $fool = Clentitogdok::find(1);
+                    $shtuk = $fool->shtuk + $value->soni;
+                    Clentitogdok::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool2 = Clentitogdok::find(1);
+                    $a = $fool2->opshi + $value->itog;
+                    Clentitogdok::find(1)->update([
+                        'opshi'=>$a,
+                    ]);
+                }
+            }else{
+                Clentitogdok::create([
+                    'tavarshtuk'=>0,
+                    'shtuk'=>0,
+                    'foiz'=>0,
+                    'itog'=>0,
+                    'opshi'=>0
+                ]);
+                foreach ($data as $value) {
+                    $foo = Clentitogdok::find(1);        
+                    $shtuk2 = $foo->shtuk + $value->soni;
+                    Clentitogdok::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk2,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool3 = Clentitogdok::find(1);
+                    $a1 = $fool3->opshi + $value->itog;
+                    Clentitogdok::find(1)->update([
+                        'opshi'=>$a1,
+                    ]);
+                }
+            }
+            $foo2 = Clentitogdok::find(1);
+            return response()->json([
+                'output'=>$output,
+                'output2'=>$output2,
+                'foo2'=>$foo2??[],
+            ]);
+        }
+    }
+
     public function clents04($request)
     {
         if($request->ajax())
@@ -1171,6 +2322,7 @@ class KlentController2 extends Controller
             ]);
         }
     }
+
     public function clents05($request)
     {
         if($request->ajax())
@@ -1251,6 +2403,87 @@ class KlentController2 extends Controller
             ]);
         }
     }
+    public function clents05dok($request)
+    {
+        if($request->ajax())
+        {
+            $output = '';
+            $output2 = '';
+            $data = Karzina3dok::where('ichkitavardok_id', $request->tavar_id)->whereBetween('updated_at', [$request->date, $request->date2])->get(); 
+            $total_row = $data->count();
+            if($total_row > 0)
+            {
+                foreach($data as $row)
+                {
+                    $output .= '
+                    <tr style="border-bottom: 1px solid;">
+                        <td>'.$row->name.'</td>
+                        <td>'.$row->raqam.'</td>
+                        <td>'.$row->soni.'</td>
+                        <td>'.$row->summa2.'</td>
+                        <td>'.$row->chegirma.'</td>
+                        <td>'.$row->itog.'</td>
+                        <td>'.$row->updated_at.'</td>
+                    </tr>
+                    ';
+                }
+            }
+            $foo = Clentitogdok::find(1);
+            if($foo){
+                $foo->tavarshtuk = 0;
+                $foo->shtuk = 0;
+                $foo->foiz = 0;
+                $foo->itog = 0;
+                $foo->opshi = 0;
+                $foo->save();
+                foreach ($data as $value) {            
+                    $fool = Clentitogdok::find(1);
+                    $shtuk = $fool->shtuk + $value->soni;
+                    Clentitogdok::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool2 = Clentitogdok::find(1);
+                    $a = $fool2->opshi + $value->itog;
+                    Clentitogdok::find(1)->update([
+                        'opshi'=>$a,
+                    ]);
+                }
+            }else{
+                Clentitogdok::create([
+                    'tavarshtuk'=>0,
+                    'shtuk'=>0,
+                    'foiz'=>0,
+                    'itog'=>0,
+                    'opshi'=>0
+                ]);
+                foreach ($data as $value) {
+                    $foo = Clentitogdok::find(1);        
+                    $shtuk2 = $foo->shtuk + $value->soni;
+                    Clentitogdok::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk2,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool3 = Clentitogdok::find(1);
+                    $a1 = $fool3->opshi + $value->itog;
+                    Clentitogdok::find(1)->update([
+                        'opshi'=>$a1,
+                    ]);
+                }
+            }
+            $foo2 = Clentitogdok::find(1);
+            return response()->json([
+                'output'=>$output,
+                'output2'=>$output2,
+                'foo2'=>$foo2??[],
+            ]);
+        }
+    }
+
     public function clents06($request)
     {
         if($request->ajax())
@@ -1332,6 +2565,87 @@ class KlentController2 extends Controller
         }
     }
 
+    public function clents06dok($request)
+    {
+        if($request->ajax())
+        {
+            $output = '';
+            $output2 = '';
+            $data = Karzina3dok::whereBetween('updated_at', [$request->date, $request->date2])->get();
+            $total_row = $data->count();
+            if($total_row > 0)
+            {
+                foreach($data as $row)
+                {
+                    $output .= '
+                    <tr style="border-bottom: 1px solid;">
+                        <td>'.$row->name.'</td>
+                        <td>'.$row->raqam.'</td>
+                        <td>'.$row->soni.'</td>
+                        <td>'.$row->summa2.'</td>
+                        <td>'.$row->chegirma.'</td>
+                        <td>'.$row->itog.'</td>
+                        <td>'.$row->updated_at.'</td>
+                    </tr>
+                    ';
+                }
+            }
+            $foo = Clentitogdok::find(1);
+            if($foo){
+                $foo->tavarshtuk = 0;
+                $foo->shtuk = 0;
+                $foo->foiz = 0;
+                $foo->itog = 0;
+                $foo->opshi = 0;
+                $foo->save();
+                foreach ($data as $value) {            
+                    $fool = Clentitogdok::find(1);
+                    $shtuk = $fool->shtuk + $value->soni;
+                    Clentitogdok::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool2 = Clentitogdok::find(1);
+                    $a = $fool2->opshi + $value->itog;
+                    Clentitogdok::find(1)->update([
+                        'opshi'=>$a,
+                    ]);
+                }
+            }else{
+                Clentitogdok::create([
+                    'tavarshtuk'=>0,
+                    'shtuk'=>0,
+                    'foiz'=>0,
+                    'itog'=>0,
+                    'opshi'=>0
+                ]);
+                foreach ($data as $value) {
+                    $foo = Clentitogdok::find(1);        
+                    $shtuk2 = $foo->shtuk + $value->soni;
+                    Clentitogdok::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk2,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool3 = Clentitogdok::find(1);
+                    $a1 = $fool3->opshi + $value->itog;
+                    Clentitogdok::find(1)->update([
+                        'opshi'=>$a1,
+                    ]);
+                }
+            }
+            $foo2 = Clentitogdok::find(1);
+            return response()->json([
+                'output'=>$output,
+                'output2'=>$output2,
+                'foo2'=>$foo2??[],
+            ]);
+        }
+    }
+    
     public function tavarvse(Request $request)
     {
         if($request->ajax())
@@ -1404,6 +2718,168 @@ class KlentController2 extends Controller
                 }
             }
             $foo2 = Data::find(1);
+        }
+        return response()->json([
+            'output'=>$output, 
+            'total_row'=>$total_row,
+            'data'=>$data,
+            'foo2'=>$foo2??[],
+        ]);
+        }
+    }
+
+    public function tavarvsedok(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output = '';
+        $data = Ichkitavardok::all();
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr style="border-bottom: 1px solid;">                
+                    <td>'.$row->name.'</td>
+                    <td>'.$row->hajm.'</td>
+                    <td>'.$row->summa.'</td>
+                    <td>'.$row->summa2.'</td>
+                    <td>'.$row->summa3.'</td>
+                    <td>'.$row->updated_at.'</td>
+                </tr>
+                ';
+            }
+            $foo = Datadok::find(1);
+            if($foo){
+                $foo->tavarshtuk = 0;
+                $foo->shtuk = 0;
+                $foo->foiz = 0;
+                $foo->dateitog = 0;
+                $foo->opshi = 0;
+                $foo->save();
+                foreach ($data as $value) {            
+                    $fool = Datadok::find(1);
+                    $shtuk = $fool->shtuk + $value->hajm;
+                    $dateitog = $fool->dateitog + $value->summa;
+                    Datadok::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk,
+                        'dateitog'=>$dateitog,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool2 = Datadok::find(1);
+                    $a = $fool2->opshi + $value->summa;
+                    Datadok::find(1)->update([
+                        'opshi'=>$a,
+                    ]);
+                }
+            }else{
+                Datadok::create([
+                    'dateitog'=>0
+                ]);
+                foreach ($data as $value) {
+                    $foo = Datadok::find(1);        
+                    $shtuk2 = $foo->shtuk + $value->hajm;
+                    $dateitog2 = $foo->dateitog + $value->summa;
+                    Datadok::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk2,
+                        'dateitog'=>$dateitog2,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool3 = Datadok::find(1);
+                    $a1 = $fool3->opshi + $value->summa;
+                    Datadok::find(1)->update([
+                        'opshi'=>$a1,
+                    ]);
+                }
+            }
+            $foo2 = Datadok::find(1);
+        }
+        return response()->json([
+            'output'=>$output, 
+            'total_row'=>$total_row,
+            'data'=>$data,
+            'foo2'=>$foo2??[],
+        ]);
+        }
+    }
+
+    public function tavardok(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output = '';
+        $query = $request->get('id');
+        $data = Ichkitavardok::where('id', $query)->get();
+        $get = Ichkitavardok::all();
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr style="border-bottom: 1px solid;">
+                    <td>'.$row->name.'</td>
+                    <td>'.$row->hajm.'</td>
+                    <td>'.$row->summa.'</td>
+                    <td>'.$row->summa2.'</td>
+                    <td>'.$row->summa3.'</td>
+                    <td>'.$row->updated_at.'</td>
+                </tr>
+                ';
+            }
+            $foo = Datadok::find(1);
+            if($foo){
+                $foo->tavarshtuk = 0;
+                $foo->shtuk = 0;
+                $foo->foiz = 0;
+                $foo->dateitog = 0;
+                $foo->opshi = 0;
+                $foo->save();
+                foreach ($data as $value) {            
+                    $fool = Datadok::find(1);        
+                    $shtuk = $fool->shtuk + $value->hajm;
+                    $dateitog = $fool->dateitog + $value->summa;
+                    Datadok::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk,
+                        'dateitog'=>$dateitog,
+                    ]);
+                }
+                foreach ($get as $value) {
+                    $fool2 = Datadok::find(1);
+                    $a = $fool2->opshi + $value->summa;
+                    Datadok::find(1)->update([
+                        'opshi'=>$a,
+                    ]);
+                }
+            }else{
+                Datadok::create([
+                    'dateitog'=>0
+                ]);
+                foreach ($data as $value) {
+                    $foo = Datadok::find(1);        
+                    $shtuk2 = $foo->shtuk + $value->hajm;
+                    $dateitog2 = $foo->dateitog + $value->summa;
+                    Datadok::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk2,
+                        'dateitog'=>$dateitog2,
+                    ]);
+                }
+                foreach ($get as $value) {
+                    $fool3 = Datadok::find(1);
+                    $a1 = $fool3->opshi + $value->summa;
+                    Datadok::find(1)->update([
+                        'opshi'=>$a1,
+                    ]);
+                }
+            }
+            $foo2 = Datadok::find(1);
         }
         return response()->json([
             'output'=>$output, 
@@ -1488,6 +2964,86 @@ class KlentController2 extends Controller
                 }
             }
             $foo2 = Data::find(1);
+        }
+        return response()->json([
+            'output'=>$output, 
+            'total_row'=>$total_row,
+            'data'=>$data,
+            'foo2'=>$foo2??[],
+        ]);
+        }
+    }
+    
+    public function searchdok(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output = '';
+        $data = Ichkitavardok::whereBetween('updated_at', [$request->date, $request->date2])->get();
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr style="border-bottom: 1px solid;">               
+                    <td>'.$row->name.'</td>
+                    <td>'.$row->hajm.'</td>
+                    <td>'.$row->summa.'</td>
+                    <td>'.$row->summa2.'</td>
+                    <td>'.$row->summa3.'</td>
+                    <td>'.$row->updated_at.'</td>
+                </tr>
+                ';
+            }
+            $foo = Datadok::find(1);
+            if($foo){
+                $foo->tavarshtuk = 0;
+                $foo->shtuk = 0;
+                $foo->foiz = 0;
+                $foo->dateitog = 0;
+                $foo->opshi = 0;
+                $foo->save();
+                foreach ($data as $value) {            
+                    $fool = Datadok::find(1);        
+                    $shtuk = $fool->shtuk + $value->hajm;
+                    $dateitog = $fool->dateitog + $value->summa;
+                    Datadok::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk,
+                        'dateitog'=>$dateitog,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool2 = Datadok::find(1);
+                    $a = $fool2->opshi + $value->summa;
+                    Datadok::find(1)->update([
+                        'opshi'=>$a,
+                    ]);
+                }
+            }else{
+                Data::create([
+                    'dateitog'=>0
+                ]);
+                foreach ($data as $value) {
+                    $foo = Datadok::find(1);        
+                    $shtuk2 = $foo->shtuk + $value->hajm;
+                    $dateitog2 = $foo->dateitog + $value->summa;
+                    Datadok::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk2,
+                        'dateitog'=>$dateitog2,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool3 = Datadok::find(1);
+                    $a1 = $fool3->opshi + $value->summa;
+                    Datadok::find(1)->update([
+                        'opshi'=>$a1,
+                    ]);
+                }
+            }
+            $foo2 = Datadok::find(1);
         }
         return response()->json([
             'output'=>$output, 
@@ -1618,6 +3174,58 @@ class KlentController2 extends Controller
         return $foo2;
     }
 
+    public function datasearchedok(Request $request)
+    {
+        if($request->date && $request->date2){
+            $variable = Ichkitavar::whereBetween('updated_at', [$request->date, $request->date2])->get();
+            $data = Tavar::all();
+            $adress = Adress::all();
+            if(Session::has('IDIE')){
+              $brends = Drektor::where('id','=',Session::get('IDIE'))->first();
+              return view('tavar2',[
+                  'brends'=>$brends,
+                  'ichkitavar'=>$variable,
+                  'data'=>$data,
+                  'adress'=>$adress,
+              ]);
+            }else{
+                return redirect('/logaut');
+            }
+        }elseif($request->date){
+            $variable = Ichkitavar::where('updated_at', ">=", $request->date)->get();
+            $data = Tavar::all();
+            $adress = Adress::all();
+            if(Session::has('IDIE')){
+              $brends = Drektor::where('id','=',Session::get('IDIE'))->first();
+              return view('tavar2',[
+                  'brends'=>$brends,
+                  'ichkitavar'=>$variable,
+                  'data'=>$data,
+                  'adress'=>$adress,
+              ]);
+            }else{
+                return redirect('/logaut');
+            }
+        }elseif($request->date2){
+            $variable = Ichkitavar::where('updated_at', ">=", $request->date2)->get();
+            $data = Tavar::all();
+            $adress = Adress::all();
+            if(Session::has('IDIE')){
+              $brends = Drektor::where('id','=',Session::get('IDIE'))->first();
+              return view('tavar2',[
+                  'brends'=>$brends,
+                  'ichkitavar'=>$variable,
+                  'data'=>$data,
+                  'adress'=>$adress,
+              ]);
+            }else{
+                return redirect('/logaut');
+            }
+        }else{
+            return back();
+        }
+    }
+
     public function datasearche(Request $request)
     {
         if($request->date && $request->date2){
@@ -1673,11 +3281,13 @@ class KlentController2 extends Controller
     public function clent2()
     {
         $tavar = Tavar::all();
+        $ichkitavardok = Ichkitavardok::all();
         if(Session::has('IDIE')){
             $brends = Drektor::where('id','=',Session::get('IDIE'))->first();
             return view('clent2',[
                 'brends'=>$brends,
                 'tavar'=>$tavar,
+                'tavardok'=>$ichkitavardok,
             ]);
         }else{
             return redirect('/logaut');

@@ -227,21 +227,20 @@
 @else
     
 <div id="AAAAAAAA" class="card ui-widget-content">
-  Admin2
   <div class="card-block tab-icon">
     <div class="col-12">
       <ul class="nav nav-tabs md-tabs " role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#home7" role="tab" aria-expanded="true"><i class="icofont icofont-home"></i>Клент</a>
+            <a class="nav-link active" data-toggle="tab" href="#home7dok" role="tab" aria-expanded="true"><i class="icofont icofont-home"></i>Клент</a>
             <div class="slide"></div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#profile7" role="tab" aria-expanded="false"><i class="icofont icofont-ui-user "></i>Бирламчи</a>
+            <a class="nav-link" data-toggle="tab" href="#profile7dok" role="tab" aria-expanded="false"><i class="icofont icofont-ui-user "></i>Бирламчи</a>
             <div class="slide"></div>
         </li>
       </ul>
       <div class="tab-content card-block">
-        <div class="tab-pane active" id="home7" role="tabpanel" aria-expanded="true">
+        <div class="tab-pane active" id="home7dok" role="tabpanel" aria-expanded="true">
             <div class="row">
               <div class="col-2 bor">
                 <div class="table-responsive">
@@ -251,12 +250,12 @@
 
                           <thead>
                             <th>
-                              <button id="vseclent" class="btn btn-success">
+                              <button id="vseclentdok" class="btn btn-success">
                                 Все
                               </button>
                             </th>
                           </thead>
-                          <tbody id="clent_tip">
+                          <tbody id="clent_tipdok">
           
                           </tbody>
                       </table>
@@ -282,7 +281,7 @@
                             <th>Последняя дата</th>
                           </tr>             
                       </thead>
-                          <tbody id="savdo">
+                          <tbody id="savdodok">
           
                           </tbody>
                       </table>
@@ -307,7 +306,7 @@
                             <th>Последняя дата</th>
                           </tr>             
                       </thead>
-                          <tbody id="dolg">
+                          <tbody id="dolgdok">
           
                           </tbody>
                       </table>
@@ -318,30 +317,30 @@
               <div class="col-12 m-0 p-0 borders">
                 <div class="row">
                   <div class="col-2 bor1">
-                    <input type="text" id="tavarshtuk2" class="form-control sifra" placeholder="Товар шт">
-                    <input type="text" id="shtuk2" class="form-control sifra" placeholder="Шт">  
+                    <input type="text" id="tavarshtuk2dok" class="form-control sifra" placeholder="Товар шт">
+                    <input type="text" id="shtuk2dok" class="form-control sifra" placeholder="Шт">  
                   </div>
                   <div class="col-2 bor1">
-                    <input type="text" id="foiz2" class="form-control sifra" placeholder="Товар протсент">
-                    <input type="text" id="itoge2" class="form-control sifra" placeholder="Итого">  
+                    <input type="text" id="foiz2dok" class="form-control sifra" placeholder="Товар протсент">
+                    <input type="text" id="itoge2dok" class="form-control sifra" placeholder="Итого">  
                   </div>
                   <div class="col-3 mx-5 bor1">
-                    <input type="text" id="clentname" class="form-control sifra2" placeholder="Клент имя">  
+                    <input type="text" id="clentnamedok" class="form-control sifra2" placeholder="Клент имя">  
                   </div>
                   <div class="col-4 mt-4">
                     <form>
                       @csrf
-                    <input type="hidden" id="oydi">
+                    <input type="hidden" id="oydidok">
           
                       <div class="d-flex">
-                        <select name="tavar_id" id="tavar_id" class="form-control bor2">
+                        <select name="tavar_id" id="tavar_iddok" class="form-control bor2">
                           <option value="">--Тип--</option>
-                          @foreach ($tavar as $item)
+                          @foreach ($tavardok as $item)
                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                           @endforeach
                         </select>
-                        <input class="form-control mx-2" style="width: 37%" type="date" id="date" name="date">
-                        <input class="form-control" style="width: 37%" type="date" id="date2" name="date2">
+                        <input class="form-control mx-2" style="width: 37%" type="date" id="datedok" name="date">
+                        <input class="form-control" style="width: 37%" type="date" id="date2dok" name="date2">
                           {{-- <div class="input-group-append">
                           <button type="submit" class="btn btn-primary buts" id="submithendel">
                               Поиск
@@ -354,7 +353,7 @@
               </div>
             </div>
         </div>
-        <div class="tab-pane" id="profile7" role="tabpanel" aria-expanded="false">
+        <div class="tab-pane" id="profile7dok" role="tabpanel" aria-expanded="false">
             <div class="row">
               <div class="col-12 bor">
                 <div class="table-responsive">
@@ -372,7 +371,7 @@
                             <th>Последняя дата</th>
                           </tr>             
                       </thead>
-                          <tbody id="savdobirlamchi">
+                          <tbody id="savdobirlamchidok">
           
                           </tbody>
                       </table>
@@ -394,14 +393,14 @@
                     <form>
                       @csrf
                       <div class="d-flex">
-                        <select name="tavar_id" id="tavar_ids" class="form-control bor2">
+                        <select name="tavar_id" id="tavar_idsdok" class="form-control bor2">
                           <option value="">--Тип--</option>
-                          @foreach ($tavar as $item)
+                          @foreach ($tavardok as $item)
                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                           @endforeach
                         </select>
-                        <input class="form-control mx-2" style="width: 37%" type="date" id="datem">
-                        <input class="form-control" style="width: 37%" type="date" id="datem2">                      
+                        <input class="form-control mx-2" style="width: 37%" type="date" id="datemdok">
+                        <input class="form-control" style="width: 37%" type="date" id="datem2dok">                      
                       </div>
                     </form>
                   </div>
@@ -423,6 +422,7 @@
     });
 
   $(document).ready(function(){
+
     fetch_customer_data();
     function fetch_customer_data(query = '')
     {
@@ -691,6 +691,276 @@
       //   toastr.error("Выберите клент").fadeOut(1500);
       // }
     });
+
+    fetch_customer_datadok();
+    function fetch_customer_datadok(query = '')
+    {
+        $.ajax({
+            url:"{{ route('clent_tipdok') }}",
+            method:'GET',
+            data:{query:query},
+            dataType:'json',
+            success:function(data)
+            {
+                $('#clent_tipdok').html(data.table_data);
+            }
+        })
+    }
+    fetch_customer_data123dok();
+    function fetch_customer_data123dok(query = '')
+    {
+        $.ajax({
+            url:"{{ route('savdobirlamchidok') }}",
+            method:'GET',
+            data:{query:query},
+            dataType:'json',
+            success:function(data)
+            {
+                $('#savdobirlamchidok').html(data.table_data);
+            }
+        })
+    }
+
+    $(document).on('change', "#tavar_idsdok", function(){
+    var tavar_id = $("#tavar_idsdok").val();
+    var date = $("#datemdok").val();
+    var date2 = $("#datem2dok").val();
+    let _token  = $('meta[name="csrf-token"]').attr('content');
+      // if(oydi){
+        $.ajax({
+              url:"{{ route('brlamclientdok') }}",
+              method:'POST',
+              data:{
+                tavar_id: tavar_id,
+                date: date,
+                date2: date2,
+                _token: _token
+              },
+              dataType:'json',
+              success:function(data)
+              {
+                $('#savdobirlamchidok').html(data.output);
+                // fetch_customer_data123();
+                $("#tavarshtuk2sdok").val(data.foo2.tavarshtuk);
+                $("#shtuk2sdok").val(data.foo2.shtuk);
+                $("#itoge2sdok").val(data.foo2.opshi);
+              }
+          });
+      // }else{
+      //   toastr.error("Выберите клент").fadeOut(1500);
+      // }
+    });
+
+    $(document).on('change', "#datemdok", function(){
+    var tavar_id = $("#tavar_idsdok").val();
+    var date = $("#datemdok").val();
+    var date2 = $("#datem2dok").val();
+    let _token  = $('meta[name="csrf-token"]').attr('content');
+    // if(oydi){
+        $.ajax({
+              url:"{{ route('brlamclientdok') }}",
+              method:'POST',
+              data:{
+                tavar_id: tavar_id,
+                date: date,
+                date2: date2,
+                _token: _token
+              },
+              dataType:'json',
+              success:function(data)
+              {
+                $('#savdobirlamchidok').html(data.output);
+                // fetch_customer_data123();
+                $("#tavarshtuk2sdok").val(data.foo2.tavarshtuk);
+                $("#shtuk2sdok").val(data.foo2.shtuk);
+                $("#itoge2sdok").val(data.foo2.opshi);
+              }
+          });
+      // }else{
+      //   toastr.error("Выберите клент").fadeOut(1500);
+      // }
+    });
+
+    $(document).on('change', "#datem2dok", function(){
+    var tavar_id = $("#tavar_idsdok").val();
+    var date = $("#datemdok").val();
+    var date2 = $("#datem2dok").val();
+    let _token  = $('meta[name="csrf-token"]').attr('content');
+      // if(oydi){
+        $.ajax({
+              url:"{{ route('brlamclientdok') }}",
+              method:'POST',
+              data:{
+                tavar_id: tavar_id,
+                date: date,
+                date2: date2,
+                _token: _token
+              },
+              dataType:'json',
+              success:function(data)
+              {
+                $('#savdobirlamchidok').html(data.output);
+                // fetch_customer_data123();
+                $("#tavarshtuk2sdok").val(data.foo2.tavarshtuk);
+                $("#shtuk2sdok").val(data.foo2.shtuk);
+                $("#itoge2sdok").val(data.foo2.opshi);
+              }
+          });
+      // }else{
+      //   toastr.error("Выберите клент").fadeOut(1500);
+      // }
+    });
+
+    $(document).on('click', "#datadok", function(){
+    var id = $(this).data("id");
+    $("#oydidok").val(id);
+    $.ajax({
+          url:"{{ route('clents2dok') }}",
+          method:'GET',
+          data:{
+            id: id
+          },
+          dataType:'json',
+          success:function(data)
+          {
+            $('#savdodok').html(data.output);
+            $('#dolgdok').html(data.output2);
+            fetch_customer_datadok();
+            $("#clentnamedok").val(data.clent.name);
+            $("#tavarshtuk2dok").val(data.foo2.tavarshtuk);
+            $("#shtuk2dok").val(data.foo2.shtuk);
+            $("#foiz2dok").val(data.foo2.foiz);
+            $("#itoge2dok").val(data.foo2.opshi);
+          }
+      });
+    });
+
+    $(document).on('click', "#vseclentdok", function(event){
+      event.preventDefault();
+      let _token  = $('meta[name="csrf-token"]').attr('content');
+      $.ajax({
+          url:"{{ route('vseclentdok') }}",
+          method:'POST',
+          data:{
+            _token: _token
+          },
+          dataType:'json',
+          success:function(data)
+          {
+            $('#savdodok').html(data.output);
+            $('#dolgdok').html(data.output2);
+            fetch_customer_datadok();
+            $("#clentnamedok").val(data.clent);
+            $("#tavarshtuk2dok").val(data.foo2.tavarshtuk);
+            $("#shtuk2dok").val(data.foo2.shtuk);
+            $("#foiz2dok").val(data.foo2.foiz);
+            $("#itoge2dok").val(data.foo2.opshi);
+          }
+      });
+    });
+
+    $(document).on('change', "#tavar_iddok", function(){
+    var tavar_id = $("#tavar_iddok").val();
+    var date = $("#datedok").val();
+    var date2 = $("#date2dok").val();
+    var oydi = $("#oydidok").val();
+    let _token  = $('meta[name="csrf-token"]').attr('content');
+      // if(oydi){
+        $.ajax({
+              url:"{{ route('clents3dok') }}",
+              method:'POST',
+              data:{
+                id: oydi,
+                tavar_id: tavar_id,
+                date: date,
+                date2: date2,
+                _token: _token
+              },
+              dataType:'json',
+              success:function(data)
+              {
+                $('#savdodok').html(data.output);
+                $('#dolgdok').html(data.output2);
+                fetch_customer_data();
+                $("#tavarshtuk2dok").val(data.foo2.tavarshtuk);
+                $("#shtuk2dok").val(data.foo2.shtuk);
+                $("#foiz2dok").val(data.foo2.foiz);
+                $("#itoge2dok").val(data.foo2.opshi);
+              }
+          });
+      // }else{
+      //   toastr.error("Выберите клент").fadeOut(1500);
+      // }
+    });
+
+    $(document).on('change', "#datedok", function(){
+    var tavar_id = $("#tavar_iddok").val();
+    var date = $("#datedok").val();
+    var date2 = $("#date2dok").val();
+    var oydi = $("#oydidok").val();
+    let _token  = $('meta[name="csrf-token"]').attr('content');
+    // if(oydi){
+        $.ajax({
+              url:"{{ route('clents3dok') }}",
+              method:'POST',
+              data:{
+                id: oydi,
+                tavar_id: tavar_id,
+                date: date,
+                date2: date2,
+                _token: _token
+              },
+              dataType:'json',
+              success:function(data)
+              {
+                $('#savdodok').html(data.output);
+                $('#dolgdok').html(data.output2);
+                fetch_customer_datadok();
+                $("#tavarshtuk2dok").val(data.foo2.tavarshtuk);
+                $("#shtuk2dok").val(data.foo2.shtuk);
+                $("#foiz2dok").val(data.foo2.foiz);
+                $("#itoge2dok").val(data.foo2.opshi);
+              }
+          });
+      // }else{
+      //   toastr.error("Выберите клент").fadeOut(1500);
+      // }
+    });
+
+    $(document).on('change', "#date2dok", function(){
+    var tavar_id = $("#tavar_iddok").val();
+    var date = $("#datedok").val();
+    var date2 = $("#date2dok").val();
+    var oydi = $("#oydidok").val();
+    let _token  = $('meta[name="csrf-token"]').attr('content');
+      // if(oydi){
+        $.ajax({
+              url:"{{ route('clents3dok') }}",
+              method:'POST',
+              data:{
+                id: oydi,
+                tavar_id: tavar_id,
+                date: date,
+                date2: date2,
+                _token: _token
+              },
+              dataType:'json',
+              success:function(data)
+              {
+                $('#savdodok').html(data.output);
+                $('#dolgdok').html(data.output2);
+                fetch_customer_datadok();
+                $("#tavarshtuk2dok").val(data.foo2.tavarshtuk);
+                $("#shtuk2dok").val(data.foo2.shtuk);
+                $("#foiz2dok").val(data.foo2.foiz);
+                $("#itoge2dok").val(data.foo2.opshi);
+              }
+          });
+      // }else{
+      //   toastr.error("Выберите клент").fadeOut(1500);
+      // }
+    });
+
   });
 
 </script>

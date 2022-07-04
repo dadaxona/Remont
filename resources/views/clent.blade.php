@@ -83,10 +83,10 @@
   </div>
 </div>
 @else
+
 <div class="card p-0">
-  Admin2
   <div class="card-header">
-          <button type="button" class="btn btn-primary" onclick="addPost()">Клиент Яратиш</button>
+          <button type="button" class="btn btn-primary" onclick="addPostdok()">Клиент Яратиш</button>
         <div class="row">
           {{-- <div class="col-12"> --}}
             <table class="tab table-hover" id="laravel_crud">
@@ -99,7 +99,7 @@
                   <th>Управление</th>
               </tr>
               </thead>
-              <tbody id="clent">
+              <tbody id="clentdok">
 
               </tbody>               
           </table>
@@ -107,7 +107,7 @@
       </div>
   </div>
   
-<div class="modal fade" id="post-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="post-modaldok" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -115,27 +115,27 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="userForm" action="{{ route('store') }}" method="POST">
+        <form id="userFormdok" action="{{ route('storedok') }}" method="POST">
             @csrf
-            <input type="hidden" name="id" id="id">
+            <input type="hidden" name="id" id="iddok">
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Клиент номи</label>
-            <input type="text" class="form-control" name="name" id="name">
+            <input type="text" class="form-control" name="name" id="namedok">
             <span class="text-danger error-text name_error"></span>
           </div>
           <div class="mb-3">
             <label for="message-text" class="col-form-label">Тел..</label>
-            <input type="number" class="form-control" name="tel"  id="tel">
+            <input type="number" class="form-control" name="tel"  id="teldok">
             <span class="text-danger error-text tel_error"></span>
           </div>
           <div class="mb-3">
               <label for="message-text" class="col-form-label">Фирма номи</label>
-              <input type="text" class="form-control" name="firma" id="firma">
+              <input type="text" class="form-control" name="firma" id="firmadok">
               <span class="text-danger error-text firma_error"></span>
             </div>
             <div class="mb-3">
               <label for="message-text" class="col-form-label">Фирма ИНН</label>
-              <input type="text" class="form-control" name="inn" id="inn">
+              <input type="text" class="form-control" name="inn" id="inndok">
               <span class="text-danger error-text inn_error"></span>
             </div>             
       </div>
@@ -156,11 +156,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-          <input type="hidden" name="id5" id="id5">
+          <input type="hidden" name="id5" id="id5dok">
         </div>
         <div class="text-center pb-4">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Нет</button>
-            <button type="submit" onclick="dele2()" class="btn btn-success">Да</button>
+            <button type="submit" onclick="dele2dok()" class="btn btn-success">Да</button>
         </div>
     </div>
   </div>
@@ -173,10 +173,15 @@
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
     });
-
+  
   function addPost() {
     $("#id").val('');
     $('#post-modal').modal('show');
+  }
+
+  function addPostdok() {
+    $("#iddok").val('');
+    $('#post-modaldok').modal('show');
   }
 
   function editPost(id) {
@@ -203,6 +208,30 @@
     });
   }
 
+  function editPostdok(id) {
+    let _url = `showdok/${id}`;
+    $('#iddokError').text('');
+    $('#namedokError').text('');
+    $('#teldokError').text('');
+    $('#firmadokError').text('');
+    $('#inndokError').text('');
+    
+    $.ajax({
+      url: _url,
+      type: "GET",
+      success: function(response) {
+          if(response) {
+            $("#iddok").val(response.id);
+            $("#namedok").val(response.name);
+            $("#teldok").val(response.tel);
+            $("#firmadok").val(response.firma);
+            $("#inndok").val(response.inn);
+            $('#post-modaldok').modal('show');
+          }
+      }
+    });
+  }
+
   $(document).ready(function(){
     fetch_customer_data();
     function fetch_customer_data(query = '')
@@ -214,8 +243,7 @@
             dataType:'json',
             success:function(data)
             {
-                $('#clent').html(data.table_data);
-                $('#total_records').text(data.total_data);
+              $('#clent').html(data.table_data);
             }
         })
     }
@@ -265,9 +293,94 @@
     
   });
 
+  $(document).ready(function(){
+    fetch_customer_data();
+    function fetch_customer_data(query = '')
+    {
+        $.ajax({
+            url:"{{ route('live_clentdok') }}",
+            method:'GET',
+            data:{query:query},
+            dataType:'json',
+            success:function(data)
+            {
+              $('#clentdok').html(data.table_data);
+            }
+        })
+    }
+    $('#userFormdok').on('submit', function(e) {
+        e.preventDefault();
+        var form = this;
+        $.ajax({
+          url:$(form).attr('action'),
+          method:$(form).attr('method'),
+          data:new FormData(form),
+          processData:false,
+          dataType:'json',
+          contentType:false,
+          beforeSend:function(){
+            $(form).find('span.error-text').text('');
+          },
+          success:function(data){
+            if(data.code == 200){
+              $(form)[0].reset();
+              fetch_customer_data();
+              // $('table tbody').prepend('<tr id="row_'+data.data.id+'"><td>'+data.data.name+'</td><td>'+data.data.tel+'</td><td>'+data.data.firma+'</td><td>'+data.data.inn+'</td><td><a href="javascript:void(0)" onclick="editPost('+data.data.id+')" style="color: green"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16"><path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/></svg></a><a href="javascript:void(0)" onclick="deletePost('+data.data.id+')" class="mx-3" style="color: red"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16"><path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/></svg></a></td></tr>');
+              $('#namedok').val('');
+              $('#teldok').val('');
+              $('#firmadok').val('');
+              $('#inndok').val('');
+              $('#post-modaldok').modal('hide');
+              toastr.success(data.msg);
+            }
+            if(data.code == 0){
+              $.each(data.error, function(prefix, val){
+                $(form).find('span.'+prefix+'_error').text(val[0]);
+              });
+              toastr.error(data.msg);
+            }
+            if(data.code == 201){
+              fetch_customer_data();
+              $('#namedok').val('');
+              $('#teldok').val('');
+              $('#firmadok').val('');
+              $('#inndok').val('');
+              $('#post-modaldok').modal('hide');
+              toastr.success(data.msg);
+            }           
+          }
+        });
+      });
+    
+  });
+
   function deletePost(id) {
     $("#id5").val(id);
     $('#post-modal5').modal('show');
+  }
+
+  function deletePostdok(id) {
+    $("#id5dok").val(id);
+    $('#post-modal5dok').modal('show');
+  }
+
+  function dele2dok() {
+    var id = $("#id5dok").val();
+    let _url = `deletedok/${id}`;
+    let _token   = $('meta[name="csrf-token"]').attr('content');
+
+      $.ajax({
+        url: _url,
+        type: 'POST',
+        data: {
+          _token: _token
+        },
+        success: function(data) {
+          $("#rowdok_"+id).remove();
+          $('#post-modal5dok').modal('hide');
+          toastr.success(data.msg);
+        }
+      });
   }
 
   function dele2() {

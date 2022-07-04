@@ -10,9 +10,11 @@ use App\Models\Clentitog;
 use App\Models\Drektor;
 use App\Models\Ichkitavar;
 use App\Models\Itogo;
+use App\Models\Itogodok;
 use App\Models\Karzina;
 use App\Models\Tavar;
 use App\Models\User;
+use App\Models\Userdok;
 use App\Models\Usere;
 use App\Models\Usta;
 use App\Models\Usta2;
@@ -93,20 +95,26 @@ class AuthController extends Controller
     public function dashbord()
     {
         $foo = Itogo::find(1);
+        $foo2 = Itogodok::find(1);
         $clents = User::all();
+        $clentsdok = Userdok::all();
         if(Session::has('IDIE')){
             $brends = Drektor::where('id','=',Session::get('IDIE'))->first();
             if($brends->login == "Admin"){
                 return view('sotuv',[
                     'brends'=>$brends,
                     'itogs'=>$foo,
-                    'clents'=>$clents
+                    'itogsdok'=>$foo2,
+                    'clents'=>$clents,
+                    'clentsdok'=>$clentsdok
                 ]);
             }elseif($brends->login == "Admin2"){
                 return view('sotuv',[
                     'brends'=>$brends,
                     'itogs'=>$foo,
-                    'clents'=>$clents
+                    'itogsdok'=>$foo2,
+                    'clents'=>$clents,
+                    'clentsdok'=>$clentsdok
                 ]);
             }else{
                 $data = Usere::paginate(20);
