@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('umumiys', function (Blueprint $table) {
             $table->id();
-            $table->float('hajm')->nullable();
-            $table->float('summa')->nullable();
-            $table->float('summa2')->nullable();
-            $table->float('foyda')->nullable();
+            $table->string('hajm')->nullable();
+            $table->string('summa')->nullable();
+            $table->string('summa2')->nullable();
+            $table->string('foyda')->nullable();
             $table->timestamps();
         });
     }

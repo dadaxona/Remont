@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('datadoks', function (Blueprint $table) {
             $table->id();
-            $table->float('tavarshtuk')->nullable();
-            $table->float('shtuk')->nullable();
-            $table->float('foiz')->nullable();
-            $table->float('dateitog')->nullable();
-            $table->float('opshi')->nullable();
+            $table->string('tavarshtuk')->nullable();
+            $table->string('shtuk')->nullable();
+            $table->string('foiz')->nullable();
+            $table->string('dateitog')->nullable();
+            $table->string('opshi')->nullable();
             $table->timestamps();
         });
     }

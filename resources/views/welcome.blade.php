@@ -17,12 +17,10 @@
       <meta name="keywords" content="bootstrap, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive" />
       <meta name="author" content="codedthemes" />
       <!-- Favicon icon -->
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+      <link href="bootstrap-5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
       <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
-    <!-- Google font-->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
-    <!-- waves.css -->
-    <link rel="stylesheet" href="assets/pages/waves/css/waves.min.css" type="text/css" media="all">
+
+      <link rel="stylesheet" href="assets/pages/waves/css/waves.min.css" type="text/css" media="all">
       <!-- Required Fremwork -->
       <link rel="stylesheet" type="text/css" href="assets/css/bootstrap/css/bootstrap.min.css">
       <!-- waves.css -->
@@ -33,18 +31,11 @@
       <link rel="stylesheet" type="text/css" href="assets/icon/font-awesome/css/font-awesome.min.css">
       <!-- scrollbar.css -->
       <link rel="stylesheet" type="text/css" href="assets/css/jquery.mCustomScrollbar.css">
-        <!-- am chart export.css -->
-        <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
-      <!-- Style.css -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+      <script src="jquery-3.6.0/dist/jquery.min.js"></script>
       <link rel="stylesheet" type="text/css" href="assets/css/style.css">
       <meta name="csrf-token" content="{{ csrf_token() }}" />
-      {{-- <link rel="stylesheet" href="{{ asset('aweetalert2/sweetalert2.min.css') }}"> --}}
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <link rel="stylesheet" href="toastr/toastr.min.css" />
+      <script src="toastr/toastr.min.js"></script>
       <style>
         .extr22{
             height: 100vh;
@@ -666,20 +657,11 @@
             location.reload(true);
         }
     </script>
-    <!-- Required Jquery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     
-    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-    <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
-    
-    <script src="{{ asset('datatable/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('datatable/js/dataTables.bootstrap4.min.js') }}"></script>
-    {{-- <script src="{{ asset('aweetalert2/sweetalert2.min.js') }}"></script> --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+    <script src="bootstrap-5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="bootstrap-5.2.0-beta1/dist/js/bootstrap.min.js"></script>    
+    <script src="bootstrap-5.2.0-beta1/js/popper.min.js"></script>
+
     <script type="text/javascript" src="assets/js/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="assets/js/jquery-ui/jquery-ui.min.js "></script>
     <script type="text/javascript" src="assets/js/bootstrap/js/bootstrap.min.js "></script>
@@ -695,13 +677,10 @@
     <script src="assets/js/jquery.mCustomScrollbar.concat.min.js "></script>
     <!-- Chart js -->
     <script type="text/javascript" src="assets/js/chart.js/Chart.js"></script>
-    <!-- amchart js -->
-    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
     <script src="assets/pages/widget/amchart/gauge.js"></script>
     <script src="assets/pages/widget/amchart/serial.js"></script>
     <script src="assets/pages/widget/amchart/light.js"></script>
     <script src="assets/pages/widget/amchart/pie.min.js"></script>
-    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
     <!-- menu js -->
     <script src="assets/js/pcoded.min.js"></script>
     <script src="assets/js/vertical-layout.min.js "></script>

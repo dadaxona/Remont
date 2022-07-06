@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('itogodoks', function (Blueprint $table) {
             $table->id();
-            $table->float('itogo')->nullable();
-            $table->float('kurs')->nullable();
-            $table->float('usd')->nullable();
+            $table->string('itogo')->nullable();
+            $table->string('kurs')->nullable();
+            $table->string('usd')->nullable();
             $table->timestamps();
         });
     }

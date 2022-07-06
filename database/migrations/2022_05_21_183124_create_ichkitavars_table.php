@@ -20,12 +20,12 @@ return new class extends Migration
             $table->bigInteger('tavar2_id')->unsigned();
             $table->string('name')->nullable();
             $table->string('raqam')->nullable();
-            $table->float('hajm')->nullable();
-            $table->float('summa')->nullable();
-            $table->float('summa2')->nullable();
-            $table->float('summa3')->nullable();
-            $table->float('kurs')->nullable();
-            $table->float('kurs2')->nullable();
+            $table->string('hajm')->nullable();
+            $table->string('summa')->nullable();
+            $table->string('summa2')->nullable();
+            $table->string('summa3')->nullable();
+            $table->string('kurs')->nullable();
+            $table->string('kurs2')->nullable();
             $table->timestamps();
             $table->foreign('tavar_id')->references('id')->on('tavars')
             ->onDelete('cascade')->onUpdate('cascade');

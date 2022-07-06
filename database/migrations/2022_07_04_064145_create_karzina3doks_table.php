@@ -18,12 +18,12 @@ return new class extends Migration
             $table->bigInteger('ichkitavardok_id')->unsigned();
             $table->string('name')->nullable();
             $table->string('raqam')->nullable();
-            $table->float('soni')->nullable();
-            $table->float('hajm')->nullable();
-            $table->float('summa')->nullable();
-            $table->float('summa2')->nullable();
+            $table->string('soni')->nullable();
+            $table->string('hajm')->nullable();
+            $table->string('summa')->nullable();
+            $table->string('summa2')->nullable();
             $table->string('chegirma')->nullable();
-            $table->float('itog')->nullable();
+            $table->string('itog')->nullable();
             $table->timestamps();
             $table->foreign('ichkitavardok_id')->references('id')->on('ichkitavardoks')
             ->onDelete('cascade')->onUpdate('cascade');
