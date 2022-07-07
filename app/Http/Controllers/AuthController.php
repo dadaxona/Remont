@@ -30,12 +30,12 @@ class AuthController extends Controller
 {
     public function typpe()
     {
-        $num = 3.14; 
-        $num2 = 3.15; 
-        $int = (float)$num2;
+        $num = 11000; 
+        $num2 = 150.6; 
         $float = (float)$num;
+        $int = (float)$num2;
 
-        echo var_dump($float + $int);
+        echo var_dump($float / $int);
     }
     public function exports() 
     {

@@ -578,23 +578,23 @@ class KlentServis extends KlentServis2
                     'raqam' => $foo->raqam,
                     'soni' => 1,
                     'hajm' => $foo->hajm,
-                    'summa' => $foo->summa3,
-                    'summa2' => $foo->kurs2,
+                    'summa' => $foo["summa3"],
+                    'summa2' => $foo["kurs2"],
                     'chegirma' => 0,
-                    'itog' => $foo->kurs2,
+                    'itog' => $foo["kurs2"],
                 ]);
                 $ito = Itogo::find(1);
                 if($ito){
-                    $j = $ito->itogo + $foo->kurs2;
+                    $j = (string)$ito->itogo + (string)$foo->kurs2;
                     Itogo::find(1)->update([
-                        'itogo'=>$j,
+                        'itogo'=>(string)$j,
                     ]);
                     $ito2 = Itogo::find(1);
                     return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
         
                 }else{
                     Itogo::create([
-                        'itogo'=>$foo->kurs2,
+                        'itogo'=>(string)$foo->kurs2,
                     ]);
                     $ito3 = Itogo::find(1);
                     return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
@@ -608,23 +608,23 @@ class KlentServis extends KlentServis2
                     'raqam' => $foo->raqam,
                     'soni' => 1,
                     'hajm' => $foo->hajm,
-                    'summa' => $foo->summa3 / $valyuta->kurs,
-                    'summa2' => $foo->kurs2 / $valyuta->kurs,
+                    'summa' => (string)$foo->summa3 / (string)$valyuta->kurs,
+                    'summa2' => (string)$foo->kurs2 / (string)$valyuta->kurs,
                     'chegirma' => 0,
-                    'itog' => $foo->kurs2 / $valyuta->kurs,
+                    'itog' => (string)$foo->kurs2 / (string)$valyuta->kurs,
                 ]);
                 $ito = Itogo::find(1);
                 if($ito){
-                    $j = $ito->itogo + $foo->kurs2 / $valyuta->kurs;
+                    $j = (string)$ito->itogo + (string)$foo->kurs2 / (string)$valyuta->kurs;
                     Itogo::find(1)->update([
-                        'itogo'=>$j,
+                        'itogo'=>(string)$j,
                     ]);
                     $ito2 = Itogo::find(1);
                     return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
         
                 }else{
                     Itogo::create([
-                        'itogo'=>$foo->kurs2 / $valyuta->kurs,
+                        'itogo'=>(string)$foo->kurs2 / (string)$valyuta->kurs,
                     ]);
                     $ito3 = Itogo::find(1);
                     return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
@@ -640,23 +640,23 @@ class KlentServis extends KlentServis2
                     'raqam' => $foo->raqam,
                     'soni' => 1,
                     'hajm' => $foo->hajm,
-                    'summa' => $foo->summa2,
-                    'summa2' => $foo->kurs,
+                    'summa' => (float)$foo->summa2,
+                    'summa2' => (float)$foo->kurs,
                     'chegirma' => 0,
-                    'itog' => $foo->kurs,
+                    'itog' => (float)$foo->kurs,
                 ]);
                 $ito = Itogo::find(1);
                 if($ito){
-                    $j = $ito->itogo + $foo->kurs;
+                    $j = (float)$ito->itogo + (float)$foo->kurs;
                     Itogo::find(1)->update([
-                        'itogo'=>$j,
+                        'itogo'=>(float)$j,
                     ]);
                     $ito2 = Itogo::find(1);
                     return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
         
                 }else{
                     Itogo::create([
-                        'itogo'=>$foo->kurs,
+                        'itogo'=>(float)$foo->kurs,
                     ]);
                     $ito3 = Itogo::find(1);
                     return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
@@ -670,23 +670,23 @@ class KlentServis extends KlentServis2
                     'raqam' => $foo->raqam,
                     'soni' => 1,
                     'hajm' => $foo->hajm,
-                    'summa' => $foo->summa2 / $valyuta->kurs,
-                    'summa2' => $foo->kurs / $valyuta->kurs,
+                    'summa' => (float)$foo->summa2 / (float)$valyuta->kurs,
+                    'summa2' => (float)$foo->kurs / (float)$valyuta->kurs,
                     'chegirma' => 0,
-                    'itog' => $foo->kurs / $valyuta->kurs,
+                    'itog' => (float)$foo->kurs / (float)$valyuta->kurs,
                 ]);
                 $ito = Itogo::find(1);
                 if($ito){
-                    $j = $ito->itogo + $foo->kurs / $valyuta->kurs;
+                    $j = (float)$ito->itogo + (float)$foo->kurs / (float)$valyuta->kurs;
                     Itogo::find(1)->update([
-                        'itogo'=>$j,
+                        'itogo'=>(float)$j,
                     ]);
                     $ito2 = Itogo::find(1);
                     return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
         
                 }else{
                     Itogo::create([
-                        'itogo'=>$foo->kurs / $valyuta->kurs,
+                        'itogo'=>(float)$foo->kurs / (float)$valyuta->kurs,
                     ]);
                     $ito3 = Itogo::find(1);
                     return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
@@ -826,24 +826,24 @@ class KlentServis extends KlentServis2
         $kurs = (float)$request->kurs;
         $row = Ichkitavar::all();
         foreach ($row as $value) {
-            $summa2 = (int)$value->summa2;
-            $summa3 = (int)$value->summa3;
+            $summa2 = (float)$value->summa2;
+            $summa3 = (float)$value->summa3;
             $dat = $summa2 * $kurs;
             $dat2 = $summa3 * $kurs;
             Ichkitavar::find($value->id)->update([
-                'kurs'=>$dat,
-                'kurs2'=>$dat2
+                'kurs'=>(float)$dat,
+                'kurs2'=>(float)$dat2
             ]);
         }
         $a = Itogo::find(1);
         if($a){
             Itogo::find(1)->update([
-                'kurs'=>$request->kurs
+                'kurs'=>(float)$request->kurs
             ]);
         }else{
             Itogo::create([
                 'itogo'=>0,
-                'kurs'=>$request->kurs,
+                'kurs'=>(float)$request->kurs,
                 'usd'=>0
             ]);
         }
@@ -1348,15 +1348,15 @@ class KlentServis extends KlentServis2
         $b23 = Itogo::find(1);
         if($b23->usd == 0){
             foreach ($row as $value) {
-                $dat = $value->summa2 / $b23->kurs;
-                $dat2 = $value->itog / $b23->kurs;
+                $dat = (float)$value->summa2 / (float)$b23->kurs;
+                $dat2 = (float)$value->itog / (float)$b23->kurs;
                 Karzina::find($value->id)->update([
-                    'summa2'=>$dat,
-                    'itog'=>$dat2
+                    'summa2'=>(float)$dat,
+                    'itog'=>(float)$dat2
                 ]);
             }
             Itogo::find(1)->update([
-                'itogo' => $b23->itogo / $b23->kurs,
+                'itogo' => (float)$b23->itogo / (float)$b23->kurs,
                 'usd' => 1,
             ]);
             $b2 = Itogo::find(1);
@@ -1370,15 +1370,15 @@ class KlentServis extends KlentServis2
     {
         $row = Karzina::all();
         foreach ($row as $value) {
-            $dat = $value->summa2 * $b23->kurs;
-            $dat2 = $value->itog * $b23->kurs;
+            $dat = (float)$value->summa2 * (float)$b23->kurs;
+            $dat2 = (float)$value->itog * (float)$b23->kurs;
             Karzina::find($value->id)->update([
-                'summa2'=>$dat,
-                'itog'=>$dat2
+                'summa2'=>(float)$dat,
+                'itog'=>(float)$dat2
             ]);
         }
         Itogo::find(1)->update([
-            'itogo' => $b23->itogo * $b23->kurs,
+            'itogo' => (float)$b23->itogo * (float)$b23->kurs,
             'usd' => 0
         ]);
         $b2 = Itogo::find(1);
