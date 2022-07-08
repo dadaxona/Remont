@@ -578,10 +578,10 @@ class KlentServis extends KlentServis2
                     'raqam' => $foo->raqam,
                     'soni' => 1,
                     'hajm' => $foo->hajm,
-                    'summa' => $foo["summa3"],
-                    'summa2' => $foo["kurs2"],
+                    'summa' => (float)$foo->summa3,
+                    'summa2' => (float)$foo->kurs2,
                     'chegirma' => 0,
-                    'itog' => $foo["kurs2"],
+                    'itog' => (float)$foo->kurs2,
                 ]);
                 $ito = Itogo::find(1);
                 if($ito){
