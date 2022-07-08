@@ -183,7 +183,7 @@
                   </svg>
             </button>
         @else
-            <label for="message-text" class="col-form-label m-0 text-right">Итого</label>
+            <label for="message-text" class="col-form-label m-0 text-right">Итого: <span id="kkkkkk"></span></label>
             <input type="text" id="itog2" class="form-control text-right" disabled value="0">
             <label for="message-text" class="col-form-label m-0 text-right">Курс</label>
             <input type="text" id="kurs2" class="form-control text-right" disabled>
