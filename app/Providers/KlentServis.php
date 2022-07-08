@@ -300,6 +300,7 @@ class KlentServis extends KlentServis2
                             'summa' => $c,
                             'summa2' => $value["summa2"],
                             'summa3' => $value["summa3"],
+                            'kod' => $value["kod"],
                         ]);
                 $data = Ichkitavar::where('tavar_id', $value["tavar_id"])
                         ->where('adress', $value["adress"])
@@ -315,6 +316,7 @@ class KlentServis extends KlentServis2
                         'summa'=>$value["summa"],
                         'summa2'=>$value["summa2"],
                         'summa3'=>$value["summa3"],
+                        'kod'=>$value["kod"],
                     ]);
             }else{
                 $fff = Tavar2::find($value["tavar2_id"]);
@@ -328,6 +330,7 @@ class KlentServis extends KlentServis2
                     'summa'=>$value["summa"],
                     'summa2'=>$value["summa2"],
                     'summa3'=>$value["summa3"],
+                    'kod'=>$value["kod"],
                 ]);
                 Updatetavr::create([
                     'tavar_id'=>$value["tavar_id"],
@@ -339,6 +342,7 @@ class KlentServis extends KlentServis2
                     'summa'=>$value["summa"],
                     'summa2'=>$value["summa2"],
                     'summa3'=>$value["summa3"],
+                    'kod'=>$value["kod"],
                 ]);
             }
         }
@@ -359,6 +363,7 @@ class KlentServis extends KlentServis2
             'summa'=>$request->summa,
             'summa2'=>$sum2,
             'summa3'=>$sum3,
+            'kod'=>$request->kod
         ]);
         Updatetavrdok::where('ichkitavardok_id', $request->id)->update([
             'name'=>$request->name,
@@ -367,6 +372,7 @@ class KlentServis extends KlentServis2
             'summa'=>$request->summa,
             'summa2'=>$request->summa2,
             'summa3'=>$request->summa3,
+            'kod'=>$request->kod
         ]);
         return response()->json(['code'=>201, 'msg'=>'Мувофакиятли янгиланди','data' => $data], 201);
     }
@@ -389,6 +395,7 @@ class KlentServis extends KlentServis2
             'summa'=>$request->summa,
             'summa2'=>$sum2,
             'summa3'=>$sum3,
+            'kod'=>$request->kod
         ]);
         Updatetavr::where('ichkitavar_id', $request->id)->update([
             'tavar_id'=>$request->tavar_id,
@@ -400,6 +407,7 @@ class KlentServis extends KlentServis2
             'summa'=>$request->summa,
             'summa2'=>$request->summa2,
             'summa3'=>$request->summa3,
+            'kod'=>$request->kod
         ]);
         return response()->json(['code'=>201, 'msg'=>'Мувофакиятли янгиланди','data' => $data], 201);
     }
@@ -419,7 +427,8 @@ class KlentServis extends KlentServis2
             'summa2'=>$data->summa2,
             'summa3'=>$data->summa3,
             'kurs'=>$data->kurs, 
-            'kurs2'=>$data->kurs2
+            'kurs2'=>$data->kurs2,
+            'kod'=>$data->kod
         ]);
         Ichkitavar::find($id)->delete($id);
         return response()->json(['msg'=>'Мувофакиятли очирилди']);
@@ -436,7 +445,8 @@ class KlentServis extends KlentServis2
             'summa2'=>$data->summa2,
             'summa3'=>$data->summa3,
             'kurs'=>$data->kurs, 
-            'kurs2'=>$data->kurs2
+            'kurs2'=>$data->kurs2,
+            'kod'=>$data->kod
         ]);
         Ichkitavardok::find($id)->delete($id);
         return response()->json(['msg'=>'Мувофакиятли очирилди']);
@@ -456,7 +466,8 @@ class KlentServis extends KlentServis2
             'summa2'=>$data->summa2,
             'summa3'=>$data->summa3,
             'kurs'=>$data->kurs, 
-            'kurs2'=>$data->kurs2
+            'kurs2'=>$data->kurs2,
+            'kod'=>$data->kod
         ]);
         Updatetavr::create([
             'tavar_id'=>$data->tavar_id,
@@ -467,7 +478,8 @@ class KlentServis extends KlentServis2
             'hajm'=>$data->hajm, 
             'summa'=>$data->summa,
             'summa2'=>$data->summa2,
-            'summa3'=>$data->summa3
+            'summa3'=>$data->summa3,
+            'kod'=>$data->kod
         ]);
         Deletkarzina::find($id)->delete($id);
         return response()->json(['msg'=>'Мувофакиятли тикланди']);
@@ -484,7 +496,8 @@ class KlentServis extends KlentServis2
             'summa2'=>$data->summa2,
             'summa3'=>$data->summa3,
             'kurs'=>$data->kurs, 
-            'kurs2'=>$data->kurs2
+            'kurs2'=>$data->kurs2,
+            'kod'=>$data->kod
         ]);
         Updatetavrdok::create([
             'ichkitavardok_id'=>$a->id,
@@ -493,7 +506,8 @@ class KlentServis extends KlentServis2
             'hajm'=>$data->hajm, 
             'summa'=>$data->summa,
             'summa2'=>$data->summa2,
-            'summa3'=>$data->summa3
+            'summa3'=>$data->summa3,
+            'kod'=>$data->kod
         ]);
         Deletkarzinadok::find($id)->delete($id);
         return response()->json(['msg'=>'Мувофакиятли тикланди']);

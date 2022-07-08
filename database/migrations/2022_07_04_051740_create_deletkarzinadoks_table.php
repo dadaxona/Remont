@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('summa3')->nullable();
             $table->string('kurs')->nullable();
             $table->string('kurs2')->nullable();
+            $table->string('kod')->nullable();
             $table->timestamps();
         });
     }

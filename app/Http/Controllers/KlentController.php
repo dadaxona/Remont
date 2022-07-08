@@ -623,6 +623,7 @@ class KlentController extends KlentController2
             'addmore.*.summa' => 'required|numeric',
             'addmore.*.summa2' => 'required|numeric',
             'addmore.*.summa3' => 'required|numeric',
+            'addmore.*.kod' => 'nullable',
         ]);
         if($validator->passes()){
             return $model->store3($request);
@@ -640,6 +641,7 @@ class KlentController extends KlentController2
             'addmore.*.summa' => 'required|numeric',
             'addmore.*.summa2' => 'required|numeric',
             'addmore.*.summa3' => 'required|numeric',
+            'addmore.*.kod' => 'nullable',
         ]);
         if($validator->passes()){
             return $model->store3dok($request);
@@ -1054,7 +1056,9 @@ class KlentController extends KlentController2
         $query = $request->get('query');
         if($query != '')
         {
-        $data = Ichkitavar::where('name', 'like', '%'.$query.'%')->orderBy('id', 'DESC')->get();            
+        $data = Ichkitavar::where('name', 'like', '%'.$query.'%')
+                            ->orWhere('kod', 'like', '%'.$query.'%')
+                            ->orderBy('id', 'DESC')->get();            
         }
         else
         {
@@ -1100,7 +1104,9 @@ class KlentController extends KlentController2
         $query = $request->get('query');
         if($query != '')
         {
-        $data = Ichkitavardok::where('name', 'like', '%'.$query.'%')->orderBy('id', 'DESC')->get();            
+        $data = Ichkitavardok::where('name', 'like', '%'.$query.'%')
+                            ->orWhere('kod', 'like', '%'.$query.'%')
+                            ->orderBy('id', 'DESC')->get();            
         }
         else
         {

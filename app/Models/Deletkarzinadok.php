@@ -16,7 +16,8 @@ class Deletkarzinadok extends Model
         'summa2',
         'summa3',
         'kurs', 
-        'kurs2'
+        'kurs2',
+        'kod'
     ];
     public $timestamps = true;
 }

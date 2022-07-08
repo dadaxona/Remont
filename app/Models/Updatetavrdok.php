@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Updatetavrdok extends Model
 {
     use HasFactory;
-    public $fillable = ['ichkitavardok_id', 'name', 'raqam', 'hajm', 'summa', 'summa2', 'summa3'];
+    public $fillable = ['ichkitavardok_id', 'name', 'raqam', 'hajm', 'summa', 'summa2', 'summa3', 'kod'];
     public $timestamps = true;
 }

@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('summa3')->nullable();
             $table->string('kurs')->nullable();
             $table->string('kurs2')->nullable();
+            $table->string('kod')->nullable();
             $table->timestamps();
             $table->foreign('tavar_id')->references('id')->on('tavars')
             ->onDelete('cascade')->onUpdate('cascade');

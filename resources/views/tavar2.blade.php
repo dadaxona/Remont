@@ -112,6 +112,7 @@
                                     <th>Закупочная цена</th>
                                     <th>Оптовая цена</th>
                                     <th>Розничная цена</th>
+                                    <th>Штрих код</th>
                                     <th>Последняя дата</th>
                                     <th>Управлена</th>
                                   </tr>
@@ -130,6 +131,7 @@
                                   <td>{{ $item->summa }}</td>
                                   <td>{{ $item->summa2 }}</td>
                                   <td>{{ $item->summa3 }}</td>
+                                  <td>{{ $item->kod }}</td>
                                   <td>{{ $item->updated_at }}</td>
                                   <td>
                                     <a href="javascript:void(0)" onclick="editPost3({{ $item->id }})" style="color: green">
@@ -326,6 +328,7 @@
               <th>Закупочная цена</th>
               <th>Оптовая цена</th>
               <th>Розничная цена</th>
+              <th>Штрих код</th>
               <th>Удалить</th>
           </tr>
           </thead>
@@ -450,6 +453,11 @@
               <input type="text" class="form-control" name="summa3" id="summa223">
               <span class="text-danger error-text summa3_error"></span>
             </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Штрих код</label>
+              <input type="text" class="form-control" name="kod" id="koddok">
+              <span class="text-danger error-text kod_error"></span>
+            </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Назад</button>
@@ -522,6 +530,7 @@
                                     <th>Закупочная цена</th>
                                     <th>Оптовая цена</th>
                                     <th>Розничная цена</th>
+                                    <th>Штрих код</th>
                                     <th>Последняя дата</th>
                                     <th>Управлена</th>
                                   </tr>
@@ -538,6 +547,7 @@
                                   <td>{{ $item->summa }}</td>
                                   <td>{{ $item->summa2 }}</td>
                                   <td>{{ $item->summa3 }}</td>
+                                  <td>{{ $item->kod }}</td>
                                   <td>{{ $item->updated_at }}</td>
                                   <td>
                                     <a href="javascript:void(0)" onclick="editPost3dok({{ $item->id }})" style="color: green">
@@ -726,6 +736,7 @@
               <th>Закупочная цена</th>
               <th>Оптовая цена</th>
               <th>Розничная цена</th>
+              <th>Штрих код</th>
               <th>Удалить</th>
           </tr>
           </thead>
@@ -826,6 +837,11 @@
               <input type="text" class="form-control" name="summa3" id="summa223dok">
               <span class="text-danger error-text summa3_error"></span>
             </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Штрих код</label>
+              <input type="text" class="form-control" name="kod2" id="kod2dok">
+              <span class="text-danger error-text kod2_error"></span>
+            </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Назад</button>
@@ -852,13 +868,13 @@
     var i = 0;
     $("#add").click(function(){            
             ++i;
-        $("#dynamicTable tbody").append('<tr><td><select name="addmore['+i+'][tavar_id]" id="" class="form-control mx-2">@foreach ($data as $item)<option value="{{ $item->id }}">{{ $item->name }}</option>@endforeach</select></td><td><select name="addmore['+i+'][adress]" id="" class="form-control mx-2">@foreach ($adress as $item)<option value="{{ $item->adress }}">{{ $item->adress }}</option>@endforeach</select></td><td><select name="addmore['+i+'][tavar2_id]" id="" class="form-control mx-2">@foreach ($datatip as $item)<option value="{{ $item->id }}">{{ $item->name }}</option>@endforeach</select></td><td><input type="text" name="addmore['+i+'][raqam]" id="" class="form-control mx-2" placeholder="Предупрежденние"></td><td><input type="number" name="addmore['+i+'][hajm]" id="" class="form-control mx-2" placeholder="Шт"></td><td><input type="text" name="addmore['+i+'][summa]" id="" class="form-control mx-2" placeholder="Закупочная цена"></td><td><input type="text" name="addmore['+i+'][summa2]" id="" class="form-control mx-2" placeholder="Оптовая цена"><td><input type="text" name="addmore['+i+'][summa3]" id="" class="form-control mx-2" placeholder="Розничная цена"></td><td><button type="button" class="btn btn-danger remove-tr">Удалить</button></td></tr>');
+        $("#dynamicTable tbody").append('<tr><td><select name="addmore['+i+'][tavar_id]" id="" class="form-control mx-2">@foreach ($data as $item)<option value="{{ $item->id }}">{{ $item->name }}</option>@endforeach</select></td><td><select name="addmore['+i+'][adress]" id="" class="form-control mx-2">@foreach ($adress as $item)<option value="{{ $item->adress }}">{{ $item->adress }}</option>@endforeach</select></td><td><select name="addmore['+i+'][tavar2_id]" id="" class="form-control mx-2">@foreach ($datatip as $item)<option value="{{ $item->id }}">{{ $item->name }}</option>@endforeach</select></td><td><input type="text" name="addmore['+i+'][raqam]" id="" class="form-control mx-2" placeholder="Предупрежденние"></td><td><input type="number" name="addmore['+i+'][hajm]" id="" class="form-control mx-2" placeholder="Шт"></td><td><input type="text" name="addmore['+i+'][summa]" id="" class="form-control mx-2" placeholder="Закупочная цена"></td><td><input type="text" name="addmore['+i+'][summa2]" id="" class="form-control mx-2" placeholder="Оптовая цена"><td><input type="text" name="addmore['+i+'][summa3]" id="" class="form-control mx-2" placeholder="Розничная цена"></td><td><input type="text" name="addmore['+i+'][kod]" id="" class="form-control mx-2" placeholder="Штрих код"></td><td><button type="button" class="btn btn-danger remove-tr">Удалить</button></td></tr>');
     }); 
 
     var d = 0;
     $("#adddok").click(function(){            
             ++d;
-        $("#dynamicTabledok tbody").append('<tr><td><input type="text" name="addmore['+d+'][name]" id="" class="form-control mx-2" placeholder="Товар номи"></td><td><input type="text" name="addmore['+d+'][raqam]" id="" class="form-control mx-2" placeholder="Предупрежденние"></td><td><input type="number" name="addmore['+d+'][hajm]" id="" class="form-control mx-2" placeholder="Шт"></td><td><input type="text" name="addmore['+d+'][summa]" id="" class="form-control mx-2" placeholder="Закупочная цена"></td><td><input type="text" name="addmore['+d+'][summa2]" id="" class="form-control mx-2" placeholder="Оптовая цена"><td><input type="text" name="addmore['+d+'][summa3]" id="" class="form-control mx-2" placeholder="Розничная цена"></td><td><button type="button" class="btn btn-danger remove-trdok">Удалить</button></td></tr>');
+        $("#dynamicTabledok tbody").append('<tr><td><input type="text" name="addmore['+d+'][name]" id="" class="form-control mx-2" placeholder="Товар номи"></td><td><input type="text" name="addmore['+d+'][raqam]" id="" class="form-control mx-2" placeholder="Предупрежденние"></td><td><input type="number" name="addmore['+d+'][hajm]" id="" class="form-control mx-2" placeholder="Шт"></td><td><input type="text" name="addmore['+d+'][summa]" id="" class="form-control mx-2" placeholder="Закупочная цена"></td><td><input type="text" name="addmore['+d+'][summa2]" id="" class="form-control mx-2" placeholder="Оптовая цена"><td><input type="text" name="addmore['+d+'][summa3]" id="" class="form-control mx-2" placeholder="Розничная цена"></td><td><input type="text" name="addmore['+d+'][kod]" id="" class="form-control mx-2" placeholder="Штрих код"></td><td><button type="button" class="btn btn-danger remove-trdok">Удалить</button></td></tr>');
     }); 
   
     $(document).on('click', '.remove-tr', function(){

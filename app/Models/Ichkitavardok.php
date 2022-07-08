@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Ichkitavardok extends Model
 {
     use HasFactory;
-    public $fillable = ['name', 'raqam', 'hajm', 'summa', 'summa2', 'summa3', 'kurs', 'kurs2'];
+    public $fillable = ['name', 'raqam', 'hajm', 'summa', 'summa2', 'summa3', 'kurs', 'kurs2', 'kod'];
     public $timestamps = true;
 }
