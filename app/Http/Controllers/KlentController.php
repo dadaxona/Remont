@@ -361,9 +361,9 @@ class KlentController extends KlentController2
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'tel' => 'required',
-            'firma' => 'required',
-            'inn' => 'required',
+            'tel' => 'nullable',
+            'firma' => 'nullable',
+            'inn' => 'nullable',
         ]);
         if($validator->passes()){
             return $model->storead($request);
@@ -376,9 +376,9 @@ class KlentController extends KlentController2
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'tel' => 'required',
-            'firma' => 'required',
-            'inn' => 'required',
+            'tel' => 'nullable',
+            'firma' => 'nullable',
+            'inn' => 'nullable',
         ]);
         if($validator->passes()){
             return $model->storedok($request);
