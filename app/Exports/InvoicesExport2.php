@@ -2,16 +2,16 @@
 
 namespace App\Exports;
 
-use App\Models\Usta2;
+use App\Models\Ichkitavar;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
-class InvoicesExport implements FromCollection
+class InvoicesExport2 implements FromCollection
 {
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return Usta2::all();  
+        return Ichkitavar::all();  
     }
 }

@@ -2,16 +2,16 @@
 
 namespace App\Exports;
 
-use App\Models\Usta2;
+use App\Models\Tavar;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
-class InvoicesExport implements FromCollection
+class InvoicesExport3 implements FromCollection
 {
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return Usta2::all();  
+        return Tavar::all();  
     }
 }

@@ -671,7 +671,6 @@
     <script type="text/javascript" src="assets/js/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="assets/js/jquery-ui/jquery-ui.min.js "></script>
     <script type="text/javascript" src="assets/js/bootstrap/js/bootstrap.min.js "></script>
-    <script type="text/javascript" src="assets/pages/widget/excanvas.js "></script>
     <!-- waves js -->
     <script src="assets/pages/waves/js/waves.min.js"></script>
     <!-- jquery slimscroll js -->

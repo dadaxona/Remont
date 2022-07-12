@@ -211,7 +211,7 @@
     </div>
 </div>
 <div class="row">
-<div class="card col-10">
+<div class="card col-12">
     <div class="card-header">
         <input type="hidden" id="onval" value="0">
           <div class="row col-5">
@@ -553,7 +553,7 @@
     </div>
 </div>
 <div class="row">
-<div class="card col-10">
+<div class="card col-12">
     <div class="card-header">
         <div class="card-header-left">
             <input type="text" name="search" id="searchdok" class="form-control" placeholder="Поиск" />

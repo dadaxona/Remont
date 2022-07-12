@@ -368,7 +368,7 @@ class KlentController extends KlentController2
         if($validator->passes()){
             return $model->storead($request);
         }else{            
-            return response()->json(['code'=>0, 'msg'=>'Малумотларни толдирилмаган', 'error'=>$validator->errors()->toArray()]);
+            return response()->json(['code'=>0, 'msg'=>'Малумотлар толдирилмаган', 'error'=>$validator->errors()->toArray()]);
         }
     }
 
@@ -383,7 +383,7 @@ class KlentController extends KlentController2
         if($validator->passes()){
             return $model->storedok($request);
         }else{            
-            return response()->json(['code'=>0, 'msg'=>'Малумотларни толдирилмаган', 'error'=>$validator->errors()->toArray()]);
+            return response()->json(['code'=>0, 'msg'=>'Малумотлар толдирилмаган', 'error'=>$validator->errors()->toArray()]);
         }
     }
     
@@ -532,7 +532,7 @@ class KlentController extends KlentController2
         if($validator->passes()){
             return $model->store2($request);
         }else{            
-            return response()->json(['code'=>0, 'msg'=>'Малумотларни толдирилмаган', 'error'=>$validator->errors()->toArray()]);
+            return response()->json(['code'=>0, 'msg'=>'Малумотлар толдирилмаган', 'error'=>$validator->errors()->toArray()]);
         }
     }
 
@@ -545,7 +545,7 @@ class KlentController extends KlentController2
         if($validator->passes()){
             return $model->store2tip($request);
         }else{            
-            return response()->json(['code'=>0, 'msg'=>'Малумотларни толдирилмаган', 'error'=>$validator->errors()->toArray()]);
+            return response()->json(['code'=>0, 'msg'=>'Малумотлар толдирилмаган', 'error'=>$validator->errors()->toArray()]);
         }
     }
 
@@ -628,7 +628,27 @@ class KlentController extends KlentController2
         if($validator->passes()){
             return $model->store3($request);
         }else{            
-            return response()->json(['code'=>0, 'msg'=>'Малумотларни толдирилмаган', 'error'=>$validator->errors()->toArray()]);
+            return response()->json(['code'=>0, 'msg'=>'Малумотлар толдирилмаган', 'error'=>$validator->errors()->toArray()]);
+        }
+    }
+
+    public function storedd3(Request $request, KlentServis $model)
+    {
+        $validator = Validator::make($request->all(), [
+            'tavar_id' => 'required',
+            'adress' => 'nullable',
+            'tavar2_id' => 'required',
+            'raqam' => 'nullable',
+            'hajm' => 'required',
+            'summa' => 'required|numeric',
+            'summa2' => 'required|numeric',
+            'summa3' => 'required|numeric',
+            'kod' => 'nullable',
+        ]);
+        if($validator->passes()){
+            return $model->storedd3($request);
+        }else{            
+            return response()->json(['code'=>0, 'msg'=>'Малумотлар толдирилмаган', 'error'=>$validator->errors()->toArray()]);
         }
     }
 
@@ -646,7 +666,7 @@ class KlentController extends KlentController2
         if($validator->passes()){
             return $model->store3dok($request);
         }else{            
-            return response()->json(['code'=>0, 'msg'=>'Малумотларни толдирилмаган', 'error'=>$validator->errors()->toArray()]);
+            return response()->json(['code'=>0, 'msg'=>'Малумотлар толдирилмаган', 'error'=>$validator->errors()->toArray()]);
         }
     }
     
@@ -665,7 +685,7 @@ class KlentController extends KlentController2
         if($validator->passes()){
             return $model->updates($request);
         }else{            
-            return response()->json(['code'=>0, 'msg'=>'Малумотларни толдирилмаган', 'error'=>$validator->errors()->toArray()]);
+            return response()->json(['code'=>0, 'msg'=>'Малумотлар толдирилмаган', 'error'=>$validator->errors()->toArray()]);
         }
     }
 
@@ -682,7 +702,7 @@ class KlentController extends KlentController2
         if($validator->passes()){
             return $model->updatesdok($request);
         }else{            
-            return response()->json(['code'=>0, 'msg'=>'Малумотларни толдирилмаган', 'error'=>$validator->errors()->toArray()]);
+            return response()->json(['code'=>0, 'msg'=>'Малумотлар толдирилмаган', 'error'=>$validator->errors()->toArray()]);
         }
     }
     
@@ -746,7 +766,7 @@ class KlentController extends KlentController2
         if($validator->passes()){
             return $model->store4($request);
         }else{            
-            return response()->json(['code'=>0, 'msg'=>'Малумотларни толдирилмаган', 'error'=>$validator->errors()->toArray()]);
+            return response()->json(['code'=>0, 'msg'=>'Малумотлар толдирилмаган', 'error'=>$validator->errors()->toArray()]);
         }
     }
 
@@ -787,7 +807,7 @@ class KlentController extends KlentController2
         if($validator->passes()){
             return $model->storeishchi($request);
         }else{            
-            return response()->json(['code'=>0, 'msg'=>'Малумотларни толдирилмаган', 'error'=>$validator->errors()->toArray()]);
+            return response()->json(['code'=>0, 'msg'=>'Малумотлар толдирилмаган', 'error'=>$validator->errors()->toArray()]);
         }
     }
     
@@ -800,7 +820,7 @@ class KlentController extends KlentController2
         if($validator->passes()){
             return $model->storeadmin($request);
         }else{            
-            return response()->json(['code'=>0, 'msg'=>'Малумотларни толдирилмаган', 'error'=>$validator->errors()->toArray()]);
+            return response()->json(['code'=>0, 'msg'=>'Малумотлар толдирилмаган', 'error'=>$validator->errors()->toArray()]);
         }
     }
 
@@ -838,7 +858,7 @@ class KlentController extends KlentController2
         if($validator->passes()){
             return $model->pastavka($request);
         }else{            
-            return response()->json(['code'=>0, 'msg'=>'Малумотларни толдирилмаган', 'error'=>$validator->errors()->toArray()]);
+            return response()->json(['code'=>0, 'msg'=>'Малумотлар толдирилмаган', 'error'=>$validator->errors()->toArray()]);
         }
     }
 

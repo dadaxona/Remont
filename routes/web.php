@@ -17,7 +17,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login2', [AuthController::class,'login2']);
 Route::get('a', [AuthController::class,'typpe'])->name('typpe');
 Route::get('exports', [AuthController::class,'exports'])->name('exports');
+Route::get('exports2', [AuthController::class,'exports2'])->name('exports2');
+Route::get('exports3', [AuthController::class,'exports3'])->name('exports3');
+Route::get('exports4', [AuthController::class,'exports4'])->name('exports4');
+Route::get('exports5', [AuthController::class,'exports5'])->name('exports5');
+Route::get('exports6', [AuthController::class,'exports6'])->name('exports6');
 Route::post('imports', [AuthController::class,'imports'])->name('imports');
+Route::post('import2', [AuthController::class,'import2'])->name('import2');
+Route::post('import3', [AuthController::class,'import3'])->name('import3');
+Route::post('import4', [AuthController::class,'import4'])->name('import4');
+Route::post('import5', [AuthController::class,'import5'])->name('import5');
+Route::post('import6', [AuthController::class,'import6'])->name('import6');
 Route::post('storeishchi', [KlentController::class, 'storeishchi'])->name('storeishchi');
 Route::post('storeadmin', [KlentController::class, 'storeadmin'])->name('storeadmin');
 Route::get('live_ishchi', [KlentController::class, 'live_ishchi'])->name('live_ishchi');
@@ -65,6 +75,7 @@ Route::post('deleteer2/{id}', [KlentController::class, 'deleteer2']);
 Route::get('edit3', [KlentController::class, 'edit3'])->name('edit3');
 
 Route::post('store3', [KlentController::class, 'store3'])->name('store3');
+Route::post('storedd3', [KlentController::class, 'storedd3'])->name('storedd3');
 Route::post('store3dok', [KlentController::class, 'store3dok'])->name('store3dok');
 Route::post('updates', [KlentController::class, 'updates'])->name('updates');
 Route::post('updatesdok', [KlentController::class, 'updatesdok'])->name('updatesdok');
@@ -170,6 +181,7 @@ Route::post('udalitsqlad', [KlentController::class, 'udalitsqlad'])->name('udali
 Route::get('yangilashsqlad', [KlentController::class, 'yangilashsqlad'])->name('yangilashsqlad');
 Route::post('saqlashsqlad', [KlentController::class, 'saqlashsqlad'])->name('saqlashsqlad');
 Route::post('tayyorsqlad', [KlentController::class, 'tayyorsqlad'])->name('tayyorsqlad');
+Route::get('iidd', [KlentController::class, 'iidd'])->name('iidd');
 
 Route::get('/mijozlar.php', [AuthController::class, 'mijozlar'])->name('mijozlar');
 Route::get('/usta.php', [AuthController::class, 'usta'])->name('usta');

@@ -3374,6 +3374,11 @@ class KlentController2 extends Controller
         return response()->json(['status'=>200, 'data'=>$date]);
     }
 
+    public function iidd(Request $request)
+    {
+        $data = Tavar2::where('tavar_id', $request->id)->get();
+        return response()->json($data);
+    }
     public function udalitsqlad(Request $request)
     {
         Sqladpoytaxt::find($request->id)->delete($request->id);   

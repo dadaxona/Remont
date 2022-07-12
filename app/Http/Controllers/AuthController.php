@@ -3,7 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Exports\InvoicesExport;
+use App\Exports\InvoicesExport2;
+use App\Exports\InvoicesExport3;
+use App\Exports\InvoicesExport4;
+use App\Exports\InvoicesExport5;
+use App\Exports\InvoicesExport6;
 use App\Imports\UsersImport;
+use App\Imports\UsersImport2;
+use App\Imports\UsersImport3;
+use App\Imports\UsersImport4;
+use App\Imports\UsersImport5;
+use App\Imports\UsersImport6;
 use App\Models\Admin;
 use App\Models\Auth;
 use App\Models\Clentitog;
@@ -47,9 +57,64 @@ class AuthController extends Controller
         return Excel::download(new InvoicesExport, 'invoices.xlsx');
     }
 
+    public function exports2() 
+    {
+        return Excel::download(new InvoicesExport2, 'invoices.xlsx');
+    }
+
+    public function exports3() 
+    {
+        return Excel::download(new InvoicesExport3, 'invoices.xlsx');
+    }
+
+    public function exports4() 
+    {
+        return Excel::download(new InvoicesExport4, 'invoices.xlsx');
+    }
+
+    public function exports5() 
+    {
+        return Excel::download(new InvoicesExport5, 'invoices.xlsx');
+    }
+
+    public function exports6() 
+    {
+        return Excel::download(new InvoicesExport6, 'invoices.xlsx');
+    }
+
     public function imports(Request $request) 
     {
         Excel::import(new UsersImport(), $request->file('import'));
+        return back();
+    }
+    
+    public function import2(Request $request) 
+    {
+        Excel::import(new UsersImport2(), $request->file('import'));
+        return back();
+    }
+    
+    public function import3(Request $request) 
+    {
+        Excel::import(new UsersImport3(), $request->file('import'));
+        return back();
+    }
+    
+    public function import4(Request $request) 
+    {
+        Excel::import(new UsersImport4(), $request->file('import'));
+        return back();
+    }
+
+    public function import5(Request $request) 
+    {
+        Excel::import(new UsersImport5(), $request->file('import'));
+        return back();
+    }
+    
+    public function import6(Request $request) 
+    {
+        Excel::import(new UsersImport6(), $request->file('import'));
         return back();
     }
     

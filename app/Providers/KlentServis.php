@@ -349,6 +349,75 @@ class KlentServis extends KlentServis2
         return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);
     }
     
+    public function storedd3($request)
+    {
+            $foo = Ichkitavar::where('tavar_id', $request["tavar_id"])
+                            ->where('adress', $request["adress"])
+                            ->where('tavar2_id', $request["tavar2_id"])
+                            ->first();
+            if($foo){
+                $a = $foo->hajm + $request["hajm"];
+                $b = $request["summa"] - $foo->summa;
+                $c = $foo->summa + $b / 2;
+                $fff = Tavar2::find($request["tavar2_id"]);
+                Ichkitavar::where('tavar_id', $request["tavar_id"])
+                        ->where('adress', $request["adress"])
+                        ->where('tavar2_id', $request["tavar2_id"])
+                        ->update([
+                            'name'=>$fff->name,
+                            'raqam' => $request["raqam"],
+                            'hajm' => $a, 
+                            'summa' => $c,
+                            'summa2' => $request["summa2"],
+                            'summa3' => $request["summa3"],
+                            'kod' => $request["kod"],
+                        ]);
+                $data = Ichkitavar::where('tavar_id', $request["tavar_id"])
+                        ->where('adress', $request["adress"])
+                        ->where('tavar2_id', $request["tavar2_id"])
+                        ->first();
+                Updatetavr::create([
+                        'tavar_id'=>$request["tavar_id"],
+                        'ichkitavar_id'=>$data->id,
+                        'adress'=>$request["adress"],
+                        'tavar2_id'=>$request["tavar2_id"],
+                        'raqam'=>$request["raqam"],
+                        'hajm'=>$request["hajm"],
+                        'summa'=>$request["summa"],
+                        'summa2'=>$request["summa2"],
+                        'summa3'=>$request["summa3"],
+                        'kod'=>$request["kod"],
+                    ]);
+            }else{
+                $fff = Tavar2::find($request["tavar2_id"]);
+                $data = Ichkitavar::create([
+                    'tavar_id'=>$request["tavar_id"],
+                    'adress'=>$request["adress"],
+                    'tavar2_id'=>$request["tavar2_id"],
+                    'name'=>$fff["name"],
+                    'raqam'=>$request["raqam"],
+                    'hajm'=>$request["hajm"],
+                    'summa'=>$request["summa"],
+                    'summa2'=>$request["summa2"],
+                    'summa3'=>$request["summa3"],
+                    'kod'=>$request["kod"],
+                ]);
+                Updatetavr::create([
+                    'tavar_id'=>$request["tavar_id"],
+                    'ichkitavar_id'=>$data->id,
+                    'adress'=>$request["adress"],
+                    'tavar2_id'=>$request["tavar2_id"],
+                    'raqam'=>$request["raqam"],
+                    'hajm'=>$request["hajm"],
+                    'summa'=>$request["summa"],
+                    'summa2'=>$request["summa2"],
+                    'summa3'=>$request["summa3"],
+                    'kod'=>$request["kod"],
+                ]);
+            }
+        return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);
+    }
+    
     public function updatesdok($request)
     {
         $updatetavr = Updatetavrdok::where('ichkitavardok_id', $request->id)->first();

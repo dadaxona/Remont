@@ -82,6 +82,29 @@
                             </svg>
                             Создать
                           </button>
+                          <button type="button" class="btn btn-primary m-0 p-1" id="addPostm2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                            Создать
+                          </button>
+                          <a class="btn btn-success m-0 p-1 pr-2" href="#" onclick="event.preventDefault(); document.getElementById('ddr').submit();">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
+                              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                              <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                            </svg>
+                            Excel
+                          </a>
+                          <button class="btn btn-info p-1 pr-2" id="iddr2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                              <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                            </svg>
+                            Import
+                          </button>
+                          <form action="{{ route('exports2') }}" method="GET" id="ddr">
+                          </form>
                         </div>
                         <div class="col-3 mt-0">
                             <form action="{{ route('datasearche') }}" method="GET">
@@ -109,9 +132,9 @@
                                     <th>Поставщик</th>
                                     <th>Имя</th>
                                     <th>Шт</th>
-                                    <th>Закупочная цена</th>
-                                    <th>Оптовая цена</th>
-                                    <th>Розничная цена</th>
+                                    <th>Закупочная</th>
+                                    <th>Оптовая</th>
+                                    <th>Розничная</th>
                                     <th>Штрих код</th>
                                     <th>Последняя дата</th>
                                     <th>Управлена</th>
@@ -456,6 +479,83 @@
             <div class="mb-3">
               <label for="message-text" class="col-form-label">Штрих код</label>
               <input type="text" class="form-control" name="kod" id="koddok">
+              <span class="text-danger error-text kod_error"></span>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Назад</button>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="stores3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="storesm3" action="{{ route('storedd3') }}" method="POST">
+            @csrf
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Тип</label>
+                <select name="tavar_id" class="form-control" id="iidd">
+                  <option value="">--Танланг--</option>
+                  @foreach($data as $item)
+                    <option value="{{ $item->id }}">{{ $item->name }}</option>                                
+                  @endforeach
+                </select>
+              <span class="text-danger error-text tavar_id_error"></span>
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Етказиб берувчи</label>
+                <select name="adress" class="form-control">
+                  <option value="">--Танланг--</option>
+                  @foreach($adress as $item)
+                    <option value="{{ $item->adress }}">{{ $item->adress }}</option>                                
+                  @endforeach
+                </select>
+              <span class="text-danger error-text adress_error"></span>
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Тавар номи</label>
+                <select name="tavar2_id" class="form-control" id="iidd2">
+                  <option value="">--Нот--</option>                  
+                </select>
+              <span class="text-danger error-text tavar2_id_error"></span>
+            </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Предупреждение</label>
+            <input type="text" class="form-control" name="raqam"  id="">
+            <span class="text-danger error-text raqam_error"></span>
+          </div>            
+          <div class="mb-3">
+              <label for="message-text" class="col-form-label">Тавар хажм</label>
+              <input type="text" class="form-control" name="hajm" id="">
+              <span class="text-danger error-text hajm_error"></span>
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Закупочная цена</label>
+              <input type="text" class="form-control" name="summa" id="">
+              <span class="text-danger error-text summa_error"></span>
+            </div> 
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Оптовая цена</label>
+              <input type="text" class="form-control" name="summa2" id="">
+              <span class="text-danger error-text summa2_error"></span>
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Розничная цена</label>
+              <input type="text" class="form-control" name="summa3" id="">
+              <span class="text-danger error-text summa3_error"></span>
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Штрих код</label>
+              <input type="text" class="form-control" name="kod" id="">
               <span class="text-danger error-text kod_error"></span>
             </div>
       </div>
@@ -853,6 +953,28 @@
 </div>
 @endif
 
+
+<div class="modal fade" id="exxx" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Import Excel</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="{{ route('import2') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="modal-body">
+          <input type="file" name="import" class="form-control">
+        </div>
+        <div class="text-center pb-4">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script>
 
     // $(function(){
@@ -865,6 +987,10 @@
           }
     });
 
+    $("#iddr2").on("click", function(){
+      $("#exxx").modal('show');
+    });
+  
     var i = 0;
     $("#add").click(function(){            
             ++i;
@@ -886,6 +1012,32 @@
         $(this).parents('tr').remove();
         --d;               
     });
+
+    $(document).on('change', "#iidd", function(){
+        var id = $(this).val();
+        $.ajax({
+              url:"{{ route('iidd') }}",
+              method:'GET',
+              data:{
+                id: id
+              },
+              dataType:'json',
+              success:function(data)
+              {
+                let rows =  '';
+                  data.forEach(room => {
+                  rows += `
+                  <option value="${room.id}">${room.name}</option>`;
+              });
+              $("#iidd2").html(rows);
+              }
+          });                   
+    });
+    
+    $( "#addPostm2" ).on( "click", function() {
+      $('#stores3').modal('show');
+    });
+    
 
     $( "#addPost3" ).on( "click", function() {
       $('#tavar2').show('fold', 1000);
@@ -925,7 +1077,7 @@
               {
                 $('#tavar_tip').html(data.table_data);
               }
-          })
+          });
       }
 
       fetch_customer_data2();
@@ -1217,6 +1369,34 @@
   }
 
   $('#TavarFormTable').on('submit', function(e) {
+    e.preventDefault();
+    var form = this;
+    $.ajax({
+      url:$(form).attr('action'),
+      method:$(form).attr('method'),
+      data:new FormData(form),
+      processData:false,
+      dataType:'json',
+      contentType:false,
+      beforeSend:function(){
+        $(form).find('span.error-text').text('');
+      },
+      success:function(data){
+        if(data.code == 200){
+          toastr.success(data.msg);
+          location.reload(true);
+        }
+        if(data.code == 0){
+          $.each(data.error, function(prefix, val){
+            $(form).find('span.'+prefix+'_error').text(val[0]);
+          });
+          toastr.error(data.msg);
+        }      
+      }
+    });
+  });
+
+  $('#storesm3').on('submit', function(e) {
     e.preventDefault();
     var form = this;
     $.ajax({

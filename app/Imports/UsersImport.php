@@ -3,7 +3,6 @@
 namespace App\Imports;
 
 use App\Models\Usta2;
-use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
 
 class UsersImport implements ToModel

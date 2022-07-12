@@ -3,7 +3,28 @@
 @if ($brends->login == "Admin")
 <div class="card p-0">
   <div class="card-header">
-          <button type="button" class="btn btn-primary" onclick="addPost()">Клиент Яратиш</button>
+          <div class="col-10">
+            <div class="row">
+              <div class="col-4 mr-2">
+                <button type="button" class="btn btn-primary" onclick="addPost()">Клиент Яратиш</button>                      
+                <a class="btn btn-success" href="#" onclick="event.preventDefault(); document.getElementById('ddr').submit();">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
+                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                    <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                  </svg>
+                  Excel
+                </a>
+                <button class="btn btn-info" id="iddr2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                  </svg>
+                  Import
+                </button>
+            </div>
+          </div>
+          <form action="{{ route('exports5') }}" method="GET" id="ddr">
+          </form>
         <div class="row">
           {{-- <div class="col-12"> --}}
             <table class="tab table-hover" id="laravel_crud">
@@ -24,6 +45,27 @@
       </div>
   </div>
   
+  <div class="modal fade" id="exxx" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Import Excel</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="{{ route('import5') }}" method="POST" enctype="multipart/form-data">
+          @csrf
+          <div class="modal-body">
+            <input type="file" name="import" class="form-control">
+          </div>
+          <div class="text-center pb-4">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
 <div class="modal fade" id="post-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -168,12 +210,16 @@
 @endif
 
 <script>
-    $.ajaxSetup({
-      headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-    });
-  
+  $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+  });
+    
+  $("#iddr2").on("click", function(){
+    $("#exxx").modal('show');
+  });
+
   function addPost() {
     $("#id").val('');
     $('#post-modal').modal('show');
