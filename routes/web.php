@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/login2', [AuthController::class,'login2']);
 Route::get('a', [AuthController::class,'typpe'])->name('typpe');
 Route::get('exports', [AuthController::class,'exports'])->name('exports');
 Route::post('imports', [AuthController::class,'imports'])->name('imports');
@@ -28,12 +28,16 @@ Route::post('deleteishchi/{id}', [KlentController::class, 'deleteishchi']);
 Route::post('deleteadmin/{id}', [KlentController::class, 'deleteadmin']);
 
 Route::resource('posts', KlentController::class);
-Route::get('/', [AuthController::class,'login']);
 Route::post('login-user', [AuthController::class,'loginuser'])->name('login-user');
-Route::get('/glavninachal', [AuthController::class,'dashbord'])->middleware('isLog');
 Route::get('/logaut', [AuthController::class,'logaut']);
 // Route::get('/profil', [AuthController::class,'profil'])->name('profil');
 Route::get('/setting', [AuthController::class,'setting'])->name('setting');
+
+
+Route::group(['middleware'=>['isLog']], function (){
+    Route::get('/', [AuthController::class,'login']);
+    Route::get('/glavninachal', [AuthController::class,'dashbord']);
+});
 
 Route::get('tavar_live', [KlentController::class, 'tavar_live'])->name('tavar_live');
 Route::get('tavar2_live', [KlentController::class, 'tavar2_live'])->name('tavar2_live');

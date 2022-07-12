@@ -28,6 +28,11 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class AuthController extends Controller
 {
+    public function login2()
+    {
+      return view("auth.login2");
+    }
+    
     public function typpe()
     {
         $num = 11000; 
