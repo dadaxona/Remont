@@ -1363,6 +1363,7 @@
           $("#summa12").val(response.summa);
           $("#summa22").val(response.summa2);
           $("#summa223").val(response.summa3);
+          $("#koddok").val(response.kod);
           $('#updates2').modal('show');
       }
     });
