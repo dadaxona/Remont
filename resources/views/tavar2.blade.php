@@ -131,7 +131,7 @@
                                     <th>Тип</th>
                                     <th>Поставщик</th>
                                     <th>Имя</th>
-                                    <th>Шт</th>
+                                    <th class="pl-4">Шт</th>
                                     <th>Закупочная</th>
                                     <th>Оптовая</th>
                                     <th>Розничная</th>
@@ -147,9 +147,9 @@
                                   <td>{{ $item->adress }}</td>
                                   <td>{{ $item->tavar2->name }}</td>
                                   @if ($item->hajm <= $item->raqam)
-                                  <td style="background-color: rgb(237, 0, 0); color: white;">{{ $item->hajm }}</td>                                        
+                                  <td style="background-color: rgb(237, 0, 0); color: white;" class="pl-4">{{ $item->hajm }}</td>                                        
                                   @else
-                                  <td>{{ $item->hajm }}</td>  
+                                  <td class="pl-4">{{ $item->hajm }}</td>  
                                   @endif
                                   <td>{{ $item->summa }}</td>
                                   <td>{{ $item->summa2 }}</td>
@@ -452,7 +452,7 @@
               <span class="text-danger error-text adress_error"></span>
             </div>
           <div class="mb-3">
-            <label for="message-text" class="col-form-label">Ид ракам</label>
+            <label for="message-text" class="col-form-label">Предупреждение</label>
             <input type="text" class="form-control" name="raqam"  id="raqam2">
             <span class="text-danger error-text raqam_error"></span>
           </div>            
