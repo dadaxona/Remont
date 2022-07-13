@@ -423,7 +423,7 @@
             <input type="hidden" name="id" id="ichki_id">
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">Тип</label>
-                <select name="tavar_id" class="form-control">
+                <select name="tavar_id" class="form-control" id="iidd3">
                   <option value="">--Танланг--</option>
                   @foreach($data as $item)
                     <option value="{{ $item->id }}">{{ $item->name }}</option>                                
@@ -443,11 +443,8 @@
             </div>
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">Тавар номи</label>
-                <select name="tavar2_id" class="form-control">
-                  <option value="">--Танланг--</option>
-                  @foreach($datatip as $item)
-                    <option value="{{ $item->id }}">{{ $item->name }}</option>                                
-                  @endforeach
+                <select name="tavar2_id" class="form-control" id="iidd4">
+                  <option value="">-- Нот --</option>
                 </select>
               <span class="text-danger error-text adress_error"></span>
             </div>
@@ -524,7 +521,7 @@
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">Тавар номи</label>
                 <select name="tavar2_id" class="form-control" id="iidd2">
-                  <option value="">--Нот--</option>                  
+                  <option value="">-- Нот --</option>                  
                 </select>
               <span class="text-danger error-text tavar2_id_error"></span>
             </div>
@@ -1014,26 +1011,47 @@
     });
 
     $(document).on('change', "#iidd", function(){
-        var id = $(this).val();
-        $.ajax({
-              url:"{{ route('iidd') }}",
-              method:'GET',
-              data:{
-                id: id
-              },
-              dataType:'json',
-              success:function(data)
-              {
-                let rows =  '';
-                  data.forEach(room => {
-                  rows += `
-                  <option value="${room.id}">${room.name}</option>`;
-              });
-              $("#iidd2").html(rows);
-              }
-          });                   
+      var id = $(this).val();
+      $.ajax({
+        url:"{{ route('iidd') }}",
+        method:'GET',
+        data:{
+          id: id
+        },
+        dataType:'json',
+        success:function(data)
+        {
+          let rows =  '';
+            data.forEach(room => {
+            rows += `
+            <option value="${room.id}">${room.name}</option>`;
+        });
+        $("#iidd2").html(rows);
+        }
+      });                   
     });
     
+    $(document).on('change', "#iidd3", function(){
+      var id = $(this).val();
+      $.ajax({
+        url:"{{ route('iidd') }}",
+        method:'GET',
+        data:{
+          id: id
+        },
+        dataType:'json',
+        success:function(data)
+        {
+          let rows =  '';
+            data.forEach(room => {
+            rows += `
+            <option value="${room.id}">${room.name}</option>`;
+        });
+        $("#iidd4").html(rows);
+        }
+      });                   
+    });
+
     $( "#addPostm2" ).on( "click", function() {
       $('#stores3').modal('show');
     });
