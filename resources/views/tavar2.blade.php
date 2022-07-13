@@ -444,7 +444,6 @@
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">Тавар номи</label>
                 <select name="tavar2_id" class="form-control" id="iidd4">
-                  <option value="">-- Нот --</option>
                 </select>
               <span class="text-danger error-text adress_error"></span>
             </div>
@@ -520,8 +519,7 @@
             </div>
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">Тавар номи</label>
-                <select name="tavar2_id" class="form-control" id="iidd2">
-                  <option value="">-- Нот --</option>                  
+                <select name="tavar2_id" class="form-control" id="iidd2">       
                 </select>
               <span class="text-danger error-text tavar2_id_error"></span>
             </div>
@@ -1351,7 +1349,7 @@
         id: id
       },
       success: function(response) {
-          $("#ichki_iddok").val(response.ichkitavardok_id);
+          $("#ichki_iddok").val(response.id);
           $("#namedok").val(response.name);
           $("#raqam2dok").val(response.raqam);
           $("#hajm2dok").val(response.hajm);
@@ -1371,7 +1369,7 @@
         id: id
       },
       success: function(response) {
-          $("#ichki_id").val(response.ichkitavar_id);
+          $("#ichki_id").val(response.id);
           $("#tavar_id").val(response.tavar_id);
           $("#adress").val(response.adress);
           $("#tavar2_id").val(response.tavar2_id);

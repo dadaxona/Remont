@@ -40,7 +40,6 @@
         .extr22{
             height: 100vh;
         }
-        
         .extr25552{
             height: 346px;
         }
@@ -55,15 +54,21 @@
             width: 100%;
             margin: 5px; 
         }
+                
         .ext{
             height: 460px;
         }
         .scrolll2{
             overflow-x: auto;
+        }        
+        .ext555{
+            height: 460px;
         }
-
         .rty2{
             width: 100%;
+        }
+        .rty2pul{
+            width: 200%;
         }
         .buts{
             height: 35px;

@@ -165,6 +165,7 @@ Route::get('clent_tipdok', [KlentController::class, 'clent_tipdok'])->name('clen
 Route::get('savdobirlamchi', [KlentController::class, 'savdobirlamchi'])->name('savdobirlamchi');
 Route::get('savdobirlamchidok', [KlentController::class, 'savdobirlamchidok'])->name('savdobirlamchidok');
 Route::get('clents2', [KlentController::class, 'clents2'])->name('clents2');
+Route::get('clents2aniq', [KlentController::class, 'clents2aniq'])->name('clents2aniq');
 Route::get('clents2dok', [KlentController::class, 'clents2dok'])->name('clents2dok');
 Route::post('clents3', [KlentController::class, 'clents3'])->name('clents3');
 Route::post('clents3dok', [KlentController::class, 'clents3dok'])->name('clents3dok');

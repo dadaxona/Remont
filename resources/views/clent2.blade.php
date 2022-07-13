@@ -74,7 +74,31 @@
                   </div>
                 </div>
               </div>
-              <div class="col-6 bor">
+              <div class="col-4 bor">
+                <div class="table-responsive">
+                  <div class="ext555 scrolll2">
+                    <div class="rty2pul">
+                      <table class="tab table-hover">
+                        <thead>
+                          <tr>
+                            <th>Клент</th>
+                            <th>Итого</th>
+                            <th>Наличные</th>
+                            <th>Карта</th>
+                            <th>Безнал</th>
+                            <th>Долг</th>
+                            <th>Последняя дата</th>
+                          </tr>             
+                      </thead>
+                          <tbody id="dolg">
+          
+                          </tbody>
+                      </table>
+                    </div> 
+                  </div>
+                </div> 
+              </div>
+              <div class="col-6">
                 <div class="table-responsive">
                   <div class="ext scrolll2">
                     <div class="rty2">
@@ -100,31 +124,7 @@
                   </div>
                 </div> 
               </div>
-              <div class="col-4">
-                <div class="table-responsive">
-                  <div class="ext scrolll2">
-                    <div class="rty2">
-                      <table class="tab table-hover">
 
-                        <thead>
-                          <tr>
-                            <th>Клент</th>
-                            <th>Итого</th>
-                            <th>Наличные</th>
-                            <th>Карта</th>
-                            <th>Безнал</th>
-                            <th>Долг</th>
-                            <th>Последняя дата</th>
-                          </tr>             
-                      </thead>
-                          <tbody id="dolg">
-          
-                          </tbody>
-                      </table>
-                    </div> 
-                  </div>
-                </div> 
-              </div>
               <div class="col-12 m-0 p-0 borders">
                 <div class="row">
                   <div class="col-2 bor1">
@@ -566,6 +566,29 @@
       });
     });
 
+    $(document).on('click', "#cret", function(){
+    var id = $(this).data("id");
+    $("#oydi").val(id);
+    $.ajax({
+          url:"{{ route('clents2aniq') }}",
+          method:'GET',
+          data:{
+            id: id
+          },
+          dataType:'json',
+          success:function(data)
+          {
+            $('#savdo').html(data.output);
+            fetch_customer_data();
+            $("#clentname").val(data.clent.name);
+            $("#tavarshtuk2").val(data.foo2.tavarshtuk);
+            $("#shtuk2").val(data.foo2.shtuk);
+            $("#foiz2").val(data.foo2.foiz);
+            $("#itoge2").val(data.foo2.opshi);
+          }
+      });
+    });
+  
     $(document).on('click', "#vseclent", function(event){
       event.preventDefault();
       let _token  = $('meta[name="csrf-token"]').attr('content');

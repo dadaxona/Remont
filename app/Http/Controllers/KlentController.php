@@ -708,13 +708,13 @@ class KlentController extends KlentController2
     
     public function edit4(Request $request)
     {
-        $post = Updatetavr::where('ichkitavar_id', $request->id)->first();    
+        $post = Ichkitavar::find($request->id);    
         return response()->json($post);
     }
 
     public function edit4dok(Request $request)
     {
-        $post = Updatetavrdok::where('ichkitavardok_id', $request->id)->first();    
+        $post = Ichkitavardok::find($request->id);    
         return response()->json($post);
     }
     

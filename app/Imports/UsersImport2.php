@@ -27,19 +27,6 @@ class UsersImport2 implements ToCollection
                 'kurs2'=>$row[11],
                 'kod'=>$row[12]
             ]);
-
-            Updatetavr::create([
-                'tavar_id'=>$row[1],
-                'ichkitavar_id'=>$data->id,
-                'adress'=>$row[2],
-                'tavar2_id'=>$row[3],
-                'raqam'=>$row[5],
-                'hajm'=>$row[6],
-                'summa'=>$row[7],
-                'summa2'=>$row[8],
-                'summa3'=>$row[9],
-                'kod'=>$row[12],
-            ]);
         }
     }
 }

@@ -759,7 +759,7 @@ class KlentController2 extends Controller
                 foreach($data222 as $row)
                 {
                     $output2 .= '
-                    <tr style="border-bottom: 1px solid;">
+                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="cret">
                         <td>'.$row->user->name.'</td>
                         <td>'.$row->itogs.'</td>
                         <td>'.$row->naqt.'</td>
@@ -1097,7 +1097,7 @@ class KlentController2 extends Controller
                 foreach($data222 as $row)
                 {
                     $output2 .= '
-                    <tr style="border-bottom: 1px solid;">
+                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="cret">
                         <td>'.$row->user->name.'</td>
                         <td>'.$row->itogs.'</td>
                         <td>'.$row->naqt.'</td>
@@ -1162,6 +1162,101 @@ class KlentController2 extends Controller
                         'foiz'=>$a,
                     ]);
                 }
+                foreach ($data as $value) {
+                    $fool3 = Clentitog::find(1);
+                    $a1 = $fool3->opshi + $value->itog;
+                    Clentitog::find(1)->update([
+                        'opshi'=>$a1,
+                    ]);
+                }
+            }
+            $foo2 = Clentitog::find(1);
+            return response()->json([
+                'output'=>$output,
+                'output2'=>$output2,
+                'clent'=>$da,
+                'foo2'=>$foo2??[],
+            ]);
+        }
+    }
+
+    public function clents2aniq(Request $request)
+    {
+        if($request->ajax())
+        {
+            $output = '';
+            $output2 = ''; 
+            $data222 = Arxiv::find($request->id);
+            $da = User::find($data222->user_id);
+            $data = Karzina2::where('created_at', $data222->created_at)->get();
+            $total_row = $data->count();
+            if($total_row > 0)
+            {
+                foreach($data as $row)
+                {
+                    $output .= '
+                    <tr style="border-bottom: 1px solid;">
+                        <td>'.$row->user->name.'</td>
+                        <td>'.$row->tavar->name.'</td>
+                        <td>'.$row->raqam.'</td>
+                        <td>'.$row->soni.'</td>
+                        <td>'.$row->summa2.'</td>
+                        <td>'.$row->chegirma.'</td>
+                        <td>'.$row->itog.'</td>
+                        <td>'.$row->updated_at.'</td>
+                    </tr>
+                    ';
+                }      
+            }
+            $foo = Clentitog::find(1);
+            if($foo){
+                $foo->tavarshtuk = 0;
+                $foo->shtuk = 0;
+                $foo->foiz = 0;
+                $foo->itog = 0;
+                $foo->opshi = 0;
+                $foo->save();
+                foreach ($data as $value) {            
+                    $fool = Clentitog::find(1);
+                    $shtuk = $fool->shtuk + $value->soni;
+                    Clentitog::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk,
+                    ]);
+                }
+                $fool2 = Clentitog::find(1);
+                $a = $fool2->foiz + $data222->karzs;
+                Clentitog::find(1)->update([
+                    'foiz'=>$a,
+                ]);
+                foreach ($data as $value) {
+                    $fool2 = Clentitog::find(1);
+                    $a = $fool2->opshi + $value->itog;
+                    Clentitog::find(1)->update([
+                        'opshi'=>$a,
+                    ]);
+                }
+            }else{
+                Clentitog::create([
+                    'tavarshtuk'=>0,
+                    'shtuk'=>0,
+                    'foiz'=>0,
+                    'itog'=>0,
+                    'opshi'=>0
+                ]);
+                foreach ($data as $value) {
+                    $foo = Clentitog::find(1);        
+                    $shtuk2 = $foo->shtuk + $value->soni;
+                    Clentitog::find(1)->update([
+                        'tavarshtuk'=>$total_row,
+                        'shtuk'=>$shtuk2,
+                    ]);
+                }
+                $fool2 = Clentitog::find(1);
+                $a = $fool2->foiz + $data222->karzs;
+                Clentitog::find(1)->update([
+                    'foiz'=>$a,
+                ]);
                 foreach ($data as $value) {
                     $fool3 = Clentitog::find(1);
                     $a1 = $fool3->opshi + $value->itog;
@@ -1393,7 +1488,7 @@ class KlentController2 extends Controller
                 foreach($data222 as $row)
                 {
                     $output2 .= '
-                    <tr style="border-bottom: 1px solid;">
+                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="cret">
                         <td>'.$row->user->name.'</td>
                         <td>'.$row->itogs.'</td>
                         <td>'.$row->naqt.'</td>
@@ -1509,7 +1604,7 @@ class KlentController2 extends Controller
                 foreach($data222 as $row)
                 {
                     $output2 .= '
-                    <tr style="border-bottom: 1px solid;">
+                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="cret">
                         <td>'.$row->user->name.'</td>
                         <td>'.$row->itogs.'</td>
                         <td>'.$row->naqt.'</td>
@@ -1591,6 +1686,7 @@ class KlentController2 extends Controller
             ]);
         }
     }
+    
     public function clents5dok($request)
     {
         if($request->ajax())
@@ -1967,7 +2063,7 @@ class KlentController2 extends Controller
                     foreach($data222 as $row)
                     {
                         $output2 .= '
-                        <tr style="border-bottom: 1px solid;">
+                        <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="cret">
                             <td>'.$row->user->name.'</td>
                             <td>'.$row->itogs.'</td>
                             <td>'.$row->naqt.'</td>
@@ -2077,7 +2173,7 @@ class KlentController2 extends Controller
                     foreach($data222 as $row)
                     {
                         $output2 .= '
-                        <tr style="border-bottom: 1px solid;">
+                        <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="cret">
                             <td>'.$row->user->name.'</td>
                             <td>'.$row->itogs.'</td>
                             <td>'.$row->naqt.'</td>
