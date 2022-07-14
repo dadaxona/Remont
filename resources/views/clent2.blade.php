@@ -415,16 +415,16 @@
 
 @endif
 <script>
-  $( function() {
-    $( "#savdobirlamchi" ).selectable();
-  } );
+  // $( function() {
+  //   $( "#savdobirlamchi" ).selectable();
+  // } );
 
-  $( function() {
-    $( "#dolg" ).selectable();
-  } );
-  $( function() {
-    $( "#savdo" ).selectable();
-  } );
+  // $( function() {
+  //   $( "#dolg" ).selectable();
+  // } );
+  // $( function() {
+  //   $( "#savdo" ).selectable();
+  // } );
   
     $.ajaxSetup({
       headers: {
