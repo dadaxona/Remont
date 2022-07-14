@@ -158,6 +158,9 @@
   </div>
 </div>
   <script>
+    $( function() {
+  $( "#tbody2" ).selectable();
+} );
     $.ajaxSetup({
       headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

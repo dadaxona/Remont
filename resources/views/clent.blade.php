@@ -23,6 +23,7 @@
                 </button>
             </div>
           </div>
+        </div>
           <form action="{{ route('exports5') }}" method="GET" id="ddr">
           </form>
         <div class="row">
@@ -210,6 +211,10 @@
 @endif
 
 <script>
+      $( function() {
+      $( "#clent" ).selectable();
+    });
+    
   $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

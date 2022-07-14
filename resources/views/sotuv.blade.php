@@ -789,6 +789,18 @@
     
 @endif
 <script type="text/javascript">
+  $( function() {
+    $( "#tbody2" ).selectable();
+  } );
+  
+  $( function() {
+    $( "#zaqazz123" ).selectable();
+  } );
+
+  $( function() {
+    $( "#tbody" ).selectable();
+  } );
+
 $(document).on('click', '#on', function(){
     var a = $("#onval").val();
     if(a == 0){

@@ -77,6 +77,89 @@
         .blask{
             background-color: black;
         }
+        #feedback { font-size: 1.4em; }
+    #tbody2 .ui-selecting { background: #277890; }
+    #tbody2 .ui-selected { background: #277890; color: white; }
+    #tbody2 { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #tbody2 tr { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+
+    #feedback { font-size: 1.4em; }
+    #ttbody .ui-selecting { background: #277890; }
+    #ttbody .ui-selected { background: #277890; color: white; }
+    #ttbody { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #ttbody tr { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+
+    #feedback { font-size: 1.4em; }
+    #clent .ui-selecting { background: #277890; }
+    #clent .ui-selected { background: #277890; color: white; }
+    #clent { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #clent tr { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+
+    #feedback { font-size: 1.4em; }
+    #savdobirlamchi .ui-selecting { background: #277890; }
+    #savdobirlamchi .ui-selected { background: #277890; color: white; }
+    #savdobirlamchi { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #savdobirlamchi tr { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+
+    #feedback { font-size: 1.4em; }
+    #dolg .ui-selecting { background: #277890; }
+    #dolg .ui-selected { background: #277890; color: white; }
+    #dolg { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #dolg tr { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+
+    #feedback { font-size: 1.4em; }
+    #savdo .ui-selecting { background: #277890; }
+    #savdo .ui-selected { background: #277890; color: white; }
+    #savdo { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #savdo tr { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+
+    #feedback { font-size: 1.4em; }
+    #clent_tip .ui-selecting { background: #277890; }
+    #clent_tip .ui-selected { background: #277890; color: white; }
+    #clent_tip { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #clent_tip tr { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+
+    #feedback { font-size: 1.4em; }
+    #zaqazz123 .ui-selecting { background: #277890; }
+    #zaqazz123 .ui-selected { background: #277890; color: white; }
+    #zaqazz123 { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #zaqazz123 tr { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+
+    #feedback { font-size: 1.4em; }
+    #imya .ui-selecting { background: #277890; }
+    #imya .ui-selected { background: #277890; color: white; }
+    #imya { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #imya tr { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+
+    #feedback { font-size: 1.4em; }
+    #tbody .ui-selecting { background: #277890; }
+    #tbody .ui-selected { background: #277890; color: white; }
+    #tbody { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #tbody tr { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+
+    #feedback { font-size: 1.4em; }
+    #tbody3 .ui-selecting { background: #277890; }
+    #tbody3 .ui-selected { background: #277890; color: white; }
+    #tbody3 { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #tbody3 tr { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+
+    #feedback { font-size: 1.4em; }
+    #tavar_tip .ui-selecting { background: #277890; }
+    #tavar_tip .ui-selected { background: #277890; color: white; }
+    #tavar_tip { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #tavar_tip tr { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+
+    #feedback { font-size: 1.4em; }
+    #tavarlar .ui-selecting { background: #277890; }
+    #tavarlar .ui-selected { background: #277890; color: white; }
+    #tavarlar { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #tavarlar tr { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+
+    #feedback { font-size: 1.4em; }
+    #malumotser .ui-selecting { background: #277890; }
+    #malumotser .ui-selected { background: #277890; color: white; }
+    #malumotser { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #malumotser tr { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
       </style>
   </head>
   <body>

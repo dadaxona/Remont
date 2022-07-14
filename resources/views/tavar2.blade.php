@@ -1076,9 +1076,9 @@
 
 <script>
 
-    // $(function(){
-    //  $( "#AAAAAAAA" ).draggable();
-    // });
+$( function() {
+  $( "#tavarlar" ).selectable();
+} );
 
     $.ajaxSetup({
       headers: {

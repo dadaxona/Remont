@@ -415,6 +415,17 @@
 
 @endif
 <script>
+  $( function() {
+    $( "#savdobirlamchi" ).selectable();
+  } );
+
+  $( function() {
+    $( "#dolg" ).selectable();
+  } );
+  $( function() {
+    $( "#savdo" ).selectable();
+  } );
+  
     $.ajaxSetup({
       headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
