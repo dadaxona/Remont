@@ -68,6 +68,8 @@ Route::post('store2', [KlentController::class, 'store2'])->name('store2');
 Route::post('store2tip', [KlentController::class, 'store2tip'])->name('store2tip');
 Route::post('update2', [KlentController::class, 'update2'])->name('update2');
 Route::post('updateer2', [KlentController::class, 'updateer2'])->name('updateer2');
+Route::get('iidd3', [KlentController::class, 'iidd3'])->name('iidd3');
+Route::get('iidd4', [KlentController::class, 'iidd4'])->name('iidd4');
 Route::get('show2/{id}', [KlentController::class, 'show2']);
 Route::get('shower2/{id}', [KlentController::class, 'shower2']);
 Route::post('delete2/{id}', [KlentController::class, 'delete2']);
@@ -95,6 +97,7 @@ Route::get('ombor', [KlentController::class, 'ombor'])->name('ombor');
 Route::get('index2', [KlentController::class, 'index2'])->name('index2');
 
 Route::post('pastavka', [KlentController::class, 'pastavka'])->name('pastavka');
+Route::get('past', [KlentController::class, 'past'])->name('past');
 Route::get('show3/{id}', [KlentController::class, 'show3']);
 Route::post('pastavkaupdate', [KlentController::class, 'pastavkaupdate'])->name('pastavkaupdate');
 Route::post('delete4/{id}', [KlentController::class, 'delete4']);

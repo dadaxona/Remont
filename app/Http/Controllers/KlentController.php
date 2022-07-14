@@ -561,6 +561,18 @@ class KlentController extends KlentController2
         return response()->json($post);
     }
 
+    public function iidd3()
+    {
+        $post = Tavar::all();    
+        return response()->json($post);
+    }
+ 
+    public function iidd4()
+    {
+        $post = Tavar2::all();    
+        return response()->json($post);
+    }
+ 
     public function edit3(KlentServis $model)
     {
         return $model->edit3();
@@ -865,6 +877,12 @@ class KlentController extends KlentController2
     public function show3($id)
     {
         $post = Adress::find($id);    
+        return response()->json($post);
+    }
+
+    public function past()
+    {
+        $post = Adress::all();    
         return response()->json($post);
     }
 

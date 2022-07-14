@@ -128,9 +128,33 @@
                           <table class="tab table-hover" id="laravel_crud">
                               <thead>
                                   <tr>
-                                    <th>Тип</th>
-                                    <th>Поставщик</th>
-                                    <th>Имя</th>
+                                    <th>
+                                      <button type="button" class="btn btn-primary m-0 p-1" data-bs-toggle="modal" onclick="tips()">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                        </svg>
+                                        Тип Создать
+                                      </button>  
+                                    </th>
+                                    <th>
+                                      <button type="button" class="btn btn-primary m-0 p-1" data-bs-toggle="modal" onclick="pass()">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                        </svg>
+                                        Поставщик Создать
+                                      </button>  
+                                      </th>
+                                    <th>
+                                      <button type="button" class="btn btn-primary m-0 p-1" data-bs-toggle="modal" onclick="imyas()">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                        </svg>
+                                        Имя Создать
+                                      </button>
+                                    </th>
                                     <th class="pl-4">Шт</th>
                                     <th>Закупочная</th>
                                     <th>Оптовая</th>
@@ -174,6 +198,94 @@
                           </table>
                         </div>                          
                   </div>
+
+                  <div class="modal fade" id="tips" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Тип Создать</h5>
+                          <a href="javascript:void(0)" id="tips2" class="btn btn-success m-0 p-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                            Добавыт
+                          </a>
+                        </div>
+                        <div class="modal-body">
+                          <form id="tipsForm" action="{{ route('store2') }}" method="POST">
+                              @csrf
+                              <table class="col-12" id="dynamictips">
+                  
+                              </table>             
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Назад</button>
+                          <button type="submit" class="btn btn-primary">Сохранить</button>
+                        </div>
+                      </form>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="modal fade" id="imyas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel"> Имя Создать</h5>
+                          <a href="javascript:void(0)" id="imyas2" class="btn btn-success m-0 p-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                            Добавыт
+                          </a>
+                        </div>
+                        <div class="modal-body">
+                          <form id="imyasForm" action="{{ route('store2tip') }}" method="POST">
+                              @csrf
+                              <table class="col-12" id="dynamicimyas">
+                  
+                              </table>             
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Назад</button>
+                          <button type="submit" class="btn btn-primary">Сохранить</button>
+                        </div>
+                      </form>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="modal fade" id="pass" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Создать поставщики</h5>
+                          <a href="javascript:void(0)" id="pass2" class="btn btn-success m-0 p-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                            Добавыт
+                          </a>
+                        </div>
+                        <div class="modal-body">
+                          <form id="passpastavka" action="{{ route('pastavka') }}" method="POST">
+                              @csrf
+                              <table class="col-12" id="dynamicpass">
+                  
+                              </table>             
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Назад</button>
+                          <button type="submit" class="btn btn-primary">Сохранить</button>
+                        </div>
+                      </form>
+                      </div>
+                    </div>
+                  </div>
+           
                   <div class="tab-pane" id="profile7" role="tabpanel" aria-expanded="false">
                     <div class="row">
                       <div class="col-2 bor">
@@ -423,21 +535,13 @@
             <input type="hidden" name="id" id="ichki_id">
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">Тип</label>
-                <select name="tavar_id" class="form-control" id="iidd3">
-                  <option value="">--Танланг--</option>
-                  @foreach($data as $item)
-                    <option value="{{ $item->id }}">{{ $item->name }}</option>                                
-                  @endforeach
+                <select name="tavar_id" class="form-control" id="iidd3">               
                 </select>
               <span class="text-danger error-text tavar_id_error"></span>
             </div>
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">Етказиб берувчи</label>
-                <select name="adress" class="form-control">
-                  <option value="">--Танланг--</option>
-                  @foreach($adress as $item)
-                    <option value="{{ $item->adress }}">{{ $item->adress }}</option>                                
-                  @endforeach
+                <select name="adress" class="form-control" id="past">              
                 </select>
               <span class="text-danger error-text adress_error"></span>
             </div>
@@ -985,7 +1089,109 @@
     $("#iddr2").on("click", function(){
       $("#exxx").modal('show');
     });
+
+    var w = 0;
+    $("#tips2").click(function(){            
+            ++w;
+        $("#dynamictips").append('<tr><td><input type="text" name="addmore['+w+'][name]" id="" class="form-control col-10" placeholder="Тавар номи"></td><td><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>');
+    }); 
   
+    $(document).on('click', '.remove-tr', function(){
+        $(this).parents('tr').remove();
+        --w;               
+    });
+
+    function tips() {
+      $('#tips').modal('show');
+    }
+
+    var q = 0;
+    $("#imyas2").click(function(){            
+            ++q;
+        $("#dynamicimyas").append('<tr><td><select name="addmore['+q+'][tavar_id]" id="" class="form-control"><option value="">--Выбират--</option>@foreach ($data as $item)<option value="{{ $item->id }}">{{ $item->name }}</option>@endforeach</select></td><td><input type="text" name="addmore['+q+'][name]" id="" class="form-control col-10" placeholder="Тавар номи"></td><td><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>');
+    }); 
+  
+    $(document).on('click', '.remove-tr', function(){
+        $(this).parents('tr').remove();
+        --q;               
+    });
+
+    function imyas() {
+      $('#imyas').modal('show');
+    }
+
+    var e = 0;
+    $("#pass2").click(function(){            
+            ++e;
+        $("#dynamicpass").append('<tr><td><input type="text" name="addmore['+e+'][adress]" id="" class="form-control col-10" placeholder="Имя поставщика"></td><td><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>');
+    }); 
+  
+    $(document).on('click', '.remove-tr', function(){
+        $(this).parents('tr').remove();
+        --e;               
+    });
+
+    function pass() {
+      $('#pass').modal('show');
+    }
+  
+  $('#tipsForm').on('submit', function(e) {
+    e.preventDefault();
+    var form = this;
+    $.ajax({
+      url:$(form).attr('action'),
+      method:$(form).attr('method'),
+      data:new FormData(form),
+      processData:false,
+      dataType:'json',
+      contentType:false,                   
+      success:function(data){
+        $(form)[0].reset();
+        $('#tips').modal('hide');
+        toastr.success(data.msg);
+        location.reload(true);
+      }
+    });
+  });
+
+  $('#imyasForm').on('submit', function(e) {
+    e.preventDefault();
+    var form = this;
+    $.ajax({
+      url:$(form).attr('action'),
+      method:$(form).attr('method'),
+      data:new FormData(form),
+      processData:false,
+      dataType:'json',
+      contentType:false,
+      success:function(data){
+        $(form)[0].reset();
+        $('#imyas').modal('hide');
+        toastr.success(data.msg);
+        location.reload(true);
+      }
+    });
+  });
+
+  $('#passpastavka').on('submit', function(e) {
+    e.preventDefault();
+    var form = this;
+    $.ajax({
+      url:$(form).attr('action'),
+      method:$(form).attr('method'),
+      data:new FormData(form),
+      processData:false,
+      dataType:'json',
+      contentType:false,                   
+      success:function(data){
+        $(form)[0].reset();
+        $('#pass').modal('hide');
+        toastr.success(data.msg);
+        location.reload(true);
+      }
+    });
+  });
+
     var i = 0;
     $("#add").click(function(){            
             ++i;
@@ -1360,7 +1566,54 @@
       }
     });
   }
+  function past() {
+    $.ajax({
+      url: "{{ route('past') }}",
+      type: "GET",   
+      success: function(data) {
+        let rows =  '';
+            data.forEach(room => {
+            rows += `
+            <option value="${room.adress}">${room.adress}</option>`;
+        });
+        $("#past").html(rows);
+      }
+    });
+  }
+  past();
 
+  function iidd3() {
+    $.ajax({
+      url: "{{ route('iidd3') }}",
+      type: "GET",   
+      success: function(data) {
+        let rows =  '';
+            data.forEach(room => {
+            rows += `
+            <option value="${room.id}">${room.name}</option>`;
+        });
+        $("#iidd3").html(rows);
+      }
+    });
+  }
+  iidd3();
+
+  function iidd4() {
+    $.ajax({
+      url: "{{ route('iidd4') }}",
+      type: "GET",   
+      success: function(data) {
+        let rows =  '';
+            data.forEach(room => {
+            rows += `
+            <option value="${room.id}">${room.name}</option>`;
+        });
+        $("#iidd4").html(rows);
+      }
+    });
+  }
+  iidd4();
+  
   function editPost3(id) {
     $.ajax({
       url: "{{ route('edit4') }}",
@@ -1370,9 +1623,9 @@
       },
       success: function(response) {
           $("#ichki_id").val(response.id);
-          $("#tavar_id").val(response.tavar_id);
-          $("#adress").val(response.adress);
-          $("#tavar2_id").val(response.tavar2_id);
+          $("#iidd3").val(response.tavar_id);
+          $("#past").val(response.adress);
+          $("#iidd4").val(response.tavar2_id);
           $("#name").val(response.name);
           $("#raqam2").val(response.raqam);
           $("#hajm2").val(response.hajm);
