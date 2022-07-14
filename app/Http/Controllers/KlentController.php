@@ -18,6 +18,7 @@ use App\Models\Updatetavr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\KlentController2;
+use App\Models\Deletkarzina;
 use App\Models\Ichkitavardok;
 use App\Models\Itogodok;
 use App\Models\Karzinadok;
@@ -139,6 +140,138 @@ class KlentController extends KlentController2
         );
 
         echo json_encode($data);
+        }
+    }
+
+    public function ichkitavartbody(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '')
+        {
+        $data =Ichkitavar::where('name', 'like', '%'.$query.'%')
+                        ->orWhere('kod', 'like', '%'.$query.'%')
+                        ->orderBy('id', 'DESC')->get();
+        }
+        else
+        {
+        $data = Ichkitavar::all();
+        }
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                if($row->hajm <= $row->raqam){
+                    $ror = "<td style='background-color: rgb(237, 0, 0); color: white;' class='pl-4'>$row->hajm</td>";
+                }else{
+                    $ror = "<td class='pl-4'>$row->hajm </td>";
+                }
+
+                $output .= '
+                <tr id="row_'.$row->id.'" style="border-bottom: 1px solid">
+                <td>'.$row->tavar->name.'</td>
+                <td>'.$row->adress.'</td>
+                <td>'.$row->tavar2->name.'</td>
+                '.$ror.'
+                <td>'.$row->summa.'</td>
+                <td>'.$row->summa2.'</td>
+                <td>'.$row->summa3.'</td>
+                <td>'.$row->kod.'</td>
+                <td>'.$row->updated_at .'</td>
+                <td>
+                  <a href="javascript:void(0)" onclick="editPost3('.$row->id.')" style="color: green">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+                      <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+                    </svg>
+                  </a>                            
+                  <a href="javascript:void(0)" onclick="deletePost3('.$row->id.')" class="mx-3" style="color: red">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                      <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+                ';
+            }
+        }
+        else
+        {
+        $output = '
+            <tr>
+                <td align="center" colspan="5">No Data Found</td>
+            </tr>
+            ';
+        }
+        $data = array(
+            'table_data'  => $output,
+        );
+
+        return response()->json($data);
+        }
+    }
+
+    public function tiklaslar(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '')
+        {
+        $data =Deletkarzina::where('name', 'like', '%'.$query.'%')->orderBy('id', 'DESC')->get();
+        }
+        else
+        {
+        $data = Deletkarzina::orderBy('id', 'DESC')->get();
+        }
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr id="row2_'.$row->id.'" style="border-bottom: 1px solid">
+                <td>'.$row->tavar->name.'</td>
+                <td>'.$row->adress.'</td>
+                <td>'.$row->tavar2->name.'</td>
+                <td>'.$row->hajm.'</td> 
+                <td>'.$row->summa.'</td>
+                <td>'.$row->summa2.'</td>
+                <td>'.$row->summa3.'</td>
+                <td>'.$row->updated_at .'</td>
+                <td>
+                    <a href="javascript:void(0)" onclick="tiklash('.$row->id.')" style="color: green">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
+                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                            <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                        </svg>
+                    </a>
+                    <a href="javascript:void(0)" onclick="deletePro3('.$row->id.')" class="mx-3" style="color: red">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                        </svg>
+                    </a>
+                </td>
+              </tr>
+                ';
+            }
+        }
+        else
+        {
+        $output = '
+            <tr>
+                <td align="center" colspan="5">No Data Found</td>
+            </tr>
+            ';
+        }
+        $data = array(
+            'table_data'  => $output,
+        );
+
+        return response()->json($data);
         }
     }
 

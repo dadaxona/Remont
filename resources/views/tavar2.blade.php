@@ -47,6 +47,12 @@
     border-radius: 3px solid black; 
     color: white;
   }
+
+  #ssser{
+    padding: 2px;
+    border: none;
+    border-bottom: 2px solid;
+  }
 </style>
 @if ($brends->login == "Admin")
 <div id="AAAAAAAA" class="card ui-widget-content">
@@ -153,7 +159,8 @@
                                           <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                                         </svg>
                                         Имя Создать
-                                      </button>
+                                      </button>                                 
+                                        <input type="search" id="ssser" placeholder="Search">                            
                                     </th>
                                     <th class="pl-4">Шт</th>
                                     <th>Закупочная</th>
@@ -164,36 +171,8 @@
                                     <th>Управлена</th>
                                   </tr>
                               </thead>
-                              <tbody>
-                                @foreach ($ichkitavar as $item)
-                                <tr id="row_{{$item->id}}" style="border-bottom: 1px solid">
-                                  <td>{{ $item->tavar->name }}</td>
-                                  <td>{{ $item->adress }}</td>
-                                  <td>{{ $item->tavar2->name }}</td>
-                                  @if ($item->hajm <= $item->raqam)
-                                  <td style="background-color: rgb(237, 0, 0); color: white;" class="pl-4">{{ $item->hajm }}</td>                                        
-                                  @else
-                                  <td class="pl-4">{{ $item->hajm }}</td>  
-                                  @endif
-                                  <td>{{ $item->summa }}</td>
-                                  <td>{{ $item->summa2 }}</td>
-                                  <td>{{ $item->summa3 }}</td>
-                                  <td>{{ $item->kod }}</td>
-                                  <td>{{ $item->updated_at }}</td>
-                                  <td>
-                                    <a href="javascript:void(0)" onclick="editPost3({{ $item->id }})" style="color: green">
-                                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
-                                        <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
-                                      </svg>
-                                    </a>                            
-                                    <a href="javascript:void(0)" onclick="deletePost3({{ $item->id }})" class="mx-3" style="color: red">
-                                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-                                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
-                                      </svg>
-                                    </a>
-                                  </td>
-                                </tr>
-                                @endforeach
+                              <tbody id="ichkitavartbody">
+                    
                               </tbody>
                           </table>
                         </div>                          
@@ -379,8 +358,8 @@
                                 <th>Управлена</th>
                               </tr>
                           </thead>
-                          <tbody>
-                            @foreach ($tiklash as $item)
+                          <tbody id="tiklaslar">
+                            {{-- @foreach ($tiklash as $item)
                             <tr id="row2_{{$item->id}}" style="border-bottom: 1px solid">
                               <td>{{ $item->tavar->name }}</td>
                               <td>{{ $item->adress }}</td>
@@ -408,7 +387,7 @@
                                 </a>
                               </td>
                             </tr>
-                            @endforeach
+                            @endforeach --}}
                           </tbody>
                       </table>
                     </div> 
@@ -1666,6 +1645,41 @@ $( function() {
     });
   });
 
+  ichkitavartbody();
+  function ichkitavartbody(query = '')
+  {
+    $.ajax({
+      url:"{{ route('ichkitavartbody') }}",
+      method:'GET',
+      data:{query:query},
+      dataType:'json',
+      success:function(data)
+      {
+        $('#ichkitavartbody').html(data.table_data);
+      }
+    });
+  }
+
+  $(document).on("keyup", "#ssser", function(){
+    var query = $(this).val();
+    ichkitavartbody(query);
+  });
+
+  tiklaslar();
+  function tiklaslar(query = '')
+  {
+    $.ajax({
+      url:"{{ route('tiklaslar') }}",
+      method:'GET',
+      data:{query:query},
+      dataType:'json',
+      success:function(data)
+      {
+        $('#tiklaslar').html(data.table_data);
+      }
+    });
+  }
+
   $('#storesm3').on('submit', function(e) {
     e.preventDefault();
     var form = this;
@@ -1681,8 +1695,9 @@ $( function() {
       },
       success:function(data){
         if(data.code == 200){
+          ichkitavartbody();
           toastr.success(data.msg);
-          location.reload(true);
+          $('#stores3').modal('hide');
         }
         if(data.code == 0){
           $.each(data.error, function(prefix, val){
@@ -1744,8 +1759,9 @@ $( function() {
           toastr.error(data.msg);
         }
         if(data.code == 201){
+          ichkitavartbody();
           toastr.success(data.msg);
-          location.reload(true);
+          $('#updates2').modal('hide');
         }
       }
     });
@@ -1819,10 +1835,10 @@ $( function() {
         _token: _token
       },
       success: function(data) {
-        $("#row_"+id).remove();
-        $('#tavar2delete').modal('hide');
+        ichkitavartbody();
+        tiklaslar();
         toastr.success(data.msg);
-        location.reload(true);
+        $('#tavar2delete').modal('hide');
       }
     });
   }
@@ -1837,9 +1853,9 @@ $( function() {
           _token: _token
         },
         success: function(data) {
-          $("#row2_"+id).remove();
+          ichkitavartbody()
+          tiklaslar();
           toastr.success(data.msg);
-          location.reload(true);
         }
       });
     }
@@ -1854,7 +1870,6 @@ $( function() {
           _token: _token
         },
         success: function(data) {
-          $("#row2dok_"+id).remove();
           toastr.success(data.msg);
           location.reload(true);
         }
@@ -1877,7 +1892,8 @@ $( function() {
         _token: _token
       },
       success: function(data) {
-        $("#row2_"+id).remove();
+        ichkitavartbody()
+        tiklaslar();
         $('#tavar2delete2').modal('hide');
         toastr.success(data.msg);
       }
@@ -1900,7 +1916,6 @@ $( function() {
         _token: _token
       },
       success: function(data) {
-        $("#row2dok_"+id).remove();
         $('#tavar2delete2dok').modal('hide');
         toastr.success(data.msg);
       }

@@ -53,6 +53,8 @@ Route::get('tavar_live', [KlentController::class, 'tavar_live'])->name('tavar_li
 Route::get('tavar2_live', [KlentController::class, 'tavar2_live'])->name('tavar2_live');
 Route::get('live_adress', [KlentController::class, 'live_adress'])->name('live_adress');
 Route::get('live_clent', [KlentController::class, 'live_clent'])->name('live_clent');
+Route::get('ichkitavartbody', [KlentController::class, 'ichkitavartbody'])->name('ichkitavartbody');
+Route::get('tiklaslar', [KlentController::class, 'tiklaslar'])->name('tiklaslar');
 Route::get('live_clentdok', [KlentController::class, 'live_clentdok'])->name('live_clentdok');
 Route::get('index', [KlentController::class, 'index'])->name('index');
 Route::get('indextip', [KlentController::class, 'indextip'])->name('indextip');
