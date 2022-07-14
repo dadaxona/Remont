@@ -654,125 +654,141 @@ class KlentServis extends KlentServis2
         if($request->radio == "option1"){
             if($valyuta->usd == 0){
                 $foo = Ichkitavar::find($request->id);
-                $dat = Karzina::create([
-                    'tavar_id' => $foo->tavar_id,
-                    'ichkitavar_id' => $foo->id,
-                    'name' => $foo->name,
-                    'raqam' => $foo->raqam,
-                    'soni' => 1,
-                    'hajm' => $foo->hajm,
-                    'summa' => (float)$foo->summa3,
-                    'summa2' => (float)$foo->kurs2,
-                    'chegirma' => 0,
-                    'itog' => (float)$foo->kurs2,
-                ]);
-                $ito = Itogo::find(1);
-                if($ito){
-                    $j = (string)$ito->itogo + (string)$foo->kurs2;
-                    Itogo::find(1)->update([
-                        'itogo'=>(string)$j,
-                    ]);
-                    $ito2 = Itogo::find(1);
-                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
-        
+                if($foo->hajm <= 0){
+                    return response()->json(['msg'=>'Товар йетарли емас', 'code'=>0]);
                 }else{
-                    Itogo::create([
-                        'itogo'=>(string)$foo->kurs2,
+                    $dat = Karzina::create([
+                        'tavar_id' => $foo->tavar_id,
+                        'ichkitavar_id' => $foo->id,
+                        'name' => $foo->name,
+                        'raqam' => $foo->raqam,
+                        'soni' => 1,
+                        'hajm' => $foo->hajm,
+                        'summa' => (float)$foo->summa3,
+                        'summa2' => (float)$foo->kurs2,
+                        'chegirma' => 0,
+                        'itog' => (float)$foo->kurs2,
                     ]);
-                    $ito3 = Itogo::find(1);
-                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
+                    $ito = Itogo::find(1);
+                    if($ito){
+                        $j = (string)$ito->itogo + (string)$foo->kurs2;
+                        Itogo::find(1)->update([
+                            'itogo'=>(string)$j,
+                        ]);
+                        $ito2 = Itogo::find(1);
+                        return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
+            
+                    }else{
+                        Itogo::create([
+                            'itogo'=>(string)$foo->kurs2,
+                        ]);
+                        $ito3 = Itogo::find(1);
+                        return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
+                    }
                 }
             }else{
                 $foo = Ichkitavar::find($request->id);
-                $dat = Karzina::create([
-                    'tavar_id' => $foo->tavar_id,
-                    'ichkitavar_id' => $foo->id,
-                    'name' => $foo->name,
-                    'raqam' => $foo->raqam,
-                    'soni' => 1,
-                    'hajm' => $foo->hajm,
-                    'summa' => (string)$foo->summa3 / (string)$valyuta->kurs,
-                    'summa2' => (string)$foo->kurs2 / (string)$valyuta->kurs,
-                    'chegirma' => 0,
-                    'itog' => (string)$foo->kurs2 / (string)$valyuta->kurs,
-                ]);
-                $ito = Itogo::find(1);
-                if($ito){
-                    $j = (string)$ito->itogo + (string)$foo->kurs2 / (string)$valyuta->kurs;
-                    Itogo::find(1)->update([
-                        'itogo'=>(string)$j,
-                    ]);
-                    $ito2 = Itogo::find(1);
-                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
-        
+                if($foo->hajm <= 0){
+                    return response()->json(['msg'=>'Товар йетарли емас', 'code'=>0]);
                 }else{
-                    Itogo::create([
-                        'itogo'=>(string)$foo->kurs2 / (string)$valyuta->kurs,
+                    $dat = Karzina::create([
+                        'tavar_id' => $foo->tavar_id,
+                        'ichkitavar_id' => $foo->id,
+                        'name' => $foo->name,
+                        'raqam' => $foo->raqam,
+                        'soni' => 1,
+                        'hajm' => $foo->hajm,
+                        'summa' => (string)$foo->summa3 / (string)$valyuta->kurs,
+                        'summa2' => (string)$foo->kurs2 / (string)$valyuta->kurs,
+                        'chegirma' => 0,
+                        'itog' => (string)$foo->kurs2 / (string)$valyuta->kurs,
                     ]);
-                    $ito3 = Itogo::find(1);
-                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
+                    $ito = Itogo::find(1);
+                    if($ito){
+                        $j = (string)$ito->itogo + (string)$foo->kurs2 / (string)$valyuta->kurs;
+                        Itogo::find(1)->update([
+                            'itogo'=>(string)$j,
+                        ]);
+                        $ito2 = Itogo::find(1);
+                        return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
+            
+                    }else{
+                        Itogo::create([
+                            'itogo'=>(string)$foo->kurs2 / (string)$valyuta->kurs,
+                        ]);
+                        $ito3 = Itogo::find(1);
+                        return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
+                    }
                 }
             }
         }else{
             if($valyuta->usd == 0){
                 $foo = Ichkitavar::find($request->id);
-                $dat = Karzina::create([
-                    'tavar_id' => $foo->tavar_id,
-                    'ichkitavar_id' => $foo->id,
-                    'name' => $foo->name,
-                    'raqam' => $foo->raqam,
-                    'soni' => 1,
-                    'hajm' => $foo->hajm,
-                    'summa' => (float)$foo->summa2,
-                    'summa2' => (float)$foo->kurs,
-                    'chegirma' => 0,
-                    'itog' => (float)$foo->kurs,
-                ]);
-                $ito = Itogo::find(1);
-                if($ito){
-                    $j = (float)$ito->itogo + (float)$foo->kurs;
-                    Itogo::find(1)->update([
-                        'itogo'=>(float)$j,
-                    ]);
-                    $ito2 = Itogo::find(1);
-                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
-        
+                if($foo->hajm <= 0){
+                    return response()->json(['msg'=>'Товар йетарли емас', 'code'=>0]);
                 }else{
-                    Itogo::create([
-                        'itogo'=>(float)$foo->kurs,
+                    $dat = Karzina::create([
+                        'tavar_id' => $foo->tavar_id,
+                        'ichkitavar_id' => $foo->id,
+                        'name' => $foo->name,
+                        'raqam' => $foo->raqam,
+                        'soni' => 1,
+                        'hajm' => $foo->hajm,
+                        'summa' => (float)$foo->summa2,
+                        'summa2' => (float)$foo->kurs,
+                        'chegirma' => 0,
+                        'itog' => (float)$foo->kurs,
                     ]);
-                    $ito3 = Itogo::find(1);
-                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
+                    $ito = Itogo::find(1);
+                    if($ito){
+                        $j = (float)$ito->itogo + (float)$foo->kurs;
+                        Itogo::find(1)->update([
+                            'itogo'=>(float)$j,
+                        ]);
+                        $ito2 = Itogo::find(1);
+                        return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
+            
+                    }else{
+                        Itogo::create([
+                            'itogo'=>(float)$foo->kurs,
+                        ]);
+                        $ito3 = Itogo::find(1);
+                        return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
+                    }
                 }
             }else{
                 $foo = Ichkitavar::find($request->id);
-                $dat = Karzina::create([
-                    'tavar_id' => $foo->tavar_id,
-                    'ichkitavar_id' => $foo->id,
-                    'name' => $foo->name,
-                    'raqam' => $foo->raqam,
-                    'soni' => 1,
-                    'hajm' => $foo->hajm,
-                    'summa' => (float)$foo->summa2 / (float)$valyuta->kurs,
-                    'summa2' => (float)$foo->kurs / (float)$valyuta->kurs,
-                    'chegirma' => 0,
-                    'itog' => (float)$foo->kurs / (float)$valyuta->kurs,
-                ]);
-                $ito = Itogo::find(1);
-                if($ito){
-                    $j = (float)$ito->itogo + (float)$foo->kurs / (float)$valyuta->kurs;
-                    Itogo::find(1)->update([
-                        'itogo'=>(float)$j,
-                    ]);
-                    $ito2 = Itogo::find(1);
-                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
-        
+                if($foo->hajm <= 0){
+                    return response()->json(['msg'=>'Товар йетарли емас', 'code'=>0]);
                 }else{
-                    Itogo::create([
-                        'itogo'=>(float)$foo->kurs / (float)$valyuta->kurs,
+                    $dat = Karzina::create([
+                        'tavar_id' => $foo->tavar_id,
+                        'ichkitavar_id' => $foo->id,
+                        'name' => $foo->name,
+                        'raqam' => $foo->raqam,
+                        'soni' => 1,
+                        'hajm' => $foo->hajm,
+                        'summa' => (float)$foo->summa2 / (float)$valyuta->kurs,
+                        'summa2' => (float)$foo->kurs / (float)$valyuta->kurs,
+                        'chegirma' => 0,
+                        'itog' => (float)$foo->kurs / (float)$valyuta->kurs,
                     ]);
-                    $ito3 = Itogo::find(1);
-                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
+                    $ito = Itogo::find(1);
+                    if($ito){
+                        $j = (float)$ito->itogo + (float)$foo->kurs / (float)$valyuta->kurs;
+                        Itogo::find(1)->update([
+                            'itogo'=>(float)$j,
+                        ]);
+                        $ito2 = Itogo::find(1);
+                        return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
+            
+                    }else{
+                        Itogo::create([
+                            'itogo'=>(float)$foo->kurs / (float)$valyuta->kurs,
+                        ]);
+                        $ito3 = Itogo::find(1);
+                        return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
+                    }
                 }
             }
         }
