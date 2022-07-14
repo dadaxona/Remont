@@ -13,7 +13,7 @@ class UsersImport2 implements ToCollection
     {
         foreach ($rows as $row) 
         {
-           $data = Ichkitavar::create([
+            Ichkitavar::create([
                 'tavar_id'=>$row[1],
                 'adress'=>$row[2],
                 'tavar2_id'=>$row[3],
