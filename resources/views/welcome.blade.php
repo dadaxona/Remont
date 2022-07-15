@@ -746,7 +746,7 @@
         }
         // setInterval(function() {
         //     location.href="logaut"
-        // }, 5000);
+        // }, 10000);
     </script>
     
     <script src="bootstrap-5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
