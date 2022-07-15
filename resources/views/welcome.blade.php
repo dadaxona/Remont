@@ -744,6 +744,9 @@
         function reflesh(){
             location.reload(true);
         }
+        // setInterval(function() {
+        //     location.href="logaut"
+        // }, 5000);
     </script>
     
     <script src="bootstrap-5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>

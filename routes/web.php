@@ -72,7 +72,7 @@ Route::post('update2', [KlentController::class, 'update2'])->name('update2');
 Route::post('updateer2', [KlentController::class, 'updateer2'])->name('updateer2');
 Route::get('iidd3', [KlentController::class, 'iidd3'])->name('iidd3');
 Route::get('iidd4', [KlentController::class, 'iidd4'])->name('iidd4');
-Route::get('show2/{id}', [KlentController::class, 'show2']);
+Route::get('show2', [KlentController::class, 'show2'])->name('show2');
 Route::get('shower2/{id}', [KlentController::class, 'shower2']);
 Route::post('delete2/{id}', [KlentController::class, 'delete2']);
 Route::post('deleteer2/{id}', [KlentController::class, 'deleteer2']);

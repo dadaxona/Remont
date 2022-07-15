@@ -122,8 +122,7 @@
             @csrf
             <input type="hidden" name="id" id="id2">
             <label for="">Тип</label>
-            <select name="tavar_id" id="" class="form-control">
-              <option value="">--Выбират--</option>
+            <select name="tavar_id" class="form-control" id="tavar_id">
               @foreach ($tovar as $item)
               <option value="{{ $item->id }}">{{ $item->name }}</option>
               @endforeach
@@ -187,17 +186,17 @@
       $('#post-modal2').modal('show');
     }
   
-  function editPost2(id) {
-    let _url = `show2/${id}`;
-    $('#idError').text('');
-    $('#nameError').text('');
-    
+  function editPost2(id) { 
     $.ajax({
-      url: _url,
+      url: "{{ route('show2') }}",
       type: "GET",
+      data:{
+        id: id
+      },
       success: function(response) {
         console.log(response);
         $("#id2").val(response.id);
+        $("#tavar_id").val(response.tavar_id);
         $("#name2").val(response.name);
         $('#post-modal3').modal('show');
       }
@@ -205,20 +204,20 @@
   }
 
   $(document).ready(function(){
-      fetch_customer_data();
-      function fetch_customer_data(query = '')
-      {
-          $.ajax({
-              url:"{{ route('tavar2_live') }}",
-              method:'GET',
-              data:{query:query},
-              dataType:'json',
-              success:function(data)
-              {
-                  $('#tbody2').html(data.table_data);
-              }
-          })
-      }
+    fetch_customer_data();
+    function fetch_customer_data(query = '')
+    {
+      $.ajax({
+        url:"{{ route('tavar2_live') }}",
+        method:'GET',
+        data:{query:query},
+        dataType:'json',
+        success:function(data)
+        {
+          $('#tbody2').html(data.table_data);
+        }
+      });
+    }
 
       $(document).on('click', '#save', function(){
           var query = $(this).val();
