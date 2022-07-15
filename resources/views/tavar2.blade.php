@@ -602,7 +602,8 @@
             </div>
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">Тавар номи</label>
-                <select name="tavar2_id" class="form-control" id="iidd2">       
+                <select name="tavar2_id" class="form-control" id="iidd2">
+                  <option value="">--Танланг--</option>
                 </select>
               <span class="text-danger error-text tavar2_id_error"></span>
             </div>
@@ -1236,6 +1237,7 @@ $( function() {
     });
 
     $( "#addPostm2" ).on( "click", function() {
+      $("#storesm3")[0].reset();
       $('#stores3').modal('show');
     });
     

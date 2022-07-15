@@ -21,6 +21,7 @@ use App\Models\Ichkitavar;
 use App\Models\Ichkitavardok;
 use App\Models\Itogo;
 use App\Models\Itogodok;
+use App\Models\Javob;
 use App\Models\Karzina;
 use App\Models\Karzina2;
 use App\Models\Karzina2dok;
@@ -614,9 +615,16 @@ class KlentController2 extends Controller
         {
             foreach($data as $row)
             {
+                $rrrr = Javob::where('user_id', $row->id)->first();
+                $p = '';
+                if($rrrr->javob >= 0){
+                    $p = "<span style='color: red'>$rrrr->javob </span>";
+                }elseif($rrrr->javob < 0){
+                    $p = "<span style='color: green'>$rrrr->javob</span>";
+                }
                 $output .= '
                 <tr data-id="'.$row->id.'" id="data" style="cursor: pointer;" style="border-bottom: 1px solid;">
-                    <td>'.$row->name.'</td>
+                    <td>'.$row->name.' | '.$p.' </td>
                 </tr>
                 ';
             }

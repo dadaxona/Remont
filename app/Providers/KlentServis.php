@@ -17,6 +17,7 @@ use App\Models\User;
 use App\Providers\KlentServis2;
 use App\Models\Itogo;
 use App\Models\Itogodok;
+use App\Models\Javob;
 use App\Models\Karzina;
 use App\Models\Karzina2;
 use App\Models\Karzina2dok;
@@ -39,9 +40,11 @@ class KlentServis extends KlentServis2
             return $this->update($request);        
         }else{
             $data = User::create($request->all());
-            if($data){
-                return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);
-            }
+            Javob::create([
+                'user_id'=>$data->id,
+                'javob'=>0
+            ]);
+            return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);            
         }
     }
 
@@ -1668,6 +1671,11 @@ class KlentServis extends KlentServis2
                         'hajm'=>$foo2
                     ]);
                 }
+                $user_id = Javob::where('user_id', $request->id)->first();
+                $jav = $user_id->karzs + $request->karzs;
+                Javob::where('user_id', $request->id)->update([
+                    "javob"=> $jav
+                ]);
                 Itogo::find(1)->update([
                     'itogo'=>0,
                 ]);
@@ -1732,6 +1740,11 @@ class KlentServis extends KlentServis2
                         'hajm'=>$foo2
                     ]);
                 }
+                $user_id = Javob::where('user_id', $request->id)->first();
+                $jav = $user_id->karzs + $request->karzs;
+                Javob::where('user_id', $request->id)->update([
+                    "javob"=> $jav
+                ]);
                 Itogo::find(1)->update([
                     'itogo'=>0,
                 ]);

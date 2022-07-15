@@ -88,7 +88,7 @@
                             <th>Безнал</th>
                             <th>Долг</th>
                             <th>Последняя дата</th>
-                          </tr>             
+                          </tr>
                       </thead>
                           <tbody id="dolg">
           
