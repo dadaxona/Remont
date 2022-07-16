@@ -127,13 +127,13 @@
 
               <div class="col-12 m-0 p-0 borders">
                 <div class="row">
-                  <div class="col-2 bor1">
+                  {{-- <div class="col-2 bor1">
                     <input type="text" id="tavarshtuk2" class="form-control sifra" placeholder="Товар шт">
                     <input type="text" id="shtuk2" class="form-control sifra" placeholder="Шт">  
-                  </div>
+                  </div> --}}
                   <div class="col-2 bor1">
-                    <input type="text" id="foiz2" class="form-control sifra" placeholder="Товар протсент">
-                    <input type="text" id="itoge2" class="form-control sifra" placeholder="Итого">  
+                    Долг: <input type="text" id="foiz2" class="form-control sifra" placeholder="Долг">
+                    Итого Сумма: <input type="text" id="itoge2" class="form-control sifra" placeholder="Итого">   
                   </div>
                   <div class="col-3 mx-5 bor1">
                     <input type="text" id="clentname" class="form-control sifra2" placeholder="Клент имя">  
@@ -192,13 +192,13 @@
               </div>
               <div class="col-12 m-0 p-0 borders">
                 <div class="row">
-                  <div class="col-2 bor1">
+                  {{-- <div class="col-2 bor1">
                     <input type="text" id="tavarshtuk2s" class="form-control sifra" placeholder="Товар шт">
                     <input type="text" id="shtuk2s" class="form-control sifra" placeholder="Шт">  
-                  </div>
-                  <div class="col-2 mt-3 bor1">
+                  </div> --}}
+                  <div class="col-2 mt-2 bor1">
                     <br>
-                    <input type="text" id="itoge2s" class="form-control sifra" placeholder="Итого">
+                    Итого: <input type="text" id="itoge2s" class="form-control sifra" placeholder="Итого">
                   </div>
                   <div class="col-8 mt-4">
                     <form>

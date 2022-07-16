@@ -127,7 +127,145 @@ class KlentController2 extends Controller
         return response()->json($data);
         }
     }
+    
+    public function statistika()
+    {
+        if(Session::has('IDIE')){
+            $brends = Drektor::where('id','=',Session::get('IDIE'))->first();
+            return view('statistika',[
+                'brends'=>$brends,
+            ]);
+        }else{
+            return redirect('/logaut');
+        }
+    }
 
+    public function statistik(Request $request)
+    {
+        if($request->ajax())
+        {
+            $data = Karzina2::all();     
+            $data222 = Arxiv::all();
+            $foo = Clentitog::find(1);
+            if($foo){
+                $foo->tavarshtuk = 0;
+                $foo->shtuk = 0;
+                $foo->foiz = 0;
+                $foo->itog = 0;
+                $foo->opshi = 0;
+                $foo->save();         
+                foreach ($data222 as $value) {
+                    $fool2 = Clentitog::find(1);
+                    $a = $fool2->foiz + $value->karzs;
+                    Clentitog::find(1)->update([
+                        'foiz'=>$a,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool2 = Clentitog::find(1);
+                    $a = $fool2->opshi + $value->itog;
+                    Clentitog::find(1)->update([
+                        'opshi'=>$a,
+                    ]);
+                }
+            }else{
+                Clentitog::create([
+                    'tavarshtuk'=>0,
+                    'shtuk'=>0,
+                    'foiz'=>0,
+                    'itog'=>0,
+                    'opshi'=>0
+                ]);
+                foreach ($data222 as $value) {
+                    $fool2 = Clentitog::find(1);
+                    $a = $fool2->foiz + $value->karzs;
+                    Clentitog::find(1)->update([
+                        'foiz'=>$a,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool3 = Clentitog::find(1);
+                    $a1 = $fool3->opshi + $value->itog;
+                    Clentitog::find(1)->update([
+                        'opshi'=>$a1,
+                    ]);
+                }
+            }
+            $fo = Clentitog::find(1);
+            $ja = $fo->opshi - $fo->foiz;
+            $fo = Clentitog::find(1)->update([
+                'itog' => $ja
+            ]);
+            $foo2 = Clentitog::find(1);
+            return response()->json([
+                'foo2'=>$foo2??[],
+            ]);
+        }
+    }
+    
+    public function statistik2(Request $request)
+    {
+        if($request->ajax())
+        {
+            $data = Karzina2::whereBetween("created_at", [$request->date, $request->date2])->get();
+            $data222 = Arxiv::whereBetween("created_at", [$request->date, $request->date2])->get();
+            $foo = Clentitog::find(1);
+            if($foo){
+                $foo->tavarshtuk = 0;
+                $foo->shtuk = 0;
+                $foo->foiz = 0;
+                $foo->itog = 0;
+                $foo->opshi = 0;
+                $foo->save();         
+                foreach ($data222 as $value) {
+                    $fool2 = Clentitog::find(1);
+                    $a = $fool2->foiz + $value->karzs;
+                    Clentitog::find(1)->update([
+                        'foiz'=>$a,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool2 = Clentitog::find(1);
+                    $a = $fool2->opshi + $value->itog;
+                    Clentitog::find(1)->update([
+                        'opshi'=>$a,
+                    ]);
+                }
+            }else{
+                Clentitog::create([
+                    'tavarshtuk'=>0,
+                    'shtuk'=>0,
+                    'foiz'=>0,
+                    'itog'=>0,
+                    'opshi'=>0
+                ]);
+                foreach ($data222 as $value) {
+                    $fool2 = Clentitog::find(1);
+                    $a = $fool2->foiz + $value->karzs;
+                    Clentitog::find(1)->update([
+                        'foiz'=>$a,
+                    ]);
+                }
+                foreach ($data as $value) {
+                    $fool3 = Clentitog::find(1);
+                    $a1 = $fool3->opshi + $value->itog;
+                    Clentitog::find(1)->update([
+                        'opshi'=>$a1,
+                    ]);
+                }
+            }
+            $fo = Clentitog::find(1);
+            $ja = $fo->opshi - $fo->foiz;
+            $fo = Clentitog::find(1)->update([
+                'itog' => $ja
+            ]);
+            $foo2 = Clentitog::find(1);
+            return response()->json([
+                'foo2'=>$foo2??[],
+            ]);
+        }
+    }
+    
     public function zzzz(Request $request)
     {
         if($request->ajax())
