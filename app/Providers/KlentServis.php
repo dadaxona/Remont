@@ -24,6 +24,7 @@ use App\Models\Karzina2dok;
 use App\Models\Karzina3;
 use App\Models\Karzina3dok;
 use App\Models\Karzinadok;
+use App\Models\Statistika;
 use App\Models\Tavar2;
 use App\Models\Updatetavrdok;
 use App\Models\Userdok;
@@ -31,6 +32,7 @@ use App\Models\Zakaz;
 use App\Models\Zakaz2;
 use App\Models\Zakaz2dok;
 use App\Models\Zakazdok;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 class KlentServis extends KlentServis2
 {
@@ -221,20 +223,21 @@ class KlentServis extends KlentServis2
                             'summa' => $c,
                             'summa2' => $value["summa2"],
                             'summa3' => $value["summa3"],
+                            'kod' => $value["kod"]
                         ]);
                 $data = Ichkitavardok::where('name', $value["name"])->first();
-                $res = Updatetavrdok::where('ichkitavardok_id', $data->id)->first();
-                if($res){
-                    Updatetavrdok::where('ichkitavardok_id', $data->id)
-                    ->update([
-                        'name'=>$value["name"],
-                        'raqam'=>$value["raqam"],
-                        'hajm'=>$value["hajm"],
-                        'summa'=>$value["summa"],
-                        'summa2'=>$value["summa2"],
-                        'summa3'=>$value["summa3"],
-                    ]);
-                }else{
+                // $res = Updatetavrdok::where('ichkitavardok_id', $data->id)->first();
+                // if($res){
+                //     Updatetavrdok::where('ichkitavardok_id', $data->id)
+                //     ->update([
+                //         'name'=>$value["name"],
+                //         'raqam'=>$value["raqam"],
+                //         'hajm'=>$value["hajm"],
+                //         'summa'=>$value["summa"],
+                //         'summa2'=>$value["summa2"],
+                //         'summa3'=>$value["summa3"],
+                //     ]);
+                // }else{
                     // Updatetavrdok::create([
                     //     'ichkitavardok_id'=>$data->id,
                     //     'name'=>$value["name"],
@@ -244,7 +247,7 @@ class KlentServis extends KlentServis2
                     //     'summa2'=>$value["summa2"],
                     //     'summa3'=>$value["summa3"],
                     // ]);
-                }
+                // }
             }else{
                 $data = Ichkitavardok::create([
                     'name'=>$value["name"],
@@ -253,19 +256,20 @@ class KlentServis extends KlentServis2
                     'summa'=>$value["summa"],
                     'summa2'=>$value["summa2"],
                     'summa3'=>$value["summa3"],
+                    'kod' => $value["kod"]
                 ]);
-                $res = Updatetavrdok::where('ichkitavardok_id', $data->id)->first();
-                if($res){
-                    Updatetavrdok::where('ichkitavardok_id', $data->id)
-                    ->update([
-                        'name'=>$value["name"],
-                        'raqam'=>$value["raqam"],
-                        'hajm'=>$value["hajm"],
-                        'summa'=>$value["summa"],
-                        'summa2'=>$value["summa2"],
-                        'summa3'=>$value["summa3"],
-                    ]);
-                }else{
+                // $res = Updatetavrdok::where('ichkitavardok_id', $data->id)->first();
+                // if($res){
+                //     Updatetavrdok::where('ichkitavardok_id', $data->id)
+                //     ->update([
+                //         'name'=>$value["name"],
+                //         'raqam'=>$value["raqam"],
+                //         'hajm'=>$value["hajm"],
+                //         'summa'=>$value["summa"],
+                //         'summa2'=>$value["summa2"],
+                //         'summa3'=>$value["summa3"],
+                //     ]);
+                // }else{
                     // Updatetavrdok::create([
                     //     'ichkitavardok_id'=>$data->id,
                     //     'name'=>$value["name"],
@@ -275,7 +279,7 @@ class KlentServis extends KlentServis2
                     //     'summa2'=>$value["summa2"],
                     //     'summa3'=>$value["summa3"],
                     // ]);
-                }
+                // }
             }
         }
         return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);
@@ -435,7 +439,7 @@ class KlentServis extends KlentServis2
             'summa'=>$request->summa,
             'summa2'=>$request->summa2,
             'summa3'=>$request->summa3,
-            'kod'=>$request->kod
+            'kod'=>$request->kod2
         ]);
         // Updatetavrdok::where('ichkitavardok_id', $request->id)->update([
         //     'name'=>$request->name,
@@ -1637,7 +1641,42 @@ class KlentServis extends KlentServis2
         }
     }
 
-    public function oplata($request)
+    public function oplata($request){
+        $dt= Carbon::now('Asia/Tashkent');
+        $month = $dt->month;
+        $year = $dt->year;
+        $usd = Itogo::find(1);
+        if ($usd->usd == 1) {
+            $sta = Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+            if($sta){
+                $ddd = $sta->kassa + $request->itogs;
+                Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                    'kassa'=>$ddd,
+                ]);
+                return $this->oplata2($request, $month, $year);
+            }else{
+                Statistika::create([
+                    'kassa'=>$request->itogs,
+                ]);
+                return $this->oplata2($request, $month, $year);
+            }
+        }else{
+            $sta = Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+            if($sta){
+                $ddd = $sta->kassa + $request->itogs / $usd->kurs;
+                Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                    'kassa'=>$ddd,
+                ]);
+                return $this->oplata2($request, $month, $year);
+            }else{
+                Statistika::create([
+                    'kassa'=>$request->itogs / $usd->kurs,
+                ]);
+                return $this->oplata2($request, $month, $year);
+            }
+        }
+    }
+    public function oplata2($request, $month, $year)
     {
         $usd = Itogo::find(1);
         if ($usd->usd == 1) {
@@ -1667,10 +1706,21 @@ class KlentServis extends KlentServis2
                     ]);
                     $foo = Ichkitavar::find($value->ichkitavar_id);
                     $foo2 = $foo->hajm - $value->soni;
+                    $sena = $value->soni * $foo->summa;
                     Ichkitavar::find($value->ichkitavar_id)->update([
                         'hajm'=>$foo2
                     ]);
+                    $sta = Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+                    $pop = $sta->foyda + $sena;
+                    Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                        'foyda'=>$pop,
+                    ]);
                 }
+                $kassa = Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+                $pribl = $kassa->kassa - $kassa->foyda;
+                Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                    'pribl'=>$pribl,
+                ]);  
                 $user_id = Javob::where('user_id', $request->id)->first();
                 $jav = $user_id->karzs + $request->karzs;
                 Javob::where('user_id', $request->id)->update([
@@ -1698,10 +1748,26 @@ class KlentServis extends KlentServis2
                     ]);
                     $foo = Ichkitavar::find($value->ichkitavar_id);
                     $foo2 = $foo->hajm - $value->soni;
+                    $sena = $value->soni * $foo->summa;
                     Ichkitavar::find($value->ichkitavar_id)->update([
                         'hajm'=>$foo2
                     ]);
+                    $sta = Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+                    $pop = $sta->foyda + $sena;
+                    Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                        'foyda'=>$pop,
+                    ]);                   
                 }
+                $kassa = Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+                $pribl = $kassa->kassa - $kassa->foyda;
+                Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                    'pribl'=>$pribl,
+                ]);  
+                $user_id = Javob::where('user_id', $request->id)->first();
+                $jav = $user_id->karzs + $request->karzs;
+                Javob::where('user_id', $request->id)->update([
+                    "javob"=> $jav
+                ]);
                 Itogo::find(1)->update([
                     'itogo'=>0,
                 ]);
@@ -1736,10 +1802,21 @@ class KlentServis extends KlentServis2
                     ]);
                     $foo = Ichkitavar::find($value->ichkitavar_id);
                     $foo2 = $foo->hajm - $value->soni;
+                    $sena = $value->soni * $foo->summa;
                     Ichkitavar::find($value->ichkitavar_id)->update([
                         'hajm'=>$foo2
                     ]);
+                    $sta = Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+                    $pop = $sta->foyda + $sena;
+                    Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                        'foyda'=>$pop,
+                    ]);
                 }
+                $kassa = Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+                $pribl = $kassa->kassa - $kassa->foyda;
+                Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                    'pribl'=>$pribl,
+                ]);  
                 $user_id = Javob::where('user_id', $request->id)->first();
                 $jav = $user_id->karzs + $request->karzs;
                 Javob::where('user_id', $request->id)->update([
@@ -1767,10 +1844,26 @@ class KlentServis extends KlentServis2
                     ]);
                     $foo = Ichkitavar::find($value->ichkitavar_id);
                     $foo2 = $foo->hajm - $value->soni;
+                    $sena = $value->soni * $foo->summa;
                     Ichkitavar::find($value->ichkitavar_id)->update([
                         'hajm'=>$foo2
                     ]);
+                    $sta = Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+                    $pop = $sta->foyda + $sena;
+                    Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                        'foyda'=>$pop,
+                    ]);
                 }
+                $kassa = Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+                $pribl = $kassa->kassa - $kassa->foyda;
+                Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                    'pribl'=>$pribl,
+                ]);
+                $user_id = Javob::where('user_id', $request->id)->first();
+                $jav = $user_id->karzs + $request->karzs;
+                Javob::where('user_id', $request->id)->update([
+                    "javob"=> $jav
+                ]);
                 Itogo::find(1)->update([
                     'itogo'=>0,
                 ]);

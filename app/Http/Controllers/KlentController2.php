@@ -29,6 +29,7 @@ use App\Models\Karzina3;
 use App\Models\Karzina3dok;
 use App\Models\Karzinadok;
 use App\Models\Sqladpoytaxt;
+use App\Models\Statistika;
 use App\Models\Tavar2;
 use App\Models\Tayyorsqlad;
 use App\Models\Umumiy;
@@ -127,13 +128,75 @@ class KlentController2 extends Controller
         return response()->json($data);
         }
     }
+
+    public function limither(Request $request)
+    {
+        $idsss = Statistika::find(1);
+        if ($idsss) {
+            Statistika::find(1)->update([
+                'limit'=>$request->limit
+            ]);
+        }else{
+            Statistika::create([
+                'limit'=>$request->limit
+            ]);
+        }
+        return response()->json(200);
+    }
     
     public function statistika()
     {
+        $dt= Carbon::now('Asia/Tashkent');
+        $year = $dt->year;
+        $limit = Statistika::find(1);
+        $a = Statistika::whereYear('created_at', $year)->whereMonth('created_at', 1)->first();
+        $b = Statistika::whereYear('created_at', $year)->whereMonth('created_at', 2)->first();
+        $c = Statistika::whereYear('created_at', $year)->whereMonth('created_at', 3)->first();
+        $d = Statistika::whereYear('created_at', $year)->whereMonth('created_at', 4)->first();
+        $e = Statistika::whereYear('created_at', $year)->whereMonth('created_at', 5)->first();
+        $f = Statistika::whereYear('created_at', $year)->whereMonth('created_at', 6)->first();
+        $g = Statistika::whereYear('created_at', $year)->whereMonth('created_at', 7)->first();
+        $h = Statistika::whereYear('created_at', $year)->whereMonth('created_at', 8)->first();
+        $i = Statistika::whereYear('created_at', $year)->whereMonth('created_at', 9)->first();
+        $j = Statistika::whereYear('created_at', $year)->whereMonth('created_at', 10)->first();
+        $k = Statistika::whereYear('created_at', $year)->whereMonth('created_at', 11)->first();
+        $l = Statistika::whereYear('created_at', $year)->whereMonth('created_at', 12)->first();
+        $dataPoints1 = array(
+            array("label"=> "Лимит", "y"=> $limit->limit??[]),
+            array("label"=> "Январь", "y"=> $a->pribl??[]),
+            array("label"=> "Февраль", "y"=> $b->pribl??[]),
+            array("label"=> "Март", "y"=> $c->pribl??[]),
+            array("label"=> "Апрель", "y"=> $d->pribl??[]),
+            array("label"=> "Май", "y"=> $e->pribl??[]),
+            array("label"=> "Ийун", "y"=> $f->pribl??[]),
+            array("label"=> "Июль", "y"=> $g->pribl??[]),
+            array("label"=> "Август", "y"=> $h->pribl??[]),
+            array("label"=> "Сентябрь", "y"=> $i->pribl??[]),
+            array("label"=> "Октябрь", "y"=> $j->pribl??[]),
+            array("label"=> "Ноябрь", "y"=> $k->pribl??[]),
+            array("label"=> "Декабрь", "y"=> $l->pribl??[]),
+        );
+        $dataPoints2 = array(
+            array("label"=> "Лимит"),
+            array("label"=> "Январь", "y"=> $a->kassa??[]),
+            array("label"=> "Февраль", "y"=> $b->kassa??[]),
+            array("label"=> "Март", "y"=> $c->kassa??[]),
+            array("label"=> "Апрель", "y"=> $d->kassa??[]),
+            array("label"=> "Май", "y"=> $e->kassa??[]),
+            array("label"=> "Ийун", "y"=> $f->kassa??[]),
+            array("label"=> "Июль", "y"=> $g->kassa??[]),
+            array("label"=> "Август", "y"=> $h->kassa??[]),
+            array("label"=> "Сентябрь", "y"=> $i->kassa??[]),
+            array("label"=> "Октябрь", "y"=> $j->kassa??[]),
+            array("label"=> "Ноябрь", "y"=> $k->kassa??[]),
+            array("label"=> "Декабрь", "y"=> $l->kassa??[]),
+        );
         if(Session::has('IDIE')){
             $brends = Drektor::where('id','=',Session::get('IDIE'))->first();
             return view('statistika',[
                 'brends'=>$brends,
+                'dataPoints1'=>$dataPoints1,
+                'dataPoints2'=>$dataPoints2,
             ]);
         }else{
             return redirect('/logaut');
@@ -598,6 +661,7 @@ class KlentController2 extends Controller
                 $j = $ito->itogo + $value->itog;
                 Itogo::find(1)->update([
                     'itogo'=>$j,
+                    'usd'=>1
                 ]);
                 $ito2 = Itogo::find(1);
             }
@@ -626,6 +690,7 @@ class KlentController2 extends Controller
                 $j = $ito->itogo + $value->itog;
                 Itogodok::find(1)->update([
                     'itogo'=>$j,
+                    'usd'=>1
                 ]);
                 $ito2 = Itogodok::find(1);
             }
@@ -638,7 +703,7 @@ class KlentController2 extends Controller
     {
         $foo = Zakaz2dok::where('zakazdok_id', $request->id)->get();
         foreach ($foo as $value) {
-            Karzina::create([
+            Karzinadok::create([
                 'ichkitavardok_id' => $value->ichkitavardok_id,
                 'name' => $value->name,
                 'raqam' => $value->raqam,
@@ -654,6 +719,7 @@ class KlentController2 extends Controller
                 $j = $ito->itogo + $value->itog;
                 Itogodok::find(1)->update([
                     'itogo'=>$j,
+                    'usd'=>1
                 ]);
                 $ito2 = Itogodok::find(1);
             }
@@ -684,6 +750,7 @@ class KlentController2 extends Controller
                 $j = $ito->itogo + $value->itog;
                 Itogo::find(1)->update([
                     'itogo'=>$j,
+                    'usd'=>1
                 ]);
                 $ito2 = Itogo::find(1);
             }

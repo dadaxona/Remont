@@ -1558,15 +1558,7 @@ class KlentController extends KlentController2
 
     public function oplatadok(Request $request, KlentServis $model)
     {
-        if($request->naqt){
-            return $model->oplatadok($request);
-        }elseif($request->plastik){
-            return $model->oplatadok($request);
-        }elseif($request->bank){
-            return $model->oplatadok($request);
-        }else{
-            return response()->json(['code'=>0, 'msg'=>'Барча устунлар бош']);
-        }
+        return $model->oplatadok($request);      
     }
 
 

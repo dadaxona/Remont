@@ -329,25 +329,40 @@
                 <div class="col-4">
                     <h5 class="mt-2 mx-2">Наличные:</h5>
                 </div>                    
-               <div class="col-8">
-                <input type="text" class="form-control text-right itogsw" name="naqt" id="naqt">
+               <div class="col-6">
+                    <input type="text" class="form-control text-right itogsw" name="naqt" id="naqt">
+               </div>
+               <div class="col-2">
+                    <button class="btn btn-success" id="naqtteng">
+                        =
+                    </button>
                </div>
             </div>
             <div class="mb-3 d-flex">
                 <div class="col-4">
                     <h5 class="mt-2 mx-2">Карта:</h5> 
                 </div>
-                <div class="col-8">
+                <div class="col-6">
                     <input type="text" class="form-control text-right itogsw" name="plastik" id="plastik">
                 </div>
+                <div class="col-2">
+                    <button class="btn btn-success" id="plastikteng">
+                        =
+                    </button>
+               </div>
             </div>  
             <div class="mb-3 d-flex">
                 <div class="col-4">
-                    <h5 class="mt-2 mx-2">Безнал:</h5>    
+                    <h5 class="mt-2 mx-2">Банк:</h5>    
                 </div>
-                <div class="col-8">
+                <div class="col-6">
                     <input type="text" class="form-control text-right itogsw" name="bank" id="bank">
                 </div>
+                <div class="col-2">
+                    <button class="btn btn-success" id="bankteng">
+                        =
+                    </button>
+               </div>
             </div>
             <div class="mb-3 d-flex">
                 <div class="col-4">
@@ -664,24 +679,39 @@
                 <div class="col-4">
                     <h5 class="mt-2 mx-2">Наличные:</h5>
                 </div>                    
-               <div class="col-8">
+               <div class="col-6">
                 <input type="text" class="form-control text-right itogsw" name="naqt" id="naqtdok">
+               </div>
+               <div class="col-2">
+                <button class="btn btn-success col-2" id="naqtdokteng">
+                    =
+                </button>
                </div>
             </div>
             <div class="mb-3 d-flex">
                 <div class="col-4">
                     <h5 class="mt-2 mx-2">Карта:</h5> 
                 </div>
-                <div class="col-8">
+                <div class="col-6">
                     <input type="text" class="form-control text-right itogsw" name="plastik" id="plastikdok">
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-success col-2" id="plastikdokteng">
+                        =
+                    </button>
                 </div>
             </div>  
             <div class="mb-3 d-flex">
                 <div class="col-4">
                     <h5 class="mt-2 mx-2">Безнал:</h5>    
                 </div>
-                <div class="col-8">
+                <div class="col-6">
                     <input type="text" class="form-control text-right itogsw" name="bank" id="bankdok">
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-success col-2" id="bankdokteng">
+                        =
+                    </button>
                 </div>
             </div>
             <div class="mb-3 d-flex">
@@ -1021,6 +1051,30 @@ function kursm(){
             var sss = itogs - naqt - plastik - bank;
             $("#karzs").val(sss);
         });
+
+        $(document).on('click', '#naqtteng', function(){
+            var itogs = $("#itogs").val();
+            $("#naqt").val(itogs);
+            $("#plastik").val('');
+            $("#bank").val('');
+            $("#karzs").val(0);
+        });
+
+        $(document).on('click', '#plastikteng', function(){
+            var itogs = $("#itogs").val();
+            $("#naqt").val('');
+            $("#plastik").val(itogs);
+            $("#bank").val('');
+            $("#karzs").val(0);
+        }); 
+        
+        $(document).on('click', '#bankteng', function(){
+            var itogs = $("#itogs").val();
+            $("#naqt").val('');
+            $("#plastik").val('');
+            $("#bank").val(itogs);
+            $("#karzs").val(0);
+        });               
     });
     
     $(document).ready(function(){
@@ -1099,6 +1153,11 @@ function kursm(){
                         $("#user_zaq").val('');
                         $('#zaqazmodal').toggle('fold');
                         toastr.success(data.msg).fadeOut(1500);
+                        if(data.data.usd == 1){
+                            $("#kkkkkk").html("USD");
+                        }else{
+                            $("#kkkkkk").html("UZS");
+                        }
                     }
                 });
             }else{
@@ -1676,7 +1735,7 @@ function kursm(){
         }
     });
 
-    $(document).on('click', '#data2dok' ,function(){
+    $(document).on('click', '#data2dog' ,function(){
         var id = $(this).data("id");
         $("#user_zaqdok").val(id);        
         $.ajax({
@@ -1819,6 +1878,30 @@ function kursm(){
             var sss = itogs - naqt - plastik - bank;
             $("#karzsdok").val(sss);
         });
+
+        $(document).on('click', '#naqtdokteng', function(){
+            var itogs = $("#itogsdok").val();
+            $("#naqtdok").val(itogs);
+            $("#plastikdok").val('');
+            $("#bankdok").val('');
+            $("#karzsdok").val(0);
+        });
+
+        $(document).on('click', '#plastikdokteng', function(){
+            var itogs = $("#itogsdok").val();
+            $("#naqtdok").val('');
+            $("#plastikdok").val(itogs);
+            $("#bankdok").val('');
+            $("#karzsdok").val(0);
+        });
+        
+        $(document).on('click', '#bankdokteng', function(){
+            var itogs = $("#itogsdok").val();
+            $("#naqtdok").val('');
+            $("#plastikdok").val('');
+            $("#bankdok").val(itogs);
+            $("#karzsdok").val(0);
+        });
     });
     
     $(document).ready(function(){
@@ -1896,6 +1979,11 @@ function kursm(){
                         $("#kurs2dok").val(data.data.kurs);
                         $("#user_zaqdok").val('');
                         $('#zaqazmodaldok').toggle('fold');
+                        if(data.data.usd == 1){
+                            $("#kkkkkk").html("USD");
+                        }else{
+                            $("#kkkkkk").html("UZS");
+                        }
                         toastr.success(data.msg).fadeOut(1500);
                     }
                 });
