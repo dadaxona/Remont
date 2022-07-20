@@ -218,17 +218,8 @@
                       </ul>
                       <ul class="nav-right">
                         @if ($brends->login == "Admin")
-                        <li class="header-notification">
-                            <a href="#!" class="waves-effect waves-light">
-                                <i class="ti-bell"></i>
-                                <span class="badge bg-c-red"></span>
-                            </a>
-                            <ul class="show-notification">
-                                <li>
-                                    <h6>Notifications</h6>
-                                    <label class="label label-danger">New</label>
-                                </li>
-                            </ul>
+                        <li class="header-notification" id="crrok">
+                    
                         </li>
                         @else
                             
@@ -751,9 +742,29 @@
         function reflesh(){
             location.reload(true);
         }
-        // setInterval(function() {
-        //     location.href="logaut"
-        // }, 10000);
+        
+        function srok()
+        {
+            $.ajax({
+                url:"{{ route('srocrow') }}",
+                method:'GET',
+                success:function(data)
+                {
+                    if(data.id){
+                        var lern = '<a href="{{ route("clents") }}" class="waves-effect waves-light"><i class="ti-bell"></i><span class="badge bg-c-red"></span></a>';
+                        $("#crrok").html(lern);
+                        
+                    }else{
+                        var lern2 = '<a href="#!" class="waves-effect waves-light"><i class="ti-bell"></i></a>';
+                        $("#crrok").html(lern2);
+                    }
+                }
+            });
+        }
+        srok();
+        setInterval(function() {
+            srok();
+        }, 3600000);
     </script>
     
     <script src="bootstrap-5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>

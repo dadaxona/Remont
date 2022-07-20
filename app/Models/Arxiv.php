@@ -16,6 +16,7 @@ class Arxiv extends Model
         'bank',
         'karzs',
         'karzs2',
+        'srok'
     ];
     public $timestamps = true;
 

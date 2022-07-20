@@ -19,6 +19,7 @@ use App\Imports\UsersImport5;
 use App\Imports\UsersImport5dok;
 use App\Imports\UsersImport6;
 use App\Models\Admin;
+use App\Models\Arxiv;
 use App\Models\Auth;
 use App\Models\Clentitog;
 use App\Models\Drektor;
@@ -631,5 +632,13 @@ class AuthController extends Controller
         return view('servislar', [
             'brends'=>$brends,
         ]);
+    }
+
+    public function srocrow()
+    {
+        $dt= Carbon::now('Asia/Tashkent');
+        $data1 = $dt->toDateString();
+        $data = Arxiv::where('karzs', ">", 0)->where('srok', "<=", $data1)->first();
+        return response()->json($data);        
     }
 }

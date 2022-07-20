@@ -1641,6 +1641,13 @@ class KlentServis extends KlentServis2
         }
     }
 
+    public function bot($request)
+    {
+        $user = User::find($request->id);
+        $data = Karzina::all();
+        return response()->json(['user'=>$user, 'context'=>$data]);
+    }
+
     public function oplata($request){
         $dt= Carbon::now('Asia/Tashkent');
         $month = $dt->month;
@@ -1689,6 +1696,7 @@ class KlentServis extends KlentServis2
                     'plastik'=>$request->plastik,
                     'bank'=>$request->bank,
                     'karzs'=>$request->karzs,
+                    'srok'=>$request->srok,
                 ]);
                 foreach ($variable as $value) {
                     Karzina2::create([
@@ -1780,6 +1788,7 @@ class KlentServis extends KlentServis2
                     'plastik'=>$request->plastik / $usd->kurs,
                     'bank'=>$request->bank / $usd->kurs,
                     'karzs'=>$request->karzs / $usd->kurs,
+                    'srok'=>$request->srok,
                 ]);
                 foreach ($variable as $value) {
                     Karzina2::create([

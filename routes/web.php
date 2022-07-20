@@ -37,6 +37,7 @@ Route::post('storeadmin', [KlentController::class, 'storeadmin'])->name('storead
 Route::get('live_ishchi', [KlentController::class, 'live_ishchi'])->name('live_ishchi');
 Route::get('live_admin', [KlentController::class, 'live_admin'])->name('live_admin');
 Route::get('showishchi/{id}', [KlentController::class, 'showishchi']);
+Route::get('srocrow', [AuthController::class,'srocrow'])->name('srocrow');
 Route::get('showadmin/{id}', [KlentController::class, 'showadmin']);
 Route::post('deleteishchi/{id}', [KlentController::class, 'deleteishchi']);
 Route::post('deleteadmin/{id}', [KlentController::class, 'deleteadmin']);
@@ -62,6 +63,8 @@ Route::get('tiklaslar', [KlentController::class, 'tiklaslar'])->name('tiklaslar'
 Route::get('live_clentdok', [KlentController::class, 'live_clentdok'])->name('live_clentdok');
 Route::get('index', [KlentController::class, 'index'])->name('index');
 Route::get('indextip', [KlentController::class, 'indextip'])->name('indextip');
+Route::get('tidtolov', [KlentController::class, 'tidtolov'])->name('tidtolov');
+Route::post('tolash', [KlentController::class, 'tolash'])->name('tolash');
 Route::post('storead', [KlentController::class, 'storead'])->name('storead');
 Route::post('storedok', [KlentController::class, 'storedok'])->name('storedok');
 Route::get('show/{id}', [KlentController::class, 'show']);
@@ -141,6 +144,7 @@ Route::post('tugledok', [KlentController::class, 'tugledok'])->name('tugledok');
 Route::get('rachot', [KlentController::class, 'rachot'])->name('rachot');
 Route::get('rachotdok', [KlentController::class, 'rachotdok'])->name('rachotdok');
 Route::post('oplata', [KlentController::class, 'oplata'])->name('oplata');
+Route::post('bot', [KlentController::class, 'bot'])->name('bot');
 Route::post('oplatadok', [KlentController::class, 'oplatadok'])->name('oplatadok');
 Route::post('zakazayt', [KlentController::class, 'zakazayt'])->name('zakazayt');
 Route::post('zakazaytdok', [KlentController::class, 'zakazaytdok'])->name('zakazaytdok');

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('tel')->nullable();
+            $table->string('chatid')->nullable();
             $table->string('firma')->nullable();
             $table->string('inn')->nullable();
             $table->timestamps();

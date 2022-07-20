@@ -1,5 +1,10 @@
 @extends('welcome')
 @section('content')
+<style>
+  #otkaz{
+    margin-left: 44%;
+  }
+</style>
 @if ($brends->login == "Admin")
 <div class="card p-0">
   <div class="card-header">
@@ -33,6 +38,7 @@
               <tr>
                   <th>Исм</th>
                   <th>Телефон</th>
+                  <th>Телеграм Чат Ид</th>
                   <th>Фирма Номи</th>
                   <th>Фирма ИНН</th>
                   <th>Управление</th>
@@ -84,9 +90,14 @@
             <span class="text-danger error-text name_error"></span>
           </div>
           <div class="mb-3">
-            <label for="message-text" class="col-form-label">Тел..</label>
+            <label for="message-text" class="col-form-label">Телефон</label>
             <input type="number" class="form-control" name="tel"  id="tel">
             <span class="text-danger error-text tel_error"></span>
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Телеграм Чат Ид</label>
+            <input type="number" class="form-control" name="chatid"  id="chatid">
+            <span class="text-danger error-text chatid_error"></span>
           </div>
           <div class="mb-3">
               <label for="message-text" class="col-form-label">Фирма номи</label>
@@ -183,7 +194,7 @@
             <span class="text-danger error-text name_error"></span>
           </div>
           <div class="mb-3">
-            <label for="message-text" class="col-form-label">Тел..</label>
+            <label for="message-text" class="col-form-label">Телефон</label>
             <input type="number" class="form-control" name="tel"  id="teldok">
             <span class="text-danger error-text tel_error"></span>
           </div>
@@ -247,10 +258,38 @@
 </div>
 @endif
 
+<div class="modal fade" id="toluv" tabindex="-1" aria-labelledby="exaswer" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exaswer">Тулов килиш</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <input type="hidden" id="t_id">
+          <input type="hidden" id="t_id2">
+          <input type="hidden" id="ka">
+          <input type="text" class="form-control" id="karzstol" disabled>
+          <input type="hidden" id="karzstolqosh">
+          <button class="btn btn-primary mt-2 mb-2" id="otkaz">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+            </svg>
+          </button>
+          <input type="text" class="form-control" id="karzstol2" placeholder="Туловни суммасини">
+          <div id="htm"></div>
+        </div>
+        <div class="text-center pb-4">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Нет</button>
+            <button type="submit" id="aaa" class="btn btn-success">Да</button>
+        </div>
+    </div>
+  </div>
+</div>
 <script>
-      $( function() {
-      $( "#clent" ).selectable();
-    });
+  $( function() {
+    $( "#clent" ).selectable();
+  });
     
   $.ajaxSetup({
     headers: {
@@ -263,6 +302,115 @@
   });
   $("#iddr2dok").on("click", function(){
     $("#exxxdok").modal('show');
+  });
+  
+  function tolov(id) {
+    $.ajax({
+      url: "{{ route('tidtolov') }}",
+      type: "GET",
+      data:{
+        id: id
+      },
+      success: function(response) {
+        $("#t_id2").val(response.id);
+        $("#t_id").val(response.user_id);
+        $("#ka").val(response.karzs);
+        $("#karzstol").val(response.karzs);
+        $("#karzstol2").val('');
+        $('#toluv').modal('show');
+      }
+    });
+  }
+
+  $("#otkaz").on("click", function(){
+    var ka = $("#ka").val();
+    $("#karzstol2").val(ka);
+    $("#karzstol").val(0);
+  });
+
+  $(document).on("keyup", "#karzstol2", function(){
+    var data = $(this).val();
+    var ka = $("#ka").val(); 
+    var a = ka - data;
+    $("#karzstol").val(a);
+    $("#karzstolqosh").val(a);
+    var fer = $("#karzstol").val();
+    var kare = $("#karzstol2").val();
+    if(fer > 0){
+      if(kare == ''){
+        $("#htm").html('');
+      }else{
+        var ht = '<input type="date" class="form-control mt-4" id="ddddate">';
+        $("#htm").html(ht);
+      }
+    }else{
+      $("#htm").html('');
+    }
+  });
+
+  $("#aaa").on("click", function(){
+    let _token   = $('meta[name="csrf-token"]').attr('content');
+    var id = $("#t_id").val();
+    var t_id2 = $("#t_id2").val();
+    var karzs = $("#karzstolqosh").val();
+    var karzs2 = $("#karzstol2").val();
+    var datesrok = $("#ddddate").val();
+    if(karzs2){
+      if(karzs > 0){
+        if(datesrok){
+          $.ajax({
+          url: "{{ route('tolash') }}",
+          type: "POST",
+          data:{
+            _token: _token,
+            id: id,
+            t_id2: t_id2,
+            karzs: karzs,
+            karzs2: karzs2,
+            datesrok: datesrok
+          },
+          success: function(data) {
+            toastr.success(data.msg);
+            $("#t_id").val('');
+            $("#ka").val('');
+            $("#karzstol").val('');
+            $("#karzstol2").val('');
+            $("#karzstolqosh").val('');
+            $("#ddddate").val('');
+            $('#toluv').modal('hide');
+            location.reload(true);
+          }
+        });
+        }else{
+          toastr.error("Срокни белгиланг");
+        }
+      }else{
+        $.ajax({
+          url: "{{ route('tolash') }}",
+          type: "POST",
+          data:{
+            _token: _token,
+            id: id,
+            t_id2: t_id2,
+            karzs: karzs,
+            karzs2: karzs2
+          },
+          success: function(data) {
+            toastr.success(data.msg);
+            $("#t_id").val('');
+            $("#ka").val('');
+            $("#karzstol").val('');
+            $("#karzstol2").val('');
+            $("#karzstolqosh").val('');
+            $("#ddddate").val('');
+            $('#toluv').modal('hide');
+            location.reload(true);
+          }
+        });
+      }
+    }else{
+      toastr.error("Тулов киритилмаган");
+    }
   });
 
   function addPost() {
@@ -291,6 +439,7 @@
             $("#id").val(response.id);
             $("#name").val(response.name);
             $("#tel").val(response.tel);
+            $("#chatid").val(response.chatid);
             $("#firma").val(response.firma);
             $("#inn").val(response.inn);
             $('#post-modal').modal('show');
@@ -324,7 +473,6 @@
   }
 
   $(document).ready(function(){
-    fetch_customer_data();
     function fetch_customer_data(query = '')
     {
         $.ajax({
@@ -338,6 +486,8 @@
             }
         })
     }
+    fetch_customer_data();
+    fetch_customer_data();
     $('#userForm').on('submit', function(e) {
         e.preventDefault();
         var form = this;

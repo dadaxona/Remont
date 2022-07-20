@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class User extends Model
 {
     use HasFactory;
-    public $fillable = ['name','tel', 'firma', 'inn'];
+    public $fillable = ['name','tel', 'chatid', 'firma', 'inn'];
     public $timestamps = true;
 }
