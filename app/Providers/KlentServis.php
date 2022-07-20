@@ -1644,8 +1644,10 @@ class KlentServis extends KlentServis2
     public function bot($request)
     {
         $user = User::find($request->id);
+        $javob = Javob::where('user_id', $request->id)->first();
+        $foo = $javob->javob + $request->karzs;
         $data = Karzina::all();
-        return response()->json(['user'=>$user, 'context'=>$data]);
+        return response()->json(['user'=>$user, 'javob'=>$foo, 'context'=>$data]);
     }
 
     public function oplata($request){

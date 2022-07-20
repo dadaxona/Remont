@@ -1296,7 +1296,8 @@ function kursm(){
                                 url: "{{ route('bot') }}",
                                 type: 'POST',
                                 data:{
-                                    id: clentra,                              
+                                    id: clentra,
+                                    karzs: karzs,
                                     _token: _token
                                 },
                                 success: function(data) {
@@ -1323,6 +1324,7 @@ function kursm(){
                                         k+= ";\n";
                                         k+= "Тулаш муддати" + " , " + srok;
                                         k+= ";\n";
+                                        k+= "Жами карзинггиз" + " , " + data.javob;
                                         k+= "\n";
                                         k+= "\n";
                                         k+= "Хурмат билан << ID Group >>";
