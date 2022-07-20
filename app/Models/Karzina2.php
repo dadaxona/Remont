@@ -34,4 +34,9 @@ class Karzina2 extends Model
     {
         return $this->belongsTo(Tavar::class);
     }
+
+    public function ichkitavar()
+    {
+        return $this->belongsTo(Ichkitavar::class);
+    }
 }

@@ -5,7 +5,7 @@
   <div class="card-header">
           <div class="col-10">
             <div class="row">
-              <div class="col-4 mr-2">
+              <div class="col-5 mr-2">
                 <button type="button" class="btn btn-primary" onclick="addPost()">Клиент Яратиш</button>                      
                 <a class="btn btn-success" href="#" onclick="event.preventDefault(); document.getElementById('ddr').submit();">
                   <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">

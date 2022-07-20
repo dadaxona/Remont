@@ -917,7 +917,7 @@ class KlentController2 extends Controller
             {
                 $output .= '
                 <tr style="border-bottom: 1px solid;">
-                    <td>'.$row->tavar->name.'</td>
+                    <td>'.$row->ichkitavar->name.'</td>
                     <td>'.$row->raqam.'</td>
                     <td>'.$row->soni.'</td>
                     <td>'.$row->summa2.'</td>
@@ -959,7 +959,7 @@ class KlentController2 extends Controller
                     $output .= '
                     <tr style="border-bottom: 1px solid;">
                         <td>'.$row->user->name.'</td>
-                        <td>'.$row->tavar->name.'</td>
+                        <td>'.$row->ichkitavar->name.'</td>
                         <td>'.$row->raqam.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
@@ -1297,7 +1297,7 @@ class KlentController2 extends Controller
                     $output .= '
                     <tr style="border-bottom: 1px solid;">
                         <td>'.$row->user->name.'</td>
-                        <td>'.$row->tavar->name.'</td>
+                        <td>'.$row->ichkitavar->name.'</td>
                         <td>'.$row->raqam.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
@@ -1410,7 +1410,7 @@ class KlentController2 extends Controller
                     $output .= '
                     <tr style="border-bottom: 1px solid;">
                         <td>'.$row->user->name.'</td>
-                        <td>'.$row->tavar->name.'</td>
+                        <td>'.$row->ichkitavar->name.'</td>
                         <td>'.$row->raqam.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
@@ -1688,7 +1688,7 @@ class KlentController2 extends Controller
                     $output .= '
                     <tr style="border-bottom: 1px solid;">
                         <td>'.$row->user->name.'</td>
-                        <td>'.$row->tavar->name.'</td>
+                        <td>'.$row->ichkitavar->name.'</td>
                         <td>'.$row->raqam.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
@@ -1804,7 +1804,7 @@ class KlentController2 extends Controller
                     $output .= '
                     <tr style="border-bottom: 1px solid;">
                         <td>'.$row->user->name.'</td>
-                        <td>'.$row->tavar->name.'</td>
+                        <td>'.$row->ichkitavar->name.'</td>
                         <td>'.$row->raqam.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
@@ -2263,7 +2263,7 @@ class KlentController2 extends Controller
                         $output .= '
                         <tr style="border-bottom: 1px solid;">
                             <td>'.$row->user->name.'</td>
-                            <td>'.$row->tavar->name.'</td>
+                            <td>'.$row->ichkitavar->name.'</td>
                             <td>'.$row->raqam.'</td>
                             <td>'.$row->soni.'</td>
                             <td>'.$row->summa2.'</td>
@@ -2373,7 +2373,7 @@ class KlentController2 extends Controller
                         $output .= '
                         <tr style="border-bottom: 1px solid;">
                             <td>'.$row->user->name.'</td>
-                            <td>'.$row->tavar->name.'</td>
+                            <td>'.$row->ichkitavar->name.'</td>
                             <td>'.$row->raqam.'</td>
                             <td>'.$row->soni.'</td>
                             <td>'.$row->summa2.'</td>
@@ -2565,7 +2565,7 @@ class KlentController2 extends Controller
                 {
                     $output .= '
                     <tr style="border-bottom: 1px solid;">
-                        <td>'.$row->tavar->name.'</td>
+                        <td>'.$row->ichkitavar->name.'</td>
                         <td>'.$row->raqam.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
@@ -2646,7 +2646,7 @@ class KlentController2 extends Controller
                 {
                     $output .= '
                     <tr style="border-bottom: 1px solid;">
-                        <td>'.$row->tavar->name.'</td>
+                        <td>'.$row->ichkitavar->name.'</td>
                         <td>'.$row->raqam.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
@@ -2807,7 +2807,7 @@ class KlentController2 extends Controller
                 {
                     $output .= '
                     <tr style="border-bottom: 1px solid;">
-                        <td>'.$row->tavar->name.'</td>
+                        <td>'.$row->ichkitavar->name.'</td>
                         <td>'.$row->raqam.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>

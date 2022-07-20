@@ -1722,7 +1722,7 @@ class KlentServis extends KlentServis2
                     'pribl'=>$pribl,
                 ]);  
                 $user_id = Javob::where('user_id', $request->id)->first();
-                $jav = $user_id->karzs + $request->karzs;
+                $jav = $user_id->javob + $request->karzs;
                 Javob::where('user_id', $request->id)->update([
                     "javob"=> $jav
                 ]);
@@ -1762,11 +1762,6 @@ class KlentServis extends KlentServis2
                 $pribl = $kassa->kassa - $kassa->foyda;
                 Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
                     'pribl'=>$pribl,
-                ]);  
-                $user_id = Javob::where('user_id', $request->id)->first();
-                $jav = $user_id->karzs + $request->karzs;
-                Javob::where('user_id', $request->id)->update([
-                    "javob"=> $jav
                 ]);
                 Itogo::find(1)->update([
                     'itogo'=>0,
@@ -1818,7 +1813,7 @@ class KlentServis extends KlentServis2
                     'pribl'=>$pribl,
                 ]);  
                 $user_id = Javob::where('user_id', $request->id)->first();
-                $jav = $user_id->karzs + $request->karzs;
+                $jav = $user_id->javob + $request->karzs;
                 Javob::where('user_id', $request->id)->update([
                     "javob"=> $jav
                 ]);
@@ -1858,12 +1853,7 @@ class KlentServis extends KlentServis2
                 $pribl = $kassa->kassa - $kassa->foyda;
                 Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
                     'pribl'=>$pribl,
-                ]);
-                $user_id = Javob::where('user_id', $request->id)->first();
-                $jav = $user_id->karzs + $request->karzs;
-                Javob::where('user_id', $request->id)->update([
-                    "javob"=> $jav
-                ]);
+                ]);          
                 Itogo::find(1)->update([
                     'itogo'=>0,
                 ]);
