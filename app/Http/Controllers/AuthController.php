@@ -351,7 +351,8 @@ class AuthController extends Controller
             'xulosa'=>$request->xulosa,
             'summa'=>$request->summa,
         ]);
-        return back()->with('success', 'Muvofaqiyatli yaratildi');
+        $usta = Usta::where('name', $request->usta)->first();
+        return response()->json(['usta'=>$usta, 'msg'=>'Мувафакиятли сакланди']);
     }
 
     public function edit(Request $request)

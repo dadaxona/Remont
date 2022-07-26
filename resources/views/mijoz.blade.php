@@ -113,27 +113,27 @@
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
-                          <form action="{{ route('store') }}" method="POST">
+                          <form action="{{ route('store') }}" method="POST" id="mijoz">
                               @csrf
                             <div class="row">
                               <div class="mb-3 col-6">
                                 <label for="recipient-name" class="col-form-label">Ism</label>
-                                <input type="text" name="name" class="form-control">
+                                <input type="text" name="name" class="form-control" id="ismu">
                                 <span class="text-danger">@error('name') {{$message}}@enderror</span>
                               </div>
                               <div class="mb-3 col-6">
                                   <label for="recipient-name" class="col-form-label">Telefon</label>
-                                  <input type="number" name="tel" class="form-control">
+                                  <input type="number" name="tel" class="form-control" id="telu">
                                   <span class="text-danger">@error('tel') {{$message}}@enderror</span>
                               </div>
                               <div class="mb-3 col-6">
                                   <label for="recipient-name" class="col-form-label">Texnika</label>
-                                  <input type="text" name="texnika" class="form-control">
+                                  <input type="text" name="texnika" class="form-control" id="texu">
                                   <span class="text-danger">@error('texnika') {{$message}}@enderror</span>
                               </div>
                               <div class="mb-3 col-6">
                                 <label for="recipient-name" class="col-form-label">Muammo</label>
-                                <input type="text" name="muammo" class="form-control">
+                                <input type="text" name="muammo" class="form-control" id="muau">
                                 <span class="text-danger">@error('muammo') {{$message}}@enderror</span>
                               </div>
                               <div class="mb-3 col-6">
@@ -199,7 +199,7 @@
                                 </div>
                                 <div class="mb-3 col-6">
                                   <label for="recipient-name" class="col-form-label">Masul usta</label>
-                                  <select name="usta" class="form-control">
+                                  <select name="usta" class="form-control" id="usta">
                                    @foreach ($collection as $usta)
                                     <option value="{{ $usta->name }}">{{ $usta->name }}</option>
                                    @endforeach
@@ -258,11 +258,64 @@
               $("#tel").val(data.success.tel);
               $("#texnika").val(data.success.texnika);
               $("#muammo").val(data.success.muammo);
+              $("#usta").val(data.success.usta);
               $("#xulosa").val(data.success.xulosa);
               $("#summa").val(data.success.summa);
               $("#exampleModalMijoz").modal("toggle");
             }
         });
     }
+
+    $('#mijoz').on('submit', function(e) {
+      e.preventDefault();
+      var form = this;
+      var ismu = $("#ismu").val();
+      var telu = $("#telu").val();
+      var texu = $("#texu").val();
+      var muau = $("#muau").val();
+      $.ajax({
+        url:$(form).attr('action'),
+        method:$(form).attr('method'),
+        data:new FormData(form),
+        processData:false,
+        dataType:'json',
+        contentType:false,
+        success:function(data){
+          if(data.usta.chatid){
+            var k= "";
+            k+= "Салом хурматли" + " " + data.usta.name + " " + "сизга буйуртма топширилди.";
+            k+= " \n";
+            k+= "\n";
+            k+= "Мижоз" + " , " + ismu;
+            k+= ";\n";
+            k+= "Техника" + " , " + texu;
+            k+= ";\n";
+            k+= "Муаммо" + " , " + muau;
+            k+= ";\n";
+            k+= "Телефон" + " , " + telu;
+            k+= ";\n";
+            k+= "\n";
+            k+= "Хурмат билан << ID Group >>";
+            $.ajax({
+              url: "https://api.telegram.org/bot5473083753:AAGZa2nwaz0Ndj53tJskF--Owqxe-ApZdnA/sendMessage",
+              type: "GET",
+              data: {
+                  chat_id: data.usta.chatid,
+                  text: k
+              },
+              success: function(result) {
+                $(form)[0].reset();
+                toastr.success(data.msg);
+                location.reload(true);
+              }
+            });
+          }else{
+            $(form)[0].reset();
+                toastr.success(data.msg);
+                location.reload(true);
+          }
+        }
+      });
+    });
 </script>
 @endsection

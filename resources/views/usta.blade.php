@@ -18,8 +18,11 @@
             @csrf
             <div class="col-8">
               <div class="row">
-                <div class="col-8">
+                <div class="col-4">
                   <input type="text" name="name"  class="form-control" placeholder="Usta nomi">
+                </div>
+                <div class="col-4">
+                  <input type="text" name="chatid"  class="form-control" placeholder="Chat ID">
                 </div>
                 <div class="col-4">
                   <button type="submit" class="btn btn-primary">Saqlash</button>
@@ -30,8 +33,11 @@
           @else
             <div class="col-8">
               <div class="row">
-                <div class="col-8">
+                <div class="col-4">
                   <input class="form-control" placeholder="Usta nomi" disabled>
+                </div>
+                <div class="col-4">
+                  <input class="form-control" placeholder="Chat ID" disabled>
                 </div>
                 <div class="col-4">
                   <button class="btn btn-dark">Saqlash</button>
@@ -46,12 +52,14 @@
                     <table class="tab table-hover table-striped">
                         <tr>
                           <th>Name</th>
+                          <th>Chat ID</th>
                           <th>Edit</th>
                           <th>Delete</th>
                         </tr>
                         @foreach ($collection as $item)
                         <tr id="sid{{ $item->id  }}">
                           <td>{{ $item->name }}</td>
+                          <td>{{ $item->chatid }}</td>
                           @if ($brends->login == "Admin")
                           <td>
                             <button onclick="editusta({{ $item->id }})" class="btn-success" style="border-radius: 5px;">
@@ -123,6 +131,11 @@
                       <input type="text" name="name" id="name" class="form-control">
                       <span class="text-danger">@error('name') {{$message}}@enderror</span>
                     </div>
+                    <div class="mb-3">
+                      <label for="recipient-name" class="col-form-label">Chat ID</label>
+                      <input type="text" name="chatid" id="chatid" class="form-control">
+                      <span class="text-danger">@error('chatid') {{$message}}@enderror</span>
+                    </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary">Saqlash</button>
@@ -148,6 +161,7 @@
             success:function(data){
               $("#id").val(data.success.id);
               $("#name").val(data.success.name);
+              $("#chatid").val(data.success.chatid);
               $("#exampleModalUsta").modal("toggle");
             }
         });

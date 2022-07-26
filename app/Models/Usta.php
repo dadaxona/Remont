@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Usta extends Model
 {
     use HasFactory;
-    public $fillable = ['name'];
+    public $fillable = ['name', 'chatid'];
     public $timestamps = true;
 }
