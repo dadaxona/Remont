@@ -35,6 +35,7 @@ use App\Models\Tayyorsqlad;
 use App\Models\Umumiy;
 use App\Models\Updatetavr;
 use App\Models\Userdok;
+use App\Models\Vazvrad;
 use App\Models\Zakaz;
 use App\Models\Zakaz2;
 use App\Models\Zakaz2dok;
@@ -849,6 +850,53 @@ class KlentController2 extends Controller
         }
     }
 
+    public function vazvradspi(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '')
+        {
+        $data = Vazvrad::where('name', 'like', '%'.$query.'%')->get();
+        }
+        else
+        {
+        $data = Vazvrad::all();
+        }
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr style="border-bottom: 1px solid;">
+                    <td>'.$row->created_at.'</td>
+                    <td>'.$row->username.'</td>
+                    <td>'.$row->name.'</td>
+                    <td>'.$row->sabab.'</td>
+                    <td>'.$row->hajm.'</td>
+                    <td>'.$row->summa.'</td>
+                    <td>'.$row->kod.'</td>
+                </tr>
+                ';
+            }
+        }
+        else
+        {
+        $output = '
+            <tr>
+                <td align="center" colspan="7">No Data Found</td>
+            </tr>
+            ';
+        }
+        $data = array(
+            'table_data'  => $output,
+        );
+        return response()->json($data);
+        }
+    }
+
     public function savdobirlamchidok(Request $request)
     {
         if($request->ajax())
@@ -901,24 +949,15 @@ class KlentController2 extends Controller
         if($request->ajax())
         {
         $output = '';
-        $query = $request->get('query');
-        if($query != '')
-        {
-        $data = Karzina3::where('name', 'like', '%'.$query.'%')->get();
-        }
-        else
-        {
         $data = Karzina3::all();
-        }
         $total_row = $data->count();
         if($total_row > 0)
         {
             foreach($data as $row)
             {
                 $output .= '
-                <tr style="border-bottom: 1px solid;">
+                <tr style="border-bottom: 1px solid;"  data-id="'.$row->id.'" id="bilamvaz">
                     <td>'.$row->ichkitavar->name.'</td>
-                    <td>'.$row->raqam.'</td>
                     <td>'.$row->soni.'</td>
                     <td>'.$row->summa2.'</td>
                     <td>'.$row->chegirma.'</td>
@@ -927,20 +966,166 @@ class KlentController2 extends Controller
                 </tr>
                 ';
             }
+                $foo = Clentitog::find(1);
+                if($foo){
+                    $foo->tavarshtuk = 0;
+                    $foo->shtuk = 0;
+                    $foo->foiz = 0;
+                    $foo->itog = 0;
+                    $foo->opshi = 0;
+                    $foo->save();
+                    foreach ($data as $value) {            
+                        $fool = Clentitog::find(1);
+                        $shtuk = $fool->shtuk + $value->soni;
+                        Clentitog::find(1)->update([
+                            'tavarshtuk'=>$total_row,
+                            'shtuk'=>$shtuk,
+                        ]);
+                    }
+                    foreach ($data as $value) {
+                        $fool2 = Clentitog::find(1);
+                        $a = $fool2->opshi + $value->itog;
+                        Clentitog::find(1)->update([
+                            'opshi'=>$a,
+                        ]);
+                    }
+                }else{
+                    Clentitog::create([
+                        'tavarshtuk'=>0,
+                        'shtuk'=>0,
+                        'foiz'=>0,
+                        'itog'=>0,
+                        'opshi'=>0
+                    ]);
+                    foreach ($data as $value) {
+                        $foo = Clentitog::find(1);        
+                        $shtuk2 = $foo->shtuk + $value->soni;
+                        Clentitog::find(1)->update([
+                            'tavarshtuk'=>$total_row,
+                            'shtuk'=>$shtuk2,
+                        ]);
+                    }
+                    foreach ($data as $value) {
+                        $fool3 = Clentitog::find(1);
+                        $a1 = $fool3->opshi + $value->itog;
+                        Clentitog::find(1)->update([
+                            'opshi'=>$a1,
+                        ]);
+                    }
+                }
+                $foo2 = Clentitog::find(1);
+                return response()->json([
+                    'output'=>$output,
+                    'foo2'=>$foo2??[],
+                ]);
+            }
         }
-        else
-        {
-        $output = '
-            <tr>
-                <td align="center" colspan="7">No Data Found</td>
-            </tr>
-            ';
+    }
+    
+    public function qaytar(Request $request)
+    {
+        $data = Karzina2::find($request->id);
+        $j = $data->soni - $request->hajm;
+        if($j < 0){
+            return response()->json(['code'=>0, 'msg'=>'Кайтариладиган товар хажми нотогри']);
         }
-        $data = array(
-            'table_data'  => $output,
-        );
+        if($j == 0){
+            $foo = Ichkitavar::find($data->ichkitavar_id);
+            $jav = $foo->hajm + $request->hajm;
+            Ichkitavar::find($data->ichkitavar_id)->update([
+                'hajm'=>$jav
+            ]);
+            Vazvrad::create([
+                'username'=>$data->user->name, 
+                'name'=>$data->name, 
+                'sabab'=>$request->sabab, 
+                'hajm'=>$request->hajm, 
+                'summa'=>$data->summa2, 
+                'kod'=>$data->raqam,
+            ]);
+            Karzina2::find($request->id)->delete($request->id);
+            return response()->json(['code'=>200, 'msg'=>'Товар мувафакиятли кайтарилди']);
+        }
+        if($j > 0){
+            $foo = Ichkitavar::find($data->ichkitavar_id);
+            $jav = $foo->hajm + $request->hajm;
+            $sum = $data->itog - $data->summa2 * $request->hajm;            
+            Ichkitavar::find($data->ichkitavar_id)->update([
+                'hajm'=>$jav
+            ]);
+            Vazvrad::create([
+                'username'=>$data->user->name, 
+                'name'=>$data->name, 
+                'sabab'=>$request->sabab, 
+                'hajm'=>$request->hajm, 
+                'summa'=>$data->summa2, 
+                'kod'=>$data->raqam,
+            ]);
+            Karzina2::find($request->id)->update([
+                'soni'=>$j,
+                'itog'=>$sum
+
+            ]);
+            return response()->json(['code'=>200, 'msg'=>'Товар мувафакиятли кайтарилди']);
+        }        
+    }
+
+    public function qaytarbirlamchini(Request $request)
+    {
+        $data = Karzina3::find($request->id);
+        $j = $data->soni - $request->hajm;
+        if($j < 0){
+            return response()->json(['code'=>0, 'msg'=>'Кайтариладиган товар хажми нотогри']);
+        }
+        if($j == 0){
+            $foo = Ichkitavar::find($data->ichkitavar_id);
+            $jav = $foo->hajm + $request->hajm;
+            Ichkitavar::find($data->ichkitavar_id)->update([
+                'hajm'=>$jav
+            ]);
+            Vazvrad::create([
+                'name'=>$data->name, 
+                'sabab'=>$request->sabab, 
+                'hajm'=>$request->hajm, 
+                'summa'=>$data->summa2, 
+                'kod'=>$data->raqam,
+            ]);
+            Karzina3::find($request->id)->delete($request->id);
+            return response()->json(['code'=>200, 'msg'=>'Товар мувафакиятли кайтарилди']);
+        }
+        if($j > 0){
+            $foo2 = Ichkitavar::find($data->ichkitavar_id);
+            $jav2 = $foo2->hajm + $request->hajm;
+            $sum2 = $data->itog - $data->summa2 * $request->hajm;            
+            Ichkitavar::find($data->ichkitavar_id)->update([
+                'hajm'=>$jav2
+            ]);
+            Vazvrad::create([
+                'name'=>$data->name, 
+                'sabab'=>$request->sabab, 
+                'hajm'=>$request->hajm, 
+                'summa'=>$data->summa2, 
+                'kod'=>$data->raqam,
+            ]);
+            Karzina3::find($request->id)->update([
+                'soni'=>$j,
+                'itog'=>$sum2
+
+            ]);
+            return response()->json(['code'=>200, 'msg'=>'Товар мувафакиятли кайтарилди']);
+        }
+    }
+
+    public function qaytaredit(Request $request)
+    {
+        $data = Karzina2::find($request->id);
         return response()->json($data);
-        }
+    }
+
+    public function qaytareditbirlam(Request $request)
+    {
+        $data = Karzina3::find($request->id);
+        return response()->json($data);
     }
     
     public function vseclent(Request $request)
@@ -957,15 +1142,14 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;">
-                        <td>'.$row->user->name.'</td>
+                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="vazvrat">
+                    <td>'.$row->updated_at.'</td>
                         <td>'.$row->ichkitavar->name.'</td>
-                        <td>'.$row->raqam.'</td>
+            
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
                         <td>'.$row->chegirma.'</td>
                         <td>'.$row->itog.'</td>
-                        <td>'.$row->updated_at.'</td>
                     </tr>
                     ';
                 }
@@ -973,13 +1157,13 @@ class KlentController2 extends Controller
                 {
                     $output2 .= '
                     <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="cret">
+                    <td>'.$row->updated_at.'</td>
                         <td>'.$row->user->name.'</td>
                         <td>'.$row->itogs.'</td>
                         <td>'.$row->naqt.'</td>
                         <td>'.$row->plastik.'</td>
                         <td>'.$row->bank.'</td>
                         <td>'.$row->karzs.'</td>
-                        <td>'.$row->updated_at.'</td>
                     </tr>
                     ';
                 }
@@ -1295,15 +1479,14 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;">
-                        <td>'.$row->user->name.'</td>
+                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="vazvrat">
+                    <td>'.$row->updated_at.'</td>
                         <td>'.$row->ichkitavar->name.'</td>
-                        <td>'.$row->raqam.'</td>
+            
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
                         <td>'.$row->chegirma.'</td>
                         <td>'.$row->itog.'</td>
-                        <td>'.$row->updated_at.'</td>
                     </tr>
                     ';
                 }
@@ -1311,13 +1494,13 @@ class KlentController2 extends Controller
                 {
                     $output2 .= '
                     <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="cret">
+                    <td>'.$row->updated_at.'</td>
                         <td>'.$row->user->name.'</td>
                         <td>'.$row->itogs.'</td>
                         <td>'.$row->naqt.'</td>
                         <td>'.$row->plastik.'</td>
                         <td>'.$row->bank.'</td>
                         <td>'.$row->karzs.'</td>
-                        <td>'.$row->updated_at.'</td>
                     </tr>
                     ';
                 }
@@ -1408,15 +1591,13 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;">
-                        <td>'.$row->user->name.'</td>
-                        <td>'.$row->ichkitavar->name.'</td>
-                        <td>'.$row->raqam.'</td>
+                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="vazvrat">
+                    <td>'.$row->updated_at.'</td>
+                        <td>'.$row->ichkitavar->name.'</td>            
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
                         <td>'.$row->chegirma.'</td>
                         <td>'.$row->itog.'</td>
-                        <td>'.$row->updated_at.'</td>
                     </tr>
                     ';
                 }      
@@ -1686,15 +1867,14 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;">
-                        <td>'.$row->user->name.'</td>
+                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="vazvrat">
+                    <td>'.$row->updated_at.'</td>
                         <td>'.$row->ichkitavar->name.'</td>
-                        <td>'.$row->raqam.'</td>
+            
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
                         <td>'.$row->chegirma.'</td>
                         <td>'.$row->itog.'</td>
-                        <td>'.$row->updated_at.'</td>
                     </tr>
                     ';
                 }
@@ -1702,13 +1882,13 @@ class KlentController2 extends Controller
                 {
                     $output2 .= '
                     <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="cret">
+                    <td>'.$row->updated_at.'</td>
                         <td>'.$row->user->name.'</td>
                         <td>'.$row->itogs.'</td>
                         <td>'.$row->naqt.'</td>
                         <td>'.$row->plastik.'</td>
                         <td>'.$row->bank.'</td>
                         <td>'.$row->karzs.'</td>
-                        <td>'.$row->updated_at.'</td>
                     </tr>
                     ';
                 }
@@ -1802,15 +1982,14 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;">
-                        <td>'.$row->user->name.'</td>
+                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="vazvrat">
+                    <td>'.$row->updated_at.'</td>
                         <td>'.$row->ichkitavar->name.'</td>
-                        <td>'.$row->raqam.'</td>
+            
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
                         <td>'.$row->chegirma.'</td>
                         <td>'.$row->itog.'</td>
-                        <td>'.$row->updated_at.'</td>
                     </tr>
                     ';
                 }
@@ -1818,13 +1997,13 @@ class KlentController2 extends Controller
                 {
                     $output2 .= '
                     <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="cret">
+                    <td>'.$row->updated_at.'</td>
                         <td>'.$row->user->name.'</td>
                         <td>'.$row->itogs.'</td>
                         <td>'.$row->naqt.'</td>
                         <td>'.$row->plastik.'</td>
                         <td>'.$row->bank.'</td>
                         <td>'.$row->karzs.'</td>
-                        <td>'.$row->updated_at.'</td>
                     </tr>
                     ';
                 }
@@ -2564,9 +2743,9 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;">
+                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="bilamvaz">
                         <td>'.$row->ichkitavar->name.'</td>
-                        <td>'.$row->raqam.'</td>
+            
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
                         <td>'.$row->chegirma.'</td>
@@ -2645,9 +2824,9 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;">
+                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="bilamvaz">
                         <td>'.$row->ichkitavar->name.'</td>
-                        <td>'.$row->raqam.'</td>
+            
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
                         <td>'.$row->chegirma.'</td>
@@ -2806,9 +2985,9 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;">
+                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="bilamvaz">
                         <td>'.$row->ichkitavar->name.'</td>
-                        <td>'.$row->raqam.'</td>
+            
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
                         <td>'.$row->chegirma.'</td>

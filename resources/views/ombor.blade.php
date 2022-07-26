@@ -33,7 +33,7 @@
         @if ($brends->login == "Admin")
         <div class="col-xl-4 col-md-6 mt-5">
             <div class="card" style="border: 2px solid">
-                <a href="#" class="p-0">
+                <a href="{{ route('vazvratspisk') }}" class="p-0">
                 <div class="card-block">
                     <div class="row align-items-center">
                         <div class="col-4">

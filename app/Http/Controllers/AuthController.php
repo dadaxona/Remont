@@ -641,4 +641,16 @@ class AuthController extends Controller
         $data = Arxiv::where('karzs', ">", 0)->where('srok', "<=", $data1)->first();
         return response()->json($data);        
     }
+
+    public function vazvratspisk()
+    {
+        if(Session::has('IDIE')){
+            $brends = Drektor::where('id','=',Session::get('IDIE'))->first();
+            return view('vazvratspisk',[
+                'brends'=>$brends
+            ]);
+        }else{
+            return redirect('/logaut');
+        }
+    }
 }
