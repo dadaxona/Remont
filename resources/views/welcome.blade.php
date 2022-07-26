@@ -35,7 +35,7 @@
       <link rel="stylesheet" type="text/css" href="assets/css/style.css">
       <meta name="csrf-token" content="{{ csrf_token() }}" />
       <link rel="stylesheet" href="toastr/toastr.min.css" />
-      <script src="toastr/toastr.min.js"></script>
+      
       <style>
         .extr22{
             height: 100vh;
@@ -766,11 +766,10 @@
             srok();
         }, 3600000);
     </script>
-    
+    <script src="toastr/toastr.min.js"></script>
     <script src="bootstrap-5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="bootstrap-5.2.0-beta1/dist/js/bootstrap.min.js"></script>    
     <script src="bootstrap-5.2.0-beta1/js/popper.min.js"></script>
-    <script type="text/javascript" src="assets/js/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="assets/js/jquery-ui/jquery-ui.min.js "></script>
     <script type="text/javascript" src="assets/js/bootstrap/js/bootstrap.min.js "></script>
     <script type="text/javascript" src="assets/js/jquery-slimscroll/jquery.slimscroll.js "></script>
