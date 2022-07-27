@@ -50,13 +50,9 @@ class AuthController extends Controller
     
     public function typpe()
     {
-        $num = 11000; 
-        $num2 = 150.6; 
-        $float = (float)$num;
-        $int = (float)$num2;
-
-        echo var_dump($float / $int);
+        return view('telegtam');
     }
+    
     public function exports() 
     {
         return Excel::download(new InvoicesExport, 'invoices.xlsx');

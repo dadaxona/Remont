@@ -1024,6 +1024,9 @@ class KlentController2 extends Controller
     
     public function qaytar(Request $request)
     {
+        $dt= Carbon::now('Asia/Tashkent');
+        $month = $dt->month;
+        $year = $dt->year;
         $data = Karzina2::find($request->id);
         $j = $data->soni - $request->hajm;
         if($j < 0){
@@ -1043,6 +1046,18 @@ class KlentController2 extends Controller
                 'summa'=>$data->summa2, 
                 'kod'=>$data->raqam,
             ]);
+            $q = $foo->summa * $request->hajm;
+            $q2 = $data->summa2 * $request->hajm;
+            $q3 = $q2 - $q;
+            $sta = Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+            $a = $sta->kassa - $q2;
+            $a1 = $sta->foyda - $q;
+            $a2 = $sta->pribl - $q3;
+            Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                'foyda' => $a1, 
+                'kassa' => $a,
+                'pribl' => $a2,
+            ]);
             Karzina2::find($request->id)->delete($request->id);
             return response()->json(['code'=>200, 'msg'=>'Товар мувафакиятли кайтарилди']);
         }
@@ -1061,6 +1076,18 @@ class KlentController2 extends Controller
                 'summa'=>$data->summa2, 
                 'kod'=>$data->raqam,
             ]);
+            $q = $foo->summa * $request->hajm;
+            $q2 = $data->summa2 * $request->hajm;
+            $q3 = $q2 - $q;
+            $sta = Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+            $a = $sta->kassa - $q2;
+            $a1 = $sta->foyda - $q;
+            $a2 = $sta->pribl - $q3;
+            Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                'foyda' => $a1, 
+                'kassa' => $a,
+                'pribl' => $a2,
+            ]);
             Karzina2::find($request->id)->update([
                 'soni'=>$j,
                 'itog'=>$sum
@@ -1072,6 +1099,9 @@ class KlentController2 extends Controller
 
     public function qaytarbirlamchini(Request $request)
     {
+        $dt= Carbon::now('Asia/Tashkent');
+        $month = $dt->month;
+        $year = $dt->year;
         $data = Karzina3::find($request->id);
         $j = $data->soni - $request->hajm;
         if($j < 0){
@@ -1090,6 +1120,18 @@ class KlentController2 extends Controller
                 'summa'=>$data->summa2, 
                 'kod'=>$data->raqam,
             ]);
+            $q = $foo->summa * $request->hajm;
+            $q2 = $data->summa2 * $request->hajm;
+            $q3 = $q2 - $q;
+            $sta = Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+            $a = $sta->kassa - $q2;
+            $a1 = $sta->foyda - $q;
+            $a2 = $sta->pribl - $q3;
+            Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                'foyda' => $a1, 
+                'kassa' => $a,
+                'pribl' => $a2,
+            ]);
             Karzina3::find($request->id)->delete($request->id);
             return response()->json(['code'=>200, 'msg'=>'Товар мувафакиятли кайтарилди']);
         }
@@ -1106,6 +1148,18 @@ class KlentController2 extends Controller
                 'hajm'=>$request->hajm, 
                 'summa'=>$data->summa2, 
                 'kod'=>$data->raqam,
+            ]);
+            $q = $foo2->summa * $request->hajm;
+            $q2 = $data->summa2 * $request->hajm;
+            $q3 = $q2 - $q;
+            $sta = Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+            $a = $sta->kassa - $q2;
+            $a1 = $sta->foyda - $q;
+            $a2 = $sta->pribl - $q3;
+            Statistika::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                'foyda' => $a1, 
+                'kassa' => $a,
+                'pribl' => $a2,
             ]);
             Karzina3::find($request->id)->update([
                 'soni'=>$j,
