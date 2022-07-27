@@ -14,7 +14,6 @@ use App\Models\Tavar;
 use App\Models\Umumiy;
 use App\Models\Updatetavr;
 use App\Models\User;
-use App\Providers\KlentServis2;
 use App\Models\Itogo;
 use App\Models\Itogodok;
 use App\Models\Javob;
@@ -34,7 +33,7 @@ use App\Models\Zakaz2dok;
 use App\Models\Zakazdok;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
-class KlentServis extends KlentServis2
+class KlentServis
 {
     public function storead($request)
     {
