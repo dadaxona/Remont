@@ -17,6 +17,7 @@ use App\Models\User;
 use App\Models\Itogo;
 use App\Models\Itogodok;
 use App\Models\Javob;
+use App\Models\Javobdok;
 use App\Models\Karzina;
 use App\Models\Karzina2;
 use App\Models\Karzina2dok;
@@ -24,6 +25,7 @@ use App\Models\Karzina3;
 use App\Models\Karzina3dok;
 use App\Models\Karzinadok;
 use App\Models\Statistika;
+use App\Models\Statistikadok;
 use App\Models\Tavar2;
 use App\Models\Updatetavrdok;
 use App\Models\Userdok;
@@ -55,6 +57,10 @@ class KlentServis
             return $this->updatedok($request);        
         }else{
             $data = Userdok::create($request->all());
+            Javobdok::create([
+                'userdok_id'=>$data->id,
+                'javob'=>0
+            ]);
             if($data){
                 return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);
             }
@@ -1233,7 +1239,7 @@ class KlentServis
         $valyuta = Itogodok::find(1);
         $a = $foo1->soni - 1;
         if($a < 1){
-            return $this->delminus($request, $row, $valyuta);
+            return $this->delminusdok($request, $row, $valyuta);
         }else{
             if($valyuta->usd == 0){
                 if($request->radio == "option2"){
@@ -1306,6 +1312,7 @@ class KlentServis
             }
         }
     }
+
     public function delminus($request, $row, $valyuta)
     {
         $b = Itogo::find(1);
@@ -1328,6 +1335,28 @@ class KlentServis
         }
     }
     
+    public function delminusdok($request, $row, $valyuta)
+    {
+        $b = Itogodok::find(1);
+        $j = $b->itogo - $row->kurs / $valyuta->kurs;
+        Itogodok::find(1)->update([
+            'itogo'=>$j
+        ]);
+        $b2 = Itogodok::find(1);
+        $foo3 = Karzinadok::find($request->id);
+        Karzinadok::find($request->id)->delete($request->id);
+        $iff = Karzinadok::count();
+        if ($iff == 0) {
+            Itogodok::find(1)->update([
+                'itogo'=>0,
+            ]);
+            $b3 = Itogodok::find(1);
+            return response()->json(['msg'=>'Тавар олиб ташланди', 'data'=>$foo3, 'data2'=>$b3, 'error'=>400]);
+        }else{
+            return response()->json(['msg'=>'Тавар олиб ташланди', 'data'=>$foo3, 'data2'=>$b2, 'error'=>400]);
+        }
+    }
+
     public function udalitdok($request)
     {
         $foo1 = Karzinadok::find($request->id);
@@ -1374,7 +1403,7 @@ class KlentServis
     public function yangilashdok($request)
     {
         $foo1 = Karzinadok::find($request->id);
-        $row = Ichkitavardok::find($foo1->ichkitavar_id);
+        $row = Ichkitavardok::find($foo1->ichkitavardok_id);
         if($request->soni > $row->hajm){
             return response()->json(['msg'=>'Тавар етарли емас', 'code'=>0]);
         }else{
@@ -1509,7 +1538,43 @@ class KlentServis
         return response()->json(['msg'=>'Киритилди', 'data'=>$b2]);        
     }
     
-    public function oplatadok($request)
+    public function oplatadok($request){
+        $dt= Carbon::now('Asia/Tashkent');
+        $month = $dt->month;
+        $year = $dt->year;
+        $usd = Itogodok::find(1);
+        if ($usd->usd == 1) {
+            $sta = Statistikadok::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+            if($sta){
+                $ddd = $sta->kassa + $request->itogs;
+                Statistikadok::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                    'kassa'=>$ddd,
+                ]);
+                return $this->oplatadok2($request, $month, $year);
+            }else{
+                Statistikadok::create([
+                    'kassa'=>$request->itogs,
+                ]);
+                return $this->oplatadok2($request, $month, $year);
+            }
+        }else{
+            $sta = Statistikadok::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+            if($sta){
+                $ddd = $sta->kassa + $request->itogs / $usd->kurs;
+                Statistikadok::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                    'kassa'=>$ddd,
+                ]);
+                return $this->oplatadok2($request, $month, $year);
+            }else{
+                Statistikadok::create([
+                    'kassa'=>$request->itogs / $usd->kurs,
+                ]);
+                return $this->oplatadok2($request, $month, $year);
+            }
+        }
+    }
+
+    public function oplatadok2($request, $month, $year)
     {
         $usd = Itogodok::find(1);
         if ($usd->usd == 1) {
@@ -1538,10 +1603,26 @@ class KlentServis
                     ]);
                     $foo = Ichkitavardok::find($value->ichkitavardok_id);
                     $foo2 = $foo->hajm - $value->soni;
+                    $sena = $value->soni * $foo->summa;
                     Ichkitavardok::find($value->ichkitavardok_id)->update([
                         'hajm'=>$foo2
                     ]);
+                    $sta = Statistikadok::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+                    $pop = $sta->foyda + $sena;
+                    Statistikadok::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                        'foyda'=>$pop,
+                    ]);
                 }
+                $kassa = Statistikadok::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+                $pribl = $kassa->kassa - $kassa->foyda;
+                Statistikadok::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                    'pribl'=>$pribl,
+                ]);  
+                $user_id = Javobdok::where('userdok_id', $request->id)->first();
+                $jav = $user_id->javob + $request->karzs;
+                Javobdok::where('userdok_id', $request->id)->update([
+                    "javob"=> $jav
+                ]);
                 Itogodok::find(1)->update([
                     'itogo'=>0,
                 ]);
@@ -1564,10 +1645,21 @@ class KlentServis
                     ]);
                     $foo = Ichkitavardok::find($value->ichkitavardok_id);
                     $foo2 = $foo->hajm - $value->soni;
+                    $sena = $value->soni * $foo->summa;
                     Ichkitavardok::find($value->ichkitavardok_id)->update([
                         'hajm'=>$foo2
                     ]);
+                    $sta = Statistikadok::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+                    $pop = $sta->foyda + $sena;
+                    Statistikadok::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                        'foyda'=>$pop,
+                    ]); 
                 }
+                $kassa = Statistikadok::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+                $pribl = $kassa->kassa - $kassa->foyda;
+                Statistikadok::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                    'pribl'=>$pribl,
+                ]);
                 Itogodok::find(1)->update([
                     'itogo'=>0,
                 ]);
@@ -1579,7 +1671,7 @@ class KlentServis
             if($request->id){
                 $variable = Karzinadok::all();
                 $arxiv = Arxivdok::create([
-                    'user_id'=>$request->id,
+                    'userdok_id'=>$request->id,
                     'itogs'=>$request->itogs / $usd->kurs,
                     'naqt'=>$request->naqt / $usd->kurs,
                     'plastik'=>$request->plastik / $usd->kurs,
@@ -1601,10 +1693,26 @@ class KlentServis
                     ]);
                     $foo = Ichkitavardok::find($value->ichkitavardok_id);
                     $foo2 = $foo->hajm - $value->soni;
+                    $sena = $value->soni * $foo->summa;
                     Ichkitavardok::find($value->ichkitavardok_id)->update([
                         'hajm'=>$foo2
                     ]);
+                    $sta = Statistikadok::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+                    $pop = $sta->foyda + $sena;
+                    Statistikadok::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                        'foyda'=>$pop,
+                    ]);
                 }
+                $kassa = Statistikadok::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+                $pribl = $kassa->kassa - $kassa->foyda;
+                Statistikadok::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                    'pribl'=>$pribl,
+                ]);  
+                $user_id = Javobdok::where('userdok_id', $request->id)->first();
+                $jav = $user_id->javob + $request->karzs;
+                Javobdok::where('userdok_id', $request->id)->update([
+                    "javob"=> $jav
+                ]);
                 Itogodok::find(1)->update([
                     'itogo'=>0,
                 ]);
@@ -1626,10 +1734,21 @@ class KlentServis
                     ]);
                     $foo = Ichkitavardok::find($value->ichkitavardok_id);
                     $foo2 = $foo->hajm - $value->soni;
+                    $sena = $value->soni * $foo->summa;
                     Ichkitavardok::find($value->ichkitavardok_id)->update([
                         'hajm'=>$foo2
                     ]);
+                    $sta = Statistikadok::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+                    $pop = $sta->foyda + $sena;
+                    Statistikadok::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                        'foyda'=>$pop,
+                    ]);
                 }
+                $kassa = Statistikadok::whereYear('created_at', $year)->whereMonth('created_at', $month)->first();
+                $pribl = $kassa->kassa - $kassa->foyda;
+                Statistikadok::whereYear('created_at', $year)->whereMonth('created_at', $month)->update([
+                    'pribl'=>$pribl,
+                ]);
                 Itogodok::find(1)->update([
                     'itogo'=>0,
                 ]);

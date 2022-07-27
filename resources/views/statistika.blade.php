@@ -1,5 +1,6 @@
 @extends('welcome')
 @section('content')
+@if ($brends->login == "Admin")
 <div class="row">
     <div class="col-3 d-flex mb-2">
         <input type="date" class="form-control mr-2" id="date">
@@ -15,6 +16,10 @@
 </div>
 <div id="Container" style="height: 400px; width: 100%;"></div>
 </div>
+
+@else
+<div id="chartContainerdok" class="mb-4" style="height: 400px; width: 100%;"></div>
+@endif
 
 <div class="modal fade" id="li" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -113,6 +118,29 @@
                     chart.render();
                 }
             });
+        });
+
+        $.getJSON("{{ route('statistikdok') }}", function (response) {
+        var chart = new CanvasJS.Chart("chartContainerdok", {
+            title: {
+                text: "Статистика малумотлари"
+            },
+            animationEnabled: true,
+            data: [{
+                type: "pie",
+                startAngle: 45,
+                showInLegend: "true",
+                legendText: "{label}",
+                indexLabel: "{label} ({y})",
+                yValueFormatString:"#,##0.#"%"",
+                dataPoints: [
+                    { label: "Продажи", y: response.foo2.opshi },
+                    { label: "Долг", y: response.foo2.foiz },
+                    { label: "Прибл", y: response.foo2.itog },
+                ]
+            }]
+        });
+        chart.render();
         });
     });
 

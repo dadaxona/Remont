@@ -91,7 +91,7 @@
         @else
         <div class="col-xl-4 col-md-6 mt-5">
             <div class="card" style="border: 2px solid">
-                <a href="#" class="p-0">
+                <a href="{{ route('vazvratspisk') }}" class="p-0">
                 <div class="card-block">
                     <div class="row align-items-center">
                         <div class="col-4">
@@ -101,11 +101,11 @@
                                 </svg>
                         </div>
                         <div class="col-8">
-                            <h5 class="mx-4">Вазврат паставщику</h5>
+                            <h5 class="text-c-green  mx-4">Вазврат паставщику</h5>
                         </div>
                     </div>
                 </div>
-                    <div class="card-footer blask">
+                    <div class="card-footer bg-c-green">
                         <div class="row align-items-center">
                             <div class="col-9">
                                 <p class="text-white m-b-0">

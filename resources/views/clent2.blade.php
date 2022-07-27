@@ -259,7 +259,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-6 bor">
+              <div class="col-4 bor">
                 <div class="table-responsive">
                   <div class="ext scrolll2">
                     <div class="rty2">
@@ -267,39 +267,13 @@
 
                         <thead>
                           <tr>
-                            <th>Клент</th>
-                            <th>Товар</th>
-                            <th>Штрих код</th>
-                            <th>Шт</th>
-                            <th>Цена продажи</th>
-                            <th>Скидка</th>
-                            <th>Итого</th>
                             <th>Последняя дата</th>
-                          </tr>             
-                      </thead>
-                          <tbody id="savdodok">
-          
-                          </tbody>
-                      </table>
-                    </div> 
-                  </div>
-                </div> 
-              </div>
-              <div class="col-4">
-                <div class="table-responsive">
-                  <div class="ext scrolll2">
-                    <div class="rty2">
-                      <table class="tab table-hover">
-
-                        <thead>
-                          <tr>
                             <th>Клент</th>
                             <th>Итого</th>
                             <th>Наличные</th>
                             <th>Карта</th>
                             <th>Безнал</th>
                             <th>Долг</th>
-                            <th>Последняя дата</th>
                           </tr>             
                       </thead>
                           <tbody id="dolgdok">
@@ -310,6 +284,32 @@
                   </div>
                 </div> 
               </div>
+
+              <div class="col-6">
+                <div class="table-responsive">
+                  <div class="ext scrolll2">
+                    <div class="rty2">
+                      <table class="tab table-hover">
+
+                        <thead>
+                          <tr>
+                            <th>Последняя дата</th>
+                            <th>Товар</th>
+                            <th>Шт</th>
+                            <th>Цена продажи</th>
+                            <th>Скидка</th>
+                            <th>Итого</th>
+                          </tr>             
+                      </thead>
+                          <tbody id="savdodok">
+          
+                          </tbody>
+                      </table>
+                    </div> 
+                  </div>
+                </div> 
+              </div>
+
               <div class="col-12 m-0 p-0 borders">
                 <div class="row">
                   <div class="col-2 bor1">
@@ -439,6 +439,34 @@
   </div>
 </div>
 
+<div class="modal fade" id="vazviratdok" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exdok"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <input type="hidden" id="idvazdok">
+          <div class="row">
+            <div class="col-6">
+              <input type="text" class="form-control" id="vazvrathajmdok" placeholder="Шт">
+            </div>
+            <div class="col-6">
+              <input type="text" class="form-control" id="valhajmdok" disabled>
+            </div>
+            <input type="hidden" id="valhajm2dok">
+          </div>
+          <input type="text" class="form-control mt-3" id="sababdok" placeholder="Сабап">
+        </div>
+        <div class="text-center pb-4">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Нет</button>
+            <button type="submit" id="qaytardok" class="btn btn-success">Да</button>
+        </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="vazviratb" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -466,17 +494,35 @@
     </div>
   </div>
 </div>
-<script>
-  // $( function() {
-  //   $( "#savdobirlamchi" ).selectable();
-  // } );
 
-  // $( function() {
-  //   $( "#dolg" ).selectable();
-  // } );
-  // $( function() {
-  //   $( "#savdo" ).selectable();
-  // } );
+<div class="modal fade" id="vazviratbdok" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exbdok"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <input type="hidden" id="idvazbdok">
+          <div class="row">
+            <div class="col-6">
+              <input type="text" class="form-control" id="vazvrathajmbdok" placeholder="Шт">
+            </div>
+            <div class="col-6">
+              <input type="text" class="form-control" id="valhajmbdok" disabled>
+            </div>
+            <input type="hidden" id="valhajm2bdok">
+          </div>
+          <input type="text" class="form-control mt-3" id="sabab2dok" placeholder="Сабап">
+        </div>
+        <div class="text-center pb-4">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Нет</button>
+            <button type="submit" id="qaytarbdok" class="btn btn-success">Да</button>
+        </div>
+    </div>
+  </div>
+</div>
+<script>
   
     $.ajaxSetup({
       headers: {
@@ -594,11 +640,42 @@
       });
     });
 
+    $(document).on('click', "#bilamvazdok", function(){
+      var id = $(this).data("id");
+      $.ajax({
+        url:"{{ route('qaytareditbirlamdok') }}",
+        method:'GET',
+        data:{
+          id: id
+        },
+        dataType:'json',
+        success:function(data)
+        {
+          $("#idvazbdok").val(data.id);
+          $("#exbdok").html(data.name);
+          $("#valhajmbdok").val(data.soni);
+          $("#valhajm2bdok").val(data.soni);
+          $("#vazviratbdok").modal("show");
+        }
+      });
+    });
+
     $(document).on('keyup', "#vazvrathajmb", function(){
       var a = $(this).val();
       var b = $("#valhajm2b").val();
       $("#valhajmb").val(b - a);
       var javob = $("#valhajmb").val();
+      if(javob < 0){
+        toastr.error("Киймат коп киритилди");
+      }
+    });
+
+    
+    $(document).on('keyup', "#vazvrathajmbdok", function(){
+      var a = $(this).val();
+      var b = $("#valhajm2bdok").val();
+      $("#valhajmbdok").val(b - a);
+      var javob = $("#valhajmbdok").val();
       if(javob < 0){
         toastr.error("Киймат коп киритилди");
       }
@@ -638,6 +715,42 @@
         toastr.error("Сабап корсатинг");
       }
     });
+
+    $(document).on('click', "#qaytarbdok", function(event){
+      event.preventDefault();
+      var idvaz = $("#idvazbdok").val();
+      var vazvrathajm = $("#vazvrathajmbdok").val();
+      var sabab2 = $("#sabab2dok").val();
+      let _token  = $('meta[name="csrf-token"]').attr('content');
+      if(sabab2){
+        $.ajax({
+        url:"{{ route('qaytarbirlamchinidok') }}",
+        method:'POST',
+        data:{
+          id: idvaz,
+          hajm: vazvrathajm,
+          sabab: sabab2,
+          _token: _token
+        },
+        dataType:'json',
+        success:function(data)
+        {
+          if (data.code == 0) {
+            toastr.error(data.msg);
+          }
+          if (data.code == 200) {
+            fetch_customer_data123dok();
+            toastr.success(data.msg);
+            $("#vazvrathajmbdok").val('');
+            $("#vazviratbdok").modal("hide");
+          }
+        }
+      });
+      }else{
+        toastr.error("Сабап корсатинг");
+      }
+    });
+
     $(document).on('change', "#datem2", function(){
     var tavar_id = $("#tavar_ids").val();
     var date = $("#datem").val();
@@ -712,6 +825,27 @@
       });
     });
   
+    $(document).on('click', "#cretdok", function(){
+    var id = $(this).data("id");
+    $("#oydi").val(id);
+    $.ajax({
+        url:"{{ route('clents2aniqdok') }}",
+        method:'GET',
+        data:{
+          id: id
+        },
+        dataType:'json',
+        success:function(data)
+        {
+          $('#savdodok').html(data.output);
+          $("#clentnamedok").val(data.clent.name);
+          $("#tavarshtuk2dok").val(data.foo2.tavarshtuk);
+          $("#shtuk2dok").val(data.foo2.shtuk);
+          $("#foiz2dok").val(data.foo2.foiz);
+          $("#itoge2dok").val(data.foo2.opshi);
+        }
+      });
+    });
     $(document).on('click', "#vseclent", function(event){
       event.preventDefault();
       let _token  = $('meta[name="csrf-token"]').attr('content');
@@ -757,6 +891,27 @@
       });
     });
 
+    $(document).on('click', "#vazvratdok", function(event){
+      event.preventDefault();
+      var id = $(this).data("id");      
+      $.ajax({
+        url:"{{ route('qaytareditdok') }}",
+        method:'GET',
+        data:{
+          id: id
+        },
+        dataType:'json',
+        success:function(data)
+        {
+          $("#idvazdok").val(data.id);
+          $("#exdok").html(data.name);
+          $("#valhajmdok").val(data.soni);
+          $("#valhajm2dok").val(data.soni);
+          $("#vazviratdok").modal("show");
+        }
+      });
+    });
+
     $(document).on('keyup', "#vazvrathajm", function(){
       var a = $(this).val();
       var b = $("#valhajm2").val();
@@ -767,6 +922,16 @@
       }
     });
     
+    $(document).on('keyup', "#vazvrathajmdok", function(){
+      var a = $(this).val();
+      var b = $("#valhajm2dok").val();
+      $("#valhajmdok").val(b - a);
+      var javob = $("#valhajmdok").val();
+      if(javob < 0){
+        toastr.error("Киймат коп киритилди");
+      }
+    });
+
     function rowdata()
     {
       var id = $("#oydi").val();
@@ -785,6 +950,28 @@
           $("#shtuk2").val(data.foo2.shtuk);
           $("#foiz2").val(data.foo2.foiz);
           $("#itoge2").val(data.foo2.opshi);
+        }
+      });
+    }
+
+    function rowdatadok()
+    {
+      var id = $("#oydidok").val();
+      $.ajax({
+        url:"{{ route('clents2aniqdok') }}",
+        method:'GET',
+        data:{
+          id: id
+        },
+        dataType:'json',
+        success:function(data)
+        {
+          $('#savdodok').html(data.output);
+          $("#clentnamedok").val(data.clent.name);
+          $("#tavarshtuk2dok").val(data.foo2.tavarshtuk);
+          $("#shtuk2dok").val(data.foo2.shtuk);
+          $("#foiz2dok").val(data.foo2.foiz);
+          $("#itoge2dok").val(data.foo2.opshi);
         }
       });
     }
@@ -824,6 +1011,40 @@
       }
     });
 
+    $(document).on('click', "#qaytardok", function(event){
+      event.preventDefault();
+      var idvaz = $("#idvazdok").val();
+      var vazvrathajm = $("#vazvrathajmdok").val();
+      var sabab = $("#sababdok").val();
+      let _token  = $('meta[name="csrf-token"]').attr('content');
+      if(sabab){
+        $.ajax({
+          url:"{{ route('qaytardok') }}",
+          method:'POST',
+          data:{
+            id: idvaz,
+            hajm: vazvrathajm,
+            sabab: sabab,
+            _token: _token
+          },
+          dataType:'json',
+          success:function(data)
+          {
+            if (data.code == 0) {
+              toastr.error(data.msg);
+            }
+            if (data.code == 200) {
+              rowdatadok()
+              toastr.success(data.msg);
+              $("#vazvrathajmdok").val('');
+              $("#vazviratdok").modal("hide");
+            }
+          }
+        });
+      }else{
+        toastr.error("Сабап корсатинг");
+      }
+    });
 
     $(document).on('change', "#tavar_id", function(){
     var tavar_id = $("#tavar_id").val();
@@ -926,7 +1147,6 @@
       // }
     });
 
-    fetch_customer_datadok();
     function fetch_customer_datadok(query = '')
     {
         $.ajax({
@@ -938,22 +1158,24 @@
             {
                 $('#clent_tipdok').html(data.table_data);
             }
-        })
-    }
-    fetch_customer_data123dok();
+          })
+        }
+    fetch_customer_datadok();
+
     function fetch_customer_data123dok(query = '')
     {
-        $.ajax({
-            url:"{{ route('savdobirlamchidok') }}",
-            method:'GET',
-            data:{query:query},
-            dataType:'json',
-            success:function(data)
-            {
-                $('#savdobirlamchidok').html(data.table_data);
-            }
-        })
+      $.ajax({
+        url:"{{ route('savdobirlamchidok') }}",
+        method:'GET',
+        data:{query:query},
+        dataType:'json',
+        success:function(data)
+        {
+          $('#savdobirlamchidok').html(data.table_data);
+        }
+      })
     }
+    fetch_customer_data123dok();
 
     $(document).on('change', "#tavar_idsdok", function(){
     var tavar_id = $("#tavar_idsdok").val();

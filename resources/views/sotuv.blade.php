@@ -688,7 +688,7 @@
                 <input type="text" class="form-control text-right itogsw" name="naqt" id="naqtdok">
                </div>
                <div class="col-2">
-                <button class="btn btn-success col-2" id="naqtdokteng">
+                <button class="btn btn-success" id="naqtdokteng">
                     =
                 </button>
                </div>
@@ -701,7 +701,7 @@
                     <input type="text" class="form-control text-right itogsw" name="plastik" id="plastikdok">
                 </div>
                 <div class="col-2">
-                    <button class="btn btn-success col-2" id="plastikdokteng">
+                    <button class="btn btn-success" id="plastikdokteng">
                         =
                     </button>
                 </div>
@@ -714,7 +714,7 @@
                     <input type="text" class="form-control text-right itogsw" name="bank" id="bankdok">
                 </div>
                 <div class="col-2">
-                    <button class="btn btn-success col-2" id="bankdokteng">
+                    <button class="btn btn-success" id="bankdokteng">
                         =
                     </button>
                 </div>
@@ -2338,9 +2338,6 @@ function kursm(){
                         }else{
                             toastr.error("Клентни танланг").fadeOut(2000);
                         }
-                    }
-                    if(karzs < 0){
-                        toastr.error("Карз устуни 0 дан км болиши такикланади").fadeOut(2000);
                     }else{
                         $.ajax({
                             url: "{{ route('oplatadok') }}",
