@@ -575,9 +575,16 @@
 <div class="row">
 <div class="card col-12">
     <div class="card-header">
-        <div class="card-header-left">
-            <input type="text" name="search" id="searchdok" class="form-control" placeholder="Поиск" />
-        </div>
+        <input type="hidden" id="onvaldok" value="0">
+        <div class="row col-5">
+          <div class="col-5 mr-4">
+              <input type="text" name="search" id="searchdok" class="form-control" placeholder="Поиск" /> 
+          </div>
+          <div class="form-check form-switch col-3 mt-1">
+              <input class="form-check-input" type="checkbox"  role="switch" id="ondok">
+              <label class="form-check-label" for="">Склад 2</label>
+          </div>
+      </div>
     </div>
         <div class="table-responsive mailbox-messages">
             <div class="extr25552 scrolll2">
@@ -1644,7 +1651,7 @@ function kursm(){
     });
 
 
-    $(document).ready(function(){
+$(document).ready(function(){
     fetch_customer_data2();
     function fetch_customer_data2(query = '')
     {
@@ -2123,20 +2130,44 @@ function kursm(){
                 }
             });
         }
-        fetch_customer_data2dok();
-        function fetch_customer_data2dok(query = '')
-        {
-            $.ajax({
-                url:"{{ route('live_searchdok') }}",
-                method:'GET',
-                data:{query:query},
-                dataType:'json',
-                success:function(data)
+
+        $(document).on('click', '#ondok', function(){
+            var a = $("#onvaldok").val();
+            if(a == 0){
+                $("#onvaldok").val(1);
+                fetch_customer_data2dok();
+                function fetch_customer_data2dok(query = '')
                 {
-                    $('#tbody2dok').html(data.table_data);                    
+                    $.ajax({
+                        url:"{{ route('live_search') }}",
+                        method:'GET',
+                        data:{query:query},
+                        dataType:'json',
+                        success:function(data)
+                        {
+                            $('#tbody2dok').html(data.table_data);
+                        }
+                    });
                 }
-            })
-        }
+            }else{
+                $("#onvaldok").val(0);
+                fetch_customer_data2dok();
+                function fetch_customer_data2dok(query = '')
+                {
+                    $.ajax({
+                        url:"{{ route('live_searchdok') }}",
+                        method:'GET',
+                        data:{query:query},
+                        dataType:'json',
+                        success:function(data)
+                        {
+                            $('#tbody2dok').html(data.table_data);                    
+                        }
+                    })
+                }
+            }
+        });
+
         $("#usdkurd2dok").on('click', function(){
             var usdkurd = $("#usdkurddok").val();
             let _token = $('meta[name="csrf-token"]').attr('content');
@@ -2466,26 +2497,54 @@ function kursm(){
         });
     });
 
+    fetch_customer_data2dok();
+        function fetch_customer_data2dok(query = '')
+        {
+            $.ajax({
+                url:"{{ route('live_searchdok') }}",
+                method:'GET',
+                data:{query:query},
+                dataType:'json',
+                success:function(data)
+                {
+                    $('#tbody2dok').html(data.table_data);                
+                }
+            })
+        }
 
     $(document).ready(function(){
-    fetch_customer_data2dok();
-    function fetch_customer_data2dok(query = '')
-    {
-        $.ajax({
-            url:"{{ route('live_searchdok') }}",
-            method:'GET',
-            data:{query:query},
-            dataType:'json',
-            success:function(data)
-            {
-                $('#tbody2dok').html(data.table_data);                
-            }
-        })
-    }
+        fetch_customer_data2dok();
+        function fetch_customer_data2dok(query = '')
+        {
+            $.ajax({
+                url:"{{ route('live_searchdok') }}",
+                method:'GET',
+                data:{query:query},
+                dataType:'json',
+                success:function(data)
+                {
+                    $('#tbody2dok').html(data.table_data);                
+                }
+            })
+        }
     
-    $(document).on('keyup', '#searchdok', function(){
+        $(document).on('keyup', '#searchdok', function(){
             var query = $(this).val();
-            fetch_customer_data2dok(query);
+            var ser = $("#onvaldok").val();
+            if(ser == 0){
+                fetch_customer_data2dok(query);
+            }else{           
+                $.ajax({
+                    url:"{{ route('live_search') }}",
+                    method:'GET',
+                    data:{query:query},
+                    dataType:'json',
+                    success:function(data)
+                    {
+                        $('#tbody2dok').html(data.table_data);                    
+                    }
+                });                
+            }
         });
     });
   
