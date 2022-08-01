@@ -2498,19 +2498,19 @@ $(document).ready(function(){
     });
 
     fetch_customer_data2dok();
-        function fetch_customer_data2dok(query = '')
-        {
-            $.ajax({
-                url:"{{ route('live_searchdok') }}",
-                method:'GET',
-                data:{query:query},
-                dataType:'json',
-                success:function(data)
-                {
-                    $('#tbody2dok').html(data.table_data);                
-                }
-            })
-        }
+    function fetch_customer_data2dok(query = '')
+    {
+        $.ajax({
+            url:"{{ route('live_searchdok') }}",
+            method:'GET',
+            data:{query:query},
+            dataType:'json',
+            success:function(data)
+            {
+                $('#tbody2dok').html(data.table_data);                
+            }
+        })
+    }
 
     $(document).ready(function(){
         fetch_customer_data2dok();
