@@ -2507,7 +2507,7 @@ $(document).ready(function(){
             dataType:'json',
             success:function(data)
             {
-                $('#tbody2dok').html(data.table_data);                
+                $('#tbody2dok').html(data.table_data);
             }
         })
     }
