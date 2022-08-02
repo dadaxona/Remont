@@ -1333,7 +1333,6 @@ $( function() {
       $("#storesm3")[0].reset();
       $('#stores3').modal('show');
     });
-    
 
     $( "#addPost3" ).on( "click", function() {
       $('#tavar2').show('fold', 1000);
