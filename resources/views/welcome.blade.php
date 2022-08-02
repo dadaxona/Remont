@@ -184,9 +184,8 @@
                               </div>
                           </div>
                       </div>
-                      <a href="index.html">
+                      <a href="glavninachal">
                           <img class="img-fluid" src="assets/images/logo.png" alt="Theme-Logo" />
-                          {{-- <h5 style="color: #eff0f3">HiLook</h5> --}}
                       </a>
                       <a class="mobile-options waves-effect waves-light">
                           <i class="ti-more"></i>
