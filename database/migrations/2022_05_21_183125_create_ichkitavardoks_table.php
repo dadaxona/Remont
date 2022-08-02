@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('deletkarzinadoks', function (Blueprint $table) {
+        Schema::create('ichkitavardoks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('tavardok_id')->unsigned();
             $table->string('adress')->nullable();
@@ -42,6 +42,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deletkarzinadoks');
+        Schema::dropIfExists('ichkitavardoks');
     }
 };

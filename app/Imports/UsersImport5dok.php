@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\Javobdok;
 use App\Models\Userdok;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -18,10 +19,10 @@ class UsersImport5dok implements ToCollection
                 'firma'=>$row[3], 
                 'inn'=>$row[4],
             ]);
-            // Javob::create([
-            //     'user_id' => $data->id,
-            //     'javob' => 0
-            // ]);
+            Javobdok::create([
+                'userdok_id' => $data->id,
+                'javob' => 0
+            ]);
         }
     }
 }

@@ -6,18 +6,24 @@ use App\Exports\InvoicesExport;
 use App\Exports\InvoicesExport2;
 use App\Exports\InvoicesExport2dok;
 use App\Exports\InvoicesExport3;
+use App\Exports\InvoicesExport3dok;
 use App\Exports\InvoicesExport4;
+use App\Exports\InvoicesExport4dok;
 use App\Exports\InvoicesExport5;
 use App\Exports\InvoicesExport5dok;
 use App\Exports\InvoicesExport6;
+use App\Exports\InvoicesExport6dok;
 use App\Imports\UsersImport;
 use App\Imports\UsersImport2;
 use App\Imports\UsersImport2dok;
 use App\Imports\UsersImport3;
+use App\Imports\UsersImport3dok;
 use App\Imports\UsersImport4;
+use App\Imports\UsersImport4dok;
 use App\Imports\UsersImport5;
 use App\Imports\UsersImport5dok;
 use App\Imports\UsersImport6;
+use App\Imports\UsersImport6dok;
 use App\Models\Admin;
 use App\Models\Arxiv;
 use App\Models\Auth;
@@ -73,9 +79,19 @@ class AuthController extends Controller
         return Excel::download(new InvoicesExport3, 'invoices.xlsx');
     }
 
+    public function exports3dok() 
+    {
+        return Excel::download(new InvoicesExport3dok, 'invoices.xlsx');
+    }
+
     public function exports4() 
     {
         return Excel::download(new InvoicesExport4, 'invoices.xlsx');
+    }
+
+    public function exports4dok() 
+    {
+        return Excel::download(new InvoicesExport4dok, 'invoices.xlsx');
     }
 
     public function exports5() 
@@ -91,6 +107,11 @@ class AuthController extends Controller
     public function exports6() 
     {
         return Excel::download(new InvoicesExport6, 'invoices.xlsx');
+    }
+
+    public function exports6dok() 
+    {
+        return Excel::download(new InvoicesExport6dok, 'invoices.xlsx');
     }
 
     public function imports(Request $request) 
@@ -116,10 +137,22 @@ class AuthController extends Controller
         Excel::import(new UsersImport3(), $request->file('import'));
         return back();
     }
+
+    public function import3dok(Request $request) 
+    {
+        Excel::import(new UsersImport3dok(), $request->file('import'));
+        return back();
+    }
     
     public function import4(Request $request) 
     {
         Excel::import(new UsersImport4(), $request->file('import'));
+        return back();
+    }
+
+    public function import4dok(Request $request) 
+    {
+        Excel::import(new UsersImport4dok(), $request->file('import'));
         return back();
     }
 
@@ -141,6 +174,12 @@ class AuthController extends Controller
         return back();
     }
     
+    public function import6dok(Request $request) 
+    {
+        Excel::import(new UsersImport6dok(), $request->file('import'));
+        return back();
+    }
+
     public function login()
     {
       return view("auth.login");
@@ -337,7 +376,7 @@ class AuthController extends Controller
             'muammo'=>'required',
             'usta'=>'required',
         ]);
-        Usere::create([
+        $data = Usere::create([
             'data'=>$data1,
             'name'=>$request->name,
             'tel'=>$request->tel,
@@ -348,7 +387,7 @@ class AuthController extends Controller
             'summa'=>$request->summa,
         ]);
         $usta = Usta::where('name', $request->usta)->first();
-        return response()->json(['usta'=>$usta, 'msg'=>'Мувафакиятли сакланди']);
+        return response()->json(['usta'=>$usta, 'id'=>$data->id, 'msg'=>'Мувафакиятли сакланди']);
     }
 
     public function edit(Request $request)
@@ -398,7 +437,7 @@ class AuthController extends Controller
         }
     }
 
-    public function otkazish(Request $request)
+    public function otkazishauth(Request $request)
     {
         $data = Usere::find($request->id);
         Usta2::create([

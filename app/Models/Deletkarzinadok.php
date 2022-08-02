@@ -9,6 +9,9 @@ class Deletkarzinadok extends Model
 {
     use HasFactory;
     public $fillable = [
+        'tavardok_id',
+        'adress',
+        'tavar2dok_id',
         'name',
         'raqam',
         'hajm', 
@@ -20,4 +23,12 @@ class Deletkarzinadok extends Model
         'kod'
     ];
     public $timestamps = true;
+    public function tavardok()
+    {
+        return $this->belongsTo(Tavardok::class);
+    }
+    public function tavar2dok()
+    {
+        return $this->belongsTo(Tavar2dok::class);
+    }
 }

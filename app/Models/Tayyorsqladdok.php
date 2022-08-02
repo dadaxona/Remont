@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ichkitavardok extends Model
+class Tayyorsqladdok extends Model
 {
     use HasFactory;
-    public $fillable = ['tavardok_id', 'adress', 'tavar2dok_id', 'name', 'raqam', 'hajm', 'summa', 'summa2', 'summa3', 'kurs', 'kurs2', 'kod'];
+    public $fillable = ['tavardok_id', 'adress', 'tavar2dok_id', 'name', 'raqam', 'hajm', 'summa', 'summa2', 'summa3', 'kurs', 'kurs2'];
     public $timestamps = true;
 
     public function tavardok()

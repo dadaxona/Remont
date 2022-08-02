@@ -13,15 +13,18 @@ class UsersImport2dok implements ToCollection
         foreach ($rows as $row) 
         {
             Ichkitavardok::create([
-                'name'=>$row[1],
-                'raqam'=>$row[2],
-                'hajm'=>$row[3],
-                'summa'=>$row[4],
-                'summa2'=>$row[5],
-                'summa3'=>$row[6],
-                'kurs'=>$row[7],
-                'kurs2'=>$row[8],
-                'kod'=>$row[9],
+                'tavardok_id'=>$row[1],
+                'adress'=>$row[2],
+                'tavar2dok_id'=>$row[3],
+                'name'=>$row[4],
+                'raqam'=>$row[5],
+                'hajm'=>$row[6],
+                'summa'=>$row[7],
+                'summa2'=>$row[8],
+                'summa3'=>$row[9],
+                'kurs'=>$row[10],
+                'kurs2'=>$row[11],
+                'kod'=>$row[12],
             ]);
         }
     }

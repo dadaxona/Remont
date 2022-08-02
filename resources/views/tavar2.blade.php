@@ -651,24 +651,24 @@
 <div id="AAAAAAAA" class="card ui-widget-content">
   <div class="card-block tab-icon">
           <div class="col-12">
-              <ul class="nav nav-tabs md-tabs " role="tablist">
-                  <li class="nav-item">
-                      <a class="nav-link active" data-toggle="tab" href="#home7dok" role="tab" aria-expanded="true"><i class="icofont icofont-home"></i>Товар</a>
-                      <div class="slide"></div>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" data-toggle="tab" href="#profile7dok" role="tab" aria-expanded="false"><i class="icofont icofont-ui-user "></i>Cписок товаров</a>
-                      <div class="slide"></div>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" data-toggle="tab" href="#messages7dok" role="tab" aria-expanded="false"><i class="icofont icofont-ui-message"></i>Удалить товар</a>
-                      <div class="slide"></div>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" data-toggle="tab" href="#settings7dok" role="tab" aria-expanded="false"><i class="icofont icofont-ui-settings"></i>Оччет по товарам</a>
-                      <div class="slide"></div>
-                  </li>
-              </ul>
+            <ul class="nav nav-tabs md-tabs " role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#home7dok" role="tab" aria-expanded="true"><i class="icofont icofont-home"></i>Товар</a>
+                    <div class="slide"></div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#profile7dok" role="tab" aria-expanded="false"><i class="icofont icofont-ui-user "></i>Cписок товаров</a>
+                    <div class="slide"></div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#messages7dok" role="tab" aria-expanded="false"><i class="icofont icofont-ui-message"></i>Удалить товар</a>
+                    <div class="slide"></div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#settings7dok" role="tab" aria-expanded="false"><i class="icofont icofont-ui-settings"></i>Оччет по товарам</a>
+                    <div class="slide"></div>
+                </li>
+            </ul>
               <div class="tab-content card-block">
                   <div class="tab-pane active" id="home7dok" role="tabpanel" aria-expanded="true">
                       <div class="card-header-left">
@@ -704,6 +704,8 @@
                           <table class="tab table-hover" id="laravel_cruddok">
                               <thead>
                                   <tr>
+                                    <th>Тип</th>
+                                    <th>Поставщик</th>
                                     <th>Имя</th>
                                     <th>Шт</th>
                                     <th>Закупочная цена</th>
@@ -717,7 +719,9 @@
                               <tbody>
                                 @foreach ($ichkitavardok as $item)
                                 <tr id="rowdok_{{$item->id}}" style="border-bottom: 1px solid">
-                                  <td>{{ $item->name }}</td>
+                                  <td>{{ $item->tavardok->name }}</td>
+                                  <td>{{ $item->adress }}</td>
+                                  <td>{{ $item->tavar2dok->name}}</td>
                                   @if ($item->hajm <= $item->raqam)
                                   <td style="background-color: rgb(237, 0, 0); color: white;">{{ $item->hajm }}</td>                                        
                                   @else
@@ -826,11 +830,14 @@
                       <table class="tab table-hover" id="laravel_cruddok">
                           <thead>
                               <tr>
+                                <th>Тип</th>
+                                <th>Поставщик</th>
                                 <th>Имя</th>
                                 <th>Шт</th>
                                 <th>Закупочная цена</th>
                                 <th>Оптовая цена</th>
                                 <th>Розничная цена</th>
+                                <th>Штрих код</th>
                                 <th>Последняя дата</th>
                                 <th>Управлена</th>
                               </tr>
@@ -838,7 +845,9 @@
                           <tbody>
                             @foreach ($tiklashdok as $item)
                             <tr id="row2dok_{{$item->id}}" style="border-bottom: 1px solid">
-                              <td>{{ $item->name }}</td>
+                              <td>{{ $item->tavardok->name }}</td>
+                              <td>{{ $item->adress }}</td>
+                              <td>{{ $item->tavar2dok->name}}</td>
                               @if ($item->hajm <= $item->raqam)
                               <td style="background-color: rgb(237, 0, 0); color: white;">{{ $item->hajm }}</td>                                        
                               @else
@@ -847,6 +856,7 @@
                               <td>{{ $item->summa }}</td>
                               <td>{{ $item->summa2 }}</td>
                               <td>{{ $item->summa3 }}</td>
+                              <td>{{ $item->kod }}</td>
                               <td>{{ $item->updated_at }}</td>
                               <td>
                                 <a href="javascript:void(0)" onclick="tiklashdok({{ $item->id }})" style="color: green">
@@ -909,6 +919,8 @@
         <table class="col-12" id="dynamicTabledok">
           <thead>
             <tr>
+              <th>Тип</th>
+              <th>Поставщик</th>
               <th>Имя</th>
               <th>Предупрежденние</th>
               <th>Шт</th>
@@ -987,16 +999,38 @@
             @csrf
             <input type="hidden" name="id" id="ichki_iddok">
             <div class="mb-3">
-              <label for="message-text" class="col-form-label">Товар номи</label>
-              <input type="text" class="form-control" name="name"  id="namedok">
+              <label for="recipient-name" class="col-form-label">Тип</label>
+                <select name="tavardok_id" class="form-control" id="tavardok_id">
+                  <option value="">--Танланг--</option>
+                  @foreach($datadok as $item)
+                    <option value="{{ $item->id }}">{{ $item->name }}</option>                                
+                  @endforeach
+                </select>
+              <span class="text-danger error-text tavar_id_error"></span>
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Етказиб берувчи</label>
+                <select name="adress" class="form-control" id="adressdok">
+                  <option value="">--Танланг--</option>
+                  @foreach($adressdok as $item)
+                    <option value="{{ $item->adress }}">{{ $item->adress }}</option>                                
+                  @endforeach
+                </select>
+              <span class="text-danger error-text adress_error"></span>
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Тавар номи</label>
+                <select name="tavar2dok_id" class="form-control" id="tavar2dok_id">
+                  <option value="">--Танланг--</option>
+                </select>
+              <span class="text-danger error-text tavar2_id_error"></span>
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Ид ракам</label>
+              <input type="text" class="form-control" name="raqam"  id="raqam2dok">
               <span class="text-danger error-text raqam_error"></span>
-            </div>  
-          <div class="mb-3">
-            <label for="message-text" class="col-form-label">Ид ракам</label>
-            <input type="text" class="form-control" name="raqam"  id="raqam2dok">
-            <span class="text-danger error-text raqam_error"></span>
-          </div>            
-          <div class="mb-3">
+            </div>            
+            <div class="mb-3">
               <label for="message-text" class="col-form-label">Тавар хажм</label>
               <input type="number" class="form-control" name="hajm" id="hajm2dok">
               <span class="text-danger error-text hajm_error"></span>
@@ -1198,13 +1232,14 @@ $( function() {
     $("#add").click(function(){            
             ++i;
         $("#dynamicTable tbody").append('<tr><td><select name="addmore['+i+'][tavar_id]" id="" class="form-control mx-2">@foreach ($data as $item)<option value="{{ $item->id }}">{{ $item->name }}</option>@endforeach</select></td><td><select name="addmore['+i+'][adress]" id="" class="form-control mx-2">@foreach ($adress as $item)<option value="{{ $item->adress }}">{{ $item->adress }}</option>@endforeach</select></td><td><select name="addmore['+i+'][tavar2_id]" id="" class="form-control mx-2">@foreach ($datatip as $item)<option value="{{ $item->id }}">{{ $item->name }}</option>@endforeach</select></td><td><input type="text" name="addmore['+i+'][raqam]" id="" class="form-control mx-2" placeholder="Предупрежденние"></td><td><input type="number" name="addmore['+i+'][hajm]" id="" class="form-control mx-2" placeholder="Шт"></td><td><input type="text" name="addmore['+i+'][summa]" id="" class="form-control mx-2" placeholder="Закупочная цена"></td><td><input type="text" name="addmore['+i+'][summa2]" id="" class="form-control mx-2" placeholder="Оптовая цена"><td><input type="text" name="addmore['+i+'][summa3]" id="" class="form-control mx-2" placeholder="Розничная цена"></td><td><input type="text" name="addmore['+i+'][kod]" id="" class="form-control mx-2" placeholder="Штрих код"></td><td><button type="button" class="btn btn-danger remove-tr">Удалить</button></td></tr>');
-    }); 
+   
+      }); 
 
     var d = 0;
     $("#adddok").click(function(){            
             ++d;
-        $("#dynamicTabledok tbody").append('<tr><td><input type="text" name="addmore['+d+'][name]" id="" class="form-control mx-2" placeholder="Товар номи"></td><td><input type="text" name="addmore['+d+'][raqam]" id="" class="form-control mx-2" placeholder="Предупрежденние"></td><td><input type="number" name="addmore['+d+'][hajm]" id="" class="form-control mx-2" placeholder="Шт"></td><td><input type="text" name="addmore['+d+'][summa]" id="" class="form-control mx-2" placeholder="Закупочная цена"></td><td><input type="text" name="addmore['+d+'][summa2]" id="" class="form-control mx-2" placeholder="Оптовая цена"><td><input type="text" name="addmore['+d+'][summa3]" id="" class="form-control mx-2" placeholder="Розничная цена"></td><td><input type="text" name="addmore['+d+'][kod]" id="" class="form-control mx-2" placeholder="Штрих код"></td><td><button type="button" class="btn btn-danger remove-trdok">Удалить</button></td></tr>');
-    }); 
+            $("#dynamicTabledok tbody").append('<tr><td><select name="addmore['+d+'][tavardok_id]" id="" class="form-control mx-2">@foreach ($datadok as $item)<option value="{{ $item->id }}">{{ $item->name }}</option>@endforeach</select></td><td><select name="addmore['+d+'][adress]" id="" class="form-control mx-2">@foreach ($adressdok as $item)<option value="{{ $item->adress }}">{{ $item->adress }}</option>@endforeach</select></td><td><select name="addmore['+d+'][tavar2dok_id]" id="" class="form-control mx-2">@foreach ($datatipdok as $item)<option value="{{ $item->id }}">{{ $item->name }}</option>@endforeach</select></td><td><input type="text" name="addmore['+d+'][raqam]" id="" class="form-control mx-2" placeholder="Предупрежденние"></td><td><input type="number" name="addmore['+d+'][hajm]" id="" class="form-control mx-2" placeholder="Шт"></td><td><input type="text" name="addmore['+d+'][summa]" id="" class="form-control mx-2" placeholder="Закупочная цена"></td><td><input type="text" name="addmore['+d+'][summa2]" id="" class="form-control mx-2" placeholder="Оптовая цена"><td><input type="text" name="addmore['+d+'][summa3]" id="" class="form-control mx-2" placeholder="Розничная цена"></td><td><input type="text" name="addmore['+d+'][kod]" id="" class="form-control mx-2" placeholder="Штрих код"></td><td><button type="button" class="btn btn-danger remove-trdok">Удалить</button></td></tr>');
+      }); 
   
     $(document).on('click', '.remove-tr', function(){
         $(this).parents('tr').remove();
@@ -1215,7 +1250,22 @@ $( function() {
         $(this).parents('tr').remove();
         --d;               
     });
-
+    function fooorm() {
+      $.ajax({
+        url:"{{ route('tavardokoption_id') }}",
+        method:'GET',
+        success:function(data)
+        {
+          let rows =  '';
+            data.forEach(room => {
+            rows += `
+            <option value="${room.id}">${room.name}</option>`;
+        });
+        $("#tavar2dok_id").html(rows);
+        }
+      }); 
+    }
+    fooorm();
     $(document).on('change', "#iidd", function(){
       var id = $(this).val();
       $.ajax({
@@ -1237,6 +1287,27 @@ $( function() {
       });                   
     });
     
+    $(document).on('change', "#tavardok_id", function(){
+      var id = $(this).val();
+      $.ajax({
+        url:"{{ route('tavardok_id') }}",
+        method:'GET',
+        data:{
+          id: id
+        },
+        dataType:'json',
+        success:function(data)
+        {
+          let rows =  '';
+            data.forEach(room => {
+            rows += `
+            <option value="${room.id}">${room.name}</option>`;
+        });
+        $("#tavar2dok_id").html(rows);
+        }
+      });                   
+    });
+
     $(document).on('change', "#iidd3", function(){
       var id = $(this).val();
       $.ajax({
@@ -1559,6 +1630,9 @@ $( function() {
       },
       success: function(response) {
           $("#ichki_iddok").val(response.id);
+          $("#tavardok_id").val(response.tavardok_id);
+          $("#adressdok").val(response.adress);
+          $("#tavar2dok_id").val(response.tavar2dok_id);
           $("#namedok").val(response.name);
           $("#raqam2dok").val(response.raqam);
           $("#hajm2dok").val(response.hajm);
@@ -1680,6 +1754,7 @@ $( function() {
       success:function(data)
       {
         $('#ichkitavartbody').html(data.table_data);
+
       }
     });
   }
@@ -1920,6 +1995,7 @@ $( function() {
         tiklaslar();
         $('#tavar2delete2').modal('hide');
         toastr.success(data.msg);
+        location.reload(true);
       }
     });
   }
@@ -1942,6 +2018,7 @@ $( function() {
       success: function(data) {
         $('#tavar2delete2dok').modal('hide');
         toastr.success(data.msg);
+        location.reload(true);
       }
     });
   }

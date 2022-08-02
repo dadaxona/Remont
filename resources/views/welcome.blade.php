@@ -222,7 +222,9 @@
                     
                         </li>
                         @else
-                            
+                        <li class="header-notification" id="crrokdok">
+                    
+                        </li>
                         @endif
                           <li class="user-profile header-notification">
                               <a href="#!" class="waves-effect waves-light">
@@ -310,11 +312,11 @@
                                 </a>
                             </li>
                             <li class="">
-                            <a href="{{ route('indextip') }}" class="waves-effect waves-dark">
-                                <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
-                                <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Создать Товар</span>
-                                <span class="pcoded-mcaret"></span>
-                            </a>
+                                <a href="{{ route('indextip') }}" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Создать Товар</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
                             </li>
                             <li class="">
                                 <a href="{{ route('clents') }}" class="waves-effect waves-dark">
@@ -341,7 +343,14 @@
                                 </a>
                             </li>
                             <li class="">
-                                <a href="{{ route('edit3') }}" class="waves-effect waves-dark">
+                                <a href="{{ route('index') }}" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Создать коталог</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="{{ route('indextip') }}" class="waves-effect waves-dark">
                                     <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
                                     <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Создать Товар</span>
                                     <span class="pcoded-mcaret"></span>
@@ -759,19 +768,53 @@
                 {
                     if(data.id){
                         var lern = '<a href="{{ route("clents") }}" class="waves-effect waves-light"><i class="ti-bell"></i><span class="badge bg-c-red"></span></a>';
-                        $("#crrok").html(lern);
-                        
+                        $("#crrok").html(lern);                        
                     }else{
-                        var lern2 = '<a href="#!" class="waves-effect waves-light"><i class="ti-bell"></i></a>';
-                        $("#crrok").html(lern2);
+                   
                     }
                 }
             });
         }
-        srok();
+
+        function srok2()
+        {
+            $.ajax({
+                url:"{{ route('kelgantovar2ajax') }}",
+                method:'GET',
+                success:function(data)
+                {
+                    if(data > 0){
+                        var lern = '<a href="{{ route("kelgantovar2") }}" class="waves-effect waves-light"><i class="ti-bell"></i><span class="badge bg-c-red"></span></a>';
+                        $("#crrok").html(lern);                        
+                    }else{
+                     
+                    }
+                }
+            });
+        }
+
+        function srok2dok()
+        {
+            $.ajax({
+                url:"{{ route('kelgantovar2ajaxdok') }}",
+                method:'GET',
+                success:function(data)
+                {
+                    if(data > 0){
+                        var lern = '<a href="{{ route("kelgantovar2") }}" class="waves-effect waves-light"><i class="ti-bell"></i><span class="badge bg-c-red"></span></a>';
+                        $("#crrokdok").html(lern);                        
+                    }else{
+                        
+                    }
+                }
+            });
+        }
+
         setInterval(function() {
             srok();
-        }, 3600000);
+            srok2();
+            srok2dok();
+        }, 5000);
     </script>
     <script src="toastr/toastr.min.js"></script>
     <script src="bootstrap-5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>

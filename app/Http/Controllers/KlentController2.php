@@ -29,10 +29,13 @@ use App\Models\Karzina3;
 use App\Models\Karzina3dok;
 use App\Models\Karzinadok;
 use App\Models\Sqladpoytaxt;
+use App\Models\Sqladpoytaxtdok;
 use App\Models\Statistika;
 use App\Models\Statistikadok;
 use App\Models\Tavar2;
+use App\Models\Tavar2dok;
 use App\Models\Tayyorsqlad;
+use App\Models\Tayyorsqladdok;
 use App\Models\Umumiy;
 use App\Models\Updatetavr;
 use App\Models\Userdok;
@@ -4225,12 +4228,36 @@ class KlentController2 extends Controller
             'summa2' =>$data->summa2, 
             'summa3' =>$data->summa3,
         ]);
-        return response()->json(['output'=>$foo]);
+        return response()->json($foo);
+    }
+
+    public function otkazishdok(Request $request)
+    {        
+        $data = Ichkitavardok::find($request->id);
+        $foo = Sqladpoytaxtdok::create([
+            'tavardok_id' =>$data->tavardok_id, 
+            'adress' =>$data->adress, 
+            'tavar2dok_id' =>$data->tavar2dok_id, 
+            'name' =>$data->name, 
+            'raqam' =>$data->raqam, 
+            'hajm' =>1, 
+            'summa' =>$data->summa, 
+            'summa2' =>$data->summa2, 
+            'summa3' =>$data->summa3,
+        ]);
+        return response()->json($foo);
     }
 
     public function malumotolish(Request $request)
     {
-        return response()->json(Sqladpoytaxt::find($request->id));
+        $data = Sqladpoytaxt::find($request->id);
+        return response()->json($data);
+    }
+
+    public function malumotolishdok(Request $request)
+    {
+        $data = Sqladpoytaxtdok::find($request->id);
+        return response()->json($data);
     }
 
     public function plussqlad(Request $request)
@@ -4252,6 +4279,26 @@ class KlentController2 extends Controller
         return response()->json(['status'=>200, 'data'=>$date]);
     }
 
+    
+    public function plussqladdok(Request $request)
+    {
+        $foo = Sqladpoytaxtdok::find($request->id);
+        $data = Ichkitavardok::where('tavardok_id', $foo->tavardok_id)
+                        ->where('adress', $foo->adress)
+                        ->where('tavar2dok_id', $foo->tavar2dok_id)
+                        ->first();
+        $foo2 = $foo->hajm + 1;
+        if($data->hajm < $foo2){
+            return response()->json(['status'=>0, 'data'=>$foo]);
+        }else{
+            Sqladpoytaxtdok::find($request->id)->update([
+                'hajm'=>$foo2
+            ]);
+        }
+        $date = Sqladpoytaxtdok::find($request->id);
+        return response()->json(['status'=>200, 'data'=>$date]);
+    }
+
     public function minussqlad(Request $request)
     {
         $foo = Sqladpoytaxt::find($request->id);
@@ -4267,19 +4314,59 @@ class KlentController2 extends Controller
         return response()->json(['status'=>200, 'data'=>$date]);
     }
 
+    public function minussqladdok(Request $request)
+    {
+        $foo = Sqladpoytaxtdok::find($request->id);
+        $foo2 = $foo->hajm - 1;
+        if($foo2 == 0){
+            return response()->json(['status'=>0, 'data'=>$foo]);
+        }else{
+            Sqladpoytaxtdok::find($request->id)->update([
+                'hajm'=>$foo2
+            ]);
+        }
+        $date = Sqladpoytaxtdok::find($request->id);
+        return response()->json(['status'=>200, 'data'=>$date]);
+    }
+
     public function iidd(Request $request)
     {
         $data = Tavar2::where('tavar_id', $request->id)->get();
         return response()->json($data);
     }
+    
+    public function tavardok_id(Request $request)
+    {
+        $data = Tavar2dok::where('tavardok_id', $request->id)->get();
+        return response()->json($data);
+    }
+
+    public function tavardokoption_id()
+    {
+        $data = Tavar2dok::all();
+        return response()->json($data);
+    }
+
     public function udalitsqlad(Request $request)
     {
         Sqladpoytaxt::find($request->id)->delete($request->id);   
         return response()->json(['status'=>200]);
     }
+
+    public function udalitsqladdok(Request $request)
+    {
+        Sqladpoytaxtdok::find($request->id)->delete($request->id);   
+        return response()->json(['status'=>200]);
+    }
+
     public function yangilashsqlad(Request $request)
     {
         return response()->json(Sqladpoytaxt::find($request->id));
+    }
+
+    public function yangilashsqladdok(Request $request)
+    {
+        return response()->json(Sqladpoytaxtdok::find($request->id));
     }
     
     public function saqlashsqlad(Request $request)
@@ -4300,22 +4387,40 @@ class KlentController2 extends Controller
         return response()->json(['status'=>200, 'data'=>$date]);
     }
 
+    public function saqlashsqladdok(Request $request)
+    {
+        $foo = Sqladpoytaxtdok::find($request->id);
+        $data = Ichkitavardok::where('tavardok_id', $foo->tavardok_id)
+                        ->where('adress', $foo->adress)
+                        ->where('tavar2dok_id', $foo->tavar2dok_id)
+                        ->first();
+        if($data->hajm < $request->son){
+            return response()->json(['status'=>0, 'data'=>$foo]);
+        }else{
+            Sqladpoytaxtdok::find($request->id)->update([
+                'hajm'=>$request->son
+            ]);
+        }
+        $date = Sqladpoytaxtdok::find($request->id);
+        return response()->json(['status'=>200, 'data'=>$date]);
+    }
+    
     public function tayyorsqlad(Request $request)
     {
         $data = Sqladpoytaxt::all();
         foreach($data as $data2){
-            $sss = Tayyorsqlad::where('tavar_id', $data2->tavar_id)
+            $sss = Tayyorsqladdok::where('tavardok_id', $data2->tavar_id)
                         ->where('adress', $data2->adress)
-                        ->where('tavar2_id', $data2->tavar2_id)
+                        ->where('tavar2dok_id', $data2->tavar2_id)
                         ->first();
             if($sss){
                 $swer = $sss->hajm + $data2->hajm;
-                Tayyorsqlad::where('tavar_id', $data2->tavar_id)
+                Tayyorsqladdok::where('tavardok_id', $data2->tavard_id)
                         ->where('adress', $data2->adress)
-                        ->where('tavar2_id', $data2->tavar2_id)
+                        ->where('tavar2dok_id', $data2->tavar2_id)
                         ->update([
                             'name' =>$data2->name, 
-                            'raqam' =>$data2->raqam, 
+                            'raqam' =>$data2->raqam,
                             'hajm' =>$swer, 
                             'summa' =>$data2->summa, 
                             'summa2' =>$data2->summa2, 
@@ -4334,10 +4439,10 @@ class KlentController2 extends Controller
                         ]);
                 Sqladpoytaxt::where('id', ">", 0)->delete();
             }else{
-                Tayyorsqlad::create([
-                    'tavar_id' =>$data2->tavar_id, 
+                Tayyorsqladdok::create([
+                    'tavardok_id' =>$data2->tavar_id, 
                     'adress' =>$data2->adress, 
-                    'tavar2_id' =>$data2->tavar2_id, 
+                    'tavar2dok_id' =>$data2->tavar2_id, 
                     'name' =>$data2->name, 
                     'raqam' =>$data2->raqam, 
                     'hajm' =>$data2->hajm, 
@@ -4360,5 +4465,169 @@ class KlentController2 extends Controller
             }
         }
         return response()->json(['status'=>200]);
+    }
+
+    public function tayyorsqladdok(Request $request)
+    {
+        $data = Sqladpoytaxtdok::all();
+        foreach($data as $data2){
+            $sss = Tayyorsqlad::where('tavar_id', $data2->tavardok_id)
+                        ->where('adress', $data2->adress)
+                        ->where('tavar2_id', $data2->tavar2dok_id)
+                        ->first();
+            if($sss){
+                $swer = $sss->hajm + $data2->hajm;
+                Tayyorsqlad::where('tavar_id', $data2->tavardok_id)
+                        ->where('adress', $data2->adress)
+                        ->where('tavar2_id', $data2->tavar2dok_id)
+                        ->update([
+                            'name' =>$data2->name, 
+                            'raqam' =>$data2->raqam,
+                            'hajm' =>$swer, 
+                            'summa' =>$data2->summa, 
+                            'summa2' =>$data2->summa2, 
+                            'summa3' =>$data2->summa3,
+                        ]);
+                $ssss = Ichkitavardok::where('tavardok_id', $data2->tavardok_id)
+                                ->where('adress', $data2->adress)
+                                ->where('tavar2dok_id', $data2->tavar2dok_id)
+                                ->first();
+                $ccc = $ssss->hajm - $data2->hajm;
+                Ichkitavardok::where('tavardok_id', $data2->tavardok_id)
+                        ->where('adress', $data2->adress)
+                        ->where('tavar2dok_id', $data2->tavar2dok_id)
+                        ->update([
+                            'hajm'=>$ccc
+                        ]);
+                Sqladpoytaxtdok::where('id', ">", 0)->delete();
+            }else{
+                Tayyorsqlad::create([
+                    'tavar_id' =>$data2->tavardok_id, 
+                    'adress' =>$data2->adress, 
+                    'tavar2_id' =>$data2->tavar2dok_id, 
+                    'name' =>$data2->name, 
+                    'raqam' =>$data2->raqam, 
+                    'hajm' =>$data2->hajm, 
+                    'summa' =>$data2->summa, 
+                    'summa2' =>$data2->summa2, 
+                    'summa3' =>$data2->summa3,
+                ]);
+                $ssss = Ichkitavardok::where('tavardok_id', $data2->tavardok_id)
+                                ->where('adress', $data2->adress)
+                                ->where('tavar2dok_id', $data2->tavar2dok_id)
+                                ->first();
+                $ccc = $ssss->hajm - $data2->hajm;
+                Ichkitavardok::where('tavardok_id', $data2->tavardok_id)
+                            ->where('adress', $data2->adress)
+                            ->where('tavar2dok_id', $data2->tavar2dok_id)
+                            ->update([
+                                'hajm'=>$ccc
+                            ]);
+                Sqladpoytaxtdok::where('id', ">", 0)->delete();
+            }
+        }
+        return response()->json(['status'=>200]);
+    }
+
+    public function kelgantovar2ajax()
+    {
+        $jonatilgan = Tayyorsqlad::count();
+        return response()->json($jonatilgan);   
+    }
+
+    public function kelgantovar2ajaxdok()
+    {
+        $jonatilgan = Tayyorsqladdok::count();
+        return response()->json($jonatilgan);   
+    }
+
+    public function kelgantovar2()
+    {
+        $jonatil = Tayyorsqlad::all();
+        $jonatildok = Tayyorsqladdok::all();
+        if(Session::has('IDIE')){
+            $brends = Drektor::where('id','=',Session::get('IDIE'))->first();
+            return view('kelgantovar',[
+                'brends'=>$brends,
+                'jonatil'=>$jonatil,
+                'jonatildok'=>$jonatildok,
+            ]);
+        }else{
+            return redirect('/logaut');
+        }
+    }
+
+    public function sinimayt(Request $request)
+    {
+        $datap = Tayyorsqlad::all();
+        foreach($datap as $data2){
+            $sss = Ichkitavar::where('tavar_id', $data2->tavar_id)
+                        ->where('tavar2_id', $data2->tavar2_id)
+                        ->first();
+            if($sss){
+                $swer = $sss->hajm + $data2->hajm;
+                Ichkitavar::where('tavar_id', $data2->tavar_id)
+                        ->where('tavar2_id', $data2->tavar2_id)
+                        ->update([
+                            'name' =>$data2->name, 
+                            'raqam' =>$data2->raqam, 
+                            'hajm' =>$swer, 
+                            'summa' =>$data2->summa, 
+                            'summa2' =>$data2->summa2, 
+                            'summa3' =>$data2->summa3,
+                        ]);
+            }else{
+                Ichkitavar::create([
+                    'tavar_id' =>$data2->tavar_id, 
+                    'adress' =>$data2->adress,
+                    'tavar2_id' =>$data2->tavar2_id,
+                    'name' =>$data2->name,
+                    'raqam' =>$data2->raqam, 
+                    'hajm' =>$data2->hajm, 
+                    'summa' =>$data2->summa, 
+                    'summa2' =>$data2->summa2, 
+                    'summa3' =>$data2->summa3,
+                ]);
+            }
+        }
+        Tayyorsqlad::where('id', ">", 0)->delete();
+        return redirect('/glavninachal');
+    }
+
+    public function sinimaytdok(Request $request)
+    {
+        $datap = Tayyorsqladdok::all();
+        foreach($datap as $data2){
+            $sss = Ichkitavardok::where('tavardok_id', $data2->tavardok_id)
+                        ->where('tavar2dok_id', $data2->tavar2dok_id)
+                        ->first();
+            if($sss){
+                $swer = $sss->hajm + $data2->hajm;
+                Ichkitavardok::where('tavardok_id', $data2->tavardok_id)
+                        ->where('tavar2dok_id', $data2->tavar2dok_id)
+                        ->update([
+                            'name' =>$data2->name, 
+                            'raqam' =>$data2->raqam, 
+                            'hajm' =>$swer, 
+                            'summa' =>$data2->summa, 
+                            'summa2' =>$data2->summa2, 
+                            'summa3' =>$data2->summa3,
+                        ]);
+            }else{
+                Ichkitavardok::create([
+                    'tavardok_id' =>$data2->tavardok_id, 
+                    'adress' =>$data2->adress,
+                    'tavar2dok_id' =>$data2->tavar2dok_id,
+                    'name' =>$data2->name,
+                    'raqam' =>$data2->raqam, 
+                    'hajm' =>$data2->hajm, 
+                    'summa' =>$data2->summa, 
+                    'summa2' =>$data2->summa2, 
+                    'summa3' =>$data2->summa3,
+                ]);
+            }
+        }
+        Tayyorsqladdok::where('id', ">", 0)->delete();
+        return redirect('/glavninachal');
     }
 }

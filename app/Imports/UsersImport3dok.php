@@ -7,16 +7,16 @@ use App\Models\Tavardok;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
-class UsersImport3 implements ToCollection
+class UsersImport3dok implements ToCollection
 {
     public function collection(Collection $rows)
     {
         foreach ($rows as $row) 
         {
-            Tavar::create([
+            Tavardok::create([
                 'name'=>$row[1],
             ]);
-            Tavardok::create([
+            Tavar::create([
                 'name'=>$row[1],
             ]);
         }

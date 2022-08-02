@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\Adress;
+use App\Models\Adresdoks;
+use App\Models\Adressdok;
 use App\Models\Arxiv;
 use App\Models\Arxivdok;
 use App\Models\Deletkarzina;
@@ -27,6 +29,8 @@ use App\Models\Karzinadok;
 use App\Models\Statistika;
 use App\Models\Statistikadok;
 use App\Models\Tavar2;
+use App\Models\Tavar2dok;
+use App\Models\Tavardok;
 use App\Models\Updatetavrdok;
 use App\Models\Userdok;
 use App\Models\Zakaz;
@@ -61,9 +65,8 @@ class KlentServis
                 'userdok_id'=>$data->id,
                 'javob'=>0
             ]);
-            if($data){
-                return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);
-            }
+            return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);
+            
         }
     }
     
@@ -97,20 +100,42 @@ class KlentServis
     {
         foreach ($request->addmore as $value) {
             $data = Tavar::create($value);
+            Tavardok::create($value);
         }
-        if($data){
-            return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);
-        }
+        return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);        
     }
 
+    public function store2dok($request)
+    {
+        foreach ($request->addmore as $value) {
+            $data = Tavardok::create($value);
+            Tavar::create($value);
+        }
+        return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);        
+    }
+    
     public function store2tip($request)
     {
         foreach ($request->addmore as $value) {
             $data = Tavar2::create($value);
+            Tavar2dok::create([
+                'tavardok_id'=>$value["tavar_id"],
+                'name'=>$value["name"]
+            ]);
         }
-        if($data){
-            return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);
+        return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);        
+    }
+
+    public function store2tipdok($request)
+    {
+        foreach ($request->addmore as $value) {
+            $data = Tavar2dok::create($value);
+            Tavar2::create([
+                'tavar_id'=>$value["tavardok_id"],
+                'name'=>$value["name"]
+            ]);
         }
+        return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади'], 200);        
     }
         
     public function storeishchi($request)
@@ -118,14 +143,12 @@ class KlentServis
         if($request->id){
             return $this->updateishchi($request);        
         }else{
-            $data = Drektor::create([                
+            Drektor::create([                
                 'name'=>$request->name,
                 'login'=>$request->login,
                 'password'=>$request->password,
             ]);
-            if($data){
-                return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $request], 200);
-            }
+            return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $request], 200);            
         }
     }
 
@@ -134,13 +157,11 @@ class KlentServis
         if($request->id){
             return $this->updateadmin($request);
         }else{
-            $data = Drektor::create([
+           Drektor::create([
                 'login'=>$request->login,
                 'password'=>$request->password,
             ]);
-            if($data){
-                return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $request], 200);
-            }
+            return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $request], 200);            
         }
     }
 
@@ -158,11 +179,19 @@ class KlentServis
         return response()->json(['code'=>201, 'msg'=>'Мувофакиятли янгиланди','data' => $data], 201);
     }
 
-
     public function update2($request)
     {
         Tavar2::find($request->id)->update($request->all());
+        Tavar2dok::find($request->id)->update($request->all());
         $data = Tavar2::find($request->id);
+        return response()->json(['code'=>200, 'msg'=>'Мувофакиятли янгиланди','data' => $data], 200);
+    }
+    
+    public function update2dok($request)
+    {
+        Tavar2dok::find($request->id)->update($request->all());
+        Tavar2::find($request->id)->update($request->all());
+        $data = Tavar2dok::find($request->id);
         return response()->json(['code'=>200, 'msg'=>'Мувофакиятли янгиланди','data' => $data], 200);
     }
 
@@ -181,10 +210,19 @@ class KlentServis
     public function updateer2($request)
     {
         Tavar::find($request->id)->update($request->all());
+        Tavardok::find($request->id)->update($request->all());
         $data = Tavar::find($request->id);
         return response()->json(['code'=>200, 'msg'=>'Мувофакиятли янгиланди','data' => $data], 200);
     }
     
+    public function updateer2dok($request)
+    {
+        Tavardok::find($request->id)->update($request->all());
+        Tavar::find($request->id)->update($request->all());
+        $data = Tavardok::find($request->id);
+        return response()->json(['code'=>200, 'msg'=>'Мувофакиятли янгиланди','data' => $data], 200);
+    }
+
     public function edit3()
     {
         $ichkitavar = Ichkitavar::all();
@@ -192,6 +230,9 @@ class KlentServis
         $data = Tavar::all();
         $datatip = Tavar2::all();
         $adress = Adress::all();
+        $datadok = Tavardok::all();
+        $datatipdok = Tavar2dok::all();
+        $adressdok = Adressdok::all();
         $tiklash = Deletkarzina::all();
         $tiklashdok = Deletkarzinadok::all();
         $umumiy = Umumiy::find(1);
@@ -202,10 +243,13 @@ class KlentServis
               'ichkitavar'=>$ichkitavar,
               'ichkitavardok'=>$ichkitavardok,
               'data'=>$data,
+              'datadok'=>$datadok,
               'datatip'=>$datatip,
+              'datatipdok'=>$datatipdok,
               'tiklash'=>$tiklash,
               'tiklashdok'=>$tiklashdok,
               'adress'=>$adress,
+              'adressdok'=>$adressdok,
               'umumiy'=>$umumiy??[]
           ]);
         }else{
@@ -216,13 +260,20 @@ class KlentServis
     public function store3dok($request)
     {
         foreach ($request->addmore as $value) {
-            $foo = Ichkitavardok::where('name', $value["name"])->first();
+            $foo = Ichkitavardok::where('tavardok_id', $request["tavardok_id"])
+                                ->where('adress', $request["adress"])
+                                ->where('tavar2dok_id', $request["tavar2dok_id"])
+                                ->first();
             if($foo){
                 $a = $foo->hajm + $value["hajm"];
                 $b = $value["summa"] - $foo->summa;
                 $c = $foo->summa + $b / 2;
-                Ichkitavardok::where('name', $value["name"])
+                $fff = Tavar2dok::find($value["tavar2dok_id"]);
+                Ichkitavardok::where('tavardok_id', $request["tavardok_id"])
+                ->where('adress', $request["adress"])
+                ->where('tavar2dok_id', $request["tavar2dok_id"])
                         ->update([
+                            'name'=> $fff->name,
                             'raqam' => $value["raqam"],
                             'hajm' => $a, 
                             'summa' => $c,
@@ -230,32 +281,17 @@ class KlentServis
                             'summa3' => $value["summa3"],
                             'kod' => $value["kod"]
                         ]);
-                $data = Ichkitavardok::where('name', $value["name"])->first();
-                // $res = Updatetavrdok::where('ichkitavardok_id', $data->id)->first();
-                // if($res){
-                //     Updatetavrdok::where('ichkitavardok_id', $data->id)
-                //     ->update([
-                //         'name'=>$value["name"],
-                //         'raqam'=>$value["raqam"],
-                //         'hajm'=>$value["hajm"],
-                //         'summa'=>$value["summa"],
-                //         'summa2'=>$value["summa2"],
-                //         'summa3'=>$value["summa3"],
-                //     ]);
-                // }else{
-                    // Updatetavrdok::create([
-                    //     'ichkitavardok_id'=>$data->id,
-                    //     'name'=>$value["name"],
-                    //     'raqam'=>$value["raqam"],
-                    //     'hajm'=>$value["hajm"],
-                    //     'summa'=>$value["summa"],
-                    //     'summa2'=>$value["summa2"],
-                    //     'summa3'=>$value["summa3"],
-                    // ]);
-                // }
+                $data = Ichkitavardok::where('tavardok_id', $request["tavardok_id"])
+                                    ->where('adress', $request["adress"])
+                                    ->where('tavar2dok_id', $request["tavar2dok_id"])
+                                    ->first();          
             }else{
+                $fff = Tavar2dok::find($value["tavar2dok_id"]);
                 $data = Ichkitavardok::create([
-                    'name'=>$value["name"],
+                    'tavardok_id'=>$value["tavardok_id"], 
+                    'adress'=>$value["adress"], 
+                    'tavar2dok_id'=>$value["tavar2dok_id"],
+                    'name'=> $fff->name,
                     'raqam'=>$value["raqam"],
                     'hajm'=>$value["hajm"],
                     'summa'=>$value["summa"],
@@ -263,28 +299,6 @@ class KlentServis
                     'summa3'=>$value["summa3"],
                     'kod' => $value["kod"]
                 ]);
-                // $res = Updatetavrdok::where('ichkitavardok_id', $data->id)->first();
-                // if($res){
-                //     Updatetavrdok::where('ichkitavardok_id', $data->id)
-                //     ->update([
-                //         'name'=>$value["name"],
-                //         'raqam'=>$value["raqam"],
-                //         'hajm'=>$value["hajm"],
-                //         'summa'=>$value["summa"],
-                //         'summa2'=>$value["summa2"],
-                //         'summa3'=>$value["summa3"],
-                //     ]);
-                // }else{
-                    // Updatetavrdok::create([
-                    //     'ichkitavardok_id'=>$data->id,
-                    //     'name'=>$value["name"],
-                    //     'raqam'=>$value["raqam"],
-                    //     'hajm'=>$value["hajm"],
-                    //     'summa'=>$value["summa"],
-                    //     'summa2'=>$value["summa2"],
-                    //     'summa3'=>$value["summa3"],
-                    // ]);
-                // }
             }
         }
         return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);
@@ -432,13 +446,12 @@ class KlentServis
     
     public function updatesdok($request)
     {
-        // $updatetavr = Updatetavrdok::where('ichkitavardok_id', $request->id)->first();
-        // $foo = Ichkitavardok::find($request->id);
-        // $h1 = $foo->hajm - $updatetavr->hajm + $request->hajm;
-        // $sum2 = $foo->summa2 - $updatetavr->summa2 + $request->summa2;
-        // $sum3 = $foo->summa3 - $updatetavr->summa3 + $request->summa3;        
+        $fff = Tavar2::find($request->tavar2dok_id);
         $data = Ichkitavardok::find($request->id)->update([
-            'name'=>$request->name,
+            'tavardok_id'=>$request->tavardok_id,
+            'adress'=>$request->adress,
+            'tavar2dok_id'=>$request->tavar2dok_id,
+            'name'=>$fff->name,
             'raqam'=>$request->raqam,
             'hajm'=>$request->hajm,
             'summa'=>$request->summa,
@@ -446,15 +459,6 @@ class KlentServis
             'summa3'=>$request->summa3,
             'kod'=>$request->kod2
         ]);
-        // Updatetavrdok::where('ichkitavardok_id', $request->id)->update([
-        //     'name'=>$request->name,
-        //     'raqam'=>$request->raqam,
-        //     'hajm'=>$request->hajm, 
-        //     'summa'=>$request->summa,
-        //     'summa2'=>$request->summa2,
-        //     'summa3'=>$request->summa3,
-        //     'kod'=>$request->kod
-        // ]);
         return response()->json(['code'=>201, 'msg'=>'Мувофакиятли янгиланди','data' => $data], 201);
     }
 
@@ -519,6 +523,9 @@ class KlentServis
     {
         $data = Ichkitavardok::find($id);
         Deletkarzinadok::create([
+            'tavardok_id'=>$data->tavardok_id,
+            'adress'=>$data->adress,
+            'tavar2dok_id'=>$data->tavar2dok_id,
             'name'=>$data->name,
             'raqam'=>$data->raqam,
             'hajm'=>$data->hajm, 
@@ -569,7 +576,10 @@ class KlentServis
     public function tiklashdok($id)
     {
         $data = Deletkarzinadok::find($id);
-        $a = Ichkitavardok::create([
+        Ichkitavardok::create([
+            'tavardok_id'=>$data->tavardok_id,
+            'adress'=>$data->adress,
+            'tavar2dok_id'=>$data->tavar2dok_id,
             'name'=>$data->name,
             'raqam'=>$data->raqam,
             'hajm'=>$data->hajm, 
@@ -579,17 +589,7 @@ class KlentServis
             'kurs'=>$data->kurs, 
             'kurs2'=>$data->kurs2,
             'kod'=>$data->kod
-        ]);
-        // Updatetavrdok::create([
-        //     'ichkitavardok_id'=>$a->id,
-        //     'name'=>$data->name,
-        //     'raqam'=>$data->raqam,
-        //     'hajm'=>$data->hajm, 
-        //     'summa'=>$data->summa,
-        //     'summa2'=>$data->summa2,
-        //     'summa3'=>$data->summa3,
-        //     'kod'=>$data->kod
-        // ]);
+        ]); 
         Deletkarzinadok::find($id)->delete($id);
         return response()->json(['msg'=>'Мувофакиятли тикланди']);
     }
@@ -620,29 +620,46 @@ class KlentServis
         ]);
         $data = Ichkitavar::find($request->id);
         return response()->json(['code'=>201, 'msg'=>'Мувофакиятли янгиланди','data' => $data], 201);
-       
     }
 
     public function pastavka($request)
     {
         foreach ($request->addmore as $value) {
             $data = Adress::create($value);
+            Adressdok::create($value);
         }
-        if($data){
-            return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);
-        }
+        return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);       
     }
 
+    public function pastavkadok($request)
+    {
+        foreach ($request->addmore as $value) {
+            $data = Adressdok::create($value);
+            Adress::create($value);
+        }
+        return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);        
+    }
+    
     public function pastavkaupdate($request)
     {
         Adress::find($request->id)->update($request->all());
+        Adressdok::find($request->id)->update($request->all());
         $data = Adress::find($request->id);
+        return response()->json(['code'=>201, 'msg'=>'Мувофакиятли янгиланди','data' => $data], 201);
+    }
+
+    public function pastavkaupdatedok($request)
+    {
+        Adressdok::find($request->id)->update($request->all());
+        Adress::find($request->id)->update($request->all());
+        $data = Adressdok::find($request->id);
         return response()->json(['code'=>201, 'msg'=>'Мувофакиятли янгиланди','data' => $data], 201);
     }
 
     public function deletew4($id)
     {
         Adress::find($id)->delete($id);
+        Adressdok::find($id)->delete($id);
         return response()->json(['msg'=>'Мувофакиятли очирилди']);
     }
 

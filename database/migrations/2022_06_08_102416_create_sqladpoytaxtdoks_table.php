@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('deletkarzinadoks', function (Blueprint $table) {
+        Schema::create('sqladpoytaxtdoks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('tavardok_id')->unsigned();
             $table->string('adress')->nullable();
@@ -26,7 +26,6 @@ return new class extends Migration
             $table->string('summa3')->nullable();
             $table->string('kurs')->nullable();
             $table->string('kurs2')->nullable();
-            $table->string('kod')->nullable();
             $table->timestamps();
             $table->foreign('tavardok_id')->references('id')->on('tavardoks')
             ->onDelete('cascade')->onUpdate('cascade');
@@ -42,6 +41,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deletkarzinadoks');
+        Schema::dropIfExists('sqladpoytaxtdoks');
     }
 };

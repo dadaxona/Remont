@@ -38,6 +38,7 @@
                           <th>Muammo</th>
                           <th>Xulosa</th>
                           <th>Masul usta</th>
+                          <th>Сервисе Номер</th>
                           <th>Summa</th>
                           <th>Aloqa</th>
                           <th>Edit</th>
@@ -53,6 +54,7 @@
                           <td>{{ $item->muammo }}</td>
                           <td>{{ $item->xulosa }}</td>
                           <td>{{ $item->usta }}</td>
+                          <td>{{ $item->id}}</td>
                           <td>{{ $item->summa }}</td>
                          @if ($item->vizp == 1)
                          <td>
@@ -88,7 +90,7 @@
                             </button>
                           </td>
                           <td>
-                            <form action="{{ route('otkazish') }}" method="POST">
+                            <form action="{{ route('otkazishauth') }}" method="POST">
                               @csrf
                               <input type="hidden" name="id" value="{{ $item->id }}">
                               <button type="submit" class="btn-info" style="border-radius: 5px;">
@@ -293,6 +295,8 @@
             k+= "Муаммо" + " , " + muau;
             k+= ";\n";
             k+= "Телефон" + " , " + telu;
+            k+= ";\n";
+            k+= "Сервис номер" + " , " + data.id;
             k+= ";\n";
             k+= "\n";
             k+= "Хурмат билан << ID Group >>";

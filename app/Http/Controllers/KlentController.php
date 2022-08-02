@@ -18,6 +18,7 @@ use App\Models\Updatetavr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\KlentController2;
+use App\Models\Adressdok;
 use App\Models\Arxiv;
 use App\Models\Deletkarzina;
 use App\Models\Ichkitavardok;
@@ -25,9 +26,13 @@ use App\Models\Itogodok;
 use App\Models\Javob;
 use App\Models\Karzinadok;
 use App\Models\Sqladpoytaxt;
+use App\Models\Sqladpoytaxtdok;
 use App\Models\Statistika;
 use App\Models\Tavar2;
+use App\Models\Tavar2dok;
+use App\Models\Tavardok;
 use App\Models\Tayyorsqlad;
+use App\Models\Tayyorsqladdok;
 use App\Models\Updatetavrdok;
 use App\Models\Userdok;
 
@@ -91,6 +96,64 @@ class KlentController extends KlentController2
         }
     }
 
+    public function tavar_livedok(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '')
+        {
+        $data = DB::table('tavardoks')
+            ->where('name', 'like', '%'.$query.'%')
+            ->orderBy('id', 'DESC')
+            ->get();
+        }
+        else
+        {
+        $data = DB::table('tavardoks')
+            ->orderBy('id', 'DESC')
+            ->get();
+        }
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr style="border-bottom: 1px solid;">
+                    <td>'.$row->name.'</td>
+                    <td>
+                        <a href="javascript:void(0)" onclick="editPost2dok('.$row->id.')" style="color: green">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+                                <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+                            </svg>
+                        </a>             
+                        <a href="javascript:void(0)" onclick="deletePost2dok('.$row->id.')" class="mx-3" style="color: red">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                ';
+            }
+        }
+        else
+        {
+        $output = '
+            <tr>
+                <td align="center" colspan="5">No Data Found</td>
+            </tr>
+            ';
+        }
+        $data = array(
+            'table_data'  => $output,
+        );
+        echo json_encode($data);
+        }
+    }
+
     public function tavar2_live(Request $request)
     {
         if($request->ajax())
@@ -121,6 +184,61 @@ class KlentController extends KlentController2
                             </svg>
                         </a>             
                         <a href="javascript:void(0)" onclick="deletePost2('.$row->id.')" class="mx-3" style="color: red">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                ';
+            }
+        }
+        else
+        {
+        $output = '
+            <tr>
+                <td align="center" colspan="5">No Data Found</td>
+            </tr>
+            ';
+        }
+        $data = array(
+            'table_data'  => $output,
+        );
+
+        echo json_encode($data);
+        }
+    }
+
+    public function tavar2_livedok(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '')
+        {
+        $data =Tavar2dok::where('name', 'like', '%'.$query.'%')->orderBy('id', 'DESC')->get();
+        }
+        else
+        {
+        $data = Tavar2dok::orderBy('id', 'DESC')->get();
+        }
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr style="border-bottom: 1px solid;">
+                    <td>'.$row->tavardok->name.'</td>
+                    <td>'.$row->name.'</td>
+                    <td>
+                        <a href="javascript:void(0)" onclick="editPost2dok('.$row->id.')" style="color: green">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+                                <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+                            </svg>
+                        </a>             
+                        <a href="javascript:void(0)" onclick="deletePost2dok('.$row->id.')" class="mx-3" style="color: red">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
                                 <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
                             </svg>
@@ -278,6 +396,64 @@ class KlentController extends KlentController2
         }
     }
 
+    public function live_adressdok(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '')
+        {
+        $data = Adressdok::where('adress', 'like', '%'.$query.'%')
+            ->orderBy('id', 'DESC')
+            ->get();
+            
+        }
+        else
+        {
+        $data = Adressdok::orderBy('id', 'DESC')
+            ->get();
+        }
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr id="row_'.$row->id.'" style="border-bottom: 1px solid;">
+                <td>'. $row->adress.'</td>
+                <td>
+                  <a href="javascript:void(0)" onclick="editPosts2dok('.$row->id .')" style="color: green">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+                      <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+                    </svg>
+                  </a>                            
+                  <a href="javascript:void(0)" onclick="deletePost2dok('.$row->id.')" class="mx-3" style="color: red">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                      <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+              ';
+            }
+        }
+        else
+        {
+        $output = '
+            <tr>
+                <td align="center" colspan="5">No Data Found</td>
+            </tr>
+            ';
+        }
+        $data = array(
+            'table_data'  => $output,
+        );
+
+        echo json_encode($data);
+        }
+    }
+
     public function live_adress(Request $request)
     {
         if($request->ajax())
@@ -332,7 +508,6 @@ class KlentController extends KlentController2
         }
         $data = array(
             'table_data'  => $output,
-            'total_data'  => $total_row
         );
 
         echo json_encode($data);
@@ -501,11 +676,13 @@ class KlentController extends KlentController2
     public function indextip()
     {
         $data = Tavar::all();
+        $data2 = Tavardok::all();
         if(Session::has('IDIE')){
           $brends = Drektor::where('id','=',Session::get('IDIE'))->first();
           return view('tavartip',[
               'brends'=>$brends,
-              'tovar'=>$data
+              'tovar'=>$data,
+              'tovardok'=>$data2
           ]);
         }else{
             return redirect('/logaut');
@@ -727,6 +904,18 @@ class KlentController extends KlentController2
         }
     }
 
+    public function store2dok(Request $request, KlentServis $model)
+    {
+        $validator = Validator::make($request->all(), [
+            'addmore.*.name' => 'required',
+        ]);
+        if($validator->passes()){
+            return $model->store2dok($request);
+        }else{            
+            return response()->json(['code'=>0, 'msg'=>'Малумотлар толдирилмаган', 'error'=>$validator->errors()->toArray()]);
+        }
+    }
+
     public function store2tip(Request $request, KlentServis $model)
     {
         $validator = Validator::make($request->all(), [
@@ -740,15 +929,40 @@ class KlentController extends KlentController2
         }
     }
 
+    public function store2tipdok(Request $request, KlentServis $model)
+    {
+        $validator = Validator::make($request->all(), [
+            'addmore.*.tavardok_id' => 'required',
+            'addmore.*.name' => 'required',
+        ]);
+        if($validator->passes()){
+            return $model->store2tipdok($request);
+        }else{            
+            return response()->json(['code'=>0, 'msg'=>'Малумотлар толдирилмаган', 'error'=>$validator->errors()->toArray()]);
+        }
+    }
+
     public function show2(Request $request)
     {
-        $post = Tavar2::find($request->id);    
+        $post = Tavar2::find($request->id);
+        return response()->json($post);
+    }
+
+    public function show2dok(Request $request)
+    {
+        $post = Tavar2dok::find($request->id);
         return response()->json($post);
     }
 
     public function shower2($id)
     {
         $post = Tavar::find($id);    
+        return response()->json($post);
+    }
+
+    public function shower2dok($id)
+    {
+        $post = Tavardok::find($id);    
         return response()->json($post);
     }
 
@@ -780,6 +994,19 @@ class KlentController extends KlentController2
             return response()->json(['code'=>0, 'msg'=>'Малумот киритилмади', 'error'=>$validator->errors()->toArray()]);
         }
     }
+
+    public function update2dok(Request $request, KlentServis $model)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
+        if($validator->passes()){
+            return $model->update2dok($request);
+        }else{            
+            return response()->json(['code'=>0, 'msg'=>'Малумот киритилмади', 'error'=>$validator->errors()->toArray()]);
+        }
+    }
+
     public function updateer2(Request $request, KlentServis $model)
     {
         $validator = Validator::make($request->all(), [
@@ -792,18 +1019,47 @@ class KlentController extends KlentController2
         }
     }
 
+    public function updateer2dok(Request $request, KlentServis $model)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
+        if($validator->passes()){
+            return $model->updateer2dok($request);
+        }else{            
+            return response()->json(['code'=>0, 'msg'=>'Малумот киритилмади', 'error'=>$validator->errors()->toArray()]);
+        }
+    }
+
     public function delete2($id)
     {
         Tavar2::find($id)->delete($id);
+        Tavar2dok::find($id)->delete($id);
         return response()->json(['msg'=>'Мувофакиятли очирилди']);
     }
 
-    public function deleteer2($id)
+    
+    public function delete2dok($id)
     {
-        Tavar::find($id)->delete($id);
+        Tavar2dok::find($id)->delete($id);
+        Tavar2::find($id)->delete($id);
         return response()->json(['msg'=>'Мувофакиятли очирилди']);
     }
     
+    
+    public function deleteer2($id)
+    {
+        Tavar::find($id)->delete($id);
+        Tavardok::find($id)->delete($id);
+        return response()->json(['msg'=>'Мувофакиятли очирилди']);
+    }
+
+    public function deleteer2dok($id)
+    {
+        Tavardok::find($id)->delete($id);
+        Tavar::find($id)->delete($id);
+        return response()->json(['msg'=>'Мувофакиятли очирилди']);
+    }
         
     public function deleteishchi($id, KlentServis $model)
     {
@@ -858,7 +1114,9 @@ class KlentController extends KlentController2
     public function store3dok(Request $request, KlentServis $model)
     {
         $validator = Validator::make($request->all(), [
-            'addmore.*.name' => 'required',
+            'addmore.*.tavardok_id' => 'required',
+            'addmore.*.adress' => 'nullable',
+            'addmore.*.tavar2dok_id' => 'required',
             'addmore.*.raqam' => 'nullable',
             'addmore.*.hajm' => 'required',
             'addmore.*.summa' => 'required|numeric',
@@ -895,7 +1153,9 @@ class KlentController extends KlentController2
     public function updatesdok(Request $request, KlentServis $model)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'tavardok_id' => 'required',
+            'adress' => 'nullable',
+            'tavar2dok_id' => 'required',
             'raqam' => 'nullable',
             'hajm' => 'required',
             'summa' => 'required|numeric',
@@ -1052,7 +1312,7 @@ class KlentController extends KlentController2
             return redirect('/logaut');
         }
     }
-
+    
     public function pastavka(Request $request, KlentServis $model)
     {
         $validator = Validator::make($request->all(), [
@@ -1060,6 +1320,18 @@ class KlentController extends KlentController2
         ]);
         if($validator->passes()){
             return $model->pastavka($request);
+        }else{            
+            return response()->json(['code'=>0, 'msg'=>'Малумотлар толдирилмаган', 'error'=>$validator->errors()->toArray()]);
+        }
+    }
+
+    public function pastavkadok(Request $request, KlentServis $model)
+    {
+        $validator = Validator::make($request->all(), [
+            'addmore.*.adress' => 'required',
+        ]);
+        if($validator->passes()){
+            return $model->pastavkadok($request);
         }else{            
             return response()->json(['code'=>0, 'msg'=>'Малумотлар толдирилмаган', 'error'=>$validator->errors()->toArray()]);
         }
@@ -1081,6 +1353,12 @@ class KlentController extends KlentController2
     {
         return $model->pastavkaupdate($request);
     }
+
+    public function pastavkaupdatedok(Request $request, KlentServis $model)
+    {
+        return $model->pastavkaupdatedok($request);
+    }
+
 
     public function delete4($id, KlentServis $model)
     {
@@ -1419,6 +1697,53 @@ class KlentController extends KlentController2
         echo json_encode($data);
         }
     }
+
+    function sqladiskizapasdok(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '')
+        {
+        $data = Ichkitavardok::where('name', 'like', '%'.$query.'%')->orderBy('id', 'DESC')->get();            
+        }
+        else
+        {
+        $data = Ichkitavardok::orderBy('id', 'DESC')->get();
+        }
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr data-id="'.$row->id.'" id="datadok" style="border-bottom: 1px solid;">
+                <td>'.$row->tavardok->name.'</td>
+                <td>'.$row->name.'</td>
+                <td>'.$row->hajm.'</td>
+                <td>'.$row->summa.'</td>
+                <td>'.$row->summa2.'</td>
+                <td>'.$row->summa3.'</td>
+                </tr>
+                ';
+            }
+        }
+        else
+        {
+        $output = '
+        <tr>
+            <td align="center" colspan="5">No Data Found</td>
+        </tr>
+        ';
+        }
+        $data = array(
+            'table_data'  => $output,
+        );
+
+        echo json_encode($data);
+        }
+    }
     
     function sqladiskizapas2(Request $request)
     {
@@ -1442,6 +1767,45 @@ class KlentController extends KlentController2
                 $output .= '
                 <tr data-id="'.$row->id.'" id="asdsad" style="border-bottom: 1px solid;">
                 <td>'.$row->tavar->name.'</td>
+                <td>'.$row->name.'</td>
+                <td>'.$row->hajm.'</td>
+                <td>'.$row->summa.'</td>
+                <td>'.$row->summa2.'</td>
+                <td>'.$row->summa3.'</td>
+                </tr>
+                ';
+            }
+        }
+
+        $data = array(
+            'table_data'  => $output,
+        );
+
+        echo json_encode($data);
+        }
+    }
+    function sqladiskizapas2dok(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '')
+        {
+        $data = Sqladpoytaxtdok::where('name', 'like', '%'.$query.'%')->orderBy('id', 'DESC')->get();            
+        }
+        else
+        {
+        $data = Sqladpoytaxtdok::orderBy('id', 'DESC')->get();
+        }
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr data-id="'.$row->id.'" id="asdsaddok" style="border-bottom: 1px solid;">
+                <td>'.$row->tavardok->name.'</td>
                 <td>'.$row->name.'</td>
                 <td>'.$row->hajm.'</td>
                 <td>'.$row->summa.'</td>
@@ -1499,7 +1863,45 @@ class KlentController extends KlentController2
         echo json_encode($data);
         }
     }
+    function tbody3tabledok(Request $request)
+    {
+        if($request->ajax())
+        {
+        $output = '';
+        $query = $request->get('query');
+        if($query != '')
+        {
+            $data = Tayyorsqladdok::where('name', 'like', '%'.$query.'%')->orderBy('id', 'DESC')->get();            
+        }
+        else
+        {
+        $data = Tayyorsqladdok::orderBy('id', 'DESC')->get();
+        }
+        $total_row = $data->count();
+        if($total_row > 0)
+        {
+            foreach($data as $row)
+            {
+                $output .= '
+                <tr data-id="'.$row->id.'" id="asdsaddok" style="border-bottom: 1px solid;">
+                <td>'.$row->tavardok->name.'</td>
+                <td>'.$row->name.'</td>
+                <td>'.$row->hajm.'</td>
+                <td>'.$row->summa.'</td>
+                <td>'.$row->summa2.'</td>
+                <td>'.$row->summa3.'</td>
+                </tr>
+                ';
+            }
+        }
 
+        $data = array(
+            'table_data'  => $output,
+        );
+
+        echo json_encode($data);
+        }
+    }
     public function tbody3table2(Request $request)
     {
         if($request->ajax())
@@ -1529,7 +1931,35 @@ class KlentController extends KlentController2
             echo json_encode($data);
         }
     }
-
+    public function tbody3table2dok(Request $request)
+    {
+        if($request->ajax())
+        {
+            $output = ''; 
+            $data = Tayyorsqladdok::whereBetween('updated_at', [$request->date1, $request->date2])->get(); 
+            $total_row = $data->count();
+            if($total_row > 0)
+            {
+                foreach($data as $row)
+                {
+                    $output .= '
+                    <tr data-id="'.$row->id.'" id="asdsaddok" style="border-bottom: 1px solid;">
+                    <td>'.$row->tavardok->name.'</td>
+                    <td>'.$row->name.'</td>
+                    <td>'.$row->hajm.'</td>
+                    <td>'.$row->summa.'</td>
+                    <td>'.$row->summa2.'</td>
+                    <td>'.$row->summa3.'</td>
+                    </tr>
+                    ';
+                }
+            }
+            $data = array(
+                'table_data'  => $output,
+            );
+            echo json_encode($data);
+        }
+    }
     public function plus(Request $request, KlentServis $model)
     {
         return $model->plus($request);

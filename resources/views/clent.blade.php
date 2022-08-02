@@ -96,7 +96,7 @@
           </div>
           <div class="mb-3">
             <label for="message-text" class="col-form-label">Телеграм Чат Ид</label>
-            <input type="number" class="form-control" name="chatid"  id="chatid">
+            <input type="text" class="form-control" name="chatid"  id="chatid">
             <span class="text-danger error-text chatid_error"></span>
           </div>
           <div class="mb-3">
