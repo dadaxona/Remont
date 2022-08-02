@@ -14,8 +14,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/login2', [AuthController::class,'login2']);
-Route::get('a', [AuthController::class,'typpe'])->name('typpe');
 Route::get('exports', [AuthController::class,'exports'])->name('exports');
 Route::get('exports2', [AuthController::class,'exports2'])->name('exports2');
 Route::get('exports2dok', [AuthController::class,'exports2dok'])->name('exports2dok');

@@ -49,16 +49,17 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class AuthController extends Controller
 {
-    public function login2()
-    {
-      return view("auth.login2");
-    }
-    
     public function typpe()
     {
-        return view('telegtam');
+        return view('auth.login2');
     }
     
+    public function data()
+    {
+        $data = Tavar::all();
+        return response()->json($data);
+    }
+
     public function exports() 
     {
         return Excel::download(new InvoicesExport, 'invoices.xlsx');

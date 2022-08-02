@@ -24,10 +24,10 @@
                 }
             });
         }
-        srok();
-        setInterval(function() {
-            srok();
-        }, 3000);
+        // srok();
+        // setInterval(function() {
+        //     srok();
+        // }, 3000);
     </script>
 </body>
 </html>
