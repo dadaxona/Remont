@@ -849,7 +849,8 @@ class KlentController extends KlentController2
                 <tr id="row_'.$row->id.'" style="border-bottom: 1px solid;">
                 <td class="ui-widget-content">'.$row->name.'</td>
                 <td class="ui-widget-content">'.$row->login.'</td>
-                <td class="ui-widget-content">'.$row->password.'</td>            
+                <td class="ui-widget-content">'.$row->password.'</td>
+                <td class="ui-widget-content">'.$row->count.'</td>
                 <td class="ui-widget-content">
                   <a href="javascript:void(0)" onclick="editPost('.$row->id.')" style="color: green">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">

@@ -13,18 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('clentitogs', function (Blueprint $table) {
+        Schema::create('rasxods', function (Blueprint $table) {
             $table->id();
-            $table->string('tavarshtuk')->nullable();
-            $table->string('shtuk')->nullable();
-            $table->string('foiz')->nullable();
-            $table->string('itog')->nullable();
-            $table->string('opshi')->nullable();
             $table->string('rasxod')->nullable();
+            $table->string('qayer')->nullable();
+            $table->string('sabap')->nullable();
             $table->timestamps();
         });
     }
-
+    
     /**
      * Reverse the migrations.
      *
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clentitogs');
+        Schema::dropIfExists('rasxods');
     }
 };

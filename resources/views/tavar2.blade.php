@@ -1218,7 +1218,7 @@ $( function() {
       data:new FormData(form),
       processData:false,
       dataType:'json',
-      contentType:false,
+      contentType:false,                   
       success:function(data){
         $(form)[0].reset();
         $('#pass').modal('hide');
@@ -1284,7 +1284,7 @@ $( function() {
         });
         $("#iidd2").html(rows);
         }
-      });
+      });                   
     });
     
     $(document).on('change', "#tavardok_id", function(){
@@ -1333,6 +1333,7 @@ $( function() {
       $("#storesm3")[0].reset();
       $('#stores3').modal('show');
     });
+    
 
     $( "#addPost3" ).on( "click", function() {
       $('#tavar2').show('fold', 1000);

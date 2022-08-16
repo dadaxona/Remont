@@ -7,6 +7,7 @@ use App\Models\Adresdoks;
 use App\Models\Adressdok;
 use App\Models\Arxiv;
 use App\Models\Arxivdok;
+use App\Models\Clentitog;
 use App\Models\Deletkarzina;
 use App\Models\Deletkarzinadok;
 use App\Models\Drektor;
@@ -26,6 +27,7 @@ use App\Models\Karzina2dok;
 use App\Models\Karzina3;
 use App\Models\Karzina3dok;
 use App\Models\Karzinadok;
+use App\Models\Rasxod;
 use App\Models\Statistika;
 use App\Models\Statistikadok;
 use App\Models\Tavar2;
@@ -147,6 +149,7 @@ class KlentServis
                 'name'=>$request->name,
                 'login'=>$request->login,
                 'password'=>$request->password,
+                'count'=>$request->count,
             ]);
             return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $request], 200);            
         }
@@ -168,8 +171,7 @@ class KlentServis
     public function updateishchi($request)
     {
         Drektor::find($request->id)->update($request->all());
-        $data = Drektor::find($request->id);
-        return response()->json(['code'=>201, 'msg'=>'Мувофакиятли янгиланди','data' => $data], 201);
+        return response()->json(['code'=>201, 'msg'=>'Мувофакиятли янгиланди'], 201);
     }
 
     public function updateadmin($request)
@@ -1533,7 +1535,7 @@ class KlentServis
             'usd' => 0
         ]);
         $b2 = Itogo::find(1);
-        return response()->json(['msg'=>'Киритилди', 'data'=>$b2]);        
+        return response()->json(['msg'=>'Киритилди', 'data'=>$b2]);
     }
 
     public function tuglesomdok($b23)
@@ -2267,5 +2269,16 @@ class KlentServis
                 return response()->json(['data'=>$b2]);
             }
         }        
+    }
+
+    public function postrasxod($request)
+    {
+        $sta = Clentitog::find(1);
+        Clentitog::find(1)->update([
+            'itog' => $sta->itog - $request->rasxod,
+            'rasxod' => $sta->rasxod + $request->rasxod
+        ]);
+        Rasxod::create($request->all());
+        return response()->json(['msg'=>'Сакланди']);
     }
 }

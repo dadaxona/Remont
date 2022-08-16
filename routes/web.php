@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/login2', [AuthController::class,'login2']);
+Route::get('a', [AuthController::class,'typpe'])->name('typpe');
 Route::get('exports', [AuthController::class,'exports'])->name('exports');
 Route::get('exports2', [AuthController::class,'exports2'])->name('exports2');
 Route::get('exports2dok', [AuthController::class,'exports2dok'])->name('exports2dok');
@@ -270,3 +272,6 @@ Route::get('kelgantovar2', [KlentController::class, 'kelgantovar2'])->name('kelg
 Route::get('kelgantovar2ajaxdok', [KlentController::class, 'kelgantovar2ajaxdok'])->name('kelgantovar2ajaxdok');
 Route::post('sinimayt', [KlentController::class, 'sinimayt'])->name('sinimayt');
 Route::post('sinimaytdok', [KlentController::class, 'sinimaytdok'])->name('sinimaytdok');
+Route::get('/rasxod', [KlentController::class, 'rasxod'])->name('rasxod');
+Route::get('/getrasxod', [KlentController::class, 'getrasxod'])->name('getrasxod');
+Route::post('postrasxod', [KlentController::class, 'postrasxod'])->name('postrasxod');

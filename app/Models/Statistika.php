@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Statistika extends Model
 {
     use HasFactory;
-    public $fillable = ['foyda', 'kassa','pribl', 'limit'];
+    public $fillable = ['foyda', 'kassa','pribl', 'limit', 'rasxod'];
     public $timestamps = true;
 }

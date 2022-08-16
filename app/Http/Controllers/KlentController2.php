@@ -28,6 +28,7 @@ use App\Models\Karzina2dok;
 use App\Models\Karzina3;
 use App\Models\Karzina3dok;
 use App\Models\Karzinadok;
+use App\Models\Rasxod;
 use App\Models\Sqladpoytaxt;
 use App\Models\Sqladpoytaxtdok;
 use App\Models\Statistika;
@@ -226,16 +227,14 @@ class KlentController2 extends Controller
                 foreach ($data222 as $value) {
                     $fool2 = Clentitog::find(1);
                     $a = $fool2->foiz + $value->karzs;
-                    Clentitog::find(1)->update([
-                        'foiz'=>$a,
-                    ]);
+                    $fool2->foiz = $a;
+                    $fool2->save();                    
                 }
                 foreach ($data as $value) {
                     $fool2 = Clentitog::find(1);
                     $a = $fool2->opshi + $value->itog;
-                    Clentitog::find(1)->update([
-                        'opshi'=>$a,
-                    ]);
+                    $fool2->opshi = $a;
+                    $fool2->save();
                 }
             }else{
                 Clentitog::create([
@@ -247,27 +246,26 @@ class KlentController2 extends Controller
                 ]);
                 foreach ($data222 as $value) {
                     $fool2 = Clentitog::find(1);
-                    $a = $fool2->foiz + $value->karzs;
-                    Clentitog::find(1)->update([
-                        'foiz'=>$a,
-                    ]);
+                    $a = $fool2->foiz + $value->karzs;                   
+                    $fool2->foiz = $a;
+                    $fool2->save();
+                  
                 }
                 foreach ($data as $value) {
                     $fool3 = Clentitog::find(1);
-                    $a1 = $fool3->opshi + $value->itog;
-                    Clentitog::find(1)->update([
-                        'opshi'=>$a1,
-                    ]);
+                    $a1 = $fool3->opshi + $value->itog;                   
+                    $fool3->opshi = $a1;
+                    $fool3->save();                    
                 }
             }
             $fo = Clentitog::find(1);
-            $ja = $fo->opshi - $fo->foiz;
-            $fo = Clentitog::find(1)->update([
-                'itog' => $ja
-            ]);
-            $foo2 = Clentitog::find(1);
+            $ja = $fo->opshi - $fo->foiz;       
+            $fo->itog = $ja;
+            $jav = $fo->itog - $fo->rasxod;
+            $fo->itog = $jav;
+            $fo->save();
             return response()->json([
-                'foo2'=>$foo2??[],
+                'foo2'=>$fo??[],
             ]);
         }
     }
@@ -4629,5 +4627,37 @@ class KlentController2 extends Controller
         }
         Tayyorsqladdok::where('id', ">", 0)->delete();
         return redirect('/glavninachal');
+    }
+
+    public function rasxod()
+    {
+        if(Session::has('IDIE')){
+            $brends = Drektor::where('id','=',Session::get('IDIE'))->first();
+            return view('rasxod',[
+                'brends'=>$brends,
+            ]);
+        }else{
+            return redirect('/logaut');
+        }
+    }
+
+    public function getrasxod()
+    {
+        $data = Rasxod::all();
+        return response()->json($data);
+    }
+
+    public function postrasxod(Request $request, KlentServis $model)
+    {
+        $validator = Validator::make($request->all(), [
+            'rasxod' => 'required|numeric',
+            'qayer' => 'required',
+            'sabap' => 'required'
+        ]);
+        if($validator->passes()){
+            return $model->postrasxod($request);
+        }else{            
+            return response()->json(['code'=>0, 'msg'=>'Малумотни киритинг', 'error'=>$validator->errors()->toArray()]);
+        }
     }
 }

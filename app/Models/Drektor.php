@@ -9,6 +9,6 @@ class Drektor extends Model
 {
     use HasFactory;
     protected $table = 'drektors';
-    public $fillable = ['name','login','password'];
+    public $fillable = ['name','login','password','count'];
     public $timestamps = false;
 }

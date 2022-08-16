@@ -78,6 +78,7 @@
                 dataPoints: [
                     { label: "Продажи", y: response.foo2.opshi },
                     { label: "Долг", y: response.foo2.foiz },
+                    { label: "Расход", y: response.foo2.rasxod },
                     { label: "Прибл", y: response.foo2.itog },
                 ]
             }]
