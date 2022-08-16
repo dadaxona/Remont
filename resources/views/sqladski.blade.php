@@ -1,6 +1,6 @@
 @extends('welcome')
 @section('content')
-@if ($brends->login == "Admin")
+@if ($brends->count == "1" || $brends->count == "3" || $brends->count == "4")
 <div id="AAAAAAAA" class="card ui-widget-content">
     <div class="card-block tab-icon">
             <div class="col-12">

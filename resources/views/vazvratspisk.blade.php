@@ -1,6 +1,6 @@
 @extends('welcome')
 @section('content')
-@if ($brends->login == "Admin")
+@if ($brends->count == "1" || $brends->count == "3" || $brends->count == "4")
 <div class="table-responsive card">
     <table class="tab table-hover" id="laravel_crud">
         <thead>

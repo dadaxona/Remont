@@ -1,6 +1,6 @@
 @extends('welcome')
 @section('content')
-@if ($brends->login == "Admin")
+@if ($brends->count == "1" || $brends->count == "3" || $brends->count == "4")
 <div class="row">
     <div class="col-3 d-flex mb-2">
         <input type="date" class="form-control mr-2" id="date">

@@ -70,13 +70,14 @@
         <div class="modal-body">
           <form id="userForm2" action="{{ route('postrasxod') }}" method="POST">
               @csrf
+              <input type="hidden" name="id" id="id">
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Summa</label>
                 <input type="text" class="form-control" name="rasxod"  id="rasxod">
                 <span class="text-danger error-text rasxod_error"></span>
               </div>
               <div class="mb-3">
-                <label for="message-text" class="col-form-label">Каерга</label>
+                <label for="message-text" class="col-form-label">Кайерга</label>
                 <input type="text" class="form-control" name="qayer"  id="qayer">
                 <span class="text-danger error-text qayer_error"></span>
               </div>
@@ -94,9 +95,9 @@
       </div>
     </div>
   </div>
-
 <script>
     function addPost2() {
+      $("#userForm2")[0].reset();
       $('#post-modal2').modal('show');
     }
     function tbody2(){
@@ -112,6 +113,11 @@
                     <td>${room.rasxod}</td>
                     <td>${room.qayer}</td>
                     <td>${room.sabap}</td>
+                    <td>
+                      <button class="btn-primary m-0 p-0 pl-2 pr-2" id="ed" data-id="${room.id}" data-rasxod="${room.rasxod}" data-qayer="${room.qayer}" data-sabap="${room.sabap}">
+                        Edit
+                      </button>
+                    </td>
                 </tr>`;
                 });
             $("#tbody2").html(rows);
@@ -137,6 +143,14 @@
         toastr.success(data.msg);
       }
     });
+  });
+
+  $(document).on("click", "#ed", function () {
+    $("#id").val($(this).data("id"));
+    $("#rasxod").val($(this).data("rasxod"));
+    $("#qayer").val($(this).data("qayer"));
+    $("#sabap").val($(this).data("sabap"));
+    $("#post-modal2").modal("show");
   });
 </script>
 @endsection

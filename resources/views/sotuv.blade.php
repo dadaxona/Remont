@@ -112,7 +112,7 @@
     margin-left: 10px;
   }
 </style>
-@if ($brends->login == "Admin")
+@if ($brends->count == "1" || $brends->count == "3" || $brends->count == "4")
 <div class="page-body button-page">
     <div class="col-sm-12 card">
         <div class="row">
@@ -470,8 +470,7 @@
   </div>
 </div>
 </div>
-@elseif($brends->login == "Admin2")
-
+@elseif($brends->count == "2")
 <div class="page-body button-page">
     <div class="col-sm-12 card">
         <div class="row">

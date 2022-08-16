@@ -2273,12 +2273,29 @@ class KlentServis
 
     public function postrasxod($request)
     {
-        $sta = Clentitog::find(1);
-        Clentitog::find(1)->update([
-            'itog' => $sta->itog - $request->rasxod,
-            'rasxod' => $sta->rasxod + $request->rasxod
-        ]);
-        Rasxod::create($request->all());
+        if($request->id){
+            $id = Rasxod::find($request->id);
+            $st = Clentitog::find(1);
+            Clentitog::find(1)->update([
+                'itog' => $st->itog + $id->rasxod,
+                'rasxod' => $st->rasxod - $id->rasxod
+            ]);
+            $st2 = Clentitog::find(1);
+            $st2->itog = $st2->itog - $request->rasxod;
+            $st2->rasxod = $st2->rasxod + $request->rasxod;
+            $st2->update();
+            $id->rasxod = $request->rasxod;
+            $id->qayer = $request->qayer;
+            $id->sabap = $request->sabap;
+            $id->update();
+        }else{
+            $sta = Clentitog::find(1);
+            Clentitog::find(1)->update([
+                'itog' => $sta->itog - $request->rasxod,
+                'rasxod' => $sta->rasxod + $request->rasxod
+            ]);
+            Rasxod::create($request->all());
+        }
         return response()->json(['msg'=>'Сакланди']);
     }
 }

@@ -216,7 +216,7 @@
                           </li>
                       </ul>
                       <ul class="nav-right">
-                        @if ($brends->login == "Admin")
+                        @if ($brends->count == "1")
                         <li class="header-notification" id="crrok">
                     
                         </li>
@@ -232,7 +232,7 @@
                                   <i class="ti-angle-down"></i>
                               </a>
                               <ul class="show-notification profile-notification">
-                                @if ($brends->login == "Admin")
+                                @if ($brends->count == "1")
                                 <li class="waves-effect waves-light">
                                     <a href="{{ route('setting') }}">
                                         <i class="ti-settings"></i> Settings
@@ -274,7 +274,7 @@
                                   <ul>
                                       <li class="more-details">
                                         {{-- <a href="{{ route('profil') }}"><i class="ti-user"></i>View Profile</a> --}}
-                                        @if ($brends->login == "Admin")
+                                        @if ($brends->count == "1")
                                             <a href="{{ route('setting') }}"><i class="ti-settings"></i>Settings</a>
                                             <a href="/logaut"><i class="ti-layout-sidebar-left"></i>Logout</a>
                                         @else
@@ -294,7 +294,7 @@
                               </form>
                           </div>
                           <div class="pcoded-navigation-label" data-i18n="nav.category.navigation">Расположение</div>
-                          @if ($brends->login == "Admin")
+                          @if ($brends->count == "1")
                           <ul class="pcoded-item pcoded-left-item">
                               <li class="active">
                                   <a href="/glavninachal" class="waves-effect waves-dark">
@@ -339,7 +339,76 @@
                                 </a>
                             </li>
                           </ul>
-                          @elseif ($brends->login == "Admin2")
+                          @elseif ($brends->count == "3")
+                          <ul class="pcoded-item pcoded-left-item">
+                            <li class="active">
+                                <a href="/glavninachal" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-home"></i><b>Д</b></span>
+                                    <span class="pcoded-mtext" data-i18n="nav.dash.main">Дашборд</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                          </li>
+                          <li class="">
+                              <a href="{{ route('index') }}" class="waves-effect waves-dark">
+                                  <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                  <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Создать коталог</span>
+                                  <span class="pcoded-mcaret"></span>
+                              </a>
+                          </li>
+                          <li class="">
+                              <a href="{{ route('indextip') }}" class="waves-effect waves-dark">
+                                  <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                  <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Создать Товар</span>
+                                  <span class="pcoded-mcaret"></span>
+                              </a>
+                          </li>
+                          <li class="">
+                              <a href="{{ route('clents') }}" class="waves-effect waves-dark">
+                                  <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                  <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Создать Клиент</span>
+                                  <span class="pcoded-mcaret"></span>
+                              </a>
+                          </li>
+                          <li class="">
+                              <a href="{{ route('rasxod') }}" class="waves-effect waves-dark">
+                                  <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                  <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Расход</span>
+                                  <span class="pcoded-mcaret"></span>
+                              </a>
+                          </li>
+                        </ul>
+                        @elseif ($brends->count == "4")
+                        <ul class="pcoded-item pcoded-left-item">
+                          <li class="active">
+                              <a href="/glavninachal" class="waves-effect waves-dark">
+                                  <span class="pcoded-micon"><i class="ti-home"></i><b>Д</b></span>
+                                  <span class="pcoded-mtext" data-i18n="nav.dash.main">Дашборд</span>
+                                  <span class="pcoded-mcaret"></span>
+                              </a>
+                            </li>
+                            <li class="">
+                                <a href="{{ route('index') }}" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Создать коталог</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="{{ route('indextip') }}" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Создать Товар</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="{{ route('clents') }}" class="waves-effect waves-dark">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext" data-i18n="nav.basic-components.breadcrumbs">Создать Клиент</span>
+                                    <span class="pcoded-mcaret"></span>
+                                </a>
+                            </li>                    
+                        </ul>
+                          @elseif ($brends->count == "2")
                           <ul class="pcoded-item pcoded-left-item">
                             <li class="active">
                                 <a href="/glavninachal" class="waves-effect waves-dark">
@@ -398,7 +467,7 @@
                                     <!-- Page-body start -->
                                     <div class="page-body">
                                         <div class="row">
-                                            @if ($brends->login == "Admin")
+                                            @if ($brends->count == "1" || $brends->count == "3" || $brends->count == "4")
                                             <div class="col-xl-3 col-md-6">
                                                 <div class="card">
                                                     <a href="/glavninachal">
@@ -514,7 +583,7 @@
                                                </a>
                                                 </div>
                                             </div>
-                                            @elseif($brends->login == "Admin2")
+                                            @elseif($brends->count == "2")
                                             <div class="col-xl-3 col-md-6">
                                                 <div class="card">
                                                     <a href="/glavninachal">

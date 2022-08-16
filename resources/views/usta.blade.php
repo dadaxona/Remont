@@ -13,7 +13,7 @@
           <!-- /.card-header -->
           <div class="card-body p-0">
             <div class="mailbox-controls">
-          @if ($brends->login == "Admin")
+          @if ($brends->count == "1" || $brends->count == "3" || $brends->count == "4")
           <form action="{{ route('usracreate') }}" method="POST">
             @csrf
             <div class="col-8">

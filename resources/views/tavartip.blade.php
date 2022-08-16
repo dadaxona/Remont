@@ -1,6 +1,6 @@
 @extends('welcome')
 @section('content')
-@if ($brends->login == "Admin")
+@if ($brends->count == "1" || $brends->count == "3" || $brends->count == "4")
 <div class="page-body button-page">
   <div class="row">
       <div class="col-sm-12">

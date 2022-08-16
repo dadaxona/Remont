@@ -27,24 +27,24 @@
             <div class="col-2">
               <input type="text" id="itoge2" class="form-control" placeholder="Итого сумма">  
             </div>
-        @if ($brends->login == "Admin")
-          <div class="col-1">             
-            <button id="import" class="btn btn-primary">Import</button>
-          </div>
-          <div class="col-1">
-            <form action="{{ route('exports') }}" method="GET">
-              @csrf
-              <button type="submit" class="btn btn-success">Export</button>
-            </form>
-          </div>
-        @else
-          <div class="col-1">             
-            <button class="btn btn-dark">Import</button>
-          </div>
-          <div class="col-1">           
-              <button class="btn btn-dark">Export</button>
-          </div>
-        @endif
+            @if ($brends->count == "1" || $brends->count == "3" || $brends->count == "4")
+              <div class="col-1">             
+                <button id="import" class="btn btn-primary">Import</button>
+              </div>
+              <div class="col-1">
+                <form action="{{ route('exports') }}" method="GET">
+                  @csrf
+                  <button type="submit" class="btn btn-success">Export</button>
+                </form>
+              </div>
+            @else
+              <div class="col-1">             
+                <button class="btn btn-dark">Import</button>
+              </div>
+              <div class="col-1">           
+                  <button class="btn btn-dark">Export</button>
+              </div>
+            @endif
           </div>
         
           </div>

@@ -5,7 +5,7 @@
     margin-left: 44%;
   }
 </style>
-@if ($brends->login == "Admin")
+@if ($brends->count == "1" || $brends->count == "3" || $brends->count == "4")
 <div class="card p-0">
   <div class="card-header">
           <div class="col-10">
