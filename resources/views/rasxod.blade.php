@@ -38,7 +38,7 @@
                         </div>
                       </div>
                     </div>
-                      <form action="{{ route('exports3') }}" method="GET" id="ddr">
+                      <form action="{{ route('exports7') }}" method="GET" id="ddr">
                       </form>
                     </div>
                     <div class="table-responsive">
@@ -95,11 +95,55 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="exxx" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Import Excel</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="{{ route('import7') }}" method="POST" enctype="multipart/form-data">
+          @csrf
+          <div class="modal-body">
+            <input type="file" name="import" class="form-control">
+          </div>
+          <div class="text-center pb-4">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="post-modal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Товарни очириш</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" name="id4" id="id4">
+          </div>
+          <div class="text-center pb-4">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Нет</button>
+              <button type="submit" id="dele" class="btn btn-success">Да</button>
+          </div>
+      </div>
+    </div>
+  </div>
 <script>
     function addPost2() {
       $("#userForm2")[0].reset();
       $('#post-modal2').modal('show');
     }
+
+    $("#iddr2").on("click", function(){
+      $("#exxx").modal('show');
+    });
+
     function tbody2(){
         $.ajax({
             url: "getrasxod",
@@ -117,6 +161,9 @@
                       <button class="btn-primary m-0 p-0 pl-2 pr-2" id="ed" data-id="${room.id}" data-rasxod="${room.rasxod}" data-qayer="${room.qayer}" data-sabap="${room.sabap}">
                         Edit
                       </button>
+                      <button onclick="deletePost2(${room.id})" class="btn-danger m-0 p-0 pl-2 pr-2 mx-2" >
+                         Delete
+                        </button>
                     </td>
                 </tr>`;
                 });
@@ -135,12 +182,23 @@
       data:new FormData(form),
       processData:false,
       dataType:'json',
-      contentType:false,                   
+      contentType:false,
+      beforeSend:function(){
+        $(form).find('span.error-text').text('');
+      },
       success:function(data){
-        $(form)[0].reset();
-        tbody2();
-        $('#post-modal2').modal('hide');
-        toastr.success(data.msg);
+        if(data.code == 200){
+          $(form)[0].reset();
+          tbody2();
+          $('#post-modal2').modal('hide');
+          toastr.success(data.msg);
+        }
+        if(data.code == 0){
+          $.each(data.error, function(prefix, val){
+            $(form).find('span.'+prefix+'_error').text(val[0]);
+          });
+          toastr.error(data.msg);
+        }
       }
     });
   });
@@ -152,5 +210,27 @@
     $("#sabap").val($(this).data("sabap"));
     $("#post-modal2").modal("show");
   });
+
+  function deletePost2(id) {
+    $("#id4").val(id);
+    $('#post-modal4').modal('show');
+  }
+  $('#dele').on('click', function(){
+    var id = $("#id4").val();
+    let _url = `deletrasxod/${id}`;
+    let _token   = $('meta[name="csrf-token"]').attr('content');    
+    $.ajax({
+      url: _url,
+      type: 'POST',
+      data: {
+        _token: _token
+      },
+      success: function(data) {
+        tbody2();
+        $('#post-modal4').modal('hide');
+        toastr.success(data.msg);
+      }
+    });
+  }); 
 </script>
 @endsection

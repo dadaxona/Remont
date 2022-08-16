@@ -4660,4 +4660,9 @@ class KlentController2 extends Controller
             return response()->json(['code'=>0, 'msg'=>'Малумотни киритинг', 'error'=>$validator->errors()->toArray()]);
         }
     }
+
+    public function deletrasxod($id, KlentServis $model)
+    {
+        return $model->deletrasxod($id);
+    }
 }

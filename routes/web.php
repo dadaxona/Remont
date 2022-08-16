@@ -26,6 +26,7 @@ Route::get('exports4dok', [AuthController::class,'exports4dok'])->name('exports4
 Route::get('exports5', [AuthController::class,'exports5'])->name('exports5');
 Route::get('exports5dok', [AuthController::class,'exports5dok'])->name('exports5dok');
 Route::get('exports6', [AuthController::class,'exports6'])->name('exports6');
+Route::get('exports7', [AuthController::class,'exports7'])->name('exports7');
 Route::get('exports6dok', [AuthController::class,'exports6dok'])->name('exports6dok');
 Route::post('imports', [AuthController::class,'imports'])->name('imports');
 Route::post('import2', [AuthController::class,'import2'])->name('import2');
@@ -37,6 +38,7 @@ Route::post('import4dok', [AuthController::class,'import4dok'])->name('import4do
 Route::post('import5', [AuthController::class,'import5'])->name('import5');
 Route::post('import5dok', [AuthController::class,'import5dok'])->name('import5dok');
 Route::post('import6', [AuthController::class,'import6'])->name('import6');
+Route::post('import7', [AuthController::class,'import7'])->name('import7');
 Route::post('import6dok', [AuthController::class,'import6dok'])->name('import6dok');
 Route::post('storeishchi', [KlentController::class, 'storeishchi'])->name('storeishchi');
 Route::post('storeadmin', [KlentController::class, 'storeadmin'])->name('storeadmin');
@@ -275,3 +277,4 @@ Route::post('sinimaytdok', [KlentController::class, 'sinimaytdok'])->name('sinim
 Route::get('/rasxod', [KlentController::class, 'rasxod'])->name('rasxod');
 Route::get('/getrasxod', [KlentController::class, 'getrasxod'])->name('getrasxod');
 Route::post('postrasxod', [KlentController::class, 'postrasxod'])->name('postrasxod');
+Route::post('deletrasxod/{id}', [KlentController::class, 'deletrasxod']);

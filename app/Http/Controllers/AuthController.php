@@ -13,6 +13,7 @@ use App\Exports\InvoicesExport5;
 use App\Exports\InvoicesExport5dok;
 use App\Exports\InvoicesExport6;
 use App\Exports\InvoicesExport6dok;
+use App\Exports\InvoicesExport7;
 use App\Imports\UsersImport;
 use App\Imports\UsersImport2;
 use App\Imports\UsersImport2dok;
@@ -24,6 +25,7 @@ use App\Imports\UsersImport5;
 use App\Imports\UsersImport5dok;
 use App\Imports\UsersImport6;
 use App\Imports\UsersImport6dok;
+use App\Imports\UsersImport7;
 use App\Models\Admin;
 use App\Models\Arxiv;
 use App\Models\Auth;
@@ -109,6 +111,11 @@ class AuthController extends Controller
         return Excel::download(new InvoicesExport6, 'invoices.xlsx');
     }
 
+    public function exports7() 
+    {
+        return Excel::download(new InvoicesExport7, 'invoices.xlsx');
+    }
+
     public function exports6dok() 
     {
         return Excel::download(new InvoicesExport6dok, 'invoices.xlsx');
@@ -171,6 +178,12 @@ class AuthController extends Controller
     public function import6(Request $request) 
     {
         Excel::import(new UsersImport6(), $request->file('import'));
+        return back();
+    }
+
+    public function import7(Request $request) 
+    {
+        Excel::import(new UsersImport7(), $request->file('import'));
         return back();
     }
     

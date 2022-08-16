@@ -2296,6 +2296,18 @@ class KlentServis
             ]);
             Rasxod::create($request->all());
         }
-        return response()->json(['msg'=>'Сакланди']);
+        return response()->json(['code'=>200, 'msg'=>'Сакланди']);
+    }
+
+    public function deletrasxod($id)
+    {
+       $da = Rasxod::find($id);
+       $sta = Clentitog::find(1);
+       Clentitog::find(1)->update([
+           'itog' => $sta->itog + $da->rasxod,
+           'rasxod' => $sta->rasxod - $da->rasxod
+       ]);
+       $da->delete();
+       return response()->json(['msg'=>'Учирилди']);
     }
 }
