@@ -221,7 +221,11 @@ class AuthController extends Controller
                     'login'=>'required',
                     'password'=>'required',
                     ]);  
-                    Drektor::create($request->all());   
+                    Drektor::create([
+                        'login' => $request['login'],
+                        'password' => $request['password'],
+                        'count' => 1
+                    ]);   
                     $user = Drektor::where('login','=',$request['login'])->first();
                     if ($user) {         
                         $request->session()->put('IDIE',$user->id);
@@ -254,7 +258,7 @@ class AuthController extends Controller
         $clentsdok = Userdok::all();
         if(Session::has('IDIE')){
             $brends = Drektor::where('id','=',Session::get('IDIE'))->first();
-            if($brends->login == "Admin"){
+            if($brends->count == "1" || $brends->count == "3" || $brends->count == "4"){
                 return view('sotuv',[
                     'brends'=>$brends,
                     'itogs'=>$foo,
@@ -262,7 +266,7 @@ class AuthController extends Controller
                     'clents'=>$clents,
                     'clentsdok'=>$clentsdok
                 ]);
-            }elseif($brends->login == "Admin2"){
+            }elseif($brends->count == "2"){
                 return view('sotuv',[
                     'brends'=>$brends,
                     'itogs'=>$foo,
