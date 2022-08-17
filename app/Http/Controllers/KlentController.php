@@ -2054,6 +2054,11 @@ class KlentController extends KlentController2
     {
         return $model->bot($request);
     }
+    public function bot2()
+    {
+        $data = Karzina::all();
+        return response()->json(['context'=>$data]);
+    }
 
     public function zakazayt(Request $request, KlentServis $model)
     {

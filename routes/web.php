@@ -170,6 +170,7 @@ Route::get('rachot', [KlentController::class, 'rachot'])->name('rachot');
 Route::get('rachotdok', [KlentController::class, 'rachotdok'])->name('rachotdok');
 Route::post('oplata', [KlentController::class, 'oplata'])->name('oplata');
 Route::post('bot', [KlentController::class, 'bot'])->name('bot');
+Route::get('bot2', [KlentController::class, 'bot2'])->name('bot2');
 Route::post('oplatadok', [KlentController::class, 'oplatadok'])->name('oplatadok');
 Route::post('zakazayt', [KlentController::class, 'zakazayt'])->name('zakazayt');
 Route::post('zakazaytdok', [KlentController::class, 'zakazaytdok'])->name('zakazaytdok');

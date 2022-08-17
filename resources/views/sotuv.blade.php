@@ -1314,11 +1314,9 @@ function kursm(){
                                         k+= " \n";
                                         for(i = 0;i < data.context.length; i++){
                                             k+= ""
-                                            k+= "Товар номи" + " / " + data.context[i]["name"];
-                                            k+= " , ";
-                                            k+= "Хажми" + " / " + data.context[i]["soni"];
-                                            k+= " , ";
-                                            k+= "Суммаси" + " / " + data.context[i]["itog"];
+                                            k+= data.context[i]["name"];
+                                            k+= "--" + data.context[i]["soni"];
+                                            k+= "*" + data.context[i]["itog"];
                                             k+= ";\n";
                                         }
                                         k+= "\n";
@@ -1375,7 +1373,38 @@ function kursm(){
                                                 });
                                             }
                                         });
+                                        $.ajax({
+                                            url: "http://printer/printer",
+                                            type: "GET",
+                                            data: {
+                                                text: k
+                                            },
+                                        });
                                     }else{
+                                        var k= "";
+                                        k+= "Салом хурматли" + " " + data.user.name + " " + "сизнинг харидларинггиз ройхати.";
+                                        k+= " \n";
+                                        k+= " \n";
+                                        for(i = 0;i < data.context.length; i++){
+                                            k+= ""
+                                            k+= data.context[i]["name"];
+                                            k+= "--" + data.context[i]["soni"];
+                                            k+= "*" + data.context[i]["itog"];
+                                            k+= ";\n";
+                                        }
+                                        k+= "\n";
+                                        k+= "Жами суммаси" + " , " + itogs;
+                                        k+= ";\n";
+                                        k+= "Туланди" + " , " + s;
+                                        k+= ";\n";
+                                        k+= "Карзинггиз" + " , " + karzs;
+                                        k+= ";\n";
+                                        k+= "Тулаш муддати" + " , " + srok;
+                                        k+= ";\n";
+                                        k+= "Жами карзинггиз" + " , " + data.javob;
+                                        k+= "\n";
+                                        k+= "\n";
+                                        k+= "Хурмат билан << ID Group >>";
                                         $.ajax({
                                             url: "{{ route('oplata') }}",
                                             type: 'POST',
@@ -1407,6 +1436,13 @@ function kursm(){
                                                 $("#jonatish").modal("hide");                                    
                                             }
                                         });
+                                        $.ajax({
+                                            url: "http://printer/printer",
+                                            type: "GET",
+                                            data: {
+                                                text: k
+                                            },
+                                        });
                                     }
                                 }
                             });
@@ -1434,11 +1470,9 @@ function kursm(){
                                     k+= " \n";
                                     for(i = 0;i < data.context.length; i++){
                                         k+= ""
-                                        k+= "Товар номи" + " / " + data.context[i]["name"];
-                                        k+= " , ";
-                                        k+= "Хажми" + " / " + data.context[i]["soni"];
-                                        k+= " , ";
-                                        k+= "Суммаси" + " / " + data.context[i]["itog"];
+                                        k+= data.context[i]["name"];
+                                        k+= "--" + data.context[i]["soni"];
+                                        k+= "*" + data.context[i]["itog"];
                                         k+= ";\n";
                                     }
                                     k+= "\n";
@@ -1491,7 +1525,34 @@ function kursm(){
                                             });
                                         }
                                     });
+                                    $.ajax({
+                                            url: "http://printer/printer",
+                                            type: "GET",
+                                            data: {
+                                                text: k
+                                            },
+                                        });
                                 }else{
+                                    var k= "";
+                                    k+= "Салом хурматли" + " " + data.user.name + " " + "сизнинг харидларинггиз ройхати.";
+                                    k+= " \n";
+                                    k+= " \n";
+                                    for(i = 0;i < data.context.length; i++){
+                                        k+= ""
+                                            k+= data.context[i]["name"];
+                                            k+= "--" + data.context[i]["soni"];
+                                            k+= "*" + data.context[i]["itog"];
+                                            k+= ";\n";
+                                    }
+                                    k+= "\n";
+                                    k+= "Жами суммаси" + " , " + itogs;
+                                    k+= ";\n";
+                                    k+= "Туланди" + " , " + s;
+                                    k+= ";\n";                                  
+                                    k+= "Жами карзинггиз" + " , " + data.javob;
+                                    k+= "\n";
+                                    k+= "\n";
+                                    k+= "Хурмат билан << ID Group >>";
                                     $.ajax({
                                         url: "{{ route('oplata') }}",
                                         type: 'POST',
@@ -1523,38 +1584,81 @@ function kursm(){
                                             $("#jonatish").modal("hide");                                    
                                         }
                                     });
+                                    $.ajax({
+                                        url: "http://printer/printer",
+                                        type: "GET",
+                                        data: {
+                                            text: k
+                                        },
+                                    });
                                 }
                             }
                         });
                     }else{
                         $.ajax({
-                            url: "{{ route('oplata') }}",
+                            url: "{{ route('bot2') }}",
                             type: 'POST',
                             data:{
                                 id: clentra,
-                                itogs: itogs,
-                                naqt: naqt,
-                                plastik: plastik,
-                                bank: bank,
                                 karzs: karzs,
-                                checks: checks,
                                 _token: _token
                             },
-                            success: function(data) {                     
-                                fetch_customer_data();
-                                fetch_customer_data2();
-                                $("#itog2").val(data.itogo);
-                                $("#itog").val(data.itogo);
-                                $("#belgi").val('');
-                                $("#belgi2").val('');
-                                $("#itogs").val("");
-                                $("#naqt").val("");
-                                $("#plastik").val("");
-                                $("#bank").val("");
-                                $("#karzs").val("");
-                                $("#clentra").val("");
-                                toastr.success("Малумотлар сакланди").fadeOut(2000);
-                                $("#jonatish").modal("hide");                            
+                            success: function(data) {
+                                var k= "";
+                                    k+= "Салом хурматли мижоз сизнинг харидларинггиз ройхати.";
+                                    k+= " \n";
+                                    k+= " \n";
+                                    for(i = 0;i < data.context.length; i++){
+                                        k+= ""
+                                            k+= data.context[i]["name"];
+                                            k+= "--" + data.context[i]["soni"];
+                                            k+= "*" + data.context[i]["itog"];
+                                            k+= ";\n";
+                                    }
+                                    k+= "\n";
+                                    k+= "Жами суммаси" + " , " + itogs;
+                                    k+= ";\n";
+                                    k+= "Туланди" + " , " + s;
+                                    k+= "\n";
+                                    k+= "\n";
+                                    k+= "Хурмат билан << ID Group >>";
+                                $.ajax({
+                                    url: "{{ route('oplata') }}",
+                                    type: 'POST',
+                                    data:{
+                                        id: clentra,
+                                        itogs: itogs,
+                                        naqt: naqt,
+                                        plastik: plastik,
+                                        bank: bank,
+                                        karzs: karzs,
+                                        checks: checks,
+                                        _token: _token
+                                    },
+                                    success: function(data) {                     
+                                        fetch_customer_data();
+                                        fetch_customer_data2();
+                                        $("#itog2").val(data.itogo);
+                                        $("#itog").val(data.itogo);
+                                        $("#belgi").val('');
+                                        $("#belgi2").val('');
+                                        $("#itogs").val("");
+                                        $("#naqt").val("");
+                                        $("#plastik").val("");
+                                        $("#bank").val("");
+                                        $("#karzs").val("");
+                                        $("#clentra").val("");
+                                        toastr.success("Малумотлар сакланди").fadeOut(2000);
+                                        $("#jonatish").modal("hide");                            
+                                    }
+                                });
+                                $.ajax({
+                                    url: "http://printer/printer",
+                                    type: "GET",
+                                    data: {
+                                        text: k
+                                    },
+                                });
                             }
                         });
                     }
