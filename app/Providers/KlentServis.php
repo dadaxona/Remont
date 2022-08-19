@@ -699,6 +699,7 @@ class KlentServis
                         'summa2' => (float)$foo->kurs2,
                         'chegirma' => 0,
                         'itog' => (float)$foo->kurs2,
+                        'status' => 0
                     ]);
                     $ito = Itogo::find(1);
                     if($ito){
@@ -733,6 +734,7 @@ class KlentServis
                         'summa2' => (string)$foo->kurs2 / (string)$valyuta->kurs,
                         'chegirma' => 0,
                         'itog' => (string)$foo->kurs2 / (string)$valyuta->kurs,
+                        'status' => 0
                     ]);
                     $ito = Itogo::find(1);
                     if($ito){
@@ -769,6 +771,7 @@ class KlentServis
                         'summa2' => (float)$foo->kurs,
                         'chegirma' => 0,
                         'itog' => (float)$foo->kurs,
+                        'status' => 1
                     ]);
                     $ito = Itogo::find(1);
                     if($ito){
@@ -803,6 +806,7 @@ class KlentServis
                         'summa2' => (float)$foo->kurs / (float)$valyuta->kurs,
                         'chegirma' => 0,
                         'itog' => (float)$foo->kurs / (float)$valyuta->kurs,
+                        'status' => 1
                     ]);
                     $ito = Itogo::find(1);
                     if($ito){

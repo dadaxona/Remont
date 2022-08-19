@@ -1491,14 +1491,29 @@ class KlentController extends KlentController2
          {
           foreach($data as $row)
           {
+            if($row->status == 0){
+                $a ='<td style="color:#ff0c17">'.$row->name.'</td>';
+                $a1 ='<td style="color:#ff0c17">'.number_format($row->summa2, 3).'</td>';
+                $a2 ='<td style="color:#ff0c17">'.$row->soni.'</td>';
+                $a3 ='<td style="color:#ff0c17">'.$row->chegirma.'</td>';
+                $a4 ='<td style="color:#ff0c17">'.number_format($row->itog, 3).'</td>';
+                $a5 ='<td style="color:#ff0c17">'.$row->hajm.'</td>';      
+            }else{
+                $a ='<td style="color: #0000bf">'.$row->name.'</td>';
+                $a1 ='<td style="color: #0000bf">'.number_format($row->summa2, 3).'</td>';
+                $a2 ='<td style="color: #0000bf">'.$row->soni.'</td>';
+                $a3 ='<td style="color: #0000bf">'.$row->chegirma.'</td>';
+                $a4 ='<td style="color: #0000bf">'.number_format($row->itog, 3).'</td>';
+                $a5 ='<td style="color: #0000bf">'.$row->hajm.'</td>';
+            }
            $output .= '
            <tr onclick="belgilash('.$row->id.')" style="border-bottom: 1px solid;">  
-            <td>'.$row->name.'</td>
-            <td>'.number_format($row->summa2, 3).'</td>
-            <td>'.$row->soni.'</td>
-            <td>'.$row->chegirma.'</td>
-            <td>'.number_format($row->itog, 3).'</td>
-            <td>'.$row->hajm.'</td>
+            '.$a.'
+            '.$a1.'
+            '.$a2.'
+            '.$a3.'
+            '.$a4.'
+            '.$a5.'
            </tr>
            ';
           }

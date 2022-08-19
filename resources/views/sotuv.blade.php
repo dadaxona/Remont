@@ -1749,7 +1749,6 @@ function kursm(){
         $("#saqlash").on('click', function(){
             fetch_customer_data();
             fetch_customer_data();
-            fetch_customer_data();
         });
     });
 
@@ -1789,7 +1788,22 @@ $(document).ready(function(){
             }
         });
     });
-  
+    
+    fetch_customer_data();
+        function fetch_customer_data(query = '')
+        {
+            $.ajax({
+                url:"{{ route('sotuv') }}",
+                method:'GET',
+                data:{query:query},
+                dataType:'json',
+                success:function(data)
+                {
+                    $('#tbody').html(data.table_data);
+                   
+                }
+            })
+        }
 
     function plus(id) {
         let _token   = $('meta[name="csrf-token"]').attr('content');
@@ -1812,7 +1826,7 @@ $(document).ready(function(){
                         if(data.code == 0){
                             toastr.error(data.msg).fadeOut(2500);
                         }else{
-                            $('#tbody').prepend('<tr onclick="belgilash('+data.data.id+')" style="border-bottom: 1px solid;" id="selectablesdasd"><td>'+data.data.name+'</td><td>'+data.data.summa2+'</td><td>'+data.data.soni+'</td><td>'+data.data.chegirma+'</td><td>'+data.data.itog+'</td><td>'+data.data.hajm+'</td></tr>');
+                            fetch_customer_data();
                             $("#itog").val(data.data2.itogo);
                             $("#itog2").val(data.data2.itogo);
                             $("#kurs").val(data.data2.kurs);
@@ -2594,7 +2608,6 @@ $(document).ready(function(){
         }
             
         $("#saqlashdok").on('click', function(){
-            fetch_customer_datadok();
             fetch_customer_datadok();
             fetch_customer_datadok();
         });
