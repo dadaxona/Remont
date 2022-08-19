@@ -262,18 +262,18 @@ class KlentServis
     public function store3dok($request)
     {
         foreach ($request->addmore as $value) {
-            $foo = Ichkitavardok::where('tavardok_id', $request["tavardok_id"])
-                                ->where('adress', $request["adress"])
-                                ->where('tavar2dok_id', $request["tavar2dok_id"])
+            $foo = Ichkitavardok::where('tavardok_id', $value["tavardok_id"])
+                                ->where('adress', $value["adress"])
+                                ->where('tavar2dok_id', $value["tavar2dok_id"])
                                 ->first();
             if($foo){
                 $a = $foo->hajm + $value["hajm"];
                 $b = $value["summa"] - $foo->summa;
                 $c = $foo->summa + $b / 2;
                 $fff = Tavar2dok::find($value["tavar2dok_id"]);
-                Ichkitavardok::where('tavardok_id', $request["tavardok_id"])
-                ->where('adress', $request["adress"])
-                ->where('tavar2dok_id', $request["tavar2dok_id"])
+                Ichkitavardok::where('tavardok_id', $value["tavardok_id"])
+                ->where('adress', $value["adress"])
+                ->where('tavar2dok_id', $value["tavar2dok_id"])
                         ->update([
                             'name'=> $fff->name,
                             'raqam' => $value["raqam"],
@@ -282,14 +282,10 @@ class KlentServis
                             'summa2' => $value["summa2"],
                             'summa3' => $value["summa3"],
                             'kod' => $value["kod"]
-                        ]);
-                $data = Ichkitavardok::where('tavardok_id', $request["tavardok_id"])
-                                    ->where('adress', $request["adress"])
-                                    ->where('tavar2dok_id', $request["tavar2dok_id"])
-                                    ->first();          
+                        ]);      
             }else{
                 $fff = Tavar2dok::find($value["tavar2dok_id"]);
-                $data = Ichkitavardok::create([
+                Ichkitavardok::create([
                     'tavardok_id'=>$value["tavardok_id"], 
                     'adress'=>$value["adress"], 
                     'tavar2dok_id'=>$value["tavar2dok_id"],
@@ -303,7 +299,7 @@ class KlentServis
                 ]);
             }
         }
-        return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);
+        return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади'], 200);
     }
 
     public function store3($request)
@@ -319,36 +315,20 @@ class KlentServis
                 $c = $foo->summa + $b / 2;
                 $fff = Tavar2::find($value["tavar2_id"]);
                 Ichkitavar::where('tavar_id', $value["tavar_id"])
-                        ->where('adress', $value["adress"])
-                        ->where('tavar2_id', $value["tavar2_id"])
-                        ->update([
-                            'name'=>$fff->name,
-                            'raqam' => $value["raqam"],
-                            'hajm' => $a, 
-                            'summa' => $c,
-                            'summa2' => $value["summa2"],
-                            'summa3' => $value["summa3"],
-                            'kod' => $value["kod"],
-                        ]);
-                $data = Ichkitavar::where('tavar_id', $value["tavar_id"])
-                        ->where('adress', $value["adress"])
-                        ->where('tavar2_id', $value["tavar2_id"])
-                        ->first();
-                // Updatetavr::create([
-                //         'tavar_id'=>$value["tavar_id"],
-                //         'ichkitavar_id'=>$data->id,
-                //         'adress'=>$value["adress"],
-                //         'tavar2_id'=>$value["tavar2_id"],
-                //         'raqam'=>$value["raqam"],
-                //         'hajm'=>$value["hajm"],
-                //         'summa'=>$value["summa"],
-                //         'summa2'=>$value["summa2"],
-                //         'summa3'=>$value["summa3"],
-                //         'kod'=>$value["kod"],
-                //     ]);
+                    ->where('adress', $value["adress"])
+                    ->where('tavar2_id', $value["tavar2_id"])
+                    ->update([
+                        'name'=>$fff->name,
+                        'raqam' => $value["raqam"],
+                        'hajm' => $a, 
+                        'summa' => $c,
+                        'summa2' => $value["summa2"],
+                        'summa3' => $value["summa3"],
+                        'kod' => $value["kod"],
+                    ]);
             }else{
                 $fff = Tavar2::find($value["tavar2_id"]);
-                $data = Ichkitavar::create([
+                Ichkitavar::create([
                     'tavar_id'=>$value["tavar_id"],
                     'adress'=>$value["adress"],
                     'tavar2_id'=>$value["tavar2_id"],
@@ -360,21 +340,9 @@ class KlentServis
                     'summa3'=>$value["summa3"],
                     'kod'=>$value["kod"],
                 ]);
-                // Updatetavr::create([
-                //     'tavar_id'=>$value["tavar_id"],
-                //     'ichkitavar_id'=>$data->id,
-                //     'adress'=>$value["adress"],
-                //     'tavar2_id'=>$value["tavar2_id"],
-                //     'raqam'=>$value["raqam"],
-                //     'hajm'=>$value["hajm"],
-                //     'summa'=>$value["summa"],
-                //     'summa2'=>$value["summa2"],
-                //     'summa3'=>$value["summa3"],
-                //     'kod'=>$value["kod"],
-                // ]);
             }
         }
-        return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади','data' => $data], 200);
+        return response()->json(['code'=>200, 'msg'=>'Мувофакиятли яратилмади'], 200);
     }
     
     public function storedd3($request)
