@@ -1597,7 +1597,7 @@ function kursm(){
                     }else{
                         $.ajax({
                             url: "{{ route('bot2') }}",
-                            type: 'POST',
+                            type: 'GET',
                             data:{
                                 id: clentra,
                                 karzs: karzs,
