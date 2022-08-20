@@ -3575,7 +3575,7 @@ class KlentController2 extends Controller
                 foreach ($data as $value) {            
                     $fool = Data::find(1);
                     $shtuk = $fool->shtuk + $value->hajm;
-                    $dateitog = $fool->dateitog + $value->summa;
+                    $dateitog = $fool->dateitog + $value->summa * $value->hajm;
                     Data::find(1)->update([
                         'tavarshtuk'=>$total_row,
                         'shtuk'=>$shtuk,
@@ -3584,7 +3584,7 @@ class KlentController2 extends Controller
                 }
                 foreach ($data as $value) {
                     $fool2 = Data::find(1);
-                    $a = $fool2->opshi + $value->summa;
+                    $a = $fool2->opshi + $value->summa * $value->hajm;
                     Data::find(1)->update([
                         'opshi'=>$a,
                     ]);
@@ -3596,7 +3596,7 @@ class KlentController2 extends Controller
                 foreach ($data as $value) {
                     $foo = Data::find(1);        
                     $shtuk2 = $foo->shtuk + $value->hajm;
-                    $dateitog2 = $foo->dateitog + $value->summa;
+                    $dateitog2 = $foo->dateitog + $value->summa * $value->hajm;
                     Data::find(1)->update([
                         'tavarshtuk'=>$total_row,
                         'shtuk'=>$shtuk2,
@@ -3605,7 +3605,7 @@ class KlentController2 extends Controller
                 }
                 foreach ($data as $value) {
                     $fool3 = Data::find(1);
-                    $a1 = $fool3->opshi + $value->summa;
+                    $a1 = $fool3->opshi + $value->summa * $value->hajm;
                     Data::find(1)->update([
                         'opshi'=>$a1,
                     ]);
@@ -3655,7 +3655,7 @@ class KlentController2 extends Controller
                 foreach ($data as $value) {            
                     $fool = Datadok::find(1);
                     $shtuk = $fool->shtuk + $value->hajm;
-                    $dateitog = $fool->dateitog + $value->summa;
+                    $dateitog = $fool->dateitog + $value->summa * $value->hajm;
                     Datadok::find(1)->update([
                         'tavarshtuk'=>$total_row,
                         'shtuk'=>$shtuk,
@@ -3664,7 +3664,7 @@ class KlentController2 extends Controller
                 }
                 foreach ($data as $value) {
                     $fool2 = Datadok::find(1);
-                    $a = $fool2->opshi + $value->summa;
+                    $a = $fool2->opshi + $value->summa * $value->hajm;
                     Datadok::find(1)->update([
                         'opshi'=>$a,
                     ]);
@@ -3676,7 +3676,7 @@ class KlentController2 extends Controller
                 foreach ($data as $value) {
                     $foo = Datadok::find(1);        
                     $shtuk2 = $foo->shtuk + $value->hajm;
-                    $dateitog2 = $foo->dateitog + $value->summa;
+                    $dateitog2 = $foo->dateitog + $value->summa * $value->hajm;
                     Datadok::find(1)->update([
                         'tavarshtuk'=>$total_row,
                         'shtuk'=>$shtuk2,
@@ -3685,7 +3685,7 @@ class KlentController2 extends Controller
                 }
                 foreach ($data as $value) {
                     $fool3 = Datadok::find(1);
-                    $a1 = $fool3->opshi + $value->summa;
+                    $a1 = $fool3->opshi + $value->summa * $value->hajm;
                     Datadok::find(1)->update([
                         'opshi'=>$a1,
                     ]);
@@ -3737,7 +3737,7 @@ class KlentController2 extends Controller
                 foreach ($data as $value) {            
                     $fool = Datadok::find(1);        
                     $shtuk = $fool->shtuk + $value->hajm;
-                    $dateitog = $fool->dateitog + $value->summa;
+                    $dateitog = $fool->dateitog + $value->summa * $value->hajm;
                     Datadok::find(1)->update([
                         'tavarshtuk'=>$total_row,
                         'shtuk'=>$shtuk,
@@ -3746,7 +3746,7 @@ class KlentController2 extends Controller
                 }
                 foreach ($get as $value) {
                     $fool2 = Datadok::find(1);
-                    $a = $fool2->opshi + $value->summa;
+                    $a = $fool2->opshi + $value->summa * $value->hajm;
                     Datadok::find(1)->update([
                         'opshi'=>$a,
                     ]);
@@ -3758,7 +3758,7 @@ class KlentController2 extends Controller
                 foreach ($data as $value) {
                     $foo = Datadok::find(1);        
                     $shtuk2 = $foo->shtuk + $value->hajm;
-                    $dateitog2 = $foo->dateitog + $value->summa;
+                    $dateitog2 = $foo->dateitog + $value->summa * $value->hajm;
                     Datadok::find(1)->update([
                         'tavarshtuk'=>$total_row,
                         'shtuk'=>$shtuk2,
@@ -3767,7 +3767,7 @@ class KlentController2 extends Controller
                 }
                 foreach ($get as $value) {
                     $fool3 = Datadok::find(1);
-                    $a1 = $fool3->opshi + $value->summa;
+                    $a1 = $fool3->opshi + $value->summa * $value->hajm;
                     Datadok::find(1)->update([
                         'opshi'=>$a1,
                     ]);
@@ -3821,7 +3821,7 @@ class KlentController2 extends Controller
                 foreach ($data as $value) {            
                     $fool = Data::find(1);        
                     $shtuk = $fool->shtuk + $value->hajm;
-                    $dateitog = $fool->dateitog + $value->summa;
+                    $dateitog = $fool->dateitog + $value->summa * $value->hajm;
                     Data::find(1)->update([
                         'tavarshtuk'=>$total_row,
                         'shtuk'=>$shtuk,
@@ -3830,7 +3830,7 @@ class KlentController2 extends Controller
                 }
                 foreach ($get as $value) {
                     $fool2 = Data::find(1);
-                    $a = $fool2->opshi + $value->summa;
+                    $a = $fool2->opshi + $value->summa * $value->hajm;
                     Data::find(1)->update([
                         'opshi'=>$a,
                     ]);
@@ -3842,7 +3842,7 @@ class KlentController2 extends Controller
                 foreach ($data as $value) {
                     $foo = Data::find(1);        
                     $shtuk2 = $foo->shtuk + $value->hajm;
-                    $dateitog2 = $foo->dateitog + $value->summa;
+                    $dateitog2 = $foo->dateitog + $value->summa * $value->hajm;
                     Data::find(1)->update([
                         'tavarshtuk'=>$total_row,
                         'shtuk'=>$shtuk2,
@@ -3851,7 +3851,7 @@ class KlentController2 extends Controller
                 }
                 foreach ($get as $value) {
                     $fool3 = Data::find(1);
-                    $a1 = $fool3->opshi + $value->summa;
+                    $a1 = $fool3->opshi + $value->summa * $value->hajm;
                     Data::find(1)->update([
                         'opshi'=>$a1,
                     ]);
@@ -3901,7 +3901,7 @@ class KlentController2 extends Controller
                 foreach ($data as $value) {            
                     $fool = Datadok::find(1);        
                     $shtuk = $fool->shtuk + $value->hajm;
-                    $dateitog = $fool->dateitog + $value->summa;
+                    $dateitog = $fool->dateitog + $value->summa * $value->hajm;
                     Datadok::find(1)->update([
                         'tavarshtuk'=>$total_row,
                         'shtuk'=>$shtuk,
@@ -3910,7 +3910,7 @@ class KlentController2 extends Controller
                 }
                 foreach ($data as $value) {
                     $fool2 = Datadok::find(1);
-                    $a = $fool2->opshi + $value->summa;
+                    $a = $fool2->opshi + $value->summa * $value->hajm;
                     Datadok::find(1)->update([
                         'opshi'=>$a,
                     ]);
@@ -3922,7 +3922,7 @@ class KlentController2 extends Controller
                 foreach ($data as $value) {
                     $foo = Datadok::find(1);        
                     $shtuk2 = $foo->shtuk + $value->hajm;
-                    $dateitog2 = $foo->dateitog + $value->summa;
+                    $dateitog2 = $foo->dateitog + $value->summa * $value->hajm;
                     Datadok::find(1)->update([
                         'tavarshtuk'=>$total_row,
                         'shtuk'=>$shtuk2,
@@ -3931,7 +3931,7 @@ class KlentController2 extends Controller
                 }
                 foreach ($data as $value) {
                     $fool3 = Datadok::find(1);
-                    $a1 = $fool3->opshi + $value->summa;
+                    $a1 = $fool3->opshi + $value->summa * $value->hajm;
                     Datadok::find(1)->update([
                         'opshi'=>$a1,
                     ]);
@@ -3983,7 +3983,7 @@ class KlentController2 extends Controller
                 foreach ($data as $value) {            
                     $fool = Data::find(1);        
                     $shtuk = $fool->shtuk + $value->hajm;
-                    $dateitog = $fool->dateitog + $value->summa;
+                    $dateitog = $fool->dateitog + $value->summa * $value->hajm;
                     Data::find(1)->update([
                         'tavarshtuk'=>$total_row,
                         'shtuk'=>$shtuk,
@@ -3992,7 +3992,7 @@ class KlentController2 extends Controller
                 }
                 foreach ($data as $value) {
                     $fool2 = Data::find(1);
-                    $a = $fool2->opshi + $value->summa;
+                    $a = $fool2->opshi + $value->summa * $value->hajm;
                     Data::find(1)->update([
                         'opshi'=>$a,
                     ]);
@@ -4004,7 +4004,7 @@ class KlentController2 extends Controller
                 foreach ($data as $value) {
                     $foo = Data::find(1);        
                     $shtuk2 = $foo->shtuk + $value->hajm;
-                    $dateitog2 = $foo->dateitog + $value->summa;
+                    $dateitog2 = $foo->dateitog + $value->summa * $value->hajm;
                     Data::find(1)->update([
                         'tavarshtuk'=>$total_row,
                         'shtuk'=>$shtuk2,
@@ -4013,7 +4013,7 @@ class KlentController2 extends Controller
                 }
                 foreach ($data as $value) {
                     $fool3 = Data::find(1);
-                    $a1 = $fool3->opshi + $value->summa;
+                    $a1 = $fool3->opshi + $value->summa * $value->hajm;
                     Data::find(1)->update([
                         'opshi'=>$a1,
                     ]);
