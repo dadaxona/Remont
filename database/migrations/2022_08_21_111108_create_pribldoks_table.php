@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('karz')->nullable();
             $table->string('pribl')->nullable();
             $table->string('vse')->nullable();
+            $table->string('rasxod')->nullable();
             $table->timestamps();
         });
     }

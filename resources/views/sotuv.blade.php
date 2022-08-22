@@ -316,8 +316,7 @@
 <div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel"></h5>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <span class="modal-title" id="exampleModalLabeldokse"></span>
     </div>
     <div class="modal-body">
             <div class="mb-3 d-flex">
@@ -327,6 +326,14 @@
                 <div class="col-8">
                     <input type="text" class="form-control text-right itogsw" name="itogs" id="itogs" disabled>
                 </div>
+            </div>
+            <div class="mb-3 d-flex">
+                <select name="clentra" id="clentra" class="form-control text-center">
+                    <option value="">Выберите клиент</option>
+                    @foreach ($clents as $item)
+                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="mb-3 d-flex">
                 <div class="col-4">
@@ -374,14 +381,6 @@
                 <div class="col-8">
                     <input type="text" class="form-control text-right itogsw" name="karzs" id="karzs" disabled>
                 </div>
-            </div>
-            <div class="mb-3 d-flex">
-                <select name="clentra" id="clentra" class="form-control text-center">
-                    <option value="">Выберите клиент</option>
-                    @foreach ($clents as $item)
-                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                    @endforeach
-                </select>
             </div>
             <div class="mb-3 d-flex" id="channgem">    
             </div>
@@ -674,7 +673,7 @@
 <div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel"></h5>
+      <h5 class="modal-title" id="exampleModalLabeldoksedok"></h5>
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
@@ -858,6 +857,7 @@
     var kurs2 = $("#kurs2").val();
     var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srok' />";
     var karzs = $("#karzs").val();
+    var itogs = $("#itogs").val();
     $.ajax({
         url:"{{ route('usersumma') }}",
         method:'GET',
@@ -869,19 +869,28 @@
         success:function(data)
         {
             if(data.usd == 1){
-                if(data.summa > karzs){
+                if(data.summa >= karzs){
+                    let pay = data.summa - karzs;
                     $("#channgem").html('');
                     $("#karzs").val('');
+                    $("#exampleModalLabeldokse").html("Мижоз баланси  " + data.summa + "$  " + "Карз копланади ва коладиган сумма  " + pay + "$");
+
                 }else{
+                    let pay2 = karzs - data.summa;
+                    $("#karzs").val(pay2);
                     $("#channgem").html(inputdate);
+                    $("#exampleModalLabeldokse").html("Мижоз баланси  " + data.summa + "$  " + "Туловни амалга оширолмайди.  " + pay2 + "$  Тулов килиши йоки карзни муддат белгилаган холда амалга ошириши мумкин");
                 }
             }
             if(data.usd == 0){
-                if(data.summa > data.sum){
+                if(data.summa >= data.sum){
                     $("#channgem").html('');
                     $("#karzs").val('');
+                    $("#exampleModalLabeldokse").html("Мижоз баланси " + data.summa + "$  " + "Карз копланади Коладиган сумма" + pay + "$");
                 }else{
+                    $("#karzs").val(itogs);
                     $("#channgem").html(inputdate);
+                    $("#exampleModalLabeldokse").html("Мижоз баланси  " + data.summa + "$");
                 }
             }
         }
@@ -894,6 +903,10 @@
     var kurs2 = $("#kurs2dok").val();
     var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srokdok' />";
     var karzs = $("#karzsdok").val();
+    var itogs = $("#itogsdok").val();
+    var naqt = $("#naqtdok").val();
+    var plastik = $("#plastikdok").val();
+    var bank = $("#bankdok").val();
     $.ajax({
         url:"{{ route('usersummadok') }}",
         method:'GET',
@@ -905,18 +918,26 @@
         success:function(data)
         {
             if(data.usd == 1){
-                if(data.summa > karzs){
+                if(data.summa >= karzs){
                     $("#channgemdok").html('');
+                    $("#naqtdok").val('');
+                    $("#plastikdok").val('');
+                    $("#bankdok").val('');
                     $("#karzsdok").val('');
                 }else{
+                    $("#karzsdok").val(itogs);
                     $("#channgemdok").html(inputdate);
                 }
             }
             if(data.usd == 0){
-                if(data.summa > data.sum){
+                if(data.summa >= data.sum){
                     $("#channgemdok").html('');
+                    $("#naqtdok").val('');
+                    $("#plastikdok").val('');
+                    $("#bankdok").val('');
                     $("#karzsdok").val('');
                 }else{
+                    $("#karzsdok").val(itogs);
                     $("#channgemdok").html(inputdate);
                 }
             }

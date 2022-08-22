@@ -29,6 +29,7 @@ use App\Models\Karzina2dok;
 use App\Models\Karzina3;
 use App\Models\Karzina3dok;
 use App\Models\Karzinadok;
+use App\Models\Pribl;
 use App\Models\Rasxod;
 use App\Models\Sqladpoytaxt;
 use App\Models\Sqladpoytaxtdok;
@@ -215,60 +216,137 @@ class KlentController2 extends Controller
     {
         if($request->ajax())
         {
-            $data = Karzina2::all();     
-            $data222 = Arxiv::all();
-            $foo = Clentitog::find(1);
+            $ichki = Ichkitavar::all();
+            $kar2 = Karzina2::all();
+            $arx = Arxiv::all();
+            $ras = Rasxod::all();
+            $foo = Pribl::find(1);
             if($foo){
-                $foo->tavarshtuk = 0;
-                $foo->shtuk = 0;
-                $foo->foiz = 0;
-                $foo->itog = 0;
-                $foo->opshi = 0;
-                $foo->save();         
-                foreach ($data222 as $value) {
-                    $fool2 = Clentitog::find(1);
-                    $a = $fool2->foiz + $value->karzs;
-                    $fool2->foiz = $a;
-                    $fool2->save();                    
+                $foo->jami = 0;
+                $foo->karz = 0;
+                $foo->pribl = 0;
+                $foo->vse = 0;
+                $foo->rasxod = 0;
+                $foo->save();
+                foreach ($ichki as $value) {
+                    $foo1 = Pribl::find(1);
+                    $foo1->vse = $foo1->vse + $value->hajm * $value->summa;
+                    $foo1->update();
                 }
-                foreach ($data as $value) {
-                    $fool2 = Clentitog::find(1);
-                    $a = $fool2->opshi + $value->itog;
-                    $fool2->opshi = $a;
-                    $fool2->save();
+                foreach ($kar2 as $value) {
+                    $ich = Ichkitavar::find($value->ichkitavar_id);
+                    $foo2 = Pribl::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($arx as $value) {
+                    $foo3 = Pribl::find(1);
+                    $foo3->karz = $foo3->karz + $value->karzs;
+                    $foo3->update();                    
+                }
+                foreach ($ras as $value) {
+                    $foo4 = Pribl::find(1);
+                    $foo4->rasxod = $foo4->rasxod + $value->rasxod;
+                    $foo4->update();
                 }
             }else{
-                Clentitog::create([
-                    'tavarshtuk'=>0,
-                    'shtuk'=>0,
-                    'foiz'=>0,
-                    'itog'=>0,
-                    'opshi'=>0
+                Pribl::create([
+                    'jami'=>0,
+                    'karz'=>0,
+                    'pribl'=>0,
+                    'vse'=>0,
+                    'rasxod'=>0
                 ]);
-                foreach ($data222 as $value) {
-                    $fool2 = Clentitog::find(1);
-                    $a = $fool2->foiz + $value->karzs;                   
-                    $fool2->foiz = $a;
-                    $fool2->save();
-                  
+                foreach ($ichki as $value) {
+                    $foo1 = Pribl::find(1);
+                    $foo1->vse = $foo1->vse + $value->hajm * $value->summa;
+                    $foo1->update();
                 }
-                foreach ($data as $value) {
-                    $fool3 = Clentitog::find(1);
-                    $a1 = $fool3->opshi + $value->itog;                   
-                    $fool3->opshi = $a1;
-                    $fool3->save();                    
+                foreach ($kar2 as $value) {
+                    $ich = Ichkitavar::find($value->ichkitavar_id);
+                    $foo2 = Pribl::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($arx as $value) {
+                    $foo3 = Pribl::find(1);
+                    $foo3->karz = $foo3->karz + $value->karzs;
+                    $foo3->update();
+                }
+                foreach ($ras as $value) {
+                    $foo4 = Pribl::find(1);
+                    $foo4->rasxod = $foo4->rasxod + $value->rasxod;
+                    $foo4->update();
                 }
             }
-            $fo = Clentitog::find(1);
-            $ja = $fo->opshi - $fo->foiz;       
-            $fo->itog = $ja;
-            $jav = $fo->itog - $fo->rasxod;
-            $fo->itog = $jav;
-            $fo->save();
+            $foo5 = Pribl::find(1);
+            $fo = $foo5->jami - $foo5->pribl;
+            $f = $fo - $foo5->rasxod;
+            $foo5->pribl = $f - $foo5->karz;
+            $foo5->update();
             return response()->json([
-                'foo2'=>$fo??[],
+                'foo2'=>$foo5??[],
             ]);
         }
+
+        // if($request->ajax())
+        // {
+        //     $data = Karzina2::all();
+        //     $data222 = Arxiv::all();
+        //     $foo = Clentitog::find(1);
+        //     if($foo){
+        //         $foo->tavarshtuk = 0;
+        //         $foo->shtuk = 0;
+        //         $foo->foiz = 0;
+        //         $foo->itog = 0;
+        //         $foo->opshi = 0;
+        //         $foo->save();         
+        //         foreach ($data222 as $value) {
+        //             $fool2 = Clentitog::find(1);
+        //             $a = $fool2->foiz + $value->karzs;
+        //             $fool2->foiz = $a;
+        //             $fool2->save();                    
+        //         }
+        //         foreach ($data as $value) {
+        //             $fool2 = Clentitog::find(1);
+        //             $a = $fool2->opshi + $value->itog;
+        //             $fool2->opshi = $a;
+        //             $fool2->save();
+        //         }
+        //     }else{
+        //         Clentitog::create([
+        //             'tavarshtuk'=>0,
+        //             'shtuk'=>0,
+        //             'foiz'=>0,
+        //             'itog'=>0,
+        //             'opshi'=>0
+        //         ]);
+        //         foreach ($data222 as $value) {
+        //             $fool2 = Clentitog::find(1);
+        //             $a = $fool2->foiz + $value->karzs;                   
+        //             $fool2->foiz = $a;
+        //             $fool2->save();
+                  
+        //         }
+        //         foreach ($data as $value) {
+        //             $fool3 = Clentitog::find(1);
+        //             $a1 = $fool3->opshi + $value->itog;                   
+        //             $fool3->opshi = $a1;
+        //             $fool3->save();                    
+        //         }
+        //     }
+        //     $fo = Clentitog::find(1);
+        //     $ja = $fo->opshi - $fo->foiz;       
+        //     $fo->itog = $ja;
+        //     $jav = $fo->itog - $fo->rasxod;
+        //     $fo->itog = $jav;
+        //     $fo->save();
+        //     return response()->json([
+        //         'foo2'=>$fo??[],
+        //     ]);
+        // }
     }
     
     public function statistikdok(Request $request)

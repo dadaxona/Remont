@@ -13,6 +13,7 @@ class Pribl extends Model
         'karz',
         'pribl',
         'vse',
+        'rasxod'
     ];
     public $timestamps = true;
 }
