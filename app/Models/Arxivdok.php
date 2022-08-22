@@ -15,6 +15,8 @@ class Arxivdok extends Model
         'plastik',
         'bank',
         'karzs',
+        'karzs2',
+        'srok'
     ];
     public $timestamps = true;
 

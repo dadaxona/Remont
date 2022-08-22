@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('plastik')->nullable();
             $table->string('bank')->nullable();
             $table->string('karzs')->nullable();
+            $table->string('karzs2')->nullable();
+            $table->date('srok')->nullable();
             $table->timestamps();
             $table->foreign('userdok_id')->references('id')->on('userdoks')
             ->onDelete('cascade')->onUpdate('cascade');

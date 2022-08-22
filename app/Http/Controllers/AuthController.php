@@ -28,12 +28,15 @@ use App\Imports\UsersImport6dok;
 use App\Imports\UsersImport7;
 use App\Models\Admin;
 use App\Models\Arxiv;
+use App\Models\Arxivdok;
 use App\Models\Auth;
 use App\Models\Clentitog;
 use App\Models\Drektor;
 use App\Models\Ichkitavar;
 use App\Models\Itogo;
 use App\Models\Itogodok;
+use App\Models\Javob;
+use App\Models\Javobdok;
 use App\Models\Karzina;
 use App\Models\Tavar;
 use App\Models\User;
@@ -692,7 +695,67 @@ class AuthController extends Controller
         $dt= Carbon::now('Asia/Tashkent');
         $data1 = $dt->toDateString();
         $data = Arxiv::where('karzs', ">", 0)->where('srok', "<=", $data1)->first();
-        return response()->json($data);        
+        $q = User::find($data->user_id);
+        $j = Javob::where('user_id', $data->user_id)->first();
+        if($data){
+            if($q->summa < $data->karzs){
+                $j->javob = $j->javob - $q->summa;
+                $j->update();
+                $data->karzs = $data->karzs - $q->summa;
+                $q->summa = 0;
+                $q->update();
+                $data->update();
+                return response()->json($data);
+            }elseif($q->summa > $data->karzs){
+                $q->summa = $q->summa - $data->karzs;
+                $q->update();
+                $j->javob = $j->javob - $data->karzs;
+                $j->update();
+                $data->karzs = 0;                
+                $data->update();
+            }else{
+                $j->javob = $j->javob - $q->summa;
+                $j->update();
+                $q->summa = 0;
+                $q->update();
+                $data->karzs = 0;
+                $data->update();
+            }
+        }else{}
+    }
+
+    public function srocrowdok()
+    {
+        $dt= Carbon::now('Asia/Tashkent');
+        $data1 = $dt->toDateString();
+        $data = Arxivdok::where('karzs', ">", 0)->where('srok', "<=", $data1)->first();
+        $q = Userdok::find($data->userdok_id);
+        $j = Javobdok::where('userdok_id', $data->userdok_id)->first();
+        if($data){
+            if($q->summa < $data->karzs){
+                $j->javob = $j->javob - $q->summa;
+                $j->update();
+                $data->karzs = $data->karzs - $q->summa;
+                $q->summa = 0;
+                $q->update();
+                $data->update();
+                return response()->json($data);
+            }elseif($q->summa > $data->karzs){
+                $q->summa = $q->summa - $data->karzs;
+                $q->update();
+                $j->javob = $j->javob - $data->karzs;
+                $j->update();
+                $data->karzs = 0;                
+                $data->update();
+            }else{
+                $j->javob = $j->javob - $q->summa;
+                $j->update();
+                $q->summa = 0;
+                $q->update();
+                $data->karzs = 0;
+                $data->update();
+            }
+        }else{}
     }
 
     public function vazvratspisk()
@@ -705,5 +768,71 @@ class AuthController extends Controller
         }else{
             return redirect('/logaut');
         }
+    }
+    
+    public function usersumma(Request $request)
+    {
+        $usd = Itogo::find(1);
+        $d = User::find($request->id);
+        if($usd->usd == 1){
+            return response()->json(['usd'=>1, 'summa'=>(int)$d->summa]);
+        }else{
+            $dat = $request->karzs / $usd->kurs;
+            return response()->json(['usd'=>0, 'summa'=>(int)$d->summa, 'sum'=>(int)$dat]);
+        }
+    }
+
+    public function usersummadok(Request $request)
+    {
+        $usd = Itogodok::find(1);
+        $d = Userdok::find($request->id);
+        if($usd->usd == 1){
+            return response()->json(['usd'=>1, 'summa'=>(int)$d->summa]);
+        }else{
+            $dat = $request->karzs / $usd->kurs;
+            return response()->json(['usd'=>0, 'summa'=>(int)$d->summa, 'sum'=>(int)$dat]);
+        }
+    }
+
+    public function aloxida(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'oydi' => 'required',
+            'summa' => 'required|numeric'
+        ]);
+        if($validator->passes()){
+            return $this->reque($request);
+        }else{            
+            return response()->json(['code'=>0, 'msg'=>'Малумотни киритинг', 'error'=>$validator->errors()->toArray()]);
+        }
+    }
+    
+    public function reque($request)
+    {
+        $d = User::find($request->oydi);
+        $d->summa = $d->summa + $request->summa;
+        $d->update();
+        return response()->json(['code'=>200, 'msg'=>'Сакланди']);
+    }
+
+    public function aloxidadok(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'oydi' => 'required',
+            'summa' => 'required|numeric'
+        ]);
+        if($validator->passes()){
+            return $this->requedok($request);
+        }else{            
+            return response()->json(['code'=>0, 'msg'=>'Малумотни киритинг', 'error'=>$validator->errors()->toArray()]);
+        }
+    }
+
+    public function requedok($request)
+    {
+        $d = Userdok::find($request->oydi);
+        $d->summa = $d->summa + $request->summa;
+        $d->update();
+        return response()->json(['code'=>200, 'msg'=>'Сакланди']);
     }
 }

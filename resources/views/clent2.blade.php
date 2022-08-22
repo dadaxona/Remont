@@ -34,6 +34,26 @@
     text-align: center;
     margin-top: 26px;
   }
+  #bilamvaz{
+    border: none;
+    background: #006800;
+    color: white;
+  }
+  #vazvrat{
+    border: none;
+    background: #008300;
+    color: white;
+  }
+  #bilamvazdok{
+    border: none;
+    background: #006800;
+    color: white;
+  }
+  #vazvratdok{
+    border: none;
+    background: #008300;
+    color: white;
+  }
 </style>
 @if ($brends->count == "1" || $brends->count == "3" || $brends->count == "4")
     
@@ -58,6 +78,7 @@
                   <div class="ext scrolll2">
                     <div class="rty2">
                       <table class="tab table-hover" id="">
+
                           <thead>
                             <th>
                               <button id="vseclent" class="btn btn-success">
@@ -73,7 +94,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-4 bor">
+              <div class="col-5 bor">
                 <div class="table-responsive">
                   <div class="ext555 scrolll2">
                     <div class="rty2pul">
@@ -90,56 +111,53 @@
                           </tr>
                       </thead>
                           <tbody id="dolg">
-          
+
                           </tbody>
                       </table>
                     </div> 
                   </div>
                 </div> 
               </div>
-              <div class="col-6">
+              <div class="col-5">
                 <div class="table-responsive">
                   <div class="ext scrolll2">
                     <div class="rty2">
                       <table class="tab table-hover">
-
                         <thead>
                           <tr>
-                            <th>Последняя дата</th>
-                            <th class="pl-5">Товар</th>
-                            <th class="pr-5">Шт</th>
-                            <th>Цена продажи</th>
-                            <th>Скидка</th>
+                            <th>Вазврат</th>
+                            <th>Товар</th>
+                            <th>Шт</th>
+                            <th>Цена</th>
                             <th>Итого</th>
-                          </tr>             
-                      </thead>
+                            <th>
+                              <button id="chd" class="btn btn-success p-2">
+                                Check
+                              </button>
+                            </th>
+                          </tr>
+                          </thead>
                           <tbody id="savdo">
-          
+
                           </tbody>
                       </table>
                     </div> 
                   </div>
                 </div> 
               </div>
-
               <div class="col-12 m-0 p-0 borders">
                 <div class="row">
-                  {{-- <div class="col-2 bor1">
-                    <input type="text" id="tavarshtuk2" class="form-control sifra" placeholder="Товар шт">
-                    <input type="text" id="shtuk2" class="form-control sifra" placeholder="Шт">  
-                  </div> --}}
                   <div class="col-2 bor1">
                     Долг: <input type="text" id="foiz2" class="form-control sifra" placeholder="Долг">
                     Итого Сумма: <input type="text" id="itoge2" class="form-control sifra" placeholder="Итого">   
                   </div>
                   <div class="col-3 mx-5 bor1">
-                    <input type="text" id="clentname" class="form-control sifra2" placeholder="Клент имя">  
+                    <input type="text" id="clentname" class="form-control sifra2" placeholder="Клент имя">
                   </div>
                   <div class="col-4 mt-4">
                     <form>
+                      <input type="hidden" id="oydi">
                       @csrf
-                    <input type="hidden" id="oydi">
-          
                       <div class="d-flex">
                         <select name="tavar_id" id="tavar_id" class="form-control bor2">
                           <option value="">--Тип--</option>
@@ -149,11 +167,6 @@
                         </select>
                         <input class="form-control mx-2" style="width: 37%" type="date" id="date" name="date">
                         <input class="form-control" style="width: 37%" type="date" id="date2" name="date2">
-                          {{-- <div class="input-group-append">
-                          <button type="submit" class="btn btn-primary buts" id="submithendel">
-                              Поиск
-                          </button>
-                        </div> --}}
                       </div>
                     </form>
                 </div>
@@ -161,59 +174,61 @@
               </div>
             </div>
         </div>
+        <input type="checkbox" class="form-control"  id="">
         <div class="tab-pane" id="profile7" role="tabpanel" aria-expanded="false">
-            <div class="row">
-              <div class="col-12 bor">
-                <div class="table-responsive">
-                  <div class="ext scrolll2">
-                    <div class="rty2">
-                      <table class="tab table-hover">
-                        <thead>
-                          <tr>
-                            <th>Товар</th>
-                            <th>Шт</th>
-                            <th>Цена продажи</th>
-                            <th>Скидка</th>
-                            <th>Итого</th>
-                            <th>Последняя дата</th>
-                          </tr>             
-                      </thead>
-                          <tbody id="savdobirlamchi">
-          
-                          </tbody>
-                      </table>
-                    </div> 
-                  </div>
-                </div> 
-              </div>
-              <div class="col-12 m-0 p-0 borders">
-                <div class="row">
-                  {{-- <div class="col-2 bor1">
-                    <input type="text" id="tavarshtuk2s" class="form-control sifra" placeholder="Товар шт">
-                    <input type="text" id="shtuk2s" class="form-control sifra" placeholder="Шт">  
-                  </div> --}}
-                  <div class="col-2 mt-2 bor1">
-                    <br>
-                    Итого: <input type="text" id="itoge2s" class="form-control sifra" placeholder="Итого">
-                  </div>
-                  <div class="col-8 mt-4">
-                    <form>
-                      @csrf
-                      <div class="d-flex">
-                        <select name="tavar_id" id="tavar_ids" class="form-control bor2">
-                          <option value="">--Тип--</option>
-                          @foreach ($tavar as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                          @endforeach
-                        </select>
-                        <input class="form-control mx-2" style="width: 37%" type="date" id="datem">
-                        <input class="form-control" style="width: 37%" type="date" id="datem2">                      
-                      </div>
-                    </form>
-                  </div>
+          <div class="row">
+            <div class="col-12 bor">
+              <div class="table-responsive">
+                <div class="ext scrolll2">
+                  <div class="rty2">
+                    <table class="tab table-hover">
+                      <thead>
+                        <tr>
+                          <th>
+                            <button id="chb" class="btn btn-success p-2">
+                                Check
+                            </button>
+                          </th>
+                          <th>Товар</th>
+                          <th>Шт</th>
+                          <th>Цена продажи</th>
+                          <th>Скидка</th>
+                          <th>Итого</th>
+                          <th>Последняя дата</th>
+                        </tr>             
+                    </thead>
+                        <tbody id="savdobirlamchi">
+        
+                        </tbody>
+                    </table>
+                  </div> 
+                </div>
+              </div> 
+            </div>
+            <div class="col-12 m-0 p-0 borders">
+              <div class="row">
+                <div class="col-2 mt-2 bor1">
+                  <br>
+                  Итого: <input type="text" id="itoge2s" class="form-control sifra" placeholder="Итого">
+                </div>
+                <div class="col-8 mt-4">
+                  <form>
+                    @csrf
+                    <div class="d-flex">
+                      <select name="tavar_id" id="tavar_ids" class="form-control bor2">
+                        <option value="">--Тип--</option>
+                        @foreach ($tavar as $item)
+                          <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        @endforeach
+                      </select>
+                      <input class="form-control mx-2" style="width: 37%" type="date" id="datem">
+                      <input class="form-control" style="width: 37%" type="date" id="datem2">                      
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
+          </div>
         </div>
       </div>
     </div>
@@ -293,12 +308,16 @@
 
                         <thead>
                           <tr>
-                            <th>Последняя дата</th>
+                            <th>Вазврат</th>
                             <th>Товар</th>
                             <th>Шт</th>
-                            <th>Цена продажи</th>
-                            <th>Скидка</th>
+                            <th>Цена</th>
                             <th>Итого</th>
+                            <th>
+                              <button id="chddok" class="btn btn-success p-2">
+                                Check
+                              </button>
+                            </th>
                           </tr>             
                       </thead>
                           <tbody id="savdodok">
@@ -358,8 +377,12 @@
                       <table class="tab table-hover">
                         <thead>
                           <tr>
+                            <th>
+                              <button id="chbdok" class="btn btn-success p-2">
+                                  Check
+                              </button>
+                            </th>
                             <th>Товар</th>
-                            <th>Штрих код</th>
                             <th>Шт</th>
                             <th>Цена продажи</th>
                             <th>Скидка</th>
@@ -524,11 +547,245 @@
 </div>
 <script>
   
-    $.ajaxSetup({
-      headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
+  $(document).on("click", "#chd", function(){
+    $.ajax({
+      url:"{{ route('chd') }}",
+      method:'GET',
+      success:function(data)
+      {
+        var k= "";
+        k+= "Салом хурматли мижоз сизнинг харидларингиз руйхати.";
+        k+= " \n";
+        k+= " \n";
+        for(i = 0;i < data.length; i++){
+            k+= ""
+            k+= data[i]["name"];                                        
+            k+= "--" + data[i]["soni"];                                        
+            k+= "*" + data[i]["itog"];
+            k+= ";\n";
+        }
+        k+= "\n";                                          
+        k+= "\n";
+        k+= "Хурмат билан << Id GROUP >>";
+        $.ajax({
+            url: "{{ route('chd2') }}",
+            type: "GET",           
+        });
+        $.ajax({
+            url: "http://printer/printer",
+            type: "GET",
+            data: {
+                text: k
+            },
+        });
+        location.reload(true);
+      }
     });
+  });
+
+  $(document).on("click", "#chb", function(){
+    $.ajax({
+      url:"{{ route('chb') }}",
+      method:'GET',
+      success:function(data)
+      {
+        var k= "";
+        k+= "Салом хурматли мижоз сизнинг харидларингиз руйхати.";
+        k+= " \n";
+        k+= " \n";
+        for(i = 0;i < data.length; i++){
+            k+= ""
+            k+= data[i]["name"];                                        
+            k+= "--" + data[i]["soni"];                                        
+            k+= "*" + data[i]["itog"];
+            k+= ";\n";
+        }
+        k+= "\n";                                          
+        k+= "\n";
+        k+= "Хурмат билан << Id GROUP >>";
+        $.ajax({
+            url: "{{ route('chb2') }}",
+            type: "GET",           
+        });
+        $.ajax({
+            url: "http://printer/printer",
+            type: "GET",
+            data: {
+                text: k
+            },
+        });
+        location.reload(true);
+      }
+    });
+  });
+
+  $(document).on("click", "#locol", function(){
+    var id = $(this).data("id");
+    let _token  = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+      url:"{{ route('otmetka') }}",
+      method:'POST',
+      data:{
+        id: id,
+        _token: _token
+      },
+      dataType:'json',
+      success:function(data)
+      {
+        if(data == 1){
+          toastr.success("Success full").fadeOut(1000);
+        }
+        if (data == 0) {
+          toastr.warning("Delete").fadeOut(1000);
+        }
+      }
+    });
+  });
+
+  
+  $(document).on("click", "#locold", function(){
+    var id = $(this).data("id");
+    let _token  = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+      url:"{{ route('otmetka2') }}",
+      method:'POST',
+      data:{
+        id: id,
+        _token: _token
+      },
+      dataType:'json',
+      success:function(data)
+      {
+        if(data == 1){
+          toastr.success("Success full").fadeOut(1000);
+        }
+        if (data == 0) {
+          toastr.warning("Delete").fadeOut(1000);
+        }
+      }
+    });
+  });
+
+  // dok
+
+  $(document).on("click", "#chddok", function(){
+    $.ajax({
+      url:"{{ route('chddok') }}",
+      method:'GET',
+      success:function(data)
+      {
+        var k= "";
+        k+= "Салом хурматли мижоз сизнинг харидларингиз руйхати.";
+        k+= " \n";
+        k+= " \n";
+        for(i = 0;i < data.length; i++){
+            k+= ""
+            k+= data[i]["name"];                                        
+            k+= "--" + data[i]["soni"];                                        
+            k+= "*" + data[i]["itog"];
+            k+= ";\n";
+        }
+        k+= "\n";                                          
+        k+= "\n";
+        k+= "Хурмат билан << Id GROUP >>";
+        $.ajax({
+            url: "{{ route('chd2dok') }}",
+            type: "GET",           
+        });
+        $.ajax({
+            url: "http://printer/printer",
+            type: "GET",
+            data: {
+                text: k
+            },
+        });
+        location.reload(true);
+      }
+    });
+  });
+
+  $(document).on("click", "#chbdok", function(){
+    $.ajax({
+      url:"{{ route('chbdok') }}",
+      method:'GET',
+      success:function(data)
+      {
+        var k= "";
+        k+= "Салом хурматли мижоз сизнинг харидларингиз руйхати.";
+        k+= " \n";
+        k+= " \n";
+        for(i = 0;i < data.length; i++){
+            k+= ""
+            k+= data[i]["name"];                                        
+            k+= "--" + data[i]["soni"];                                        
+            k+= "*" + data[i]["itog"];
+            k+= ";\n";
+        }
+        k+= "\n";                                          
+        k+= "\n";
+        k+= "Хурмат билан << Id GROUP >>";
+        $.ajax({
+            url: "{{ route('chb2dok') }}",
+            type: "GET",           
+        });
+        $.ajax({
+            url: "http://printer/printer",
+            type: "GET",
+            data: {
+                text: k
+            },
+        });
+        location.reload(true);
+      }
+    });
+  });
+
+  $(document).on("click", "#locoldok", function(){
+    var id = $(this).data("id");
+    let _token  = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+      url:"{{ route('otmetkadok') }}",
+      method:'POST',
+      data:{
+        id: id,
+        _token: _token
+      },
+      dataType:'json',
+      success:function(data)
+      {
+        if(data == 1){
+          toastr.success("Success full").fadeOut(1000);
+        }
+        if (data == 0) {
+          toastr.warning("Delete").fadeOut(1000);
+        }
+      }
+    });
+  });
+
+  
+  $(document).on("click", "#locolddok", function(){
+    var id = $(this).data("id");
+    let _token  = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+      url:"{{ route('otmetka2dok') }}",
+      method:'POST',
+      data:{
+        id: id,
+        _token: _token
+      },
+      dataType:'json',
+      success:function(data)
+      {
+        if(data == 1){
+          toastr.success("Success full").fadeOut(1000);
+        }
+        if (data == 0) {
+          toastr.warning("Delete").fadeOut(1000);
+        }
+      }
+    });
+  });
 
   $(document).ready(function(){
 
@@ -872,7 +1129,7 @@
     
     $(document).on('click', "#vazvrat", function(event){
       event.preventDefault();
-      var id = $(this).data("id");      
+      var id = $(this).data("id");
       $.ajax({
         url:"{{ route('qaytaredit') }}",
         method:'GET',
@@ -999,7 +1256,7 @@
               toastr.error(data.msg);
             }
             if (data.code == 200) {
-              rowdata()
+              rowdata();
               toastr.success(data.msg);
               $("#vazvrathajm").val('');
               $("#vazvirat").modal("hide");

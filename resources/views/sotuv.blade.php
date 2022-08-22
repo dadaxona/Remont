@@ -741,6 +741,8 @@
                     @endforeach
                 </select>
             </div>
+            <div class="mb-3 d-flex" id="channgemdok">    
+            </div>
             <div class="form-check">
                 <input type="hidden" id="checkshiddendok">
                 <div class="mb-3 d-flex">
@@ -841,17 +843,88 @@
   $( function() {
     $( "#tbody" ).selectable();
   } );
+//   $(document).on('change', '#clentra', function(){
+//     var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srok' />";
+//     var karzs = $("#karzs").val();
+//     if(karzs == 0){
+//         $("#channgem").html('');
+//     }else{
+//         $("#channgem").html(inputdate);
+//     }
+//   });
+
   $(document).on('change', '#clentra', function(){
+    var id = $(this).val();
+    var kurs2 = $("#kurs2").val();
     var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srok' />";
     var karzs = $("#karzs").val();
-    if(karzs == 0){
-        $("#channgem").html('');
-    }else{
-        $("#channgem").html(inputdate);
-    }
+    $.ajax({
+        url:"{{ route('usersumma') }}",
+        method:'GET',
+        data:{
+            id:id,
+            karzs: karzs
+        },
+        dataType:'json',
+        success:function(data)
+        {
+            if(data.usd == 1){
+                if(data.summa > karzs){
+                    $("#channgem").html('');
+                    $("#karzs").val('');
+                }else{
+                    $("#channgem").html(inputdate);
+                }
+            }
+            if(data.usd == 0){
+                if(data.summa > data.sum){
+                    $("#channgem").html('');
+                    $("#karzs").val('');
+                }else{
+                    $("#channgem").html(inputdate);
+                }
+            }
+        }
+    });
   });
 
-$(document).on('click', '#on', function(){
+  
+  $(document).on('change', '#clentradok', function(){
+    var id = $(this).val();
+    var kurs2 = $("#kurs2dok").val();
+    var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srokdok' />";
+    var karzs = $("#karzsdok").val();
+    $.ajax({
+        url:"{{ route('usersummadok') }}",
+        method:'GET',
+        data:{
+            id:id,
+            karzs: karzs
+        },
+        dataType:'json',
+        success:function(data)
+        {
+            if(data.usd == 1){
+                if(data.summa > karzs){
+                    $("#channgemdok").html('');
+                    $("#karzsdok").val('');
+                }else{
+                    $("#channgemdok").html(inputdate);
+                }
+            }
+            if(data.usd == 0){
+                if(data.summa > data.sum){
+                    $("#channgemdok").html('');
+                    $("#karzsdok").val('');
+                }else{
+                    $("#channgemdok").html(inputdate);
+                }
+            }
+        }
+    });
+});
+
+$(document).on('click', '#ondok', function(){
     var a = $("#onval").val();
     if(a == 0){
         $("#onval").val(1);
@@ -2388,12 +2461,13 @@ $(document).ready(function(){
                     type: 'GET',
                     success: function(data) {
                         $("#itogsdok").val(data.itogo);
+                        $("#karzsdok").val(data.itogo);
+                        $("#channgemdok").html('');
                         $("#jonatishdok").modal("show");                        
                     }
                 });
             }
         });
-
 
         $("#oplatadok").on('click', function(){
             let _token = $('meta[name="csrf-token"]').attr('content');
@@ -2405,6 +2479,8 @@ $(document).ready(function(){
             var clentra = $("#clentradok").val();
             var checks = $("#checkshiddendok").val();
             var malumot = $("#malumotdok").val();
+            var srok = $("#srokdok").val();
+            var s = plastik + naqt + bank;
             if(checks == 1){
                 if(malumot){
                     $.ajax({
@@ -2447,25 +2523,347 @@ $(document).ready(function(){
                     toastr.error("Малумотини киритинг").fadeOut(2000);
                 }
             }else{
-                if(naqt || plastik || bank){
-                    if(karzs > 0){
-                        if(clentra){
+                if(karzs > 0){
+                    if(clentra){
+                        if(srok){
                             $.ajax({
-                                url: "{{ route('oplatadok') }}",
+                                url: "{{ route('botdok') }}",
                                 type: 'POST',
                                 data:{
                                     id: clentra,
-                                    itogs: itogs,
-                                    naqt: naqt,
-                                    plastik: plastik,
-                                    bank: bank,
                                     karzs: karzs,
                                     _token: _token
                                 },
                                 success: function(data) {
-                                    if(data.code == 0){
-                                        toastr.error(data.msg).fadeOut(2000);
+                                    if(data.user.chatid){
+                                    var k= "";
+                                        k+= "Салом хурматли" + " " + data.user.name + " " + "сизнинг харидларинггиз ройхати.";
+                                        k+= " \n";
+                                        k+= " \n";
+                                        for(i = 0;i < data.context.length; i++){
+                                            k+= ""
+                                            k+= data.context[i]["name"];
+                                            k+= "--" + data.context[i]["soni"];
+                                            k+= "*" + data.context[i]["itog"];
+                                            k+= ";\n";
+                                        }
+                                        k+= "\n";
+                                        k+= "Жами суммаси" + " , " + itogs;
+                                        k+= ";\n";
+                                        k+= "Туланди" + " , " + s;
+                                        k+= ";\n";
+                                        k+= "Карзинггиз" + " , " + karzs;
+                                        k+= ";\n";
+                                        k+= "Тулаш муддати" + " , " + srok;
+                                        k+= ";\n";
+                                        k+= "Жами карзинггиз" + " , " + data.javob;
+                                        k+= "\n";
+                                        k+= "\n";
+                                        k+= "Хурмат билан << ID Group >>";
+                                        $.ajax({
+                                            url: "https://api.telegram.org/bot5473083753:AAGZa2nwaz0Ndj53tJskF--Owqxe-ApZdnA/sendMessage",
+                                            type: "GET",
+                                            data: {
+                                                chat_id: data.user.chatid,
+                                                text: k
+                                            },
+                                            success: function(data) {
+                                                $.ajax({
+                                                    url: "{{ route('oplatadok') }}",
+                                                    type: 'POST',
+                                                    data:{
+                                                        id: clentra,
+                                                        itogs: itogs,
+                                                        naqt: naqt,
+                                                        plastik: plastik,
+                                                        bank: bank,
+                                                        karzs: karzs,
+                                                        checks: checks,
+                                                        srok: srok,
+                                                        _token: _token
+                                                    },
+                                                    success: function(data) {                               
+                                                        fetch_customer_datadok();
+                                                        fetch_customer_data2dok();
+                                                        $("#itog2dok").val(data.itogo);
+                                                        $("#itogdok").val(data.itogo);
+                                                        $("#belgidok").val('');
+                                                        $("#belgi2dok").val('');
+                                                        $("#itogsdok").val("");
+                                                        $("#naqtdok").val("");
+                                                        $("#plastikdok").val("");
+                                                        $("#bankdok").val("");
+                                                        $("#karzsdok").val("");
+                                                        $("#clentradok").val("");
+                                                        toastr.success("Малумотлар сакланди").fadeOut(2000);
+                                                        $("#jonatishdok").modal("hide");                                    
+                                                    }
+                                                });
+                                            }
+                                        });
+                                        $.ajax({
+                                            url: "http://printer/printer",
+                                            type: "GET",
+                                            data: {
+                                                text: k
+                                            },
+                                        });
                                     }else{
+                                        var k= "";
+                                        k+= "Салом хурматли" + " " + data.user.name + " " + "сизнинг харидларинггиз ройхати.";
+                                        k+= " \n";
+                                        k+= " \n";
+                                        for(i = 0;i < data.context.length; i++){
+                                            k+= ""
+                                            k+= data.context[i]["name"];
+                                            k+= "--" + data.context[i]["soni"];
+                                            k+= "*" + data.context[i]["itog"];
+                                            k+= ";\n";
+                                        }
+                                        k+= "\n";
+                                        k+= "Жами суммаси" + " , " + itogs;
+                                        k+= ";\n";
+                                        k+= "Туланди" + " , " + s;
+                                        k+= ";\n";
+                                        k+= "Карзинггиз" + " , " + karzs;
+                                        k+= ";\n";
+                                        k+= "Тулаш муддати" + " , " + srok;
+                                        k+= ";\n";
+                                        k+= "Жами карзинггиз" + " , " + data.javob;
+                                        k+= "\n";
+                                        k+= "\n";
+                                        k+= "Хурмат билан << ID Group >>";
+                                        $.ajax({
+                                            url: "{{ route('oplatadok') }}",
+                                            type: 'POST',
+                                            data:{
+                                                id: clentra,
+                                                itogs: itogs,
+                                                naqt: naqt,
+                                                plastik: plastik,
+                                                bank: bank,
+                                                karzs: karzs,
+                                                checks: checks,
+                                                srok: srok,
+                                                _token: _token
+                                            },
+                                            success: function(data) {                               
+                                                fetch_customer_datadok();
+                                                fetch_customer_data2dok();
+                                                $("#itog2dok").val(data.itogo);
+                                                $("#itogdok").val(data.itogo);
+                                                $("#belgidok").val('');
+                                                $("#belgi2dok").val('');
+                                                $("#itogsdok").val("");
+                                                $("#naqtdok").val("");
+                                                $("#plastikdok").val("");
+                                                $("#bankdok").val("");
+                                                $("#karzsdok").val("");
+                                                $("#clentradok").val("");
+                                                toastr.success("Малумотлар сакланди").fadeOut(2000);
+                                                $("#jonatishdok").modal("hide");                                    
+                                            }
+                                        });
+                                        $.ajax({
+                                            url: "http://printer/printer",
+                                            type: "GET",
+                                            data: {
+                                                text: k
+                                            },
+                                        });
+                                    }
+                                }
+                            });
+                        }else{
+                            toastr.error("Срокни белгиланг").fadeOut(2000);
+                        }
+                    }else{
+                        toastr.error("Клентни танланг").fadeOut(2000);
+                    }
+                }else{
+                    if(clentra){
+                        $.ajax({
+                            url: "{{ route('botdok') }}",
+                            type: 'POST',
+                            data:{
+                                id: clentra,
+                                karzs: karzs,
+                                _token: _token
+                            },
+                            success: function(data) {
+                                if(data.user.chatid){
+                                var k= "";
+                                    k+= "Салом хурматли" + " " + data.user.name + " " + "сизнинг харидларинггиз ройхати.";
+                                    k+= " \n";
+                                    k+= " \n";
+                                    for(i = 0;i < data.context.length; i++){
+                                        k+= ""
+                                        k+= data.context[i]["name"];
+                                        k+= "--" + data.context[i]["soni"];
+                                        k+= "*" + data.context[i]["itog"];
+                                        k+= ";\n";
+                                    }
+                                    k+= "\n";
+                                    k+= "Жами суммаси" + " , " + itogs;
+                                    k+= ";\n";
+                                    k+= "Туланди" + " , " + s;
+                                    k+= ";\n";                                  
+                                    k+= "Жами карзинггиз" + " , " + data.javob;
+                                    k+= "\n";
+                                    k+= "\n";
+                                    k+= "Хурмат билан << ID Group >>";
+                                    $.ajax({
+                                        url: "https://api.telegram.org/bot5473083753:AAGZa2nwaz0Ndj53tJskF--Owqxe-ApZdnA/sendMessage",
+                                        type: "GET",
+                                        data: {
+                                            chat_id: data.user.chatid,
+                                            text: k
+                                        },
+                                        success: function(data) {
+                                            $.ajax({
+                                                url: "{{ route('oplatadok') }}",
+                                                type: 'POST',
+                                                data:{
+                                                    id: clentra,
+                                                    itogs: itogs,
+                                                    naqt: naqt,
+                                                    plastik: plastik,
+                                                    bank: bank,
+                                                    karzs: karzs,
+                                                    checks: checks,
+                                                    srok: srok,
+                                                    _token: _token
+                                                },
+                                                success: function(data) {                               
+                                                    fetch_customer_datadok();
+                                                    fetch_customer_data2dok();
+                                                    $("#itog2dok").val(data.itogo);
+                                                    $("#itogdok").val(data.itogo);
+                                                    $("#belgidok").val('');
+                                                    $("#belgi2dok").val('');
+                                                    $("#itogsdok").val("");
+                                                    $("#naqtdok").val("");
+                                                    $("#plastikdok").val("");
+                                                    $("#bankdok").val("");
+                                                    $("#karzsdok").val("");
+                                                    $("#clentradok").val("");
+                                                    toastr.success("Малумотлар сакланди").fadeOut(2000);
+                                                    $("#jonatishdok").modal("hide");                                    
+                                                }
+                                            });
+                                        }
+                                    });
+                                    $.ajax({
+                                            url: "http://printer/printer",
+                                            type: "GET",
+                                            data: {
+                                                text: k
+                                            },
+                                        });
+                                }else{
+                                    var k= "";
+                                    k+= "Салом хурматли" + " " + data.user.name + " " + "сизнинг харидларинггиз ройхати.";
+                                    k+= " \n";
+                                    k+= " \n";
+                                    for(i = 0;i < data.context.length; i++){
+                                        k+= ""
+                                            k+= data.context[i]["name"];
+                                            k+= "--" + data.context[i]["soni"];
+                                            k+= "*" + data.context[i]["itog"];
+                                            k+= ";\n";
+                                    }
+                                    k+= "\n";
+                                    k+= "Жами суммаси" + " , " + itogs;
+                                    k+= ";\n";
+                                    k+= "Туланди" + " , " + s;
+                                    k+= ";\n";                                  
+                                    k+= "Жами карзинггиз" + " , " + data.javob;
+                                    k+= "\n";
+                                    k+= "\n";
+                                    k+= "Хурмат билан << ID Group >>";
+                                    $.ajax({
+                                        url: "{{ route('oplatadok') }}",
+                                        type: 'POST',
+                                        data:{
+                                            id: clentra,
+                                            itogs: itogs,
+                                            naqt: naqt,
+                                            plastik: plastik,
+                                            bank: bank,
+                                            karzs: karzs,
+                                            checks: checks,
+                                            srok: srok,
+                                            _token: _token
+                                        },
+                                        success: function(data) {                               
+                                            fetch_customer_datadok();
+                                            fetch_customer_data2dok();
+                                            $("#itog2dok").val(data.itogo);
+                                            $("#itogdok").val(data.itogo);
+                                            $("#belgidok").val('');
+                                            $("#belgi2dok").val('');
+                                            $("#itogsdok").val("");
+                                            $("#naqtdok").val("");
+                                            $("#plastikdok").val("");
+                                            $("#bankdok").val("");
+                                            $("#karzsdok").val("");
+                                            $("#clentradok").val("");
+                                            toastr.success("Малумотлар сакланди").fadeOut(2000);
+                                            $("#jonatishdok").modal("hide");                                    
+                                        }
+                                    });
+                                    $.ajax({
+                                        url: "http://printer/printer",
+                                        type: "GET",
+                                        data: {
+                                            text: k
+                                        },
+                                    });
+                                }
+                            }
+                        });
+                    }else{
+                        $.ajax({
+                            url: "{{ route('bot2dok') }}",
+                            type: 'GET',
+                            data:{
+                                id: clentra,
+                                karzs: karzs,
+                                _token: _token
+                            },
+                            success: function(data) {
+                                var k= "";
+                                    k+= "Салом хурматли мижоз сизнинг харидларинггиз ройхати.";
+                                    k+= " \n";
+                                    k+= " \n";
+                                    for(i = 0;i < data.context.length; i++){
+                                        k+= ""
+                                            k+= data.context[i]["name"];
+                                            k+= "--" + data.context[i]["soni"];
+                                            k+= "*" + data.context[i]["itog"];
+                                            k+= ";\n";
+                                    }
+                                    k+= "\n";
+                                    k+= "Жами суммаси" + " , " + itogs;
+                                    k+= ";\n";
+                                    k+= "Туланди" + " , " + s;
+                                    k+= "\n";
+                                    k+= "\n";
+                                    k+= "Хурмат билан << ID Group >>";
+                                $.ajax({
+                                    url: "{{ route('oplatadok') }}",
+                                    type: 'POST',
+                                    data:{
+                                        id: clentra,
+                                        itogs: itogs,
+                                        naqt: naqt,
+                                        plastik: plastik,
+                                        bank: bank,
+                                        karzs: karzs,
+                                        checks: checks,
+                                        _token: _token
+                                    },
+                                    success: function(data) {                     
                                         fetch_customer_datadok();
                                         fetch_customer_data2dok();
                                         $("#itog2dok").val(data.itogo);
@@ -2479,51 +2877,20 @@ $(document).ready(function(){
                                         $("#karzsdok").val("");
                                         $("#clentradok").val("");
                                         toastr.success("Малумотлар сакланди").fadeOut(2000);
-                                        $("#jonatishdok").modal("hide");
+                                        $("#jonatishdok").modal("hide");                            
                                     }
-                                }
-                            });
-                        }else{
-                            toastr.error("Клентни танланг").fadeOut(2000);
-                        }
-                    }else{
-                        $.ajax({
-                            url: "{{ route('oplatadok') }}",
-                            type: 'POST',
-                            data:{
-                                id: clentra,
-                                itogs: itogs,
-                                naqt: naqt,
-                                plastik: plastik,
-                                bank: bank,
-                                karzs: karzs,
-                                _token: _token
-                            },
-                            success: function(data) {
-                                if(data.code == 0){
-                                    toastr.error(data.msg).fadeOut(2000);
-                                }else{
-                                    fetch_customer_datadok();
-                                    fetch_customer_data2dok();
-                                    $("#itog2dok").val(data.itogo);
-                                    $("#itogdok").val(data.itogo);
-                                    $("#belgidok").val('');
-                                    $("#belgi2dok").val('');
-                                    $("#itogsdok").val("");
-                                    $("#naqtdok").val("");
-                                    $("#plastikdok").val("");
-                                    $("#bankdok").val("");
-                                    $("#karzsdok").val("");
-                                    $("#clentradok").val("");
-                                    toastr.success("Малумотлар сакланди").fadeOut(2000);
-                                    $("#jonatishdok").modal("hide");
-                                }
+                                });
+                                $.ajax({
+                                    url: "http://printer/printer",
+                                    type: "GET",
+                                    data: {
+                                        text: k
+                                    },
+                                });
                             }
                         });
                     }
-                }else{
-                    toastr.error("Устунлар бош").fadeOut(2000);
-                }
+                }              
             }
         });
     });
@@ -2663,7 +3030,21 @@ $(document).ready(function(){
             }
         });
     });
-  
+
+    function fetch_customer_datadok(query = '')
+    {
+        $.ajax({
+            url:"{{ route('sotuvdok') }}",
+            method:'GET',
+            data:{query:query},
+            dataType:'json',
+            success:function(data)
+            {
+                $('#tbodydok').html(data.table_data);
+                
+            }
+        })
+    }  
 
     function plusdok(id) {
         let _token   = $('meta[name="csrf-token"]').attr('content');
@@ -2683,7 +3064,7 @@ $(document).ready(function(){
                         _token: _token
                     },
                     success: function(data) {
-                        $('#tbodydok').prepend('<tr onclick="belgilashdok('+data.data.id+')" style="border-bottom: 1px solid;" id="selectablesdasd"><td>'+data.data.name+'</td><td>'+data.data.summa2+'</td><td>'+data.data.soni+'</td><td>'+data.data.chegirma+'</td><td>'+data.data.itog+'</td><td>'+data.data.hajm+'</td></tr>');
+                        fetch_customer_datadok();
                         $("#itogdok").val(data.data2.itogo);
                         $("#itog2dok").val(data.data2.itogo);
                         $("#kursdok").val(data.data2.kurs);
@@ -2767,7 +3148,6 @@ $(document).ready(function(){
             fetch_customer_datadok();
         });
     });
-
     
     function incerementedok() {
         var id = $("#belgi2dok").val();

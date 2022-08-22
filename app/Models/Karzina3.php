@@ -19,6 +19,7 @@ class Karzina3 extends Model
         'summa2', 
         'chegirma', 
         'itog',
+        'status'
     ];
     public $timestamps = true;
 

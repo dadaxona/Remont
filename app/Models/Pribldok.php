@@ -5,9 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Userdok extends Model
+class Pribldok extends Model
 {
     use HasFactory;
-    public $fillable = ['name','tel', 'chatid', 'firma', 'inn', 'summa'];
+    public $fillable = [
+        'jami',
+        'karz',
+        'pribl',
+        'vse',
+    ];
     public $timestamps = true;
 }

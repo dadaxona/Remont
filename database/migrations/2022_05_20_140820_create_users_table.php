@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('chatid')->nullable();
             $table->string('firma')->nullable();
             $table->string('inn')->nullable();
+            $table->string('summa')->nullable();
             $table->timestamps();
         });
     }

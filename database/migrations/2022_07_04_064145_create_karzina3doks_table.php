@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('summa2')->nullable();
             $table->string('chegirma')->nullable();
             $table->string('itog')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
             $table->foreign('ichkitavardok_id')->references('id')->on('ichkitavardoks')
             ->onDelete('cascade')->onUpdate('cascade');

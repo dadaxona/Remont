@@ -22,6 +22,7 @@ use App\Models\Ichkitavardok;
 use App\Models\Itogo;
 use App\Models\Itogodok;
 use App\Models\Javob;
+use App\Models\Javobdok;
 use App\Models\Karzina;
 use App\Models\Karzina2;
 use App\Models\Karzina2dok;
@@ -846,9 +847,16 @@ class KlentController2 extends Controller
         {
             foreach($data as $row)
             {
+                $rrrr = Javobdok::where('userdok_id', $row->id)->first();
+                $p = '';
+                if($rrrr->javob >= 0){
+                    $p = "<span style='color: red'>$rrrr->javob </span>";
+                }elseif($rrrr->javob < 0){
+                    $p = "<span style='color: green'>$rrrr->javob</span>";
+                }
                 $output .= '
-                <tr data-id="'.$row->id.'" id="datadok" style="cursor: pointer;" style="border-bottom: 1px solid;">
-                    <td>'.$row->name.'</td>
+                <tr data-id="'.$row->id.'" id="datadok" style="cursor: pointer; border-bottom: 1px solid;">
+                    <td>'.$row->name.' | '.$p.' </td>
                 </tr>
                 ';
             }
@@ -895,7 +903,7 @@ class KlentController2 extends Controller
                     $p = "<span style='color: green'>$rrrr->javob</span>";
                 }
                 $output .= '
-                <tr data-id="'.$row->id.'" id="data" style="cursor: pointer;" style="border-bottom: 1px solid;">
+                <tr data-id="'.$row->id.'" id="data" style="cursor: pointer; border-bottom: 1px solid;">
                     <td>'.$row->name.' | '.$p.' </td>
                 </tr>
                 ';
@@ -1030,14 +1038,19 @@ class KlentController2 extends Controller
             foreach($data as $row)
             {
                 $output .= '
-                <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="bilamvazdok">
+                <tr style="border-bottom: 1px solid;">
+                <td><input type="checkbox" class="form-check-input ml-3" id="locolddok" data-id="'.$row->id.'"></td>
                     <td>'.$row->name.'</td>
-                    <td>'.$row->raqam.'</td>
                     <td>'.$row->soni.'</td>
                     <td>'.$row->summa2.'</td>
                     <td>'.$row->chegirma.'</td>
                     <td>'.$row->itog.'</td>
                     <td>'.$row->updated_at.'</td>
+                    <td>
+                        <button data-id="'.$row->id.'" id="bilamvazdok">
+                            Вазврат
+                        </button>
+                    </td>
                 </tr>
                 ';
             }
@@ -1069,13 +1082,19 @@ class KlentController2 extends Controller
             foreach($data as $row)
             {
                 $output .= '
-                <tr style="border-bottom: 1px solid;"  data-id="'.$row->id.'" id="bilamvaz">
-                    <td>'.$row->ichkitavar->name.'</td>
+                <tr style="border-bottom: 1px solid;">
+                <td><input type="checkbox" class="form-check-input ml-3" id="locold" data-id="'.$row->id.'"></td>
+                    <td>'.$row->name.'</td>
                     <td>'.$row->soni.'</td>
                     <td>'.$row->summa2.'</td>
                     <td>'.$row->chegirma.'</td>
                     <td>'.$row->itog.'</td>
                     <td>'.$row->updated_at.'</td>
+                    <td>
+                        <button data-id="'.$row->id.'" id="bilamvaz">
+                            Вазврат
+                        </button>
+                    </td>
                 </tr>
                 ';
             }
@@ -1469,13 +1488,18 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="vazvrat">
-                    <td>'.$row->updated_at.'</td>
-                        <td>'.$row->ichkitavar->name.'</td>            
+   <tr style="border-bottom: 1px solid;">
+                        <td>
+                        <button data-id="'.$row->id.'" id="vazvrat">
+                                Вазврат
+                            </button>
+                        </td>
+                        <td>'.$row->name.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
-                        <td>'.$row->chegirma.'</td>
                         <td>'.$row->itog.'</td>
+                      <td><input type="checkbox" class="form-check-input ml-3" id="locol" data-id="'.$row->id.'"></td>
+                   
                     </tr>
                     ';
                 }
@@ -1579,13 +1603,18 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="vazvratdok">
-                    <td>'.$row->updated_at.'</td>
-                        <td>'.$row->ichkitavardok->name.'</td>            
+      <tr style="border-bottom: 1px solid;">
+                        <td>
+                        <button data-id="'.$row->id.'" id="vazvratdok">
+                                Вазврат
+                            </button>
+                        </td>
+                        <td>'.$row->name.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
-                        <td>'.$row->chegirma.'</td>
                         <td>'.$row->itog.'</td>
+                      <td><input type="checkbox" class="form-check-input ml-3" id="locoldok" data-id="'.$row->id.'"></td>
+                   
                     </tr>
                     ';
                 }
@@ -1690,13 +1719,18 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                  <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="vazvratdok">
-                    <td>'.$row->updated_at.'</td>
-                        <td>'.$row->ichkitavardok->name.'</td>            
+    <tr style="border-bottom: 1px solid;">
+                        <td>
+                        <button data-id="'.$row->id.'" id="vazvratdok">
+                                Вазврат
+                            </button>
+                        </td>
+                        <td>'.$row->name.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
-                        <td>'.$row->chegirma.'</td>
                         <td>'.$row->itog.'</td>
+                      <td><input type="checkbox" class="form-check-input ml-3" id="locoldok" data-id="'.$row->id.'"></td>
+                   
                     </tr>
                     ';
                 }
@@ -1801,14 +1835,18 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="vazvrat">
-                    <td>'.$row->updated_at.'</td>
-                        <td>'.$row->ichkitavar->name.'</td>
-            
+    <tr style="border-bottom: 1px solid;">
+                        <td>
+                        <button data-id="'.$row->id.'" id="vazvrat">
+                                Вазврат
+                            </button>
+                        </td>
+                        <td>'.$row->name.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
-                        <td>'.$row->chegirma.'</td>
                         <td>'.$row->itog.'</td>
+                      <td><input type="checkbox" class="form-check-input ml-3" id="locol" data-id="'.$row->id.'"></td>
+                   
                     </tr>
                     ';
                 }
@@ -1913,13 +1951,18 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="vazvrat">
-                    <td>'.$row->updated_at.'</td>
-                        <td>'.$row->ichkitavar->name.'</td>            
+   <tr style="border-bottom: 1px solid;">
+                        <td>
+                        <button data-id="'.$row->id.'" id="vazvrat">
+                                Вазврат
+                            </button>
+                        </td>
+                        <td>'.$row->name.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
-                        <td>'.$row->chegirma.'</td>
                         <td>'.$row->itog.'</td>
+                      <td><input type="checkbox" class="form-check-input ml-3" id="locol" data-id="'.$row->id.'"></td>
+                   
                     </tr>
                     ';
                 }      
@@ -2006,14 +2049,19 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="vazvratdok">
-                        <td>'.$row->updated_at.'</td>
-                        <td>'.$row->ichkitavardok->name.'</td>            
-                        <td>'.$row->soni.'</td>
-                        <td>'.$row->summa2.'</td>
-                        <td>'.$row->chegirma.'</td>
-                        <td>'.$row->itog.'</td>
-                    </tr>
+                    <tr style="border-bottom: 1px solid;">
+                    <td>
+                    <button data-id="'.$row->id.'" id="vazvratdok">
+                            Вазврат
+                        </button>
+                    </td>
+                    <td>'.$row->name.'</td>
+                    <td>'.$row->soni.'</td>
+                    <td>'.$row->summa2.'</td>
+                    <td>'.$row->itog.'</td>
+                  <td><input type="checkbox" class="form-check-input ml-3" id="locoldok" data-id="'.$row->id.'"></td>
+               
+                </tr>
                     ';
                 }      
             }
@@ -2166,20 +2214,25 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                  <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="vazvratdok">
-                    <td>'.$row->updated_at.'</td>
-                        <td>'.$row->ichkitavardok->name.'</td>            
+    <tr style="border-bottom: 1px solid;">
+                        <td>
+                        <button data-id="'.$row->id.'" id="vazvratdok">
+                                Вазврат
+                            </button>
+                        </td>
+                        <td>'.$row->name.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
-                        <td>'.$row->chegirma.'</td>
                         <td>'.$row->itog.'</td>
+                      <td><input type="checkbox" class="form-check-input ml-3" id="locoldok" data-id="'.$row->id.'"></td>
+                   
                     </tr>
                     ';
                 }
                 foreach($data222 as $row)
                 {
                     $output2 .= '
-                       <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="cretdok">
+                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="cretdok">
                     <td>'.$row->updated_at.'</td>
                         <td>'.$row->userdok->name.'</td>
                         <td>'.$row->itogs.'</td>
@@ -2279,14 +2332,18 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="vazvrat">
-                    <td>'.$row->updated_at.'</td>
-                        <td>'.$row->ichkitavar->name.'</td>
-            
+    <tr style="border-bottom: 1px solid;">
+                        <td>
+                        <button data-id="'.$row->id.'" id="vazvrat">
+                                Вазврат
+                            </button>
+                        </td>
+                        <td>'.$row->name.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
-                        <td>'.$row->chegirma.'</td>
                         <td>'.$row->itog.'</td>
+                      <td><input type="checkbox" class="form-check-input ml-3" id="locol" data-id="'.$row->id.'"></td>
+                   
                     </tr>
                     ';
                 }
@@ -2394,14 +2451,18 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="vazvrat">
-                    <td>'.$row->updated_at.'</td>
-                        <td>'.$row->ichkitavar->name.'</td>
-            
+    <tr style="border-bottom: 1px solid;">
+                        <td>
+                        <button data-id="'.$row->id.'" id="vazvrat">
+                                Вазврат
+                            </button>
+                        </td>
+                        <td>'.$row->name.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
-                        <td>'.$row->chegirma.'</td>
                         <td>'.$row->itog.'</td>
+                      <td><input type="checkbox" class="form-check-input ml-3" id="locol" data-id="'.$row->id.'"></td>
+                   
                     </tr>
                     ';
                 }
@@ -2509,13 +2570,18 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                  <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="vazvratdok">
-                    <td>'.$row->updated_at.'</td>
-                        <td>'.$row->ichkitavardok->name.'</td>            
+    <tr style="border-bottom: 1px solid;">
+                        <td>
+                        <button data-id="'.$row->id.'" id="vazvratdok">
+                                Вазврат
+                            </button>
+                        </td>
+                        <td>'.$row->name.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
-                        <td>'.$row->chegirma.'</td>
                         <td>'.$row->itog.'</td>
+                      <td><input type="checkbox" class="form-check-input ml-3" id="locoldok" data-id="'.$row->id.'"></td>
+                   
                     </tr>
                     ';
                 }
@@ -2623,13 +2689,18 @@ class KlentController2 extends Controller
                     foreach($data as $row)
                     {
                         $output .= '
-                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="vazvratdok">
-                    <td>'.$row->updated_at.'</td>
-                        <td>'.$row->ichkitavardok->name.'</td>            
+      <tr style="border-bottom: 1px solid;">
+                        <td>
+                        <button data-id="'.$row->id.'" id="vazvratdok">
+                                Вазврат
+                            </button>
+                        </td>
+                        <td>'.$row->name.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
-                        <td>'.$row->chegirma.'</td>
                         <td>'.$row->itog.'</td>
+                      <td><input type="checkbox" class="form-check-input ml-3" id="locoldok" data-id="'.$row->id.'"></td>
+                   
                     </tr>
                         ';
                     }
@@ -2731,22 +2802,27 @@ class KlentController2 extends Controller
                     foreach($data as $row)
                     {
                         $output .= '
-                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="vazvratdok">
-                    <td>'.$row->updated_at.'</td>
-                        <td>'.$row->ichkitavardok->name.'</td>            
+      <tr style="border-bottom: 1px solid;">
+                        <td>
+                        <button data-id="'.$row->id.'" id="vazvratdok">
+                                Вазврат
+                            </button>
+                        </td>
+                        <td>'.$row->name.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
-                        <td>'.$row->chegirma.'</td>
                         <td>'.$row->itog.'</td>
+                      <td><input type="checkbox" class="form-check-input ml-3" id="locoldok" data-id="'.$row->id.'"></td>
+                   
                     </tr>
                         ';
                     }
                     foreach($data222 as $row)
                     {
                         $output2 .= '
-                                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="cretdok">
+                                 <tr style="border-bottom: 1px solid;" data-id="'.$row->idokd.'" id="cret">
                     <td>'.$row->updated_at.'</td>
-                        <td>'.$row->userdok->name.'</td>
+                        <td>'.$row->user->name.'</td>
                         <td>'.$row->itogs.'</td>
                         <td>'.$row->naqt.'</td>
                         <td>'.$row->plastik.'</td>
@@ -3068,15 +3144,20 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;">
-                        <td>'.$row->name.'</td>
-                        <td>'.$row->raqam.'</td>
-                        <td>'.$row->soni.'</td>
-                        <td>'.$row->summa2.'</td>
-                        <td>'.$row->chegirma.'</td>
-                        <td>'.$row->itog.'</td>
-                        <td>'.$row->updated_at.'</td>
-                    </tr>
+          <tr style="border-bottom: 1px solid;">
+                <td><input type="checkbox" class="form-check-input ml-3" id="locolddok" data-id="'.$row->id.'"></td>
+                    <td>'.$row->name.'</td>
+                    <td>'.$row->soni.'</td>
+                    <td>'.$row->summa2.'</td>
+                    <td>'.$row->chegirma.'</td>
+                    <td>'.$row->itog.'</td>
+                    <td>'.$row->updated_at.'</td>
+                    <td>
+                        <button data-id="'.$row->id.'" id="bilamvazdok">
+                            Вазврат
+                        </button>
+                    </td>
+                </tr>
                     ';
                 }
             }
@@ -3149,15 +3230,20 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="bilamvaz">
-                        <td>'.$row->ichkitavar->name.'</td>
-            
-                        <td>'.$row->soni.'</td>
-                        <td>'.$row->summa2.'</td>
-                        <td>'.$row->chegirma.'</td>
-                        <td>'.$row->itog.'</td>
-                        <td>'.$row->updated_at.'</td>
-                    </tr>
+             <tr style="border-bottom: 1px solid;">
+                <td><input type="checkbox" class="form-check-input ml-3" id="locold" data-id="'.$row->id.'"></td>
+                    <td>'.$row->name.'</td>
+                    <td>'.$row->soni.'</td>
+                    <td>'.$row->summa2.'</td>
+                    <td>'.$row->chegirma.'</td>
+                    <td>'.$row->itog.'</td>
+                    <td>'.$row->updated_at.'</td>
+                    <td>
+                        <button data-id="'.$row->id.'" id="bilamvaz">
+                            Вазврат
+                        </button>
+                    </td>
+                </tr>
                     ';
                 }
             }
@@ -3230,15 +3316,20 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="bilamvaz">
-                        <td>'.$row->ichkitavar->name.'</td>
-            
-                        <td>'.$row->soni.'</td>
-                        <td>'.$row->summa2.'</td>
-                        <td>'.$row->chegirma.'</td>
-                        <td>'.$row->itog.'</td>
-                        <td>'.$row->updated_at.'</td>
-                    </tr>
+             <tr style="border-bottom: 1px solid;">
+                <td><input type="checkbox" class="form-check-input ml-3" id="locold" data-id="'.$row->id.'"></td>
+                    <td>'.$row->name.'</td>
+                    <td>'.$row->soni.'</td>
+                    <td>'.$row->summa2.'</td>
+                    <td>'.$row->chegirma.'</td>
+                    <td>'.$row->itog.'</td>
+                    <td>'.$row->updated_at.'</td>
+                    <td>
+                        <button data-id="'.$row->id.'" id="bilamvaz">
+                            Вазврат
+                        </button>
+                    </td>
+                </tr>
                     ';
                 }
             }
@@ -3310,15 +3401,20 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;">
-                        <td>'.$row->name.'</td>
-                        <td>'.$row->raqam.'</td>
-                        <td>'.$row->soni.'</td>
-                        <td>'.$row->summa2.'</td>
-                        <td>'.$row->chegirma.'</td>
-                        <td>'.$row->itog.'</td>
-                        <td>'.$row->updated_at.'</td>
-                    </tr>
+          <tr style="border-bottom: 1px solid;">
+                <td><input type="checkbox" class="form-check-input ml-3" id="locolddok" data-id="'.$row->id.'"></td>
+                    <td>'.$row->name.'</td>
+                    <td>'.$row->soni.'</td>
+                    <td>'.$row->summa2.'</td>
+                    <td>'.$row->chegirma.'</td>
+                    <td>'.$row->itog.'</td>
+                    <td>'.$row->updated_at.'</td>
+                    <td>
+                        <button data-id="'.$row->id.'" id="bilamvazdok">
+                            Вазврат
+                        </button>
+                    </td>
+                </tr>
                     ';
                 }
             }
@@ -3391,15 +3487,20 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;" data-id="'.$row->id.'" id="bilamvaz">
-                        <td>'.$row->ichkitavar->name.'</td>
-            
-                        <td>'.$row->soni.'</td>
-                        <td>'.$row->summa2.'</td>
-                        <td>'.$row->chegirma.'</td>
-                        <td>'.$row->itog.'</td>
-                        <td>'.$row->updated_at.'</td>
-                    </tr>
+             <tr style="border-bottom: 1px solid;">
+                <td><input type="checkbox" class="form-check-input ml-3" id="locold" data-id="'.$row->id.'"></td>
+                    <td>'.$row->name.'</td>
+                    <td>'.$row->soni.'</td>
+                    <td>'.$row->summa2.'</td>
+                    <td>'.$row->chegirma.'</td>
+                    <td>'.$row->itog.'</td>
+                    <td>'.$row->updated_at.'</td>
+                    <td>
+                        <button data-id="'.$row->id.'" id="bilamvaz">
+                            Вазврат
+                        </button>
+                    </td>
+                </tr>
                     ';
                 }
             }
@@ -3472,15 +3573,20 @@ class KlentController2 extends Controller
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;">
-                        <td>'.$row->name.'</td>
-                        <td>'.$row->raqam.'</td>
-                        <td>'.$row->soni.'</td>
-                        <td>'.$row->summa2.'</td>
-                        <td>'.$row->chegirma.'</td>
-                        <td>'.$row->itog.'</td>
-                        <td>'.$row->updated_at.'</td>
-                    </tr>
+          <tr style="border-bottom: 1px solid;">
+                <td><input type="checkbox" class="form-check-input ml-3" id="locolddok" data-id="'.$row->id.'"></td>
+                    <td>'.$row->name.'</td>
+                    <td>'.$row->soni.'</td>
+                    <td>'.$row->summa2.'</td>
+                    <td>'.$row->chegirma.'</td>
+                    <td>'.$row->itog.'</td>
+                    <td>'.$row->updated_at.'</td>
+                    <td>
+                        <button data-id="'.$row->id.'" id="bilamvazdok">
+                            Вазврат
+                        </button>
+                    </td>
+                </tr>
                     ';
                 }
             }
@@ -4330,6 +4436,30 @@ class KlentController2 extends Controller
     public function iidd(Request $request)
     {
         $data = Tavar2::where('tavar_id', $request->id)->get();
+        return response()->json($data);
+    }
+
+    public function toldirish(Request $request)
+    {
+        $data = Ichkitavar::where('tavar_id',"=",$request->id)
+                        ->where('adress',"=",$request->adre)
+                        ->where('tavar2_id',"=",$request->id2)
+                        ->first();
+        return response()->json($data);
+    }
+    
+    public function toldirishdok(Request $request)
+    {
+        $data = Ichkitavardok::where('tavardok_id',"=",$request->id)
+                        ->where('adress',"=", $request->adre)
+                        ->where('tavar2dok_id',"=", $request->id2)
+                        ->first();
+        return response()->json($data);
+    }
+    
+    public function tavardok_id2(Request $request)
+    {
+        $data = Tavar2dok::where('tavardok_id', $request->id)->get();
         return response()->json($data);
     }
     

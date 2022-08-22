@@ -36,22 +36,16 @@
     border-radius: 3px solid black; 
     color: white;
   }
-  #tavar2dok{
-    display: none;
-    background-color: rgb(0 0 0 / 75%);
-    padding: 32px;
-    border-radius: 12px;
-    width: 99%;
-    margin: auto;
-    position: absolute;
-    border-radius: 3px solid black; 
-    color: white;
-  }
 
   #ssser{
     padding: 2px;
     border: none;
     border-bottom: 2px solid;
+  }
+  .heje{
+    background: white;
+    border: none;
+    color: black;
   }
 </style>
 @if ($brends->count == "1" || $brends->count == "3" || $brends->count == "4")
@@ -71,23 +65,23 @@
                     <a class="nav-link" data-toggle="tab" href="#messages7" role="tab" aria-expanded="false"><i class="icofont icofont-ui-message"></i>Удалить товар</a>
                     <div class="slide"></div>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#settings7" role="tab" aria-expanded="false"><i class="icofont icofont-ui-settings"></i>Оччет по товарам</a>
                     <div class="slide"></div>
-                </li>
+                </li> --}}
               </ul>
               <div class="tab-content card-block">
                   <div class="tab-pane active" id="home7" role="tabpanel" aria-expanded="true">
                       <div class="card-header-left">
                       <div class="row">
                         <div class="col-9 mt-0">
-                          <button type="button" class="btn btn-success m-0 p-1" id="addPost3">
+                          {{-- <button type="button" class="btn btn-success m-0 p-1" id="addPost3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
                               <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                               <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                             </svg>
                             Создать
-                          </button>
+                          </button> --}}
                           <button type="button" class="btn btn-primary m-0 p-1" id="addPostm2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
                               <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
@@ -592,7 +586,7 @@
             </div>
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">Етказиб берувчи</label>
-                <select name="adress" class="form-control">
+                <select name="adress" class="form-control" id="adre">
                   <option value="">--Танланг--</option>
                   @foreach($adress as $item)
                     <option value="{{ $item->adress }}">{{ $item->adress }}</option>                                
@@ -609,32 +603,32 @@
             </div>
           <div class="mb-3">
             <label for="message-text" class="col-form-label">Предупреждение</label>
-            <input type="text" class="form-control" name="raqam"  id="">
+            <input type="text" class="form-control" name="raqam"  id="raqam">
             <span class="text-danger error-text raqam_error"></span>
           </div>            
           <div class="mb-3">
-              <label for="message-text" class="col-form-label">Тавар хажм</label>
-              <input type="text" class="form-control" name="hajm" id="">
+              <label for="message-text" class="col-form-label">Тавар астатка: <input type="text" class="heje" id="hajmspan" disabled></label>
+              <input type="text" class="form-control" name="hajm" placeholder="Кошилиши керак">
               <span class="text-danger error-text hajm_error"></span>
             </div>
             <div class="mb-3">
               <label for="message-text" class="col-form-label">Закупочная цена</label>
-              <input type="text" class="form-control" name="summa" id="">
+              <input type="text" class="form-control" name="summa" id="summa">
               <span class="text-danger error-text summa_error"></span>
             </div> 
             <div class="mb-3">
               <label for="message-text" class="col-form-label">Оптовая цена</label>
-              <input type="text" class="form-control" name="summa2" id="">
+              <input type="text" class="form-control" name="summa2" id="summa2">
               <span class="text-danger error-text summa2_error"></span>
             </div>
             <div class="mb-3">
               <label for="message-text" class="col-form-label">Розничная цена</label>
-              <input type="text" class="form-control" name="summa3" id="">
+              <input type="text" class="form-control" name="summa3" id="summa3">
               <span class="text-danger error-text summa3_error"></span>
             </div>
             <div class="mb-3">
               <label for="message-text" class="col-form-label">Штрих код</label>
-              <input type="text" class="form-control" name="kod" id="">
+              <input type="text" class="form-control" name="kod" id="kod">
               <span class="text-danger error-text kod_error"></span>
             </div>
       </div>
@@ -664,10 +658,10 @@
                     <a class="nav-link" data-toggle="tab" href="#messages7dok" role="tab" aria-expanded="false"><i class="icofont icofont-ui-message"></i>Удалить товар</a>
                     <div class="slide"></div>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#settings7dok" role="tab" aria-expanded="false"><i class="icofont icofont-ui-settings"></i>Оччет по товарам</a>
                     <div class="slide"></div>
-                </li>
+                </li> --}}
             </ul>
               <div class="tab-content card-block">
                   <div class="tab-pane active" id="home7dok" role="tabpanel" aria-expanded="true">
@@ -907,48 +901,80 @@
   </div>
 </div>
 
-<div id="tavar2dok">
-    <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Товарни кошиш</h5>
-        <svg xmlns="http://www.w3.org/2000/svg" id="nazadclickedok" width="25" height="25" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-          <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-        </svg>
+<div class="modal fade" id="tavar2dok" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="TavarFormTabledok" action="{{ route('store3dok') }}" method="POST">
+            @csrf
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Тип</label>
+              <select name="addmore[1][tavardok_id]" id="tavardok_id2" class="form-control">
+                <option value="">--Танланг--</option>
+                @foreach ($datadok as $item)
+                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                @endforeach
+              </select>
+              <span class="text-danger error-text tavardok_id_error"></span>
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Етказиб берувчи</label>
+              <select name="addmore[1][adress]" id="adressdok2" class="form-control mx-2">
+                <option value="">--Танланг--</option>
+                @foreach ($adressdok as $item)
+                <option value="{{ $item->adress }}">{{ $item->adress }}</option>
+                @endforeach
+              </select>
+              <span class="text-danger error-text adress_error"></span>
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Тавар номи</label>
+                <select name="addmore[1][tavar2dok_id]" class="form-control" id="tavar2dok_id2">
+                </select>
+              <span class="text-danger error-text tavar2_id_error"></span>
+            </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Предупреждение</label>
+            <input type="text" class="form-control" name="addmore[1][raqam]"  id="raqamdok">
+            <span class="text-danger error-text raqam_error"></span>
+          </div>            
+          <div class="mb-3">
+              <label for="message-text" class="col-form-label">Тавар хажм: <input type="text" class="heje" id="hajmspandok" disabled></label>
+              <input type="text" class="form-control" name="addmore[1][hajm]" id="hajmdok" placeholder="Кошилиши керак">
+              <span class="text-danger error-text hajm_error"></span>
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Закупочная цена</label>
+              <input type="text" class="form-control" name="addmore[1][summa]" id="summadok">
+              <span class="text-danger error-text summa_error"></span>
+            </div> 
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Оптовая цена</label>
+              <input type="text" class="form-control" name="addmore[1][summa2]" id="summa2dok">
+              <span class="text-danger error-text summa2_error"></span>
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Розничная цена</label>
+              <input type="text" class="form-control" name="addmore[1][summa3]" id="summa3dok">
+              <span class="text-danger error-text summa3_error"></span>
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Штрих код</label>
+              <input type="text" class="form-control" name="addmore[1][kod]" id="koddok2">
+              <span class="text-danger error-text kod_error"></span>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Назад</button>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+      </div>
+    </form>
     </div>
-      <form id="TavarFormTabledok" action="{{ route('store3dok') }}" method="POST">
-        @csrf
-        <table class="col-12" id="dynamicTabledok">
-          <thead>
-            <tr>
-              <th>Тип</th>
-              <th>Поставщик</th>
-              <th>Имя</th>
-              <th>Предупрежденние</th>
-              <th>Шт</th>
-              <th>Закупочная цена</th>
-              <th>Оптовая цена</th>
-              <th>Розничная цена</th>
-              <th>Штрих код</th>
-              <th>Удалить</th>
-          </tr>
-          </thead>
-        <tbody>
-
-        </tbody>
-
-        </table>   
-        <div class="modal-footer">
-          <a href="javascript:void(0)" id="adddok" class="btn btn-success">
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-            </svg>
-            Добавыт
-          </a>
-          <button type="button" class="btn btn-secondary" id="nazadclickdok">Назад</button>
-          <button type="submit" class="btn btn-primary">Сохранить</button>
-        </div>
-  
-  </form>
+  </div>
 </div>
 
 <div class="modal fade" id="tavar2deletedok" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1052,8 +1078,8 @@
             </div>
             <div class="mb-3">
               <label for="message-text" class="col-form-label">Штрих код</label>
-              <input type="text" class="form-control" name="kod2" id="kod2dok">
-              <span class="text-danger error-text kod2_error"></span>
+              <input type="text" class="form-control" name="kod2" id="">
+2              <span class="text-danger error-text kod2_error"></span>
             </div>
       </div>
       <div class="modal-footer">
@@ -1238,7 +1264,7 @@ $( function() {
     var d = 0;
     $("#adddok").click(function(){            
             ++d;
-            $("#dynamicTabledok tbody").append('<tr><td><select name="addmore['+d+'][tavardok_id]" id="" class="form-control mx-2">@foreach ($datadok as $item)<option value="{{ $item->id }}">{{ $item->name }}</option>@endforeach</select></td><td><select name="addmore['+d+'][adress]" id="" class="form-control mx-2">@foreach ($adressdok as $item)<option value="{{ $item->adress }}">{{ $item->adress }}</option>@endforeach</select></td><td><select name="addmore['+d+'][tavar2dok_id]" id="" class="form-control mx-2">@foreach ($datatipdok as $item)<option value="{{ $item->id }}">{{ $item->name }}</option>@endforeach</select></td><td><input type="text" name="addmore['+d+'][raqam]" id="" class="form-control mx-2" placeholder="Предупрежденние"></td><td><input type="number" name="addmore['+d+'][hajm]" id="" class="form-control mx-2" placeholder="Шт"></td><td><input type="text" name="addmore['+d+'][summa]" id="" class="form-control mx-2" placeholder="Закупочная цена"></td><td><input type="text" name="addmore['+d+'][summa2]" id="" class="form-control mx-2" placeholder="Оптовая цена"><td><input type="text" name="addmore['+d+'][summa3]" id="" class="form-control mx-2" placeholder="Розничная цена"></td><td><input type="text" name="addmore['+d+'][kod]" id="" class="form-control mx-2" placeholder="Штрих код"></td><td><button type="button" class="btn btn-danger remove-trdok">Удалить</button></td></tr>');
+            $("#dynamicTabledok tbody").append('<tr><td></td><td><select name="addmore['+d+'][tavar2dok_id]" id="" class="form-control mx-2">@foreach ($datatipdok as $item)<option value="{{ $item->id }}">{{ $item->name }}</option>@endforeach</select></td><td><input type="text" name="addmore['+d+'][raqam]" id="" class="form-control mx-2" placeholder="Предупрежденние"></td><td><input type="number" name="addmore['+d+'][hajm]" id="" class="form-control mx-2" placeholder="Шт"></td><td><input type="text" name="addmore['+d+'][summa]" id="" class="form-control mx-2" placeholder="Закупочная цена"></td><td><input type="text" name="addmore['+d+'][summa2]" id="" class="form-control mx-2" placeholder="Оптовая цена"><td><input type="text" name="addmore['+d+'][summa3]" id="" class="form-control mx-2" placeholder="Розничная цена"></td><td><input type="text" name="addmore['+d+'][kod]" id="" class="form-control mx-2" placeholder="Штрих код"></td><td><button type="button" class="btn btn-danger remove-trdok">Удалить</button></td></tr>');
       }); 
   
     $(document).on('click', '.remove-tr', function(){
@@ -1278,13 +1304,43 @@ $( function() {
         success:function(data)
         {
           let rows =  '';
+          rows += '<option value="">--Танланг--</option>';
             data.forEach(room => {
             rows += `
             <option value="${room.id}">${room.name}</option>`;
         });
         $("#iidd2").html(rows);
         }
-      });                   
+      });
+    });
+
+    $(document).on('change', "#iidd2", function(){      
+      var id = $("#iidd").val();
+      var adre = $("#adre").val();
+      var id2 = $(this).val();
+      if(adre){
+        $.ajax({
+          url:"{{ route('toldirish') }}",
+          method:'GET',
+          data:{
+            id: id,
+            adre: adre,
+            id2: id2
+          },
+          dataType:'json',
+          success:function(data)
+          {
+            $("#raqam").val(data.raqam);
+            $("#hajmspan").val(data.hajm);
+            $("#summa").val(data.summa);
+            $("#summa2").val(data.summa2);
+            $("#summa3").val(data.summa3);
+            $("#kod").val(data.kod);
+          }
+        });
+      }else{
+        toastr.error("Етказиб берувчини белгилан");
+      }
     });
     
     $(document).on('change', "#tavardok_id", function(){
@@ -1329,6 +1385,57 @@ $( function() {
       });                   
     });
 
+    $(document).on('change', "#tavardok_id2", function(){
+      var id = $(this).val();
+      $.ajax({
+        url:"{{ route('tavardok_id2') }}",
+        method:'GET',
+        data:{
+          id: id
+        },
+        dataType:'json',
+        success:function(data)
+        {
+          let rows =  '';
+          rows += '<option value="">--Танланг--</option>';
+            data.forEach(room => {
+            rows += `
+            <option value="${room.id}">${room.name}</option>`;
+        });
+        $("#tavar2dok_id2").html(rows);
+        }
+      });                   
+    });
+
+    $(document).on('change', "#tavar2dok_id2", function(){      
+      var id = $("#tavardok_id2").val();
+      var adre = $("#adressdok2").val();
+      var id2 = $(this).val();
+      if(adre){
+        $.ajax({
+          url:"{{ route('toldirishdok') }}",
+          method:'GET',
+          data:{
+            id: id,
+            adre: adre,
+            id2: id2
+          },
+          dataType:'json',
+          success:function(data)
+          {
+            $("#raqamdok").val(data.raqam);
+            $("#hajmspandok").val(data.hajm);
+            $("#summadok").val(data.summa);
+            $("#summa2dok").val(data.summa2);
+            $("#summa3dok").val(data.summa3);
+            $("#koddok2").val(data.kod);
+          }
+        });
+      }else{
+        toastr.error("Етказиб берувчини белгилан");
+      }
+    });
+    
     $( "#addPostm2" ).on( "click", function() {
       $("#storesm3")[0].reset();
       $('#stores3').modal('show');
@@ -1348,15 +1455,15 @@ $( function() {
     });
 
     $( "#addPost3dok" ).on( "click", function() {
-      $('#tavar2dok').show('fold', 1000);
+      $('#tavar2dok').modal("show");
     });
     
     $( "#nazadclickdok" ).on( "click", function() {
-      $('#tavar2dok').toggle('fold', 1000);
+      $('#tavar2dok').modal('hide');
     });
 
     $( "#nazadclickedok" ).on( "click", function() {
-      $('#tavar2dok').toggle('fold', 1000);
+      $('#tavar2dok').modal('hide');
     });
 
     $(document).ready(function(){

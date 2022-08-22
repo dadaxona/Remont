@@ -20,14 +20,23 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\KlentController2;
 use App\Models\Adressdok;
 use App\Models\Arxiv;
+use App\Models\Arxivdok;
 use App\Models\Deletkarzina;
 use App\Models\Ichkitavardok;
 use App\Models\Itogodok;
 use App\Models\Javob;
+use App\Models\Javobdok;
+use App\Models\Karzina2;
+use App\Models\Karzina2dok;
+use App\Models\Karzina3;
+use App\Models\Karzina3dok;
 use App\Models\Karzinadok;
+use App\Models\Pribl;
+use App\Models\Pribldok;
 use App\Models\Sqladpoytaxt;
 use App\Models\Sqladpoytaxtdok;
 use App\Models\Statistika;
+use App\Models\Statistikadok;
 use App\Models\Tavar2;
 use App\Models\Tavar2dok;
 use App\Models\Tavardok;
@@ -516,6 +525,8 @@ class KlentController extends KlentController2
     
     public function live_clentdok(Request $request)
     {
+        $dt= Carbon::now('Asia/Tashkent');
+        $data1 = $dt->toDateString();
         if($request->ajax())
         {
         $output = '';
@@ -539,10 +550,34 @@ class KlentController extends KlentController2
         {
             foreach($data as $row)
             {
+                $arx = Arxivdok::where('userdok_id', $row->id)->where('karzs', ">", 0)->where('srok',"<=", $data1)->first();
+                if($arx){
+                    $foo ='<a href="javascript:void(0)" onclick="tolovdok('.$row->id.')" class="mx-3" style="color: blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-currency-exchange" viewBox="0 0 16 16">
+                            <path d="M0 5a5.002 5.002 0 0 0 4.027 4.905 6.46 6.46 0 0 1 .544-2.073C3.695 7.536 3.132 6.864 3 5.91h-.5v-.426h.466V5.05c0-.046 0-.093.004-.135H2.5v-.427h.511C3.236 3.24 4.213 2.5 5.681 2.5c.316 0 .59.031.819.085v.733a3.46 3.46 0 0 0-.815-.082c-.919 0-1.538.466-1.734 1.252h1.917v.427h-1.98c-.003.046-.003.097-.003.147v.422h1.983v.427H3.93c.118.602.468 1.03 1.005 1.229a6.5 6.5 0 0 1 4.97-3.113A5.002 5.002 0 0 0 0 5zm16 5.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0zm-7.75 1.322c.069.835.746 1.485 1.964 1.562V14h.54v-.62c1.259-.086 1.996-.74 1.996-1.69 0-.865-.563-1.31-1.57-1.54l-.426-.1V8.374c.54.06.884.347.966.745h.948c-.07-.804-.779-1.433-1.914-1.502V7h-.54v.629c-1.076.103-1.808.732-1.808 1.622 0 .787.544 1.288 1.45 1.493l.358.085v1.78c-.554-.08-.92-.376-1.003-.787H8.25zm1.96-1.895c-.532-.12-.82-.364-.82-.732 0-.41.311-.719.824-.809v1.54h-.005zm.622 1.044c.645.145.943.38.943.796 0 .474-.37.8-1.02.86v-1.674l.077.018z"/>
+                        </svg>
+                    </a>';
+                }else{
+                    $foo ='<a href="javascript:void(0)" class="mx-3" style="color: black">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-currency-exchange" viewBox="0 0 16 16">
+                            <path d="M0 5a5.002 5.002 0 0 0 4.027 4.905 6.46 6.46 0 0 1 .544-2.073C3.695 7.536 3.132 6.864 3 5.91h-.5v-.426h.466V5.05c0-.046 0-.093.004-.135H2.5v-.427h.511C3.236 3.24 4.213 2.5 5.681 2.5c.316 0 .59.031.819.085v.733a3.46 3.46 0 0 0-.815-.082c-.919 0-1.538.466-1.734 1.252h1.917v.427h-1.98c-.003.046-.003.097-.003.147v.422h1.983v.427H3.93c.118.602.468 1.03 1.005 1.229a6.5 6.5 0 0 1 4.97-3.113A5.002 5.002 0 0 0 0 5zm16 5.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0zm-7.75 1.322c.069.835.746 1.485 1.964 1.562V14h.54v-.62c1.259-.086 1.996-.74 1.996-1.69 0-.865-.563-1.31-1.57-1.54l-.426-.1V8.374c.54.06.884.347.966.745h.948c-.07-.804-.779-1.433-1.914-1.502V7h-.54v.629c-1.076.103-1.808.732-1.808 1.622 0 .787.544 1.288 1.45 1.493l.358.085v1.78c-.554-.08-.92-.376-1.003-.787H8.25zm1.96-1.895c-.532-.12-.82-.364-.82-.732 0-.41.311-.719.824-.809v1.54h-.005zm.622 1.044c.645.145.943.38.943.796 0 .474-.37.8-1.02.86v-1.674l.077.018z"/>
+                        </svg>
+                    </a>';
+                }
+                if($row->summa == 0){
+                    $summa = '<a href="javascript:void(0)" onclick="sevdok('.$row->id.')" class="btn btn-danger p-1 m-0">
+                    '.$row->summa.'
+                    </a>';
+                }else{
+                    $summa = '<a href="javascript:void(0)" onclick="sevdok('.$row->id.')" class="btn btn-success p-1 m-0">
+                    '.$row->summa.'
+                    </a>'; 
+                }
                 $output .= '
-                <tr id="rowdok_'.$row->id.'" style="border-bottom: 1px solid;">
+                <tr id="row_'.$row->id.'" style="border-bottom: 1px solid;">
                 <td>'.$row->name.'</td>
                 <td>'.$row->tel.'</td>
+                <td>'.$row->chatid.'</td>
                 <td>'.$row->firma.'</td>
                 <td>'.$row->inn.'</td>
             
@@ -557,6 +592,8 @@ class KlentController extends KlentController2
                       <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
                     </svg>
                   </a>
+                  '.$foo.'
+                  '.$summa.'
                 </td>
               </tr>
               ';
@@ -589,7 +626,7 @@ class KlentController extends KlentController2
         if($query != '')
         {
         $data = DB::table('users')
-            ->where('adress', 'like', '%'.$query.'%')
+            ->where('name', 'like', '%'.$query.'%')
             ->orderBy('id', 'DESC')
             ->get();
             
@@ -619,7 +656,15 @@ class KlentController extends KlentController2
                         </svg>
                     </a>';
                 }
-
+                if($row->summa == 0){
+                    $summa = '<a href="javascript:void(0)" onclick="sev('.$row->id.')" class="btn btn-danger p-1 m-0">
+                    '.$row->summa.'
+                    </a>';
+                }else{
+                    $summa = '<a href="javascript:void(0)" onclick="sev('.$row->id.')" class="btn btn-success p-1 m-0">
+                    '.$row->summa.'
+                    </a>'; 
+                }
                 $output .= '
                 <tr id="row_'.$row->id.'" style="border-bottom: 1px solid;">
                 <td>'.$row->name.'</td>
@@ -640,6 +685,7 @@ class KlentController extends KlentController2
                     </svg>
                   </a>
                   '.$foo.'
+                  '.$summa.'
                 </td>
               </tr>
               ';
@@ -697,6 +743,14 @@ class KlentController extends KlentController2
         return response()->json($post);
     }
 
+    public function tidtolovdok(Request $request)
+    {
+        $dt= Carbon::now('Asia/Tashkent');
+        $data1 = $dt->toDateString();
+        $post = Arxivdok::where('userdok_id', $request->id)->where('karzs', ">", 0)->where('srok', "<=", $data1)->first();    
+        return response()->json($post);
+    }
+
     public function tolash(Request $request)
     {
         $sta = Statistika::find(1);
@@ -720,6 +774,34 @@ class KlentController extends KlentController2
         $javo = Javob::where('user_id', $request->id)->first();
         $javob2 = $javo->javob - $request->karzs2;
         Javob::where('user_id', $request->id)->update([
+            'javob'=>$javob2
+        ]);
+        return response()->json(["msg"=>"Мувофакиятли туланди"]);
+    }
+
+    public function tolashdok(Request $request)
+    {
+        $sta = Statistikadok::find(1);
+        $fo = $request->karzs2 / 10;
+        $ja = $sta->kassa + $request->karzs2 - $fo;
+        $stat2 = $sta->foyda + $fo;
+        $stat = $sta->pribl + $fo;
+        Statistikadok::find(1)->update([
+            "foyda"=>$stat2,
+            "kassa"=>$ja,
+            "pribl"=>$stat,
+        ]);
+        $arx = Arxivdok::find($request->t_id2);
+        $aaaa = $arx->itogs + $request->karzs2;
+        $aaaa22 = $arx->karzs - $request->karzs2;
+        Arxivdok::find($request->t_id2)->update([
+            "itogs"=>$aaaa,
+            "karzs"=>$aaaa22,
+            "srok"=>$request->datesrok
+        ]);
+        $javo = Javobdok::where('userdok_id', $request->id)->first();
+        $javob2 = $javo->javob - $request->karzs2;
+        Javobdok::where('userdok_id', $request->id)->update([
             'javob'=>$javob2
         ]);
         return response()->json(["msg"=>"Мувофакиятли туланди"]);
@@ -1447,15 +1529,30 @@ class KlentController extends KlentController2
          {
           foreach($data as $row)
           {
+            if($row->status == 0){
+                $a ='<td style="color:#ff0c17">'.$row->name.'</td>';
+                $a1 ='<td style="color:#ff0c17">'.number_format($row->summa2, 3).'</td>';
+                $a2 ='<td style="color:#ff0c17">'.$row->soni.'</td>';
+                $a3 ='<td style="color:#ff0c17">'.$row->chegirma.'</td>';
+                $a4 ='<td style="color:#ff0c17">'.number_format($row->itog, 3).'</td>';
+                $a5 ='<td style="color:#ff0c17">'.$row->hajm.'</td>';      
+            }else{
+                $a ='<td style="color: #0000bf">'.$row->name.'</td>';
+                $a1 ='<td style="color: #0000bf">'.number_format($row->summa2, 3).'</td>';
+                $a2 ='<td style="color: #0000bf">'.$row->soni.'</td>';
+                $a3 ='<td style="color: #0000bf">'.$row->chegirma.'</td>';
+                $a4 ='<td style="color: #0000bf">'.number_format($row->itog, 3).'</td>';
+                $a5 ='<td style="color: #0000bf">'.$row->hajm.'</td>';
+            }
            $output .= '
-           <tr onclick="belgilashdok('.$row->id.')" style="border-bottom: 1px solid;">  
-            <td>'.$row->name.'</td>
-            <td>'.number_format($row->summa2, 3).'</td>
-            <td>'.$row->soni.'</td>
-            <td>'.$row->chegirma.'</td>
-            <td>'.number_format($row->itog, 3).'</td>
-            <td>'.$row->hajm.'</td>
-           </tr>
+            <tr onclick="belgilashdok('.$row->id.')" style="border-bottom: 1px solid;">  
+                '.$a.'
+                '.$a1.'
+                '.$a2.'
+                '.$a3.'
+                '.$a4.'
+                '.$a5.'
+            </tr>
            ';
           }
          }
@@ -2069,12 +2166,24 @@ class KlentController extends KlentController2
     {
         return $model->bot($request);
     }
+
+    public function botdok(Request $request, KlentServis $model)
+    {
+        return $model->botdok($request);
+    }
+
     public function bot2()
     {
         $data = Karzina::all();
         return response()->json(['context'=>$data]);
     }
 
+    public function bot2dok()
+    {
+        $data = Karzinadok::all();
+        return response()->json(['context'=>$data]);
+    }
+    
     public function zakazayt(Request $request, KlentServis $model)
     {
         return $model->zakazayt($request);
@@ -2083,5 +2192,455 @@ class KlentController extends KlentController2
     public function zakazaytdok(Request $request, KlentServis $model)
     {
         return $model->zakazaytdok($request);
+    }
+
+    public function chd()
+    {
+        $data = Karzina2::where('status', 1)->get();
+        return response()->json($data);
+    }
+
+    public function chd2()
+    {
+        Karzina2::where('status', 1)->update([
+            'status' => 0
+        ]);
+    }
+
+    public function chb()
+    {
+        $data = Karzina3::where('status', 1)->get();
+        return response()->json($data);
+    }
+
+    public function chb2()
+    {
+        Karzina3::where('status', 1)->update([
+            'status' => 0
+        ]);
+    }
+
+    public function otmetka(Request $request)
+    {
+        $data = Karzina2::find($request->id);
+        if($data->status == 1){
+            $data->status = 0;
+            $data->update();
+            return response()->json(0);
+
+        }else{
+            $data->status = 1;
+            $data->update();
+            return response()->json(1);
+        }
+    }
+
+    public function otmetka2(Request $request)
+    {
+        $data = Karzina3::find($request->id);
+        if($data->status == 1){
+            $data->status = 0;
+            $data->update();
+            return response()->json(0);
+
+        }else{
+            $data->status = 1;
+            $data->update();
+            return response()->json(1);
+        }
+    }
+
+    public function chddok()
+    {
+        $data = Karzina2dok::where('status', 1)->get();
+        return response()->json($data);
+    }
+
+    public function chd2dok()
+    {
+        Karzina2dok::where('status', 1)->update([
+            'status' => 0
+        ]);
+    }
+
+    public function chbdok()
+    {
+        $data = Karzina3dok::where('status', 1)->get();
+        return response()->json($data);
+    }
+
+    public function chb2dok()
+    {
+        Karzina3dok::where('status', 1)->update([
+            'status' => 0
+        ]);
+    }
+
+    public function otmetkadok(Request $request)
+    {
+        $data = Karzina2dok::find($request->id);
+        if($data->status == 1){
+            $data->status = 0;
+            $data->update();
+            return response()->json(0);
+
+        }else{
+            $data->status = 1;
+            $data->update();
+            return response()->json(1);
+        }
+    }
+
+    public function otmetka2dok(Request $request)
+    {
+        $data = Karzina3dok::find($request->id);
+        if($data->status == 1){
+            $data->status = 0;
+            $data->update();
+            return response()->json(0);
+
+        }else{
+            $data->status = 1;
+            $data->update();
+            return response()->json(1);
+        }
+    }
+
+    public function pribl()
+    {
+        if(Session::has('IDIE')){
+            $brends = Drektor::where('id','=',Session::get('IDIE'))->first();
+            return view('pribl',[
+                'brends'=>$brends,
+            ]);
+        }else{
+            return redirect('/logaut');
+        }
+    }
+
+    public function getel(Request $request)
+    {
+        if($request->data2){
+            return  $this->getel1($request);
+        }else{
+            return  $this->getel2($request);
+        }
+    }
+    public function getel1($request)
+    {
+        if($request->ajax())
+        {
+            $output = '';
+            $ichki = Ichkitavar::all();
+            $data = Karzina2::whereBetween("created_at", [$request->data, $request->data2])->get();
+            $data222 = Arxiv::whereBetween("created_at", [$request->data, $request->data2])->get();
+            $foo = Pribl::find(1);
+            if($foo){
+                $foo->jami = 0;
+                $foo->karz = 0;
+                $foo->pribl = 0;
+                $foo->vse = 0;
+                $foo->save();
+                foreach ($ichki as $value) {
+                    $foo1 = Pribl::find(1);
+                    $foo1->vse = $foo1->vse + $value->hajm * $value->summa;
+                    $foo1->update();
+                }
+                foreach ($data as $value) {
+                    $ich = Ichkitavar::find($value->ichkitavar_id);
+                    $foo2 = Pribl::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($data222 as $value) {
+                    $foo3 = Pribl::find(1);
+                    $foo3->karz = $foo3->karz + $value->karzs;
+                    $foo3->update();                    
+                }
+                foreach($data as $row)
+                {
+                    $output .= '
+                    <tr style="border-bottom: 1px solid;">
+                        <td>'.$row->clentra.'</td>
+                        <td>'.$row->name.'</td>
+                        <td>'.$row->soni.'</td>
+                        <td>'.$row->summa2.'</td>
+                        <td>'.$row->itog.'</td>
+                    </tr>
+                    ';
+                }
+            }else{
+                Pribl::create([
+                    'jami'=>0,
+                    'karz'=>0,
+                    'pribl'=>0,
+                    'vse'=>0,
+                ]);
+                foreach ($ichki as $value) {
+                    $foo1 = Pribl::find(1);
+                    $foo1->vse = $foo1->vse + $value->hajm * $value->summa;
+                    $foo1->update();
+                }
+                foreach ($data as $value) {
+                    $ich = Ichkitavar::find($value->ichkitavar_id);
+                    $foo2 = Pribl::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($data222 as $value) {
+                    $foo3 = Pribl::find(1);
+                    $foo3->karz = $foo3->karz + $value->karzs;
+                    $foo3->update();                    
+                }
+                foreach($data as $row)
+                {
+                    $output .= '
+                    <tr style="border-bottom: 1px solid;">
+                        <td>'.$row->clentra.'</td>
+                        <td>'.$row->name.'</td>
+                        <td>'.$row->soni.'</td>
+                        <td>'.$row->summa2.'</td>
+                        <td>'.$row->itog.'</td>
+                    </tr>
+                    ';
+                }
+            }
+            $foo4 = Pribl::find(1);
+            $foo4->pribl = $foo4->jami - $foo4->pribl;
+            $foo4->update();
+            return response()->json([
+                'data'=>$foo4??[],
+                'output'=>$output
+            ]);
+        }
+    }
+    public function getel2($request)
+    {
+        if($request->ajax())
+        {
+            $ichki = Ichkitavar::all();
+            $kar2 = Karzina2::get();
+            $arx = Arxiv::get();
+            $foo = Pribl::find(1);
+            if($foo){
+                $foo->jami = 0;
+                $foo->karz = 0;
+                $foo->pribl = 0;
+                $foo->vse = 0;
+                $foo->save();
+                foreach ($ichki as $value) {
+                    $foo1 = Pribl::find(1);
+                    $foo1->vse = $foo1->vse + $value->hajm * $value->summa;
+                    $foo1->update();
+                }
+                foreach ($kar2 as $value) {
+                    $ich = Ichkitavar::find($value->ichkitavar_id);
+                    $foo2 = Pribl::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($arx as $value) {
+                    $foo3 = Pribl::find(1);
+                    $foo3->karz = $foo3->karz + $value->karzs;
+                    $foo3->update();                    
+                }
+            }else{
+                Pribl::create([
+                    'jami'=>0,
+                    'karz'=>0,
+                    'pribl'=>0,
+                    'vse'=>0,
+                ]);
+                foreach ($ichki as $value) {
+                    $foo1 = Pribl::find(1);
+                    $foo1->vse = $foo1->vse + $value->hajm * $value->summa;
+                    $foo1->update();
+                }
+                foreach ($kar2 as $value) {
+                    $ich = Ichkitavar::find($value->ichkitavar_id);
+                    $foo2 = Pribl::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($arx as $value) {
+                    $foo3 = Pribl::find(1);
+                    $foo3->karz = $foo3->karz + $value->karzs;
+                    $foo3->update();                    
+                }
+            }
+            $foo4 = Pribl::find(1);
+            $foo4->pribl = $foo4->jami - $foo4->pribl;
+            $foo4->update();
+            return response()->json([
+                'data'=>$foo4??[],
+            ]);
+        }
+    }
+
+    public function geteldok(Request $request)
+    {
+        if($request->data2){
+            return  $this->getel1dok($request);
+        }else{
+            return  $this->getel2dok($request);
+        }
+    }
+    public function getel1dok($request)
+    {
+        if($request->ajax())
+        {
+            $output = '';
+            $ichki = Ichkitavardok::all();
+            $data = Karzina2dok::whereBetween("created_at", [$request->data, $request->data2])->get();
+            $data222 = Arxivdok::whereBetween("created_at", [$request->data, $request->data2])->get();
+            $foo = Pribldok::find(1);
+            if($foo){
+                $foo->jami = 0;
+                $foo->karz = 0;
+                $foo->pribl = 0;
+                $foo->vse = 0;
+                $foo->save();
+                foreach ($ichki as $value) {
+                    $foo1 = Pribldok::find(1);
+                    $foo1->vse = $foo1->vse + $value->hajm * $value->summa;
+                    $foo1->update();
+                }
+                foreach ($data as $value) {
+                    $ich = Ichkitavardok::find($value->ichkitavardok_id);
+                    $foo2 = Pribldok::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($data222 as $value) {
+                    $foo3 = Pribldok::find(1);
+                    $foo3->karz = $foo3->karz + $value->karzs;
+                    $foo3->update();                    
+                }
+                foreach($data as $row)
+                {
+                    $output .= '
+                    <tr style="border-bottom: 1px solid;">
+                        <td>'.$row->userdok->name.'</td>
+                        <td>'.$row->name.'</td>
+                        <td>'.$row->soni.'</td>
+                        <td>'.$row->summa2.'</td>
+                        <td>'.$row->itog.'</td>
+                    </tr>
+                    ';
+                }
+            }else{
+                Pribldok::create([
+                    'jami'=>0,
+                    'karz'=>0,
+                    'pribl'=>0,
+                    'vse'=>0,
+                ]);
+                foreach ($ichki as $value) {
+                    $foo1 = Pribldok::find(1);
+                    $foo1->vse = $foo1->vse + $value->hajm * $value->summa;
+                    $foo1->update();
+                }
+                foreach ($data as $value) {
+                    $ich = Ichkitavardok::find($value->ichkitavardok_id);
+                    $foo2 = Pribldok::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($data222 as $value) {
+                    $foo3 = Pribldok::find(1);
+                    $foo3->karz = $foo3->karz + $value->karzs;
+                    $foo3->update();                    
+                }
+                foreach($data as $row)
+                {
+                    $output .= '
+                    <tr style="border-bottom: 1px solid;">
+                        <td>'.$row->userdok->name.'</td>
+                        <td>'.$row->name.'</td>
+                        <td>'.$row->soni.'</td>
+                        <td>'.$row->summa2.'</td>
+                        <td>'.$row->itog.'</td>
+                    </tr>
+                    ';
+                }
+            }
+            $foo4 = Pribldok::find(1);
+            $foo4->pribl = $foo4->jami - $foo4->pribl;
+            $foo4->update();
+            return response()->json([
+                'data'=>$foo4??[],
+                'output'=>$output
+            ]);
+        }
+    }
+    public function getel2dok($request)
+    {
+        if($request->ajax())
+        {
+            $ichki = Ichkitavardok::all();
+            $kar2 = Karzina2dok::get();
+            $arx = Arxivdok::get();
+            $foo = Pribldok::find(1);
+            if($foo){
+                $foo->jami = 0;
+                $foo->karz = 0;
+                $foo->pribl = 0;
+                $foo->vse = 0;
+                $foo->save();
+                foreach ($ichki as $value) {
+                    $foo1 = Pribldok::find(1);
+                    $foo1->vse = $foo1->vse + $value->hajm * $value->summa;
+                    $foo1->update();
+                }
+                foreach ($kar2 as $value) {
+                    $ich = Ichkitavardok::find($value->ichkitavardok_id);
+                    $foo2 = Pribldok::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($arx as $value) {
+                    $foo3 = Pribldok::find(1);
+                    $foo3->karz = $foo3->karz + $value->karzs;
+                    $foo3->update();                    
+                }
+            }else{
+                Pribldok::create([
+                    'jami'=>0,
+                    'karz'=>0,
+                    'pribl'=>0,
+                    'vse'=>0,
+                ]);
+                foreach ($ichki as $value) {
+                    $foo1 = Pribldok::find(1);
+                    $foo1->vse = $foo1->vse + $value->hajm * $value->summa;
+                    $foo1->update();
+                }
+                foreach ($kar2 as $value) {
+                    $ich = Ichkitavardok::find($value->ichkitavardok_id);
+                    $foo2 = Pribldok::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($arx as $value) {
+                    $foo3 = Pribldok::find(1);
+                    $foo3->karz = $foo3->karz + $value->karzs;
+                    $foo3->update();                    
+                }
+            }
+            $foo4 = Pribldok::find(1);
+            $foo4->pribl = $foo4->jami - $foo4->pribl;
+            $foo4->update();
+            return response()->json([
+                'data'=>$foo4??[],
+            ]);
+        }
     }
 }

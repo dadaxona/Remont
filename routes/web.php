@@ -46,6 +46,7 @@ Route::get('live_ishchi', [KlentController::class, 'live_ishchi'])->name('live_i
 Route::get('live_admin', [KlentController::class, 'live_admin'])->name('live_admin');
 Route::get('showishchi/{id}', [KlentController::class, 'showishchi']);
 Route::get('srocrow', [AuthController::class,'srocrow'])->name('srocrow');
+Route::get('srocrowdok', [AuthController::class,'srocrowdok'])->name('srocrowdok');
 Route::get('showadmin/{id}', [KlentController::class, 'showadmin']);
 Route::post('deleteishchi/{id}', [KlentController::class, 'deleteishchi']);
 Route::post('deleteadmin/{id}', [KlentController::class, 'deleteadmin']);
@@ -75,7 +76,9 @@ Route::get('live_clentdok', [KlentController::class, 'live_clentdok'])->name('li
 Route::get('index', [KlentController::class, 'index'])->name('index');
 Route::get('indextip', [KlentController::class, 'indextip'])->name('indextip');
 Route::get('tidtolov', [KlentController::class, 'tidtolov'])->name('tidtolov');
+Route::get('tidtolovdok', [KlentController::class, 'tidtolovdok'])->name('tidtolovdok');
 Route::post('tolash', [KlentController::class, 'tolash'])->name('tolash');
+Route::post('tolashdok', [KlentController::class, 'tolashdok'])->name('tolashdok');
 Route::post('storead', [KlentController::class, 'storead'])->name('storead');
 Route::post('storedok', [KlentController::class, 'storedok'])->name('storedok');
 Route::get('show/{id}', [KlentController::class, 'show']);
@@ -170,7 +173,9 @@ Route::get('rachot', [KlentController::class, 'rachot'])->name('rachot');
 Route::get('rachotdok', [KlentController::class, 'rachotdok'])->name('rachotdok');
 Route::post('oplata', [KlentController::class, 'oplata'])->name('oplata');
 Route::post('bot', [KlentController::class, 'bot'])->name('bot');
+Route::post('botdok', [KlentController::class, 'botdok'])->name('botdok');
 Route::get('bot2', [KlentController::class, 'bot2'])->name('bot2');
+Route::get('bot2dok', [KlentController::class, 'bot2dok'])->name('bot2dok');
 Route::post('oplatadok', [KlentController::class, 'oplatadok'])->name('oplatadok');
 Route::post('zakazayt', [KlentController::class, 'zakazayt'])->name('zakazayt');
 Route::post('zakazaytdok', [KlentController::class, 'zakazaytdok'])->name('zakazaytdok');
@@ -246,6 +251,9 @@ Route::post('saqlashsqladdok', [KlentController::class, 'saqlashsqladdok'])->nam
 Route::post('tayyorsqlad', [KlentController::class, 'tayyorsqlad'])->name('tayyorsqlad');
 Route::post('tayyorsqladdok', [KlentController::class, 'tayyorsqladdok'])->name('tayyorsqladdok');
 Route::get('iidd', [KlentController::class, 'iidd'])->name('iidd');
+Route::get('toldirish', [KlentController::class, 'toldirish'])->name('toldirish');
+Route::get('toldirishdok', [KlentController::class, 'toldirishdok'])->name('toldirishdok');
+Route::get('tavardok_id2', [KlentController::class, 'tavardok_id2'])->name('tavardok_id2');
 Route::get('tavardok_id', [KlentController::class, 'tavardok_id'])->name('tavardok_id');
 Route::get('tavardokoption_id', [KlentController::class, 'tavardokoption_id'])->name('tavardokoption_id');
 
@@ -279,3 +287,24 @@ Route::get('/rasxod', [KlentController::class, 'rasxod'])->name('rasxod');
 Route::get('/getrasxod', [KlentController::class, 'getrasxod'])->name('getrasxod');
 Route::post('postrasxod', [KlentController::class, 'postrasxod'])->name('postrasxod');
 Route::post('deletrasxod/{id}', [KlentController::class, 'deletrasxod']);
+
+Route::get('chd', [KlentController::class, 'chd'])->name('chd');
+Route::get('chd2', [KlentController::class, 'chd2'])->name('chd2');
+Route::get('chb', [KlentController::class, 'chb'])->name('chb');
+Route::get('chb2', [KlentController::class, 'chb2'])->name('chb2');
+Route::post('otmetka2', [KlentController::class, 'otmetka2'])->name('otmetka2');
+Route::post('otmetka', [KlentController::class, 'otmetka'])->name('otmetka');
+
+Route::get('/usersumma', [AuthController::class, 'usersumma'])->name('usersumma');
+Route::get('/usersummadok', [AuthController::class, 'usersummadok'])->name('usersummadok');
+Route::post('/aloxida', [AuthController::class, 'aloxida'])->name('aloxida');
+Route::post('/aloxidadok', [AuthController::class, 'aloxidadok'])->name('aloxidadok');
+Route::get('chddok', [KlentController::class, 'chddok'])->name('chddok');
+Route::get('chd2dok', [KlentController::class, 'chd2dok'])->name('chd2dok');
+Route::get('chbdok', [KlentController::class, 'chbdok'])->name('chbdok');
+Route::get('chb2dok', [KlentController::class, 'chb2dok'])->name('chb2dok');
+Route::post('otmetka2dok', [KlentController::class, 'otmetka2dok'])->name('otmetka2dok');
+Route::post('otmetkadok', [KlentController::class, 'otmetkadok'])->name('otmetkadok');
+Route::get('pribl.php', [KlentController::class, 'pribl'])->name('pribl.php');
+Route::get('getel', [KlentController::class, 'getel'])->name('getel');
+Route::get('geteldok', [KlentController::class, 'geteldok'])->name('geteldok');

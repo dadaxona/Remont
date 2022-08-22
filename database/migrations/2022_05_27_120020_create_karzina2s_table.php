@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('chegirma')->nullable();
             $table->string('itog')->nullable();
             $table->string('zakaz')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')
             ->onDelete('cascade')->onUpdate('cascade');

@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('userdoks', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name')->nullable();
-            $table->string('tel')->nullable();
-            $table->string('chatid')->nullable();
-            $table->string('firma')->nullable();
-            $table->string('inn')->nullable();
-            $table->string('summa')->nullable();
+        Schema::create('pribldoks', function (Blueprint $table) {
+            $table->id();
+            $table->string('jami')->nullable();
+            $table->string('karz')->nullable();
+            $table->string('pribl')->nullable();
+            $table->string('vse')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('userdoks');
+        Schema::dropIfExists('pribldoks');
     }
 };
