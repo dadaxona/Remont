@@ -111,6 +111,26 @@
     width: 81%;
     margin-left: 10px;
   }
+  #srokdok{
+    width: 81%;
+    margin-left: 10px;
+  }
+  #oplata{
+    width: 50%;
+    text-align: center;
+  }
+  #nazad{
+    width: 50%;
+    text-align: center;
+  }
+  #oplatadok{
+    width: 50%;
+    text-align: center;
+  }
+  #nazaddok{
+    width: 50%;
+    text-align: center;
+  }
 </style>
 @if ($brends->count == "1" || $brends->count == "3" || $brends->count == "4")
 <div class="page-body button-page">
@@ -315,8 +335,8 @@
 <div class="modal fade" id="jonatish" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog">
   <div class="modal-content">
-    <div class="modal-header">
-      <span class="modal-title" id="exampleModalLabeldokse"></span>
+    <div class="modal-header" id="exampleModalLabeldokse">
+      
     </div>
     <div class="modal-body">
             <div class="mb-3 d-flex">
@@ -341,6 +361,7 @@
                 </div>                    
                <div class="col-6">
                     <input type="text" class="form-control text-right itogsw" name="naqt" id="naqt">
+                    <input type="hidden" id="naqttr">
                </div>
                <div class="col-2">
                     <button class="btn btn-success" id="naqtteng">
@@ -399,9 +420,10 @@
                 </div>
             </div>
         </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="nazad">Назад</button>
-      <button type="submit" class="btn btn-success" id="oplata">Оплаты</button>
+        <hr>
+    <div class="d-flex p-3 pb-5">
+        <button type="button" class="btn btn-danger mr-2" data-bs-dismiss="modal" id="nazad">Назад</button>
+        <button type="submit" class="btn btn-success" id="oplata">Оплаты</button>       
     </div>
 
   </div>
@@ -672,9 +694,7 @@
 <div class="modal fade" id="jonatishdok" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog">
   <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabeldoksedok"></h5>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal-header" id="exampleModalLabeldoksedok">
     </div>
     <div class="modal-body">
             <div class="mb-3 d-flex">
@@ -686,11 +706,20 @@
                 </div>
             </div>
             <div class="mb-3 d-flex">
+                <select name="clentra" id="clentradok" class="form-control text-center">
+                    <option value="">Выберите клиент</option>
+                    @foreach ($clentsdok as $item)
+                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="mb-3 d-flex">
                 <div class="col-4">
                     <h5 class="mt-2 mx-2">Наличные:</h5>
                 </div>                    
                <div class="col-6">
                 <input type="text" class="form-control text-right itogsw" name="naqt" id="naqtdok">
+                <input type="hidden" id="naqttrdok">
                </div>
                <div class="col-2">
                 <button class="btn btn-success" id="naqtdokteng">
@@ -732,14 +761,6 @@
                     <input type="text" class="form-control text-right itogsw" name="karzs" id="karzsdok" disabled>
                 </div>
             </div>
-            <div class="mb-3 d-flex">
-                <select name="clentra" id="clentradok" class="form-control text-center">
-                    <option value="">Выберите клиент</option>
-                    @foreach ($clentsdok as $item)
-                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                    @endforeach
-                </select>
-            </div>
             <div class="mb-3 d-flex" id="channgemdok">    
             </div>
             <div class="form-check">
@@ -757,10 +778,11 @@
                 </div>
             </div>
         </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="nazaddok">Назад</button>
-      <button type="submit" class="btn btn-success" id="oplatadok">Оплаты</button>
-    </div>
+        <hr>
+        <div class="d-flex p-3 pb-5">
+            <button type="button" class="btn btn-danger mr-2" data-bs-dismiss="modal" id="nazaddok">Назад</button>
+            <button type="submit" class="btn btn-success" id="oplatadok">Оплаты</button>       
+        </div>
 
   </div>
 </div>
@@ -831,6 +853,8 @@
     
 @endif
 <script type="text/javascript">
+//   $("#tulov").html('<div class="mb-3 d-flex"><div class="col-4"><h5 class="mt-2 mx-2">Наличные:</h5></div><div class="col-6"><input type="text" class="form-control text-right itogsw" name="naqt" id="naqt"></div><div class="col-2"><button class="btn btn-success" id="naqtteng">=</button></div></div><div class="mb-3 d-flex"><div class="col-4"><h5 class="mt-2 mx-2">Карта:</h5></div><div class="col-6"><input type="text" class="form-control text-right itogsw" name="plastik" id="plastik"></div><div class="col-2"><button class="btn btn-success" id="plastikteng">=</button></div></div><div class="mb-3 d-flex"><div class="col-4"><h5 class="mt-2 mx-2">Банк:</h5></div><div class="col-6"><input type="text" class="form-control text-right itogsw" name="bank" id="bank"></div><div class="col-2"><button class="btn btn-success" id="bankteng">=</button></div></div>');
+                    
   $( function() {
     $( "#tbody2" ).selectable();
   } );
@@ -842,22 +866,14 @@
   $( function() {
     $( "#tbody" ).selectable();
   } );
-//   $(document).on('change', '#clentra', function(){
-//     var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srok' />";
-//     var karzs = $("#karzs").val();
-//     if(karzs == 0){
-//         $("#channgem").html('');
-//     }else{
-//         $("#channgem").html(inputdate);
-//     }
-//   });
 
   $(document).on('change', '#clentra', function(){
     var id = $(this).val();
     var kurs2 = $("#kurs2").val();
     var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srok' />";
-    var karzs = $("#karzs").val();
     var itogs = $("#itogs").val();
+    $("#karzs").val(itogs);
+    var karzs = $("#karzs").val();
     $.ajax({
         url:"{{ route('usersumma') }}",
         method:'GET',
@@ -873,40 +889,41 @@
                     let pay = data.summa - karzs;
                     $("#channgem").html('');
                     $("#karzs").val('');
-                    $("#exampleModalLabeldokse").html("Мижоз баланси  " + data.summa + "$  " + "Карз копланади ва коладиган сумма  " + pay + "$");
+                    $("#exampleModalLabeldokse").html("<span class='modal-title alert alert-success'>Мижоз баланси  " + data.summa + "$  " + "Карз копланади ва Балансида коладиган сумма  " + pay + "$ </span>");
 
                 }else{
                     let pay2 = karzs - data.summa;
                     $("#karzs").val(pay2);
+                    $("#naqttr").val(data.summa);
                     $("#channgem").html(inputdate);
-                    $("#exampleModalLabeldokse").html("Мижоз баланси  " + data.summa + "$  " + "Туловни амалга оширолмайди.  " + pay2 + "$  Тулов килиши йоки карзни муддат белгилаган холда амалга ошириши мумкин");
+                    $("#exampleModalLabeldokse").html("<span class='modal-title alert alert-danger'>Мижоз баланси  " + data.summa + "$  " + "Туловни амалга оширолмайди.  " + pay2 + "$  Тулов килиши йоки карзни муддат белгилаган холда амалга ошириши мумкин</span>");
                 }
             }
-            if(data.usd == 0){
-                if(data.summa >= data.sum){
+            else{
+                if(data.summa >= karzs){
+                    let pay3 = data.summa - karzs;
                     $("#channgem").html('');
                     $("#karzs").val('');
-                    $("#exampleModalLabeldokse").html("Мижоз баланси " + data.summa + "$  " + "Карз копланади Коладиган сумма" + pay + "$");
+                    $("#exampleModalLabeldokse").html("<span class='modal-title alert alert-success'>Мижоз баланси  " + data.summa + " сум  " + "Карз копланади ва Балансида коладиган сумма  " + pay3 + " сум </span>");
                 }else{
-                    $("#karzs").val(itogs);
+                    let pay4 = karzs - data.summa;
+                    $("#karzs").val(pay4);
+                    $("#naqttr").val(data.summa);
                     $("#channgem").html(inputdate);
-                    $("#exampleModalLabeldokse").html("Мижоз баланси  " + data.summa + "$");
+                    $("#exampleModalLabeldokse").html("<span class='modal-title alert alert-danger'>Мижоз баланси  " + data.summa + " сум  " + "Туловни амалга оширолмайди.  " + pay4 + " сум  Тулов килиши йоки карзни муддат белгилаган холда амалга ошириши мумкин</span>");
                 }
             }
         }
     });
   });
 
-  
   $(document).on('change', '#clentradok', function(){
     var id = $(this).val();
     var kurs2 = $("#kurs2dok").val();
     var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srokdok' />";
-    var karzs = $("#karzsdok").val();
     var itogs = $("#itogsdok").val();
-    var naqt = $("#naqtdok").val();
-    var plastik = $("#plastikdok").val();
-    var bank = $("#bankdok").val();
+    $("#karzsdok").val(itogs);
+    var karzs = $("#karzsdok").val();
     $.ajax({
         url:"{{ route('usersummadok') }}",
         method:'GET',
@@ -919,33 +936,38 @@
         {
             if(data.usd == 1){
                 if(data.summa >= karzs){
+                    let pay = data.summa - karzs;
                     $("#channgemdok").html('');
-                    $("#naqtdok").val('');
-                    $("#plastikdok").val('');
-                    $("#bankdok").val('');
                     $("#karzsdok").val('');
+                    $("#exampleModalLabeldoksedok").html("<span class='modal-title alert alert-success'>Мижоз баланси  " + data.summa + "$  " + "Карз копланади ва Балансида коладиган сумма  " + pay + "$ </span>");
+
                 }else{
-                    $("#karzsdok").val(itogs);
+                    let pay2 = karzs - data.summa;
+                    $("#karzsdok").val(pay2);
+                    $("#naqttrdok").val(data.summa);
                     $("#channgemdok").html(inputdate);
+                    $("#exampleModalLabeldoksedok").html("<span class='modal-title alert alert-danger'>Мижоз баланси  " + data.summa + "$  " + "Туловни амалга оширолмайди.  " + pay2 + "$  Тулов килиши йоки карзни муддат белгилаган холда амалга ошириши мумкин</span>");
                 }
             }
-            if(data.usd == 0){
-                if(data.summa >= data.sum){
+            else{
+                if(data.summa >= karzs){
+                    let pay3 = data.summa - karzs;
                     $("#channgemdok").html('');
-                    $("#naqtdok").val('');
-                    $("#plastikdok").val('');
-                    $("#bankdok").val('');
                     $("#karzsdok").val('');
+                    $("#exampleModalLabeldoksedok").html("<span class='modal-title alert alert-success'>Мижоз баланси  " + data.summa + " сум  " + "Карз копланади ва Балансида коладиган сумма  " + pay3 + " сум </span>");
                 }else{
-                    $("#karzsdok").val(itogs);
+                    let pay4 = karzs - data.summa;
+                    $("#karzsdok").val(pay4);
+                    $("#naqttrdok").val(data.summa);
                     $("#channgemdok").html(inputdate);
+                    $("#exampleModalLabeldoksedok").html("<span class='modal-title alert alert-danger'>Мижоз баланси  " + data.summa + " сум  " + "Туловни амалга оширолмайди.  " + pay4 + " сум  Тулов килиши йоки карзни муддат белгилаган холда амалга ошириши мумкин</span>");
                 }
             }
         }
     });
-});
+  });
 
-$(document).on('click', '#ondok', function(){
+$(document).on('click', '#on', function(){
     var a = $("#onval").val();
     if(a == 0){
         $("#onval").val(1);
@@ -1142,9 +1164,10 @@ function kursm(){
         $(document).on('keyup', '#naqt', function(){
             var itogs = $("#itogs").val();
             var naqt = $("#naqt").val();
+            var naqttr = $("#naqttr").val();
             var plastik = $("#plastik").val();
             var bank = $("#bank").val();
-            var sss = itogs - naqt - plastik - bank;
+            var sss = itogs - naqttr - naqt - plastik - bank;
             $("#karzs").val(sss);
         });
 
@@ -1153,16 +1176,18 @@ function kursm(){
             var naqt = $("#naqt").val();
             var plastik = $("#plastik").val();
             var bank = $("#bank").val();
-            var sss = itogs - naqt - plastik - bank;
+            var naqttr = $("#naqttr").val();
+            var sss = itogs - naqttr - naqt - plastik - bank;
             $("#karzs").val(sss);
         });
 
         $(document).on('keyup', '#bank', function(){
             var itogs = $("#itogs").val();
             var naqt = $("#naqt").val();
+            var naqttr = $("#naqttr").val();
             var plastik = $("#plastik").val();
             var bank = $("#bank").val();
-            var sss = itogs - naqt - plastik - bank;
+            var sss = itogs - naqttr - naqt - plastik - bank;
             $("#karzs").val(sss);
         });
 
@@ -1287,8 +1312,6 @@ function kursm(){
             $("#radio").val(aaa);        
         });
  
-
-
         $("#aqsh").on('click', function(){
             let _token = $('meta[name="csrf-token"]').attr('content');
             var kurs = $("#kurs").val();
@@ -1330,11 +1353,13 @@ function kursm(){
                         $("#itogs").val(data.itogo);
                         $("#karzs").val(data.itogo);
                         $("#channgem").html('');
+                        $("#exampleModalLabeldokse").html('');
                         $("#jonatish").modal("show");                        
                     }
                 });
             }
         });
+
         $("#oplata").on('click', function(){
             let _token = $('meta[name="csrf-token"]').attr('content');
             var itogs = $("#itogs").val();
@@ -2279,7 +2304,8 @@ $(document).ready(function(){
             var naqt = $("#naqtdok").val();
             var plastik = $("#plastikdok").val();
             var bank = $("#bankdok").val();
-            var sss = itogs - naqt - plastik - bank;
+            var naqttr = $("#naqttrdok").val();
+            var sss = itogs - naqttr - naqt - plastik - bank;
             $("#karzsdok").val(sss);
         });
 
@@ -2288,7 +2314,8 @@ $(document).ready(function(){
             var naqt = $("#naqtdok").val();
             var plastik = $("#plastikdok").val();
             var bank = $("#bankdok").val();
-            var sss = itogs - naqt - plastik - bank;
+            var naqttr = $("#naqttrdok").val();
+           var sss = itogs - naqttr - naqt - plastik - bank;
             $("#karzsdok").val(sss);
         });
 
@@ -2297,7 +2324,8 @@ $(document).ready(function(){
             var naqt = $("#naqtdok").val();
             var plastik = $("#plastikdok").val();
             var bank = $("#bankdok").val();
-            var sss = itogs - naqt - plastik - bank;
+            var naqttr = $("#naqttrdok").val();
+           var sss = itogs - naqttr - naqt - plastik - bank;
             $("#karzsdok").val(sss);
         });
 
@@ -3278,7 +3306,7 @@ $(document).ready(function(){
             fetch_customer_datadok();
         });
     });
-    
+
 </script>
 
 @endsection

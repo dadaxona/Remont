@@ -14,6 +14,7 @@ use App\Exports\InvoicesExport5dok;
 use App\Exports\InvoicesExport6;
 use App\Exports\InvoicesExport6dok;
 use App\Exports\InvoicesExport7;
+use App\Exports\InvoicesExport7dok;
 use App\Imports\UsersImport;
 use App\Imports\UsersImport2;
 use App\Imports\UsersImport2dok;
@@ -26,6 +27,7 @@ use App\Imports\UsersImport5dok;
 use App\Imports\UsersImport6;
 use App\Imports\UsersImport6dok;
 use App\Imports\UsersImport7;
+use App\Imports\UsersImport7dok;
 use App\Models\Admin;
 use App\Models\Arxiv;
 use App\Models\Arxivdok;
@@ -119,6 +121,11 @@ class AuthController extends Controller
         return Excel::download(new InvoicesExport7, 'invoices.xlsx');
     }
 
+    public function exports7dok() 
+    {
+        return Excel::download(new InvoicesExport7dok, 'invoices.xlsx');
+    }
+
     public function exports6dok() 
     {
         return Excel::download(new InvoicesExport6dok, 'invoices.xlsx');
@@ -190,6 +197,12 @@ class AuthController extends Controller
         return back();
     }
     
+    public function import7dok(Request $request) 
+    {
+        Excel::import(new UsersImport7dok(), $request->file('import'));
+        return back();
+    }
+
     public function import6dok(Request $request) 
     {
         Excel::import(new UsersImport6dok(), $request->file('import'));
@@ -777,8 +790,9 @@ class AuthController extends Controller
         if($usd->usd == 1){
             return response()->json(['usd'=>1, 'summa'=>(int)$d->summa]);
         }else{
-            $dat = $request->karzs / $usd->kurs;
-            return response()->json(['usd'=>0, 'summa'=>(int)$d->summa, 'sum'=>(int)$dat]);
+            // $dat = $request->karzs / $usd->kurs;
+            $d2 = $d->summa * $usd->kurs;
+            return response()->json(['usd'=>0, 'summa'=>(int)$d2]);
         }
     }
 
@@ -789,8 +803,8 @@ class AuthController extends Controller
         if($usd->usd == 1){
             return response()->json(['usd'=>1, 'summa'=>(int)$d->summa]);
         }else{
-            $dat = $request->karzs / $usd->kurs;
-            return response()->json(['usd'=>0, 'summa'=>(int)$d->summa, 'sum'=>(int)$dat]);
+            $d2 = $d->summa * $usd->kurs;
+            return response()->json(['usd'=>0, 'summa'=>(int)$d2]);
         }
     }
 

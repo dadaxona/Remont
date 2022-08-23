@@ -111,11 +111,13 @@
                             indexLabel: "{label} ({y})",
                             yValueFormatString:"#,##0.#"%"",
                             dataPoints: [
-                                { label: "Продажи", y: response.foo2.opshi },
-                                { label: "Долг", y: response.foo2.foiz },
-                                { label: "Прибл", y: response.foo2.itog },
+                                { label: "Продажи", y: response.foo2.jami },
+                                { label: "Долг", y: response.foo2.karz },
+                                { label: "Прибл", y: response.foo2.pribl },
+                                { label: "Склад товар сумма", y: response.foo2.vse },
+                                { label: "Расход", y: response.foo2.rasxod },
                             ]
-                        }]             
+                        }]            
                     });
                     chart.render();
                 }
@@ -136,9 +138,11 @@
                 indexLabel: "{label} ({y})",
                 yValueFormatString:"#,##0.#"%"",
                 dataPoints: [
-                    { label: "Продажи", y: response.foo2.opshi },
-                    { label: "Долг", y: response.foo2.foiz },
-                    { label: "Прибл", y: response.foo2.itog },
+                    { label: "Продажи", y: response.foo2.jami },
+                    { label: "Долг", y: response.foo2.karz },
+                    { label: "Прибл", y: response.foo2.pribl },
+                    { label: "Склад товар сумма", y: response.foo2.vse },
+                    { label: "Расход", y: response.foo2.rasxod },
                 ]
             }]
         });

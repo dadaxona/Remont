@@ -33,6 +33,8 @@ use App\Models\Karzina3dok;
 use App\Models\Karzinadok;
 use App\Models\Pribl;
 use App\Models\Pribldok;
+use App\Models\Rasxod;
+use App\Models\Rasxoddok;
 use App\Models\Sqladpoytaxt;
 use App\Models\Sqladpoytaxtdok;
 use App\Models\Statistika;
@@ -2334,12 +2336,14 @@ class KlentController extends KlentController2
             $ichki = Ichkitavar::all();
             $data = Karzina2::whereBetween("created_at", [$request->data, $request->data2])->get();
             $data222 = Arxiv::whereBetween("created_at", [$request->data, $request->data2])->get();
+            $ras = Rasxod::whereBetween("created_at", [$request->data, $request->data2])->get();
             $foo = Pribl::find(1);
             if($foo){
                 $foo->jami = 0;
                 $foo->karz = 0;
                 $foo->pribl = 0;
                 $foo->vse = 0;
+                $foo->rasxod = 0;
                 $foo->save();
                 foreach ($ichki as $value) {
                     $foo1 = Pribl::find(1);
@@ -2357,6 +2361,11 @@ class KlentController extends KlentController2
                     $foo3 = Pribl::find(1);
                     $foo3->karz = $foo3->karz + $value->karzs;
                     $foo3->update();                    
+                }
+                foreach ($ras as $value) {
+                    $foo4 = Pribl::find(1);
+                    $foo4->rasxod = $foo4->rasxod + $value->rasxod;
+                    $foo4->update();
                 }
                 foreach($data as $row)
                 {
@@ -2376,6 +2385,7 @@ class KlentController extends KlentController2
                     'karz'=>0,
                     'pribl'=>0,
                     'vse'=>0,
+                    'rasxod'=>0
                 ]);
                 foreach ($ichki as $value) {
                     $foo1 = Pribl::find(1);
@@ -2394,6 +2404,11 @@ class KlentController extends KlentController2
                     $foo3->karz = $foo3->karz + $value->karzs;
                     $foo3->update();                    
                 }
+                foreach ($ras as $value) {
+                    $foo4 = Pribl::find(1);
+                    $foo4->rasxod = $foo4->rasxod + $value->rasxod;
+                    $foo4->update();
+                }
                 foreach($data as $row)
                 {
                     $output .= '
@@ -2407,11 +2422,13 @@ class KlentController extends KlentController2
                     ';
                 }
             }
-            $foo4 = Pribl::find(1);
-            $foo4->pribl = $foo4->jami - $foo4->pribl;
-            $foo4->update();
+            $foo5 = Pribl::find(1);
+            $fo = $foo5->jami - $foo5->pribl;
+            $f = $fo - $foo5->rasxod;
+            $foo5->pribl = $f - $foo5->karz;
+            $foo5->update();
             return response()->json([
-                'data'=>$foo4??[],
+                'data'=>$foo5??[],
                 'output'=>$output
             ]);
         }
@@ -2423,12 +2440,14 @@ class KlentController extends KlentController2
             $ichki = Ichkitavar::all();
             $kar2 = Karzina2::get();
             $arx = Arxiv::get();
+            $ras = Rasxod::all();
             $foo = Pribl::find(1);
             if($foo){
                 $foo->jami = 0;
                 $foo->karz = 0;
                 $foo->pribl = 0;
                 $foo->vse = 0;
+                $foo->rasxod = 0;
                 $foo->save();
                 foreach ($ichki as $value) {
                     $foo1 = Pribl::find(1);
@@ -2447,12 +2466,18 @@ class KlentController extends KlentController2
                     $foo3->karz = $foo3->karz + $value->karzs;
                     $foo3->update();                    
                 }
+                foreach ($ras as $value) {
+                    $foo4 = Pribl::find(1);
+                    $foo4->rasxod = $foo4->rasxod + $value->rasxod;
+                    $foo4->update();
+                }
             }else{
                 Pribl::create([
                     'jami'=>0,
                     'karz'=>0,
                     'pribl'=>0,
                     'vse'=>0,
+                    'rasxod'=>0
                 ]);
                 foreach ($ichki as $value) {
                     $foo1 = Pribl::find(1);
@@ -2471,12 +2496,19 @@ class KlentController extends KlentController2
                     $foo3->karz = $foo3->karz + $value->karzs;
                     $foo3->update();                    
                 }
+                foreach ($ras as $value) {
+                    $foo4 = Pribl::find(1);
+                    $foo4->rasxod = $foo4->rasxod + $value->rasxod;
+                    $foo4->update();
+                }
             }
-            $foo4 = Pribl::find(1);
-            $foo4->pribl = $foo4->jami - $foo4->pribl;
-            $foo4->update();
+            $foo5 = Pribl::find(1);
+            $fo = $foo5->jami - $foo5->pribl;
+            $f = $fo - $foo5->rasxod;
+            $foo5->pribl = $f - $foo5->karz;
+            $foo5->update();
             return response()->json([
-                'data'=>$foo4??[],
+                'data'=>$foo5??[],
             ]);
         }
     }
@@ -2497,12 +2529,14 @@ class KlentController extends KlentController2
             $ichki = Ichkitavardok::all();
             $data = Karzina2dok::whereBetween("created_at", [$request->data, $request->data2])->get();
             $data222 = Arxivdok::whereBetween("created_at", [$request->data, $request->data2])->get();
+            $ras = Rasxoddok::whereBetween("created_at", [$request->data, $request->data2])->get();
             $foo = Pribldok::find(1);
             if($foo){
                 $foo->jami = 0;
                 $foo->karz = 0;
                 $foo->pribl = 0;
                 $foo->vse = 0;
+                $foo->rasxod = 0;
                 $foo->save();
                 foreach ($ichki as $value) {
                     $foo1 = Pribldok::find(1);
@@ -2520,6 +2554,11 @@ class KlentController extends KlentController2
                     $foo3 = Pribldok::find(1);
                     $foo3->karz = $foo3->karz + $value->karzs;
                     $foo3->update();                    
+                }
+                foreach ($ras as $value) {
+                    $foo4 = Pribldok::find(1);
+                    $foo4->rasxod = $foo4->rasxod + $value->rasxod;
+                    $foo4->update();
                 }
                 foreach($data as $row)
                 {
@@ -2539,6 +2578,7 @@ class KlentController extends KlentController2
                     'karz'=>0,
                     'pribl'=>0,
                     'vse'=>0,
+                    'rasxod'=>0
                 ]);
                 foreach ($ichki as $value) {
                     $foo1 = Pribldok::find(1);
@@ -2557,11 +2597,16 @@ class KlentController extends KlentController2
                     $foo3->karz = $foo3->karz + $value->karzs;
                     $foo3->update();                    
                 }
+                foreach ($ras as $value) {
+                    $foo4 = Pribldok::find(1);
+                    $foo4->rasxod = $foo4->rasxod + $value->rasxod;
+                    $foo4->update();
+                }
                 foreach($data as $row)
                 {
                     $output .= '
                     <tr style="border-bottom: 1px solid;">
-                        <td>'.$row->userdok->name.'</td>
+                    <td>'.$row->userdok->name.'</td>
                         <td>'.$row->name.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
@@ -2570,11 +2615,13 @@ class KlentController extends KlentController2
                     ';
                 }
             }
-            $foo4 = Pribldok::find(1);
-            $foo4->pribl = $foo4->jami - $foo4->pribl;
-            $foo4->update();
+            $foo5 = Pribldok::find(1);
+            $fo = $foo5->jami - $foo5->pribl;
+            $f = $fo - $foo5->rasxod;
+            $foo5->pribl = $f - $foo5->karz;
+            $foo5->update();
             return response()->json([
-                'data'=>$foo4??[],
+                'data'=>$foo5??[],
                 'output'=>$output
             ]);
         }
@@ -2586,12 +2633,14 @@ class KlentController extends KlentController2
             $ichki = Ichkitavardok::all();
             $kar2 = Karzina2dok::get();
             $arx = Arxivdok::get();
+            $ras = Rasxoddok::all();
             $foo = Pribldok::find(1);
             if($foo){
                 $foo->jami = 0;
                 $foo->karz = 0;
                 $foo->pribl = 0;
                 $foo->vse = 0;
+                $foo->rasxod = 0;
                 $foo->save();
                 foreach ($ichki as $value) {
                     $foo1 = Pribldok::find(1);
@@ -2610,12 +2659,18 @@ class KlentController extends KlentController2
                     $foo3->karz = $foo3->karz + $value->karzs;
                     $foo3->update();                    
                 }
+                foreach ($ras as $value) {
+                    $foo4 = Pribldok::find(1);
+                    $foo4->rasxod = $foo4->rasxod + $value->rasxod;
+                    $foo4->update();
+                }
             }else{
                 Pribldok::create([
                     'jami'=>0,
                     'karz'=>0,
                     'pribl'=>0,
                     'vse'=>0,
+                    'rasxod'=>0
                 ]);
                 foreach ($ichki as $value) {
                     $foo1 = Pribldok::find(1);
@@ -2634,12 +2689,19 @@ class KlentController extends KlentController2
                     $foo3->karz = $foo3->karz + $value->karzs;
                     $foo3->update();                    
                 }
+                foreach ($ras as $value) {
+                    $foo4 = Pribldok::find(1);
+                    $foo4->rasxod = $foo4->rasxod + $value->rasxod;
+                    $foo4->update();
+                }
             }
-            $foo4 = Pribldok::find(1);
-            $foo4->pribl = $foo4->jami - $foo4->pribl;
-            $foo4->update();
+            $foo5 = Pribldok::find(1);
+            $fo = $foo5->jami - $foo5->pribl;
+            $f = $fo - $foo5->rasxod;
+            $foo5->pribl = $f - $foo5->karz;
+            $foo5->update();
             return response()->json([
-                'data'=>$foo4??[],
+                'data'=>$foo5??[],
             ]);
         }
     }

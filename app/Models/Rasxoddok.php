@@ -5,16 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Clentitogdok extends Model
+class Rasxoddok extends Model
 {
     use HasFactory;
-    public $fillable = [
-        'tavarshtuk',
-        'shtuk',
-        'foiz',
-        'itog',
-        'opshi',
-        'rasxod'
-    ];
+    public $fillable = ['rasxod', 'qayer', 'sabap'];
     public $timestamps = true;
 }

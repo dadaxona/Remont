@@ -18,13 +18,17 @@
         <h6 class="mx-3">Жами карз:</h6>
         <h6 id="jamikarz"></h6>
       </div>
+      <div class="col-3 d-flex alert alert-danger">
+        <h6 class="mx-3">Жами расход:</h6>
+        <h6 id="rasxod"></h6>
+      </div>
       <div class="col-3 d-flex alert alert-info">
         <h6 class="mx-3">Жами прибл:</h6>
         <h6 id="jamipribl"></h6>
       </div>
       <div class="col-3 d-flex alert alert-success">
-        <h6 class="mx-3">Склад сумма:</h6>
-        <h6 id="sqladjami"></h6>
+        <h4 class="mx-3">Склад сумма:</h4>
+        <h4 id="sqladjami"></h4>
       </div>    
     </div>
     <div class="d-flex mt-0">
@@ -64,13 +68,17 @@
           <h6 class="mx-3">Жами карз:</h6>
           <h6 id="jamikarzdok"></h6>
         </div>
+        <div class="col-3 d-flex alert alert-danger">
+          <h6 class="mx-3">Жами расход:</h6>
+          <h6 id="rasxoddok"></h6>
+        </div>
         <div class="col-3 d-flex alert alert-info">
           <h6 class="mx-3">Жами прибл:</h6>
           <h6 id="jamipribldok"></h6>
         </div>
         <div class="col-3 d-flex alert alert-success">
-          <h6 class="mx-3">Склад сумма:</h6>
-          <h6 id="sqladjamidok"></h6>
+          <h4 class="mx-3">Склад сумма:</h4>
+          <h4 id="sqladjamidok"></h4>
         </div>    
       </div>
       <div class="d-flex mt-0">
@@ -114,6 +122,7 @@
         
           $("#jamisavdo").html(data.data.jami);
           $("#jamikarz").html(data.data.karz);
+          $("#rasxod").html(data.data.rasxod);
           $("#jamipribl").html(data.data.pribl);
           $("#sqladjami").html(data.data.vse);
           $("#clent").html(data.output);
@@ -141,6 +150,7 @@ function geteldok(data,  data2){
         
           $("#jamisavdodok").html(data.data.jami);
           $("#jamikarzdok").html(data.data.karz);
+          $("#rasxoddok").html(data.data.rasxod);
           $("#jamipribldok").html(data.data.pribl);
           $("#sqladjamidok").html(data.data.vse);
           $("#clenterdok").html(data.output);

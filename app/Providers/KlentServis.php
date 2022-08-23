@@ -8,6 +8,7 @@ use App\Models\Adressdok;
 use App\Models\Arxiv;
 use App\Models\Arxivdok;
 use App\Models\Clentitog;
+use App\Models\Clentitogdok;
 use App\Models\Deletkarzina;
 use App\Models\Deletkarzinadok;
 use App\Models\Drektor;
@@ -28,6 +29,7 @@ use App\Models\Karzina3;
 use App\Models\Karzina3dok;
 use App\Models\Karzinadok;
 use App\Models\Rasxod;
+use App\Models\Rasxoddok;
 use App\Models\Statistika;
 use App\Models\Statistikadok;
 use App\Models\Tavar2;
@@ -1920,23 +1922,98 @@ class KlentServis
         if($request->id){
             $usd = Itogo::find(1);
             if ($usd->usd == 1) {
-                if($request->karzs){
+                if($request->karzs >= 0){
                     $user = User::find($request->id);
-                    if($user->summa){
-                        $foo = $request->karzs - $user->summa;
-                        $arxiv = Arxiv::create([
-                            'user_id'=>$request->id,
-                            'itogs'=>$request->itogs,
-                            'naqt'=>$request->naqt,
-                            'plastik'=>$request->plastik,
-                            'bank'=>$request->bank,
-                            'karzs'=>$foo,
-                            'srok'=>$request->srok,
-                        ]);
-                        User::find($request->id)->update(['summa'=>0]);
-                        $user_id = Javob::where('user_id', $request->id)->first();
-                        $user_id->javob = $user_id->javob + $foo;
-                        $user_id->update(); 
+                    if($user->summa > 0){
+                        if($request->naqt > 0 || $request->plastik > 0  || $request->bank > 0){
+                            $der2 = $user->summa + $request->naqt + $request->plastik + $request->bank;               
+                            if($request->itogs <= $der2){
+                                $dert = $der2 - $request->itogs;
+                                $arxiv = Arxiv::create([
+                                    'user_id'=>$request->id,
+                                    'itogs'=>$request->itogs,
+                                    'naqt'=>$request->naqt,
+                                    'plastik'=>$request->plastik,
+                                    'bank'=>$request->bank,
+                                    'karzs'=> 0,
+                                    'srok'=>$request->srok,
+                                ]);
+                                $user->summa = $dert;
+                                $user->update();
+                            }else{
+                                $arxiv = Arxiv::create([
+                                    'user_id'=>$request->id,
+                                    'itogs'=>$request->itogs,
+                                    'naqt'=>$request->naqt,
+                                    'plastik'=>$request->plastik,
+                                    'bank'=>$request->bank,
+                                    'karzs'=> $request->karzs,
+                                    'srok'=>$request->srok,
+                                ]);
+                                $user->summa = 0;
+                                $user->update();
+                                $user_ide = Javob::where('user_id', $request->id)->first();
+                                $user_ide->javob = $user_ide->javob + $request->karzs;
+                                $user_ide->update();
+                            }
+                            return $this->oplata3($request, $month, $year, $arxiv);
+                    }else{
+                        if($user->summa >= $request->itogs){
+                            $arxiv = Arxiv::create([
+                                'user_id'=>$request->id,
+                                'itogs'=>$request->itogs,
+                                'naqt'=>$request->naqt,
+                                'plastik'=>$request->plastik,
+                                'bank'=>$request->bank,
+                                'karzs'=>0,
+                                'srok'=>$request->srok,
+                            ]);
+                            $user->summa = $user->summa - $request->itogs;
+                            $user->update();
+                        }else{
+                            $arxiv = Arxiv::create([
+                                'user_id'=>$request->id,
+                                'itogs'=>$request->itogs,
+                                'naqt'=>$request->naqt,
+                                'plastik'=>$request->plastik,
+                                'bank'=>$request->bank,
+                                'karzs'=>$request->karzs,
+                                'srok'=>$request->srok,
+                            ]);
+                            $user->summa = 0;
+                            $user->update();
+                            $user_ide = Javob::where('user_id', $request->id)->first();
+                            $user_ide->javob = $user_ide->javob + $request->karzs;
+                            $user_ide->update();
+                        }
+                        return $this->oplata3($request, $month, $year, $arxiv);
+                    }
+                }else{
+                    if($request->naqt > 0 || $request->plastik > 0  || $request->bank > 0){
+                        $der3 = $request->naqt + $request->plastik + $request->bank;
+                        if($request->itogs <= $der3){
+                            $arxiv = Arxiv::create([
+                                'user_id'=>$request->id,
+                                'itogs'=>$request->itogs,
+                                'naqt'=>$request->naqt,
+                                'plastik'=>$request->plastik,
+                                'bank'=>$request->bank,
+                                'karzs'=> 0,
+                                'srok'=>$request->srok,
+                            ]);
+                            $user->summa = $user->summa + $der3 - $request->itogs;
+                            $user->update();
+                        }else{
+                            $arxiv = Arxiv::create([
+                                'user_id'=>$request->id,
+                                'itogs'=>$request->itogs,
+                                'naqt'=>$request->naqt,
+                                'plastik'=>$request->plastik,
+                                'bank'=>$request->bank,
+                                'karzs'=>$request->karzs,
+                                'srok'=>$request->srok,
+                            ]);
+                        }
                         return $this->oplata3($request, $month, $year, $arxiv);
                     }else{
                         $arxiv = Arxiv::create([
@@ -1948,86 +2025,73 @@ class KlentServis
                             'karzs'=>$request->karzs,
                             'srok'=>$request->srok,
                         ]);
-                        $user_ide = Javob::where('user_id', $request->id)->first();
-                        $user_ide->javob = $user_ide->javob + $request->karzs;
-                        $user_ide->update();   
-                        return $this->oplata3($request, $month, $year, $arxiv);
-                    }
-                }else{
-                    if($request->naqt > 0 || $request->plastik > 0  || $request->bank > 0){
-                        $arxiv = Arxiv::create([
-                            'user_id'=>$request->id,
-                            'itogs'=>$request->itogs,
-                            'naqt'=>$request->naqt,
-                            'plastik'=>$request->plastik,
-                            'bank'=>$request->bank,
-                            'karzs'=>0,
-                            'srok'=>$request->srok,
-                        ]);
-                        return $this->oplata3($request, $month, $year, $arxiv);
-                    }else{
-                        $arxiv = Arxiv::create([
-                            'user_id'=>$request->id,
-                            'itogs'=>$request->itogs,
-                            'naqt'=>$request->naqt,
-                            'plastik'=>$request->plastik,
-                            'bank'=>$request->bank,
-                            'karzs'=>0,
-                            'srok'=>$request->srok,
-                        ]);
-                        $userw = User::find($request->id);
-                        $userw->summa = $userw->summa - $request->itogs;
-                        $userw->update();  
                         return $this->oplata3($request, $month, $year, $arxiv);
                     }
                 }
             }else{
-                if($request->karzs){
-                    $user2 = User::find($request->id);
-                    if($user2->summa){
-                        $foo2 = $request->karzs / $usd->kurs - $user2->summa;
-                        $arxiv = Arxiv::create([
-                            'user_id'=>$request->id,
-                            'itogs'=>$request->itogs / $usd->kurs,
-                            'naqt'=>$request->naqt / $usd->kurs,
-                            'plastik'=>$request->plastik / $usd->kurs,
-                            'bank'=>$request->bank / $usd->kurs,
-                            'karzs'=> $foo2,
-                            'srok'=>$request->srok,
-                        ]);
-                        User::find($request->id)->update(['summa'=>0]);
-                        $user_id2 = Javob::where('user_id', $request->id)->first();
-                        $user_id2->javob = $user_id2->javob + $foo2;
-                        $user_id2->update();
+                $arxiv = Arxiv::create([
+                    'user_id'=>$request->id,
+                    'itogs'=>$request->itogs,
+                    'naqt'=>$request->naqt,
+                    'plastik'=>$request->plastik,
+                    'bank'=>$request->bank,
+                    'karzs'=>$request->karzs,
+                    'srok'=>$request->srok,
+                ]);
+                $user2 = User::find($request->id);
+                $user2->summa = $user2->summa + $request->karzs - $request->itogs;
+                $user2->update();
+                return $this->oplata3($request, $month, $year, $arxiv);
+            }
+        }else{
+            if($request->karzs >= 0){
+                $user3 = User::find($request->id);
+                if($user3->summa > 0){
+                    if($request->naqt > 0 || $request->plastik > 0  || $request->bank > 0){
+                        $der2 = $user3->summa * $usd->kurs + $request->naqt + $request->plastik + $request->bank;               
+                        if($request->itogs <= $der2){
+                            $dert = $der2 - $request->itogs;
+                            $arxiv = Arxiv::create([
+                                'user_id'=>$request->id,
+                                'itogs'=>$request->itogs / $usd->kurs,
+                                'naqt'=>$request->naqt / $usd->kurs,
+                                'plastik'=>$request->plastik / $usd->kurs,
+                                'bank'=>$request->bank / $usd->kurs,
+                                'karzs'=> 0,
+                                'srok'=>$request->srok,
+                            ]);
+                            $user3->summa = $dert;
+                            $user3->update();
+                        }else{
+                            $arxiv = Arxiv::create([
+                                'user_id'=>$request->id,
+                                'itogs'=>$request->itogs / $usd->kurs,
+                                'naqt'=>$request->naqt / $usd->kurs,
+                                'plastik'=>$request->plastik / $usd->kurs,
+                                'bank'=>$request->bank / $usd->kurs,
+                                'karzs'=> $request->karzs / $usd->kurs,
+                                'srok'=>$request->srok,
+                            ]);
+                            $user3->summa = 0;
+                            $user3->update();
+                            $user_ide2 = Javob::where('user_id', $request->id)->first();
+                            $user_ide2->javob = $user_ide2->javob + $request->karzs / $usd->kurs;
+                            $user_ide2->update();
+                        }
                         return $this->oplata3($request, $month, $year, $arxiv);
-                    }else{
-                        $arxiv = Arxiv::create([
-                            'user_id'=>$request->id,
-                            'itogs'=>$request->itogs / $usd->kurs,
-                            'naqt'=>$request->naqt / $usd->kurs,
-                            'plastik'=>$request->plastik / $usd->kurs,
-                            'bank'=>$request->bank / $usd->kurs,
-                            'karzs'=> $request->karzs / $usd->kurs,
-                            'srok'=>$request->srok,
-                        ]);
-                        $user_id3 = Javob::where('user_id', $request->id)->first();
-                        $jav = $user_id3->javob + $request->karzs / $usd->kurs;
-                        $user_id3->javob = $jav;
-                        $user_id3->update();  
-                        return $this->oplata3($request, $month, $year, $arxiv);
-                    }
                 }else{
-                    if($request->naqt > 0 || $request->plastik > 0 || $request->bank > 0){
+                    if($user3->summa >= $request->itogs / $usd->kurs){
                         $arxiv = Arxiv::create([
                             'user_id'=>$request->id,
                             'itogs'=>$request->itogs / $usd->kurs,
                             'naqt'=>$request->naqt / $usd->kurs,
                             'plastik'=>$request->plastik / $usd->kurs,
                             'bank'=>$request->bank / $usd->kurs,
-                            'karzs'=> 0,
+                            'karzs'=>0,
                             'srok'=>$request->srok,
                         ]);
-                        return $this->oplata3($request, $month, $year, $arxiv);
+                        $user3->summa = $user3->summa - $request->itogs / $usd->kurs;
+                        $user3->update();
                     }else{
                         $arxiv = Arxiv::create([
                             'user_id'=>$request->id,
@@ -2035,15 +2099,71 @@ class KlentServis
                             'naqt'=>$request->naqt / $usd->kurs,
                             'plastik'=>$request->plastik / $usd->kurs,
                             'bank'=>$request->bank / $usd->kurs,
+                            'karzs'=>$request->karzs / $usd->kurs,
+                            'srok'=>$request->srok,
+                        ]);
+                        $user3->summa = 0;
+                        $user3->update();
+                        $user_ide3 = Javob::where('user_id', $request->id)->first();
+                        $user_ide3->javob = $user_ide3->javob + $request->karzs / $usd->kurs;
+                        $user_ide3->update();
+                    }
+                    return $this->oplata3($request, $month, $year, $arxiv);
+                }
+            }else{
+                if($request->naqt > 0 || $request->plastik > 0  || $request->bank > 0){
+                    $der4 = $request->naqt + $request->plastik + $request->bank;
+                    if($request->itogs <= $der4 / $usd->kurs){
+                        $arxiv = Arxiv::create([
+                            'user_id'=>$request->id,
+                            'itogs'=>$request->itogs / $usd->kurs,
+                            'naqt'=>$request->naqt / $usd->kurs,
+                            'plastik'=>$request->plastik / $usd->kurs,
+                            'bank'=>$request->bank / $usd->kurs,
                             'karzs'=> 0,
                             'srok'=>$request->srok,
                         ]);
-                        $userw2 = User::find($request->id);
-                        $jaw = $request->itogs / $usd->kurs;
-                        $userw2->summa = $userw2->summa - $jaw;
-                        $userw2->update();  
-                        return $this->oplata3($request, $month, $year, $arxiv);
+                        $user3->summa = $user3->summa + $der4 / $usd->kurs - $request->itogs / $usd->kurs;
+                        $user3->update();
+                    }else{
+                        $arxiv = Arxiv::create([
+                            'user_id'=>$request->id,
+                            'itogs'=>$request->itogs / $usd->kurs,
+                            'naqt'=>$request->naqt / $usd->kurs,
+                            'plastik'=>$request->plastik / $usd->kurs,
+                            'bank'=>$request->bank / $usd->kurs,
+                            'karzs'=>$request->karzs / $usd->kurs,
+                            'srok'=>$request->srok,
+                        ]);
                     }
+                    return $this->oplata3($request, $month, $year, $arxiv);
+                }else{
+                    $arxiv = Arxiv::create([
+                        'user_id'=>$request->id,
+                        'itogs'=>$request->itogs / $usd->kurs,
+                        'naqt'=>$request->naqt / $usd->kurs,
+                        'plastik'=>$request->plastik / $usd->kurs,
+                        'bank'=>$request->bank / $usd->kurs,
+                        'karzs'=>$request->karzs / $usd->kurs,
+                        'srok'=>$request->srok,
+                    ]);
+                    return $this->oplata3($request, $month, $year, $arxiv);
+                    }
+                }
+                }else{
+                    $arxiv = Arxiv::create([
+                        'user_id'=>$request->id,
+                        'itogs'=>$request->itogs / $usd->kurs,
+                        'naqt'=>$request->naqt / $usd->kurs,
+                        'plastik'=>$request->plastik / $usd->kurs,
+                        'bank'=>$request->bank / $usd->kurs,
+                        'karzs'=>$request->karzs / $usd->kurs,
+                        'srok'=>$request->srok,
+                    ]);
+                    $user2 = User::find($request->id);
+                    $user2->summa = $user2->summa + $request->karzs / $usd->kurs - $request->itogs / $usd->kurs;
+                    $user2->update();
+                    return $this->oplata3($request, $month, $year, $arxiv);
                 }
             }
         }else{
@@ -2466,20 +2586,76 @@ class KlentServis
             $id->update();
         }else{
             $sta = Clentitog::find(1);
-            Clentitog::find(1)->update([
-                'itog' => $sta->itog - $request->rasxod,
-                'rasxod' => $sta->rasxod + $request->rasxod
-            ]);
-            Rasxod::create($request->all());
+            if($sta){
+                Clentitog::find(1)->update([
+                    'itog' => $sta->itog - $request->rasxod,
+                    'rasxod' => $sta->rasxod + $request->rasxod
+                ]);
+                Rasxod::create($request->all());
+            }else{
+                Clentitog::create([
+                    'itog' => $request->rasxod,
+                    'rasxod' => $request->rasxod
+                ]);
+                Rasxod::create($request->all());
+            }
         }
         return response()->json(['code'=>200, 'msg'=>'Сакланди']);
     }
 
+    public function postrasxoddok($request)
+    {
+        if($request->id){
+            $id = Rasxoddok::find($request->id);
+            $st = Clentitogdok::find(1);
+            Clentitogdok::find(1)->update([
+                'itog' => $st->itog + $id->rasxod,
+                'rasxod' => $st->rasxod - $id->rasxod
+            ]);
+            $st2 = Clentitogdok::find(1);
+            $st2->itog = $st2->itog - $request->rasxod;
+            $st2->rasxod = $st2->rasxod + $request->rasxod;
+            $st2->update();
+            $id->rasxod = $request->rasxod;
+            $id->qayer = $request->qayer;
+            $id->sabap = $request->sabap;
+            $id->update();
+        }else{
+            $sta = Clentitogdok::find(1);
+            if($sta){
+                Clentitogdok::find(1)->update([
+                    'itog' => $sta->itog - $request->rasxod,
+                    'rasxod' => $sta->rasxod + $request->rasxod
+                ]);
+                Rasxoddok::create($request->all());
+            }else{
+                Clentitogdok::create([
+                    'itog' => $request->rasxod,
+                    'rasxod' => $request->rasxod
+                ]);
+                Rasxoddok::create($request->all());
+            }
+        }
+        return response()->json(['code'=>200, 'msg'=>'Сакланди']);
+    }
+    
     public function deletrasxod($id)
     {
        $da = Rasxod::find($id);
        $sta = Clentitog::find(1);
        Clentitog::find(1)->update([
+           'itog' => $sta->itog + $da->rasxod,
+           'rasxod' => $sta->rasxod - $da->rasxod
+       ]);
+       $da->delete();
+       return response()->json(['msg'=>'Учирилди']);
+    }
+
+    public function deletrasxoddok($id)
+    {
+       $da = Rasxoddok::find($id);
+       $sta = Clentitogdok::find(1);
+       Clentitogdok::find(1)->update([
            'itog' => $sta->itog + $da->rasxod,
            'rasxod' => $sta->rasxod - $da->rasxod
        ]);
