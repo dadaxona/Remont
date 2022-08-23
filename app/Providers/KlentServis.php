@@ -805,125 +805,141 @@ class KlentServis
         if($request->radio == "option1"){
             if($valyuta->usd == 0){
                 $foo = Ichkitavardok::find($request->id);
-                $dat = Karzinadok::create([
-                    'ichkitavardok_id' => $foo->id,
-                    'name' => $foo->name,
-                    'raqam' => $foo->raqam,
-                    'soni' => 1,
-                    'hajm' => $foo->hajm,
-                    'summa' => (float)$foo->summa3,
-                    'summa2' => (float)$foo->kurs2,
-                    'chegirma' => 0,
-                    'itog' => (float)$foo->kurs2,
-                    'status' => 0
-                ]);
-                $ito = Itogodok::find(1);
-                if($ito){
-                    $j = (float)$ito->itogo + (float)$foo->kurs2;
-                    Itogodok::find(1)->update([
-                        'itogo'=>(float)$j,
-                    ]);
-                    $ito2 = Itogodok::find(1);
-                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
-        
+                if($foo->hajm <= 0){
+                    return response()->json(['msg'=>'Товар йетарли емас', 'code'=>0]);
                 }else{
-                    Itogodok::create([
-                        'itogo'=>(float)$foo->kurs2,
+                    $dat = Karzinadok::create([
+                        'ichkitavardok_id' => $foo->id,
+                        'name' => $foo->name,
+                        'raqam' => $foo->raqam,
+                        'soni' => 1,
+                        'hajm' => $foo->hajm,
+                        'summa' => (float)$foo->summa3,
+                        'summa2' => (float)$foo->kurs2,
+                        'chegirma' => 0,
+                        'itog' => (float)$foo->kurs2,
+                        'status' => 0
                     ]);
-                    $ito3 = Itogodok::find(1);
-                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
+                    $ito = Itogodok::find(1);
+                    if($ito){
+                        $j = (float)$ito->itogo + (float)$foo->kurs2;
+                        Itogodok::find(1)->update([
+                            'itogo'=>(float)$j,
+                        ]);
+                        $ito2 = Itogodok::find(1);
+                        return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
+            
+                    }else{
+                        Itogodok::create([
+                            'itogo'=>(float)$foo->kurs2,
+                        ]);
+                        $ito3 = Itogodok::find(1);
+                        return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
+                    }
                 }
             }else{
                 $foo = Ichkitavardok::find($request->id);
-                $dat = Karzinadok::create([
-                    'ichkitavardok_id' => $foo->id,
-                    'name' => $foo->name,
-                    'raqam' => $foo->raqam,
-                    'soni' => 1,
-                    'hajm' => $foo->hajm,
-                    'summa' => (float)$foo->summa3 / (float)$valyuta->kurs,
-                    'summa2' => (float)$foo->kurs2 / (float)$valyuta->kurs,
-                    'chegirma' => 0,
-                    'itog' => (float)$foo->kurs2 / (float)$valyuta->kurs,
-                    'status' => 0
-                ]);
-                $ito = Itogodok::find(1);
-                if($ito){
-                    $j = (float)$ito->itogo + (float)$foo->kurs2 / (float)$valyuta->kurs;
-                    Itogodok::find(1)->update([
-                        'itogo'=>(float)$j,
-                    ]);
-                    $ito2 = Itogodok::find(1);
-                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
-        
+                if($foo->hajm <= 0){
+                    return response()->json(['msg'=>'Товар йетарли емас', 'code'=>0]);
                 }else{
-                    Itogodok::create([
-                        'itogo'=>(float)$foo->kurs2 / (float)$valyuta->kurs,
+                    $dat = Karzinadok::create([
+                        'ichkitavardok_id' => $foo->id,
+                        'name' => $foo->name,
+                        'raqam' => $foo->raqam,
+                        'soni' => 1,
+                        'hajm' => $foo->hajm,
+                        'summa' => (float)$foo->summa3 / (float)$valyuta->kurs,
+                        'summa2' => (float)$foo->kurs2 / (float)$valyuta->kurs,
+                        'chegirma' => 0,
+                        'itog' => (float)$foo->kurs2 / (float)$valyuta->kurs,
+                        'status' => 0
                     ]);
-                    $ito3 = Itogodok::find(1);
-                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
+                    $ito = Itogodok::find(1);
+                    if($ito){
+                        $j = (float)$ito->itogo + (float)$foo->kurs2 / (float)$valyuta->kurs;
+                        Itogodok::find(1)->update([
+                            'itogo'=>(float)$j,
+                        ]);
+                        $ito2 = Itogodok::find(1);
+                        return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
+            
+                    }else{
+                        Itogodok::create([
+                            'itogo'=>(float)$foo->kurs2 / (float)$valyuta->kurs,
+                        ]);
+                        $ito3 = Itogodok::find(1);
+                        return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
+                    }
                 }
             }
         }else{
             if($valyuta->usd == 0){
                 $foo = Ichkitavardok::find($request->id);
-                $dat = Karzinadok::create([
-                    'ichkitavardok_id' => $foo->id,
-                    'name' => $foo->name,
-                    'raqam' => $foo->raqam,
-                    'soni' => 1,
-                    'hajm' => $foo->hajm,
-                    'summa' => (float)$foo->summa2,
-                    'summa2' => (float)$foo->kurs,
-                    'chegirma' => 0,
-                    'itog' => (float)$foo->kurs,
-                    'status' => 1
-                ]);
-                $ito = Itogodok::find(1);
-                if($ito){
-                    $j = (float)$ito->itogo + (float)$foo->kurs;
-                    Itogodok::find(1)->update([
-                        'itogo'=>(float)$j,
-                    ]);
-                    $ito2 = Itogodok::find(1);
-                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
-        
+                if($foo->hajm <= 0){
+                    return response()->json(['msg'=>'Товар йетарли емас', 'code'=>0]);
                 }else{
-                    Itogodok::create([
-                        'itogo'=>(float)$foo->kurs,
+                    $dat = Karzinadok::create([
+                        'ichkitavardok_id' => $foo->id,
+                        'name' => $foo->name,
+                        'raqam' => $foo->raqam,
+                        'soni' => 1,
+                        'hajm' => $foo->hajm,
+                        'summa' => (float)$foo->summa2,
+                        'summa2' => (float)$foo->kurs,
+                        'chegirma' => 0,
+                        'itog' => (float)$foo->kurs,
+                        'status' => 1
                     ]);
-                    $ito3 = Itogodok::find(1);
-                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
+                    $ito = Itogodok::find(1);
+                    if($ito){
+                        $j = (float)$ito->itogo + (float)$foo->kurs;
+                        Itogodok::find(1)->update([
+                            'itogo'=>(float)$j,
+                        ]);
+                        $ito2 = Itogodok::find(1);
+                        return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
+            
+                    }else{
+                        Itogodok::create([
+                            'itogo'=>(float)$foo->kurs,
+                        ]);
+                        $ito3 = Itogodok::find(1);
+                        return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
+                    }
                 }
             }else{
                 $foo = Ichkitavardok::find($request->id);
-                $dat = Karzinadok::create([
-                    'ichkitavardok_id' => $foo->id,
-                    'name' => $foo->name,
-                    'raqam' => $foo->raqam,
-                    'soni' => 1,
-                    'hajm' => $foo->hajm,
-                    'summa' => (float)$foo->summa2 / (float)$valyuta->kurs,
-                    'summa2' => (float)$foo->kurs / (float)$valyuta->kurs,
-                    'chegirma' => 0,
-                    'itog' => (float)$foo->kurs / (float)$valyuta->kurs,
-                    'status' => 1
-                ]);
-                $ito = Itogodok::find(1);
-                if($ito){
-                    $j = (float)$ito->itogo + (float)$foo->kurs / (float)$valyuta->kurs;
-                    Itogodok::find(1)->update([
-                        'itogo'=>(float)$j,
-                    ]);
-                    $ito2 = Itogodok::find(1);
-                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
-        
+                if($foo->hajm <= 0){
+                    return response()->json(['msg'=>'Товар йетарли емас', 'code'=>0]);
                 }else{
-                    Itogodok::create([
-                        'itogo'=>(float)$foo->kurs / (float)$valyuta->kurs,
+                    $dat = Karzinadok::create([
+                        'ichkitavardok_id' => $foo->id,
+                        'name' => $foo->name,
+                        'raqam' => $foo->raqam,
+                        'soni' => 1,
+                        'hajm' => $foo->hajm,
+                        'summa' => (float)$foo->summa2 / (float)$valyuta->kurs,
+                        'summa2' => (float)$foo->kurs / (float)$valyuta->kurs,
+                        'chegirma' => 0,
+                        'itog' => (float)$foo->kurs / (float)$valyuta->kurs,
+                        'status' => 1
                     ]);
-                    $ito3 = Itogodok::find(1);
-                    return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
+                    $ito = Itogodok::find(1);
+                    if($ito){
+                        $j = (float)$ito->itogo + (float)$foo->kurs / (float)$valyuta->kurs;
+                        Itogodok::find(1)->update([
+                            'itogo'=>(float)$j,
+                        ]);
+                        $ito2 = Itogodok::find(1);
+                        return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito2]);
+            
+                    }else{
+                        Itogodok::create([
+                            'itogo'=>(float)$foo->kurs / (float)$valyuta->kurs,
+                        ]);
+                        $ito3 = Itogodok::find(1);
+                        return response()->json(['msg'=>'Кошилди', 'data'=>$dat, 'data2'=>$ito3]);
+                    }
                 }
             }
         }
@@ -1575,23 +1591,98 @@ class KlentServis
         if($request->id){
             $usd = Itogodok::find(1);
             if ($usd->usd == 1) {
-                if($request->karzs){
+                if($request->karzs >= 0){
                     $user = Userdok::find($request->id);
-                    if($user->summa){
-                        $foo = $request->karzs - $user->summa;
-                        $arxiv = Arxivdok::create([
-                            'userdok_id'=>$request->id,
-                            'itogs'=>$request->itogs,
-                            'naqt'=>$request->naqt,
-                            'plastik'=>$request->plastik,
-                            'bank'=>$request->bank,
-                            'karzs'=>$foo,
-                            'srok'=>$request->srok,
-                        ]);
-                        Userdok::find($request->id)->update(['summa'=>0]);
-                        $user_id = Javobdok::where('userdok_id', $request->id)->first();
-                        $user_id->javob = $user_id->javob + $foo;
-                        $user_id->update(); 
+                    if($user->summa > 0){
+                        if($request->naqt > 0 || $request->plastik > 0  || $request->bank > 0){
+                            $der2 = $user->summa + $request->naqt + $request->plastik + $request->bank;               
+                            if($request->itogs <= $der2){
+                                $dert = $der2 - $request->itogs;
+                                $arxiv = Arxivdok::create([
+                                    'userdok_id'=>$request->id,
+                                    'itogs'=>$request->itogs,
+                                    'naqt'=>$request->naqt,
+                                    'plastik'=>$request->plastik,
+                                    'bank'=>$request->bank,
+                                    'karzs'=> 0,
+                                    'srok'=>$request->srok,
+                                ]);
+                                $user->summa = $dert;
+                                $user->update();
+                            }else{
+                                $arxiv = Arxivdok::create([
+                                    'userdok_id'=>$request->id,
+                                    'itogs'=>$request->itogs,
+                                    'naqt'=>$request->naqt,
+                                    'plastik'=>$request->plastik,
+                                    'bank'=>$request->bank,
+                                    'karzs'=> $request->karzs,
+                                    'srok'=>$request->srok,
+                                ]);
+                                $user->summa = 0;
+                                $user->update();
+                                $user_ide = Javobdok::where('userdok_id', $request->id)->first();
+                                $user_ide->javob = $user_ide->javob + $request->karzs;
+                                $user_ide->update();
+                            }
+                            return $this->oplatadok2($request, $month, $year, $arxiv);
+                    }else{
+                        if($user->summa >= $request->itogs){
+                            $arxiv = Arxivdok::create([
+                                'userdok_id'=>$request->id,
+                                'itogs'=>$request->itogs,
+                                'naqt'=>$request->naqt,
+                                'plastik'=>$request->plastik,
+                                'bank'=>$request->bank,
+                                'karzs'=>0,
+                                'srok'=>$request->srok,
+                            ]);
+                            $user->summa = $user->summa - $request->itogs;
+                            $user->update();
+                        }else{
+                            $arxiv = Arxivdok::create([
+                                'userdok_id'=>$request->id,
+                                'itogs'=>$request->itogs,
+                                'naqt'=>$request->naqt,
+                                'plastik'=>$request->plastik,
+                                'bank'=>$request->bank,
+                                'karzs'=>$request->karzs,
+                                'srok'=>$request->srok,
+                            ]);
+                            $user->summa = 0;
+                            $user->update();
+                            $user_ide = Javobdok::where('userdok_id', $request->id)->first();
+                            $user_ide->javob = $user_ide->javob + $request->karzs;
+                            $user_ide->update();
+                        }
+                        return $this->oplatadok2($request, $month, $year, $arxiv);
+                    }
+                }else{
+                    if($request->naqt > 0 || $request->plastik > 0  || $request->bank > 0){
+                        $der3 = $request->naqt + $request->plastik + $request->bank;
+                        if($request->itogs <= $der3){
+                            $arxiv = Arxivdok::create([
+                                'userdok_id'=>$request->id,
+                                'itogs'=>$request->itogs,
+                                'naqt'=>$request->naqt,
+                                'plastik'=>$request->plastik,
+                                'bank'=>$request->bank,
+                                'karzs'=> 0,
+                                'srok'=>$request->srok,
+                            ]);
+                            $user->summa = $user->summa + $der3 - $request->itogs;
+                            $user->update();
+                        }else{
+                            $arxiv = Arxivdok::create([
+                                'userdok_id'=>$request->id,
+                                'itogs'=>$request->itogs,
+                                'naqt'=>$request->naqt,
+                                'plastik'=>$request->plastik,
+                                'bank'=>$request->bank,
+                                'karzs'=>$request->karzs,
+                                'srok'=>$request->srok,
+                            ]);
+                        }
                         return $this->oplatadok2($request, $month, $year, $arxiv);
                     }else{
                         $arxiv = Arxivdok::create([
@@ -1603,86 +1694,73 @@ class KlentServis
                             'karzs'=>$request->karzs,
                             'srok'=>$request->srok,
                         ]);
-                        $user_ide = Javobdok::where('userdok_id', $request->id)->first();
-                        $user_ide->javob = $user_ide->javob + $request->karzs;
-                        $user_ide->update();   
-                        return $this->oplatadok2($request, $month, $year, $arxiv);
-                    }
-                }else{
-                    if($request->naqt > 0 || $request->plastik > 0  || $request->bank > 0){
-                        $arxiv = Arxivdok::create([
-                            'userdok_id'=>$request->id,
-                            'itogs'=>$request->itogs,
-                            'naqt'=>$request->naqt,
-                            'plastik'=>$request->plastik,
-                            'bank'=>$request->bank,
-                            'karzs'=>0,
-                            'srok'=>$request->srok,
-                        ]);
-                        return $this->oplatadok2($request, $month, $year, $arxiv);
-                    }else{
-                        $arxiv = Arxivdok::create([
-                            'userdok_id'=>$request->id,
-                            'itogs'=>$request->itogs,
-                            'naqt'=>$request->naqt,
-                            'plastik'=>$request->plastik,
-                            'bank'=>$request->bank,
-                            'karzs'=>0,
-                            'srok'=>$request->srok,
-                        ]);
-                        $userw = Userdok::find($request->id);
-                        $userw->summa = $userw->summa - $request->itogs;
-                        $userw->update();  
                         return $this->oplatadok2($request, $month, $year, $arxiv);
                     }
                 }
             }else{
-                if($request->karzs){
-                    $user2 = Userdok::find($request->id);
-                    if($user2->summa){
-                        $foo2 = $request->karzs / $usd->kurs - $user2->summa;
-                        $arxiv = Arxivdok::create([
-                            'userdok_id'=>$request->id,
-                            'itogs'=>$request->itogs / $usd->kurs,
-                            'naqt'=>$request->naqt / $usd->kurs,
-                            'plastik'=>$request->plastik / $usd->kurs,
-                            'bank'=>$request->bank / $usd->kurs,
-                            'karzs'=> $foo2,
-                            'srok'=>$request->srok,
-                        ]);
-                        Userdok::find($request->id)->update(['summa'=>0]);
-                        $user_id2 = Javobdok::where('userdok_id', $request->id)->first();
-                        $user_id2->javob = $user_id2->javob + $foo2;
-                        $user_id2->update();
+                $arxiv = Arxivdok::create([
+                    'userdok_id'=>$request->id,
+                    'itogs'=>$request->itogs,
+                    'naqt'=>$request->naqt,
+                    'plastik'=>$request->plastik,
+                    'bank'=>$request->bank,
+                    'karzs'=>$request->karzs,
+                    'srok'=>$request->srok,
+                ]);
+                $user2 = Userdok::find($request->id);
+                $user2->summa = $user2->summa + $request->karzs - $request->itogs;
+                $user2->update();
+                return $this->oplatadok2($request, $month, $year, $arxiv);
+            }
+        }else{
+            if($request->karzs >= 0){
+                $user3 = Userdok::find($request->id);
+                if($user3->summa > 0){
+                    if($request->naqt > 0 || $request->plastik > 0  || $request->bank > 0){
+                        $der2 = $user3->summa * $usd->kurs + $request->naqt + $request->plastik + $request->bank;               
+                        if($request->itogs <= $der2){
+                            $dert = $der2 - $request->itogs;
+                            $arxiv = Arxivdok::create([
+                                'userdok_id'=>$request->id,
+                                'itogs'=>$request->itogs / $usd->kurs,
+                                'naqt'=>$request->naqt / $usd->kurs,
+                                'plastik'=>$request->plastik / $usd->kurs,
+                                'bank'=>$request->bank / $usd->kurs,
+                                'karzs'=> 0,
+                                'srok'=>$request->srok,
+                            ]);
+                            $user3->summa = $dert;
+                            $user3->update();
+                        }else{
+                            $arxiv = Arxivdok::create([
+                                'userdok_id'=>$request->id,
+                                'itogs'=>$request->itogs / $usd->kurs,
+                                'naqt'=>$request->naqt / $usd->kurs,
+                                'plastik'=>$request->plastik / $usd->kurs,
+                                'bank'=>$request->bank / $usd->kurs,
+                                'karzs'=> $request->karzs / $usd->kurs,
+                                'srok'=>$request->srok,
+                            ]);
+                            $user3->summa = 0;
+                            $user3->update();
+                            $user_ide2 = Javobdok::where('userdok_id', $request->id)->first();
+                            $user_ide2->javob = $user_ide2->javob + $request->karzs / $usd->kurs;
+                            $user_ide2->update();
+                        }
                         return $this->oplatadok2($request, $month, $year, $arxiv);
-                    }else{
-                        $arxiv = Arxivdok::create([
-                            'userdok_id'=>$request->id,
-                            'itogs'=>$request->itogs / $usd->kurs,
-                            'naqt'=>$request->naqt / $usd->kurs,
-                            'plastik'=>$request->plastik / $usd->kurs,
-                            'bank'=>$request->bank / $usd->kurs,
-                            'karzs'=> $request->karzs / $usd->kurs,
-                            'srok'=>$request->srok,
-                        ]);
-                        $user_id3 = Javobdok::where('userdok_id', $request->id)->first();
-                        $jav = $user_id3->javob + $request->karzs / $usd->kurs;
-                        $user_id3->javob = $jav;
-                        $user_id3->update();  
-                        return $this->oplatadok2($request, $month, $year, $arxiv);
-                    }
                 }else{
-                    if($request->naqt > 0 || $request->plastik > 0 || $request->bank > 0){
+                    if($user3->summa >= $request->itogs / $usd->kurs){
                         $arxiv = Arxivdok::create([
                             'userdok_id'=>$request->id,
                             'itogs'=>$request->itogs / $usd->kurs,
                             'naqt'=>$request->naqt / $usd->kurs,
                             'plastik'=>$request->plastik / $usd->kurs,
                             'bank'=>$request->bank / $usd->kurs,
-                            'karzs'=> 0,
+                            'karzs'=>0,
                             'srok'=>$request->srok,
                         ]);
-                        return $this->oplatadok2($request, $month, $year, $arxiv);
+                        $user3->summa = $user3->summa - $request->itogs / $usd->kurs;
+                        $user3->update();
                     }else{
                         $arxiv = Arxivdok::create([
                             'userdok_id'=>$request->id,
@@ -1690,15 +1768,71 @@ class KlentServis
                             'naqt'=>$request->naqt / $usd->kurs,
                             'plastik'=>$request->plastik / $usd->kurs,
                             'bank'=>$request->bank / $usd->kurs,
+                            'karzs'=>$request->karzs / $usd->kurs,
+                            'srok'=>$request->srok,
+                        ]);
+                        $user3->summa = 0;
+                        $user3->update();
+                        $user_ide3 = Javobdok::where('userdok_id', $request->id)->first();
+                        $user_ide3->javob = $user_ide3->javob + $request->karzs / $usd->kurs;
+                        $user_ide3->update();
+                    }
+                    return $this->oplatadok2($request, $month, $year, $arxiv);
+                }
+            }else{
+                if($request->naqt > 0 || $request->plastik > 0  || $request->bank > 0){
+                    $der4 = $request->naqt + $request->plastik + $request->bank;
+                    if($request->itogs <= $der4 / $usd->kurs){
+                        $arxiv = Arxivdok::create([
+                            'userdok_id'=>$request->id,
+                            'itogs'=>$request->itogs / $usd->kurs,
+                            'naqt'=>$request->naqt / $usd->kurs,
+                            'plastik'=>$request->plastik / $usd->kurs,
+                            'bank'=>$request->bank / $usd->kurs,
                             'karzs'=> 0,
                             'srok'=>$request->srok,
                         ]);
-                        $userw2 = Userdok::find($request->id);
-                        $jaw = $request->itogs / $usd->kurs;
-                        $userw2->summa = $userw2->summa - $jaw;
-                        $userw2->update();  
-                        return $this->oplatadok2($request, $month, $year, $arxiv);
+                        $user3->summa = $user3->summa + $der4 / $usd->kurs - $request->itogs / $usd->kurs;
+                        $user3->update();
+                    }else{
+                        $arxiv = Arxivdok::create([
+                            'userdok_id'=>$request->id,
+                            'itogs'=>$request->itogs / $usd->kurs,
+                            'naqt'=>$request->naqt / $usd->kurs,
+                            'plastik'=>$request->plastik / $usd->kurs,
+                            'bank'=>$request->bank / $usd->kurs,
+                            'karzs'=>$request->karzs / $usd->kurs,
+                            'srok'=>$request->srok,
+                        ]);
                     }
+                    return $this->oplatadok2($request, $month, $year, $arxiv);
+                }else{
+                    $arxiv = Arxivdok::create([
+                        'userdok_id'=>$request->id,
+                        'itogs'=>$request->itogs / $usd->kurs,
+                        'naqt'=>$request->naqt / $usd->kurs,
+                        'plastik'=>$request->plastik / $usd->kurs,
+                        'bank'=>$request->bank / $usd->kurs,
+                        'karzs'=>$request->karzs / $usd->kurs,
+                        'srok'=>$request->srok,
+                    ]);
+                    return $this->oplatadok2($request, $month, $year, $arxiv);
+                    }
+                }
+                }else{
+                    $arxiv = Arxivdok::create([
+                        'userdok_id'=>$request->id,
+                        'itogs'=>$request->itogs / $usd->kurs,
+                        'naqt'=>$request->naqt / $usd->kurs,
+                        'plastik'=>$request->plastik / $usd->kurs,
+                        'bank'=>$request->bank / $usd->kurs,
+                        'karzs'=>$request->karzs / $usd->kurs,
+                        'srok'=>$request->srok,
+                    ]);
+                    $user2 = Userdok::find($request->id);
+                    $user2->summa = $user2->summa + $request->karzs / $usd->kurs - $request->itogs / $usd->kurs;
+                    $user2->update();
+                    return $this->oplatadok2($request, $month, $year, $arxiv);
                 }
             }
         }else{

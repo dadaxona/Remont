@@ -3113,12 +3113,16 @@ $(document).ready(function(){
                         _token: _token
                     },
                     success: function(data) {
-                        fetch_customer_datadok();
-                        $("#itogdok").val(data.data2.itogo);
-                        $("#itog2dok").val(data.data2.itogo);
-                        $("#kursdok").val(data.data2.kurs);
-                        $("#kurs2dok").val(data.data2.kurs);
-                        toastr.success(data.msg).fadeOut(1500);
+                        if(data.code == 0){
+                            toastr.error(data.msg).fadeOut(2500);
+                        }else{
+                            fetch_customer_datadok();
+                            $("#itogdok").val(data.data2.itogo);
+                            $("#itog2dok").val(data.data2.itogo);
+                            $("#kursdok").val(data.data2.kurs);
+                            $("#kurs2dok").val(data.data2.kurs);
+                            toastr.success(data.msg).fadeOut(1500);
+                        }
                     }
                 });
             }else{
