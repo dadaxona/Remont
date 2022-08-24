@@ -242,11 +242,10 @@ class AuthController extends Controller
                         'password' => $request['password'],
                         'count' => 1
                     ]);   
-                    $user = Drektor::where('login','=',$request['login'])->first();
-                    if ($user) {         
-                        $request->session()->put('IDIE',$user->id);
-                        return response()->json(["data"=>200]);          
-                    }
+                    $user2 = Drektor::where('login','=',$request['login'])->first();
+                    $request->session()->put('IDIE',$user2->id);
+                    return response()->json(["data"=>200]);          
+                    
                 }            
             }else{
                 $user = Drektor::where('login','=',$request['login'])->first();
