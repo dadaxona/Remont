@@ -2333,8 +2333,10 @@ class KlentController extends KlentController2
         if($request->ajax())
         {
             $output = '';
+            $output2 = '';
             $ichki = Ichkitavar::all();
             $data = Karzina2::whereBetween("created_at", [$request->data, $request->data2])->get();
+            $data2 = Karzina3::whereBetween("created_at", [$request->data, $request->data2])->get();
             $data222 = Arxiv::whereBetween("created_at", [$request->data, $request->data2])->get();
             $ras = Rasxod::whereBetween("created_at", [$request->data, $request->data2])->get();
             $foo = Pribl::find(1);
@@ -2357,6 +2359,13 @@ class KlentController extends KlentController2
                     $foo2->jami = $foo2->jami + $value->itog;
                     $foo2->update();
                 }
+                foreach ($data2 as $value) {
+                    $ich2 = Ichkitavar::find($value->ichkitavar_id);
+                    $foo2 = Pribl::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich2->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
                 foreach ($data222 as $value) {
                     $foo3 = Pribl::find(1);
                     $foo3->karz = $foo3->karz + $value->karzs;
@@ -2370,8 +2379,20 @@ class KlentController extends KlentController2
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;">
+                    <tr style="border-bottom: 1px solid; color: #006200">
                         <td>'.$row->clentra.'</td>
+                        <td>'.$row->name.'</td>
+                        <td>'.$row->soni.'</td>
+                        <td>'.$row->summa2.'</td>
+                        <td>'.$row->itog.'</td>
+                    </tr>
+                    ';
+                }
+                foreach($data2 as $row)
+                {
+                    $output2 .= '
+                    <tr style="border-bottom: 1px solid; color: #b90404">
+                        <td>Бирламчи мижоз</td>
                         <td>'.$row->name.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
@@ -2393,9 +2414,16 @@ class KlentController extends KlentController2
                     $foo1->update();
                 }
                 foreach ($data as $value) {
-                    $ich = Ichkitavar::find($value->ichkitavar_id);
+                    $ich3 = Ichkitavar::find($value->ichkitavar_id);
                     $foo2 = Pribl::find(1);
-                    $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->pribl = $foo2->pribl + $ich3->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($data2 as $value) {
+                    $ich4 = Ichkitavar::find($value->ichkitavar_id);
+                    $foo2 = Pribl::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich4->summa * $value->soni;
                     $foo2->jami = $foo2->jami + $value->itog;
                     $foo2->update();
                 }
@@ -2412,8 +2440,20 @@ class KlentController extends KlentController2
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;">
+                    <tr style="border-bottom: 1px solid; color: #006200">
                         <td>'.$row->clentra.'</td>
+                        <td>'.$row->name.'</td>
+                        <td>'.$row->soni.'</td>
+                        <td>'.$row->summa2.'</td>
+                        <td>'.$row->itog.'</td>
+                    </tr>
+                    ';
+                }
+                foreach($data2 as $row)
+                {
+                    $output2 .= '
+                    <tr style="border-bottom: 1px solid; color: #b90404">
+                        <td>Бирламчи мижоз</td>
                         <td>'.$row->name.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
@@ -2429,7 +2469,8 @@ class KlentController extends KlentController2
             $foo5->update();
             return response()->json([
                 'data'=>$foo5??[],
-                'output'=>$output
+                'output'=>$output,
+                'output2'=>$output2,                
             ]);
         }
     }
@@ -2438,8 +2479,9 @@ class KlentController extends KlentController2
         if($request->ajax())
         {
             $ichki = Ichkitavar::all();
-            $kar2 = Karzina2::get();
-            $arx = Arxiv::get();
+            $kar2 = Karzina2::all();
+            $kar3 = Karzina3::all();
+            $arx = Arxiv::all();
             $ras = Rasxod::all();
             $foo = Pribl::find(1);
             if($foo){
@@ -2458,6 +2500,13 @@ class KlentController extends KlentController2
                     $ich = Ichkitavar::find($value->ichkitavar_id);
                     $foo2 = Pribl::find(1);
                     $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($kar3 as $value) {
+                    $ich2 = Ichkitavar::find($value->ichkitavar_id);
+                    $foo2 = Pribl::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich2->summa * $value->soni;
                     $foo2->jami = $foo2->jami + $value->itog;
                     $foo2->update();
                 }
@@ -2485,9 +2534,16 @@ class KlentController extends KlentController2
                     $foo1->update();
                 }
                 foreach ($kar2 as $value) {
-                    $ich = Ichkitavar::find($value->ichkitavar_id);
+                    $ich3 = Ichkitavar::find($value->ichkitavar_id);
                     $foo2 = Pribl::find(1);
-                    $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->pribl = $foo2->pribl + $ich3->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($kar3 as $value) {
+                    $ich4 = Ichkitavar::find($value->ichkitavar_id);
+                    $foo2 = Pribl::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich4->summa * $value->soni;
                     $foo2->jami = $foo2->jami + $value->itog;
                     $foo2->update();
                 }
@@ -2526,8 +2582,10 @@ class KlentController extends KlentController2
         if($request->ajax())
         {
             $output = '';
+            $output2 = '';
             $ichki = Ichkitavardok::all();
             $data = Karzina2dok::whereBetween("created_at", [$request->data, $request->data2])->get();
+            $data2 = Karzina3dok::whereBetween("created_at", [$request->data, $request->data2])->get();
             $data222 = Arxivdok::whereBetween("created_at", [$request->data, $request->data2])->get();
             $ras = Rasxoddok::whereBetween("created_at", [$request->data, $request->data2])->get();
             $foo = Pribldok::find(1);
@@ -2550,6 +2608,13 @@ class KlentController extends KlentController2
                     $foo2->jami = $foo2->jami + $value->itog;
                     $foo2->update();
                 }
+                foreach ($data2 as $value) {
+                    $ich2 = Ichkitavardok::find($value->ichkitavardok_id);
+                    $foo2 = Pribldok::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich2->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
                 foreach ($data222 as $value) {
                     $foo3 = Pribldok::find(1);
                     $foo3->karz = $foo3->karz + $value->karzs;
@@ -2563,8 +2628,20 @@ class KlentController extends KlentController2
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;">
+                    <tr style="border-bottom: 1px solid; color: #006200">
                         <td>'.$row->userdok->name.'</td>
+                        <td>'.$row->name.'</td>
+                        <td>'.$row->soni.'</td>
+                        <td>'.$row->summa2.'</td>
+                        <td>'.$row->itog.'</td>
+                    </tr>
+                    ';
+                }
+                foreach($data2 as $row)
+                {
+                    $output2 .= '
+                    <tr style="border-bottom: 1px solid; color: #b90404">
+                        <td>Бирламчи мижоз</td>
                         <td>'.$row->name.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
@@ -2586,9 +2663,16 @@ class KlentController extends KlentController2
                     $foo1->update();
                 }
                 foreach ($data as $value) {
-                    $ich = Ichkitavardok::find($value->ichkitavardok_id);
+                    $ich3 = Ichkitavardok::find($value->ichkitavardok_id);
                     $foo2 = Pribldok::find(1);
-                    $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->pribl = $foo2->pribl + $ich3->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($data2 as $value) {
+                    $ich4 = Ichkitavardok::find($value->ichkitavardok_id);
+                    $foo2 = Pribldok::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich4->summa * $value->soni;
                     $foo2->jami = $foo2->jami + $value->itog;
                     $foo2->update();
                 }
@@ -2605,8 +2689,20 @@ class KlentController extends KlentController2
                 foreach($data as $row)
                 {
                     $output .= '
-                    <tr style="border-bottom: 1px solid;">
+                    <tr style="border-bottom: 1px solid; color: #006200"">
                     <td>'.$row->userdok->name.'</td>
+                        <td>'.$row->name.'</td>
+                        <td>'.$row->soni.'</td>
+                        <td>'.$row->summa2.'</td>
+                        <td>'.$row->itog.'</td>
+                    </tr>
+                    ';
+                }
+                foreach($data2 as $row)
+                {
+                    $output2 .= '
+                    <tr style="border-bottom: 1px solid; color: #b90404">
+                        <td>Бирламчи мижоз</td>
                         <td>'.$row->name.'</td>
                         <td>'.$row->soni.'</td>
                         <td>'.$row->summa2.'</td>
@@ -2622,7 +2718,8 @@ class KlentController extends KlentController2
             $foo5->update();
             return response()->json([
                 'data'=>$foo5??[],
-                'output'=>$output
+                'output'=>$output,
+                'output2'=>$output2,
             ]);
         }
     }
@@ -2631,8 +2728,9 @@ class KlentController extends KlentController2
         if($request->ajax())
         {
             $ichki = Ichkitavardok::all();
-            $kar2 = Karzina2dok::get();
-            $arx = Arxivdok::get();
+            $kar2 = Karzina2dok::all();
+            $kar3 = Karzina3dok::all();
+            $arx = Arxivdok::all();
             $ras = Rasxoddok::all();
             $foo = Pribldok::find(1);
             if($foo){
@@ -2651,6 +2749,13 @@ class KlentController extends KlentController2
                     $ich = Ichkitavardok::find($value->ichkitavardok_id);
                     $foo2 = Pribldok::find(1);
                     $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($kar3 as $value) {
+                    $ich2 = Ichkitavardok::find($value->ichkitavardok_id);
+                    $foo2 = Pribldok::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich2->summa * $value->soni;
                     $foo2->jami = $foo2->jami + $value->itog;
                     $foo2->update();
                 }
@@ -2678,9 +2783,16 @@ class KlentController extends KlentController2
                     $foo1->update();
                 }
                 foreach ($kar2 as $value) {
-                    $ich = Ichkitavardok::find($value->ichkitavardok_id);
+                    $ich3 = Ichkitavardok::find($value->ichkitavardok_id);
                     $foo2 = Pribldok::find(1);
-                    $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->pribl = $foo2->pribl + $ich3->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($kar3 as $value) {
+                    $ich4 = Ichkitavardok::find($value->ichkitavardok_id);
+                    $foo2 = Pribldok::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich4->summa * $value->soni;
                     $foo2->jami = $foo2->jami + $value->itog;
                     $foo2->update();
                 }

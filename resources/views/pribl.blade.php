@@ -50,7 +50,10 @@
               </thead>
               <tbody id="clent">
 
-              </tbody>               
+              </tbody>
+                <tbody id="clent2">
+
+              </tbody> 
           </table>
       </div>
   </div>
@@ -100,6 +103,9 @@
                 </thead>
                 <tbody id="clenterdok">
   
+                </tbody>
+                 <tbody id="clenterdok2">
+  
                 </tbody>               
             </table>
         </div>
@@ -126,6 +132,7 @@
           $("#jamipribl").html(data.data.pribl);
           $("#sqladjami").html(data.data.vse);
           $("#clent").html(data.output);
+          $("#clent2").html(data.output2);
         }
     });
   }
@@ -154,6 +161,7 @@ function geteldok(data,  data2){
           $("#jamipribldok").html(data.data.pribl);
           $("#sqladjamidok").html(data.data.vse);
           $("#clenterdok").html(data.output);
+          $("#clenterdok2").html(data.output2);
         }
     });
   }

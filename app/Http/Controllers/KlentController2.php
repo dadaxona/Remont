@@ -220,6 +220,7 @@ class KlentController2 extends Controller
         {
             $ichki = Ichkitavar::all();
             $kar2 = Karzina2::all();
+            $kar3 = Karzina3::all();
             $arx = Arxiv::all();
             $ras = Rasxod::all();
             $foo = Pribl::find(1);
@@ -239,6 +240,13 @@ class KlentController2 extends Controller
                     $ich = Ichkitavar::find($value->ichkitavar_id);
                     $foo2 = Pribl::find(1);
                     $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($kar3 as $value) {
+                    $ich2 = Ichkitavar::find($value->ichkitavar_id);
+                    $foo2 = Pribl::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich2->summa * $value->soni;
                     $foo2->jami = $foo2->jami + $value->itog;
                     $foo2->update();
                 }
@@ -266,9 +274,16 @@ class KlentController2 extends Controller
                     $foo1->update();
                 }
                 foreach ($kar2 as $value) {
-                    $ich = Ichkitavar::find($value->ichkitavar_id);
+                    $ich3 = Ichkitavar::find($value->ichkitavar_id);
                     $foo2 = Pribl::find(1);
-                    $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->pribl = $foo2->pribl + $ich3->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($kar3 as $value) {
+                    $ich4 = Ichkitavar::find($value->ichkitavar_id);
+                    $foo2 = Pribl::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich4->summa * $value->soni;
                     $foo2->jami = $foo2->jami + $value->itog;
                     $foo2->update();
                 }
@@ -300,6 +315,7 @@ class KlentController2 extends Controller
         {
             $ichki = Ichkitavardok::all();
             $kar2 = Karzina2dok::all();
+            $kar3 = Karzina3dok::all();
             $arx = Arxivdok::all();
             $ras = Rasxoddok::all();
             $foo = Pribldok::find(1);
@@ -319,6 +335,13 @@ class KlentController2 extends Controller
                     $ich = Ichkitavardok::find($value->ichkitavardok_id);
                     $foo2 = Pribldok::find(1);
                     $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($kar3 as $value) {
+                    $ich2 = Ichkitavardok::find($value->ichkitavardok_id);
+                    $foo2 = Pribldok::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich2->summa * $value->soni;
                     $foo2->jami = $foo2->jami + $value->itog;
                     $foo2->update();
                 }
@@ -346,9 +369,16 @@ class KlentController2 extends Controller
                     $foo1->update();
                 }
                 foreach ($kar2 as $value) {
-                    $ich = Ichkitavardok::find($value->ichkitavardok_id);
+                    $ich3 = Ichkitavardok::find($value->ichkitavardok_id);
                     $foo2 = Pribldok::find(1);
-                    $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->pribl = $foo2->pribl + $ich3->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($kar3 as $value) {
+                    $ich4 = Ichkitavardok::find($value->ichkitavardok_id);
+                    $foo2 = Pribldok::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich4->summa * $value->soni;
                     $foo2->jami = $foo2->jami + $value->itog;
                     $foo2->update();
                 }
@@ -380,6 +410,7 @@ class KlentController2 extends Controller
         {
             $ichki = Ichkitavar::all();
             $kar2 = Karzina2::whereBetween("created_at", [$request->date, $request->date2])->get();
+            $kar3 = Karzina3::whereBetween("created_at", [$request->date, $request->date2])->get();
             $arx = Arxiv::whereBetween("created_at", [$request->date, $request->date2])->get();
             $ras = Rasxod::whereBetween("created_at", [$request->date, $request->date2])->get();
             $foo = Pribl::find(1);
@@ -399,6 +430,13 @@ class KlentController2 extends Controller
                     $ich = Ichkitavar::find($value->ichkitavar_id);
                     $foo2 = Pribl::find(1);
                     $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($kar3 as $value) {
+                    $ich2 = Ichkitavar::find($value->ichkitavar_id);
+                    $foo2 = Pribl::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich2->summa * $value->soni;
                     $foo2->jami = $foo2->jami + $value->itog;
                     $foo2->update();
                 }
@@ -426,9 +464,16 @@ class KlentController2 extends Controller
                     $foo1->update();
                 }
                 foreach ($kar2 as $value) {
-                    $ich = Ichkitavar::find($value->ichkitavar_id);
+                    $ich3 = Ichkitavar::find($value->ichkitavar_id);
                     $foo2 = Pribl::find(1);
-                    $foo2->pribl = $foo2->pribl + $ich->summa * $value->soni;
+                    $foo2->pribl = $foo2->pribl + $ich3->summa * $value->soni;
+                    $foo2->jami = $foo2->jami + $value->itog;
+                    $foo2->update();
+                }
+                foreach ($kar3 as $value) {
+                    $ich4 = Ichkitavar::find($value->ichkitavar_id);
+                    $foo2 = Pribl::find(1);
+                    $foo2->pribl = $foo2->pribl + $ich4->summa * $value->soni;
                     $foo2->jami = $foo2->jami + $value->itog;
                     $foo2->update();
                 }
