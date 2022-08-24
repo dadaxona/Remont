@@ -96,6 +96,12 @@
     #clent tr { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
 
     #feedback { font-size: 1.4em; }
+    #clent2 .ui-selecting { background: #277890; }
+    #clent2 .ui-selected { background: #277890; color: white; }
+    #clent2 { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #clent2 tr { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+    
+    #feedback { font-size: 1.4em; }
     #savdobirlamchi .ui-selecting { background: #277890; }
     #savdobirlamchi .ui-selected { background: #277890; color: white; }
     #savdobirlamchi { list-style-type: none; margin: 0; padding: 0; width: 60%; }
@@ -923,12 +929,12 @@
             });
         }
 
-        setInterval(function() {
-            srok();
-            srokdok();
-            srok2();
-            srok2dok();
-        }, 5000);
+        // setInterval(function() {
+        //     srok();
+        //     srokdok();
+        //     srok2();
+        //     srok2dok();
+        // }, 5000);
     </script>
     <script src="toastr/toastr.min.js"></script>
     <script src="bootstrap-5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>

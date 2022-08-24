@@ -21,6 +21,7 @@ use App\Http\Controllers\KlentController2;
 use App\Models\Adressdok;
 use App\Models\Arxiv;
 use App\Models\Arxivdok;
+use App\Models\Controltavar;
 use App\Models\Deletkarzina;
 use App\Models\Ichkitavardok;
 use App\Models\Itogodok;
@@ -42,6 +43,7 @@ use App\Models\Statistikadok;
 use App\Models\Tavar2;
 use App\Models\Tavar2dok;
 use App\Models\Tavardok;
+use App\Models\Tavarstatistika;
 use App\Models\Tayyorsqlad;
 use App\Models\Tayyorsqladdok;
 use App\Models\Updatetavrdok;
@@ -2816,5 +2818,56 @@ class KlentController extends KlentController2
                 'data'=>$foo5??[],
             ]);
         }
+    }
+
+    public function garizantal()
+    {
+        $data = Tavarstatistika::orderBy('summa', "DESC")->get();
+        for ($i=0; $i < $data->count(); $i++) {
+            if($i == 11){
+            }else{
+                $id = Controltavar::where('id', $i)->first();
+                if($id){
+                    $id->name = null;
+                    $id->hajm = null;
+                    $id->summa = null;
+                    $id->update();
+                    $id->name = $data[$i]["name"];
+                    $id->hajm = $id->hajm + $data[$i]["hajm"];
+                    $id->summa = $id->summa + $data[$i]["summa"];
+                    $id->update();
+                }else{
+                    Controltavar::create([
+                        'name'=>$data[$i]["name"],
+                        'hajm'=>$data[$i]["hajm"],
+                        'summa'=>$data[$i]["summa"],
+                    ]);
+                }
+            }
+        }
+        $i = 0;
+        Controltavar::where('id' ,">", 10)->delete();
+        $a = Controltavar::find(1);
+        $b = Controltavar::find(2);
+        $c = Controltavar::find(3);
+        $d = Controltavar::find(4);
+        $e = Controltavar::find(5);
+        $f = Controltavar::find(6);
+        $g = Controltavar::find(7);
+        $h = Controltavar::find(8);
+        $i1 = Controltavar::find(9);
+        $j = Controltavar::find(10);
+        return response()->json([
+           "label"=> $a->name, "y"=> (int)$a->summa??[], "gdp"=> (int)$a->summa??[],
+           "label1"=> $b->name, "y1"=> (int)$b->summa??[], "gdp1"=> (int)$b->summa??[],
+           "label2"=> $c->name, "y2"=> (int)$c->summa??[], "gdp2"=> (int)$c->summa??[],
+           "label3"=> $d->name, "y3"=> (int)$d->summa??[], "gdp3"=> (int)$d->summa??[],
+           "label4"=> $e->name, "y4"=> (int)$e->summa??[], "gdp4"=> (int)$e->summa??[],
+           "label5"=> $f->name, "y5"=> (int)$f->summa??[], "gdp5"=> (int)$f->summa??[],
+           "label6"=> $g->name, "y6"=> (int)$g->summa??[], "gdp6"=> (int)$g->summa??[],
+           "label7"=> $h->name, "y7"=> (int)$h->summa??[], "gdp7"=> (int)$h->summa??[],
+           "label8"=> $i1->name, "y8"=> (int)$i1->summa??[], "gdp8"=> (int)$i1->summa??[],
+           "label9"=> $j->name, "y9"=> (int)$j->summa??[], "gdp9"=> (int)$j->summa??[],
+        ]);
     }
 }

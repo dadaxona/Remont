@@ -314,3 +314,4 @@ Route::post('otmetkadok', [KlentController::class, 'otmetkadok'])->name('otmetka
 Route::get('pribl.php', [KlentController::class, 'pribl'])->name('pribl.php');
 Route::get('getel', [KlentController::class, 'getel'])->name('getel');
 Route::get('geteldok', [KlentController::class, 'geteldok'])->name('geteldok');
+Route::get('garizantal', [KlentController::class, 'garizantal'])->name('garizantal');

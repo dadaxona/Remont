@@ -15,6 +15,7 @@
     </button>
 </div>
 <div id="Container" style="height: 400px; width: 100%;"></div>
+<div id="garizantal" class="mt-5" style="height: 500px; width: 100%;"></div>
 </div>
 
 @else
@@ -43,6 +44,56 @@
         $("#li").modal("show");
     });
 
+    function garizantal(){
+        $.ajax({
+            url: "{{ route('garizantal') }}",
+            type: "GET",
+            success:function(data){
+                console.log(data);
+                var chartee = new CanvasJS.Chart("garizantal", {
+                animationEnabled: true,
+                title: {
+                    text: "Military Expenditure of Countries: 2016"
+                },
+                axisX: {
+                    interval: 1
+                },
+                axisY: {
+                    title: "Expenses in Billion Dollars",
+                    includeZero: true,
+                    scaleBreaks: {
+                        type: "wavy",
+                        customBreaks: [{
+                            startValue: 80,
+                            endValue: 210
+                            },
+                            {
+                                startValue: 230,
+                                endValue: 600
+                            }
+                    ]}
+                },
+                data: [{
+                    type: "bar",
+                    dataPoints: [
+                        { label: data.label8, y: data.y8, gdp: data.gdp8},
+                        { label: data.label7, y: data.y7, gdp: data.gdp7},
+                        { label: data.label6, y: data.y6, gdp: data.gdp6},
+                        { label: data.label5, y: data.y5, gdp: data.gdp5},
+                        { label: data.label4, y: data.y4, gdp: data.gdp4},
+                        { label: data.label3, y: data.y3, gdp: data.gdp3},
+                        { label: data.label2, y: data.y2, gdp: data.gdp2},
+                        { label: data.label1, y: data.y1, gdp: data.gdp1},
+                        { label: data.label9, y: data.y9, gdp: data.gdp9},
+                        { label: data.label, y: data.y, gdp: data.gdp},
+                    ]
+                }]
+            });
+            chartee.render();
+            }
+        });
+    }
+    garizantal();
     $("#sav").on("click", function(){
         let _token  = $('meta[name="csrf-token"]').attr('content');
         var limit = $("#lim").val();
@@ -193,8 +244,7 @@
             e.dataSeries.visible = true;
         }
         chart.render();
-    }
-    
+    }    
     }
 </script>
 @endsection

@@ -35,6 +35,7 @@ use App\Models\Statistikadok;
 use App\Models\Tavar2;
 use App\Models\Tavar2dok;
 use App\Models\Tavardok;
+use App\Models\Tavarstatistika;
 use App\Models\Updatetavrdok;
 use App\Models\Userdok;
 use App\Models\Zakaz;
@@ -2307,6 +2308,28 @@ class KlentServis
 
     public function oplata3($request, $month, $year, $arxiv)
     {
+        $variable = Karzina::all();
+        foreach ($variable as $value){
+            $javob = $value->itog - $value->ichkitavar->summa * $value->soni;
+            $data = Tavarstatistika::where('ichkitavar_id', $value->ichkitavar_id)->first();
+            if($data){
+                $data->hajm = $data->hajm + $value->soni;
+                $data->summa = $data->summa + $javob;
+                $data->update();
+            }else{
+                Tavarstatistika::create([
+                    'ichkitavar_id'=> $value->ichkitavar_id,
+                    'name' => $value->name,
+                    'hajm' => $value->soni,
+                    'summa' => $javob,
+                ]);
+            }
+        }
+        return $this->oplata4($request, $month, $year, $arxiv);
+    }
+
+    public function oplata4($request, $month, $year, $arxiv)
+    {
         $usd = Itogo::find(1);
         if ($usd->usd == 1) {
             if($request->id){
@@ -2319,7 +2342,7 @@ class KlentServis
                         'clentra'=>$arxiv->user->name,
                         'name'=> $value->name, 
                         'soni'=> $value->soni,
-                        'hajm'=> $value->hajm, 
+                        'hajm'=> $value->hajm,
                         'summa'=> $value->summa, 
                         'summa2'=> $value->summa2, 
                         'chegirma'=> $value->chegirma, 

@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Karzina extends Model
+class Tavarstatistika extends Model
 {
     use HasFactory;
-    public $fillable = ['tavar_id', 'ichkitavar_id', 'name', 'soni', 'raqam', 'hajm', 'summa', 'summa2', 'chegirma', 'itog', 'status'];
+    public $fillable = ['ichkitavar_id','name', 'hajm', 'summa'];
     public $timestamps = true;
 
     public function ichkitavar()
