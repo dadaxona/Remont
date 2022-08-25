@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('controltavars', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('hajm')->nullable();
-            $table->string('summa')->nullable();
+            $table->integer('hajm')->nullable();
+            $table->integer('summa')->nullable();
             $table->timestamps();
         });
     }

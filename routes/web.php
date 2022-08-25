@@ -29,6 +29,10 @@ Route::get('exports6', [AuthController::class,'exports6'])->name('exports6');
 Route::get('exports6dok', [AuthController::class,'exports6dok'])->name('exports6dok');
 Route::get('exports7', [AuthController::class,'exports7'])->name('exports7');
 Route::get('exports7dok', [AuthController::class,'exports7dok'])->name('exports7dok');
+Route::get('exports8', [AuthController::class,'exports8'])->name('exports8');
+Route::get('exports8dok', [AuthController::class,'exports8dok'])->name('exports8dok');
+Route::get('deeletkarzina', [AuthController::class,'deeletkarzina'])->name('deeletkarzina');
+Route::get('deeletkarzinadok', [AuthController::class,'deeletkarzinadok'])->name('deeletkarzinadok');
 
 Route::post('imports', [AuthController::class,'imports'])->name('imports');
 Route::post('import2', [AuthController::class,'import2'])->name('import2');
@@ -315,3 +319,6 @@ Route::get('pribl.php', [KlentController::class, 'pribl'])->name('pribl.php');
 Route::get('getel', [KlentController::class, 'getel'])->name('getel');
 Route::get('geteldok', [KlentController::class, 'geteldok'])->name('geteldok');
 Route::get('garizantal', [KlentController::class, 'garizantal'])->name('garizantal');
+Route::get('garizantalshuc', [KlentController::class, 'garizantalshuc'])->name('garizantalshuc');
+Route::get('garizantaldok', [KlentController::class, 'garizantaldok'])->name('garizantaldok');
+Route::get('garizantalshucdok', [KlentController::class, 'garizantalshucdok'])->name('garizantalshucdok');

@@ -1,25 +1,26 @@
 @extends('welcome')
 @section('content')
-@if ($brends->count == "1" || $brends->count == "3" || $brends->count == "4")
+@if ($brends->count == "1")
 <div class="row">
     <div class="col-3 d-flex mb-2">
         <input type="date" class="form-control mr-2" id="date">
         <input type="date" class="form-control" id="date2">
     </div>
 </div>
-<div class="col-12">
 <div id="chartContainer" class="mb-4" style="height: 400px; width: 100%;"></div>
 <div class="col-2">
     <button class="btn btn-primary" id="limit">
         Лимит контрол
     </button>
 </div>
-<div id="Container" style="height: 400px; width: 100%;"></div>
+<div id="Container" class="mt-1" style="height: 400px; width: 100%;"></div>
 <div id="garizantal" class="mt-5" style="height: 500px; width: 100%;"></div>
-</div>
+<div id="garizantalshuc" class="mt-5" style="height: 500px; width: 100%;"></div>
 
-@else
+@elseif($brends->count == "2")
 <div id="chartContainerdok" class="mb-4" style="height: 400px; width: 100%;"></div>
+<div id="garizantaldok" class="mt-5" style="height: 500px; width: 100%;"></div>
+<div id="garizantalshucdok" class="mt-5" style="height: 500px; width: 100%;"></div>
 @endif
 
 <div class="modal fade" id="li" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -53,13 +54,13 @@
                 var chartee = new CanvasJS.Chart("garizantal", {
                 animationEnabled: true,
                 title: {
-                    text: "Military Expenditure of Countries: 2016"
+                    text: "Товарларнинг фойдаси бойича кантрол"
                 },
                 axisX: {
                     interval: 1
                 },
                 axisY: {
-                    title: "Expenses in Billion Dollars",
+                    title: "Топ 10 товар",
                     includeZero: true,
                     scaleBreaks: {
                         type: "wavy",
@@ -76,6 +77,7 @@
                 data: [{
                     type: "bar",
                     dataPoints: [
+                        { label: data.label9, y: data.y9, gdp: data.gdp9},
                         { label: data.label8, y: data.y8, gdp: data.gdp8},
                         { label: data.label7, y: data.y7, gdp: data.gdp7},
                         { label: data.label6, y: data.y6, gdp: data.gdp6},
@@ -84,7 +86,6 @@
                         { label: data.label3, y: data.y3, gdp: data.gdp3},
                         { label: data.label2, y: data.y2, gdp: data.gdp2},
                         { label: data.label1, y: data.y1, gdp: data.gdp1},
-                        { label: data.label9, y: data.y9, gdp: data.gdp9},
                         { label: data.label, y: data.y, gdp: data.gdp},
                     ]
                 }]
@@ -94,6 +95,164 @@
         });
     }
     garizantal();
+    garizantal();
+
+    function garizantal2(){
+        $.ajax({
+            url: "{{ route('garizantalshuc') }}",
+            type: "GET",
+            success:function(data){
+                console.log(data);
+                var chartee = new CanvasJS.Chart("garizantalshuc", {
+                animationEnabled: true,
+                title: {
+                    text: "Товарларнинг сотилиши бойича кантрол"
+                },
+                axisX: {
+                    interval: 1
+                },
+                axisY: {
+                    title: "Топ 10 товар",
+                    includeZero: true,
+                    scaleBreaks: {
+                        type: "wavy",
+                        customBreaks: [{
+                            startValue: 80,
+                            endValue: 210
+                            },
+                            {
+                                startValue: 230,
+                                endValue: 600
+                            }
+                    ]}
+                },
+                data: [{
+                    type: "bar",
+                    dataPoints: [
+                        { label: data.label9, y: data.y9, gdp: data.gdp9},
+                        { label: data.label8, y: data.y8, gdp: data.gdp8},
+                        { label: data.label7, y: data.y7, gdp: data.gdp7},
+                        { label: data.label6, y: data.y6, gdp: data.gdp6},
+                        { label: data.label5, y: data.y5, gdp: data.gdp5},
+                        { label: data.label4, y: data.y4, gdp: data.gdp4},
+                        { label: data.label3, y: data.y3, gdp: data.gdp3},
+                        { label: data.label2, y: data.y2, gdp: data.gdp2},
+                        { label: data.label1, y: data.y1, gdp: data.gdp1},
+                        { label: data.label, y: data.y, gdp: data.gdp},
+                    ]
+                }]
+            });
+            chartee.render();
+            }
+        });
+    }
+    garizantal2();
+    garizantal2();
+
+    function garizantaldok(){
+        $.ajax({
+            url: "{{ route('garizantaldok') }}",
+            type: "GET",
+            success:function(data){
+                console.log(data);
+                var chartee = new CanvasJS.Chart("garizantaldok", {
+                animationEnabled: true,
+                title: {
+                    text: "Товарларнинг фойдаси бойича кантрол"
+                },
+                axisX: {
+                    interval: 1
+                },
+                axisY: {
+                    title: "Топ 10 товар",
+                    includeZero: true,
+                    scaleBreaks: {
+                        type: "wavy",
+                        customBreaks: [{
+                            startValue: 80,
+                            endValue: 210
+                            },
+                            {
+                                startValue: 230,
+                                endValue: 600
+                            }
+                    ]}
+                },
+                data: [{
+                    type: "bar",
+                    dataPoints: [
+                        { label: data.label9, y: data.y9, gdp: data.gdp9},
+                        { label: data.label8, y: data.y8, gdp: data.gdp8},
+                        { label: data.label7, y: data.y7, gdp: data.gdp7},
+                        { label: data.label6, y: data.y6, gdp: data.gdp6},
+                        { label: data.label5, y: data.y5, gdp: data.gdp5},
+                        { label: data.label4, y: data.y4, gdp: data.gdp4},
+                        { label: data.label3, y: data.y3, gdp: data.gdp3},
+                        { label: data.label2, y: data.y2, gdp: data.gdp2},
+                        { label: data.label1, y: data.y1, gdp: data.gdp1},
+                        { label: data.label, y: data.y, gdp: data.gdp},
+                    ]
+                }]
+            });
+            chartee.render();
+            }
+        });
+    }
+    garizantaldok();
+    garizantaldok();
+
+    function garizantal2dok(){
+        $.ajax({
+            url: "{{ route('garizantalshucdok') }}",
+            type: "GET",
+            success:function(data){
+                console.log(data);
+                var chartee = new CanvasJS.Chart("garizantalshucdok", {
+                animationEnabled: true,
+                title: {
+                    text: "Товарларнинг сотилиши бойича кантрол"
+                },
+                axisX: {
+                    interval: 1
+                },
+                axisY: {
+                    title: "Топ 10 товар",
+                    includeZero: true,
+                    scaleBreaks: {
+                        type: "wavy",
+                        customBreaks: [{
+                            startValue: 80,
+                            endValue: 210
+                            },
+                            {
+                                startValue: 230,
+                                endValue: 600
+                            }
+                    ]}
+                },
+                data: [{
+                    type: "bar",
+                    dataPoints: [
+                        { label: data.label9, y: data.y9, gdp: data.gdp9},
+                        { label: data.label8, y: data.y8, gdp: data.gdp8},
+                        { label: data.label7, y: data.y7, gdp: data.gdp7},
+                        { label: data.label6, y: data.y6, gdp: data.gdp6},
+                        { label: data.label5, y: data.y5, gdp: data.gdp5},
+                        { label: data.label4, y: data.y4, gdp: data.gdp4},
+                        { label: data.label3, y: data.y3, gdp: data.gdp3},
+                        { label: data.label2, y: data.y2, gdp: data.gdp2},
+                        { label: data.label1, y: data.y1, gdp: data.gdp1},
+                        { label: data.label, y: data.y, gdp: data.gdp},
+                    ]
+                }]
+            });
+            chartee.render();
+            }
+        });
+    }
+    garizantal2dok();
+    garizantal2dok();
+
     $("#sav").on("click", function(){
         let _token  = $('meta[name="csrf-token"]').attr('content');
         var limit = $("#lim").val();
@@ -203,7 +362,7 @@
 
     window.onload = function () {
  
-    var chart = new CanvasJS.Chart("Container", {
+    var chart6 = new CanvasJS.Chart("Container", {
         animationEnabled: true,
         theme: "light2",
         title:{
@@ -234,7 +393,7 @@
             dataPoints: <?php echo json_encode($dataPoints2, JSON_NUMERIC_CHECK); ?>
         }]
     });
-    chart.render();
+    chart6.render();
     
     function toggleDataSeries(e){
         if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
@@ -243,7 +402,7 @@
         else{
             e.dataSeries.visible = true;
         }
-        chart.render();
+        chart6.render();
     }    
     }
 </script>

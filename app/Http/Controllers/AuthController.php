@@ -15,6 +15,8 @@ use App\Exports\InvoicesExport6;
 use App\Exports\InvoicesExport6dok;
 use App\Exports\InvoicesExport7;
 use App\Exports\InvoicesExport7dok;
+use App\Exports\InvoicesExport8;
+use App\Exports\InvoicesExport8dok;
 use App\Imports\UsersImport;
 use App\Imports\UsersImport2;
 use App\Imports\UsersImport2dok;
@@ -40,6 +42,7 @@ use App\Models\Itogodok;
 use App\Models\Javob;
 use App\Models\Javobdok;
 use App\Models\Karzina;
+use App\Models\Karzinadok;
 use App\Models\Tavar;
 use App\Models\User;
 use App\Models\Userdok;
@@ -120,10 +123,20 @@ class AuthController extends Controller
     {
         return Excel::download(new InvoicesExport7, 'invoices.xlsx');
     }
-
+    
     public function exports7dok() 
     {
         return Excel::download(new InvoicesExport7dok, 'invoices.xlsx');
+    }
+
+    public function exports8() 
+    {
+        return Excel::download(new InvoicesExport8, 'invoices.xlsx');
+    }
+
+    public function exports8dok() 
+    {
+        return Excel::download(new InvoicesExport8dok, 'invoices.xlsx');
     }
 
     public function exports6dok() 
@@ -847,5 +860,19 @@ class AuthController extends Controller
         $d->summa = $d->summa + $request->summa;
         $d->update();
         return response()->json(['code'=>200, 'msg'=>'Сакланди']);
+    }
+
+    public function deeletkarzina()
+    {
+        Karzina::where('id', ">", 0)->delete();
+        Itogo::find(1)->update(['itogo'=>0]);
+        return back();
+    }
+
+    public function deeletkarzinadok()
+    {
+        Karzinadok::where('id', ">", 0)->delete();
+        Itogodok::find(1)->update(['itogo'=>0]);
+        return back();
     }
 }

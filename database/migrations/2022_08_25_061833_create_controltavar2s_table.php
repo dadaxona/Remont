@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('javobdoks', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('userdok_id')->unsigned();
-            $table->string('javob')->nullable();
+        Schema::create('controltavar2s', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->nullable();
+            $table->integer('hajm')->nullable();
+            $table->integer('summa')->nullable();
             $table->timestamps();
-            $table->foreign('userdok_id')->references('id')->on('userdoks')
-            ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('javobdoks');
+        Schema::dropIfExists('controltavar2s');
     }
 };
