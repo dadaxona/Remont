@@ -1461,30 +1461,32 @@ function kursm(){
                                 },
                                 success: function(data) {
                                     if(data.user.chatid){
-                                    var k= "";
+                                     var k= "";
                                         k+= "Салом хурматли" + " " + data.user.name + " " + "сизнинг харидларинггиз ройхати.";
                                         k+= " \n";
+                                        k+= "-------------------------------";
                                         k+= " \n";
                                         for(i = 0;i < data.context.length; i++){
                                             k+= ""
                                             k+= data.context[i]["name"];
-                                            k+= "--" + data.context[i]["soni"];
-                                            k+= "*" + data.context[i]["itog"];
+                                            k+= "   --   " + data.context[i]["soni"];
+                                            k+= " * " + data.context[i]["itog"];
                                             k+= ";\n";
                                         }
+                                        k+= "------------------------------";
                                         k+= "\n";
-                                        k+= "Жами суммаси" + " , " + itogs;
+                                        k+= "Жами суммаси" + " ,       " + itogs;
                                         k+= ";\n";
-                                        k+= "Туланди" + " , " + s;
+                                        k+= "Туланди" + " ,            " + s;
                                         k+= ";\n";
-                                        k+= "Карзинггиз" + " , " + karzs;
+                                        k+= "Карзинггиз" + " ,         " + karzs;
                                         k+= ";\n";
-                                        k+= "Тулаш муддати" + " , " + srok;
+                                        k+= "Тулаш муддати" + " ,      " + srok;
                                         k+= ";\n";
-                                        k+= "Жами карзинггиз" + " , " + data.javob;
+                                        k+= "Жами карзинггиз" + " ,    " + data.javob;
                                         k+= "\n";
                                         k+= "\n";
-                                        k+= "Хурмат билан << ID Group >>";
+                                        k+= "Хурмат билан    << ID Group >>";
                                         $.ajax({
                                             url: "https://api.telegram.org/bot5473083753:AAGZa2nwaz0Ndj53tJskF--Owqxe-ApZdnA/sendMessage",
                                             type: "GET",
@@ -1537,27 +1539,29 @@ function kursm(){
                                         var k= "";
                                         k+= "Салом хурматли" + " " + data.user.name + " " + "сизнинг харидларинггиз ройхати.";
                                         k+= " \n";
+                                        k+= "-------------------------------";
                                         k+= " \n";
                                         for(i = 0;i < data.context.length; i++){
                                             k+= ""
                                             k+= data.context[i]["name"];
-                                            k+= "--" + data.context[i]["soni"];
-                                            k+= "*" + data.context[i]["itog"];
+                                            k+= "   --   " + data.context[i]["soni"];
+                                            k+= " * " + data.context[i]["itog"];
                                             k+= ";\n";
                                         }
+                                        k+= "------------------------------";
                                         k+= "\n";
-                                        k+= "Жами суммаси" + " , " + itogs;
+                                        k+= "Жами суммаси" + " ,       " + itogs;
                                         k+= ";\n";
-                                        k+= "Туланди" + " , " + s;
+                                        k+= "Туланди" + " ,            " + s;
                                         k+= ";\n";
-                                        k+= "Карзинггиз" + " , " + karzs;
+                                        k+= "Карзинггиз" + " ,         " + karzs;
                                         k+= ";\n";
-                                        k+= "Тулаш муддати" + " , " + srok;
+                                        k+= "Тулаш муддати" + " ,      " + srok;
                                         k+= ";\n";
-                                        k+= "Жами карзинггиз" + " , " + data.javob;
+                                        k+= "Жами карзинггиз" + " ,    " + data.javob;
                                         k+= "\n";
                                         k+= "\n";
-                                        k+= "Хурмат билан << ID Group >>";
+                                        k+= "Хурмат билан    << ID Group >>";
                                         $.ajax({
                                             url: "{{ route('oplata') }}",
                                             type: 'POST',
@@ -1617,26 +1621,32 @@ function kursm(){
                             },
                             success: function(data) {
                                 if(data.user.chatid){
-                                var k= "";
-                                    k+= "Салом хурматли" + " " + data.user.name + " " + "сизнинг харидларинггиз ройхати.";
-                                    k+= " \n";
-                                    k+= " \n";
-                                    for(i = 0;i < data.context.length; i++){
-                                        k+= ""
-                                        k+= data.context[i]["name"];
-                                        k+= "--" + data.context[i]["soni"];
-                                        k+= "*" + data.context[i]["itog"];
+                                     var k= "";
+                                        k+= "Салом хурматли" + " " + data.user.name + " " + "сизнинг харидларинггиз ройхати.";
+                                        k+= " \n";
+                                        k+= "-------------------------------";
+                                        k+= " \n";
+                                        for(i = 0;i < data.context.length; i++){
+                                            k+= ""
+                                            k+= data.context[i]["name"];
+                                            k+= "   --   " + data.context[i]["soni"];
+                                            k+= " * " + data.context[i]["itog"];
+                                            k+= ";\n";
+                                        }
+                                        k+= "------------------------------";
+                                        k+= "\n";
+                                        k+= "Жами суммаси" + " ,       " + itogs;
                                         k+= ";\n";
-                                    }
-                                    k+= "\n";
-                                    k+= "Жами суммаси" + " , " + itogs;
-                                    k+= ";\n";
-                                    k+= "Туланди" + " , " + s;
-                                    k+= ";\n";                                  
-                                    k+= "Жами карзинггиз" + " , " + data.javob;
-                                    k+= "\n";
-                                    k+= "\n";
-                                    k+= "Хурмат билан << ID Group >>";
+                                        k+= "Туланди" + " ,            " + s;
+                                        k+= ";\n";
+                                        k+= "Карзинггиз" + " ,         " + karzs;
+                                        k+= ";\n";
+                                        k+= "Тулаш муддати" + " ,      " + srok;
+                                        k+= ";\n";
+                                        k+= "Жами карзинггиз" + " ,    " + data.javob;
+                                        k+= "\n";
+                                        k+= "\n";
+                                        k+= "Хурмат билан    << ID Group >>";
                                     $.ajax({
                                         url: "https://api.telegram.org/bot5473083753:AAGZa2nwaz0Ndj53tJskF--Owqxe-ApZdnA/sendMessage",
                                         type: "GET",
@@ -1686,26 +1696,32 @@ function kursm(){
                                             },
                                         });
                                 }else{
-                                    var k= "";
-                                    k+= "Салом хурматли" + " " + data.user.name + " " + "сизнинг харидларинггиз ройхати.";
-                                    k+= " \n";
-                                    k+= " \n";
-                                    for(i = 0;i < data.context.length; i++){
-                                        k+= ""
+                                     var k= "";
+                                        k+= "Салом хурматли" + " " + data.user.name + " " + "сизнинг харидларинггиз ройхати.";
+                                        k+= " \n";
+                                        k+= "-------------------------------";
+                                        k+= " \n";
+                                        for(i = 0;i < data.context.length; i++){
+                                            k+= ""
                                             k+= data.context[i]["name"];
-                                            k+= "--" + data.context[i]["soni"];
-                                            k+= "*" + data.context[i]["itog"];
+                                            k+= "   --   " + data.context[i]["soni"];
+                                            k+= " * " + data.context[i]["itog"];
                                             k+= ";\n";
-                                    }
-                                    k+= "\n";
-                                    k+= "Жами суммаси" + " , " + itogs;
-                                    k+= ";\n";
-                                    k+= "Туланди" + " , " + s;
-                                    k+= ";\n";                                  
-                                    k+= "Жами карзинггиз" + " , " + data.javob;
-                                    k+= "\n";
-                                    k+= "\n";
-                                    k+= "Хурмат билан << ID Group >>";
+                                        }
+                                        k+= "------------------------------";
+                                        k+= "\n";
+                                        k+= "Жами суммаси" + " ,       " + itogs;
+                                        k+= ";\n";
+                                        k+= "Туланди" + " ,            " + s;
+                                        k+= ";\n";
+                                        k+= "Карзинггиз" + " ,         " + karzs;
+                                        k+= ";\n";
+                                        k+= "Тулаш муддати" + " ,      " + srok;
+                                        k+= ";\n";
+                                        k+= "Жами карзинггиз" + " ,    " + data.javob;
+                                        k+= "\n";
+                                        k+= "\n";
+                                        k+= "Хурмат билан    << ID Group >>";
                                     $.ajax({
                                         url: "{{ route('oplata') }}",
                                         type: 'POST',
@@ -1758,23 +1774,25 @@ function kursm(){
                             },
                             success: function(data) {
                                 var k= "";
-                                    k+= "Салом хурматли мижоз сизнинг харидларинггиз ройхати.";
-                                    k+= " \n";
-                                    k+= " \n";
-                                    for(i = 0;i < data.context.length; i++){
-                                        k+= ""
-                                            k+= data.context[i]["name"];
-                                            k+= "--" + data.context[i]["soni"];
-                                            k+= "*" + data.context[i]["itog"];
-                                            k+= ";\n";
-                                    }
-                                    k+= "\n";
-                                    k+= "Жами суммаси" + " , " + itogs;
-                                    k+= ";\n";
-                                    k+= "Туланди" + " , " + s;
-                                    k+= "\n";
-                                    k+= "\n";
-                                    k+= "Хурмат билан << ID Group >>";
+                                k+= "Салом хурматли мижоз сизнинг харидларинггиз ройхати.";
+                                k+= " \n";
+                                k+= "------------------------------";
+                                k+= " \n";
+                                for(i = 0;i < data.context.length; i++){
+                                    k+= ""
+                                        k+= data.context[i]["name"];
+                                        k+= "     --     " + data.context[i]["soni"];
+                                        k+= "  *  " + data.context[i]["itog"];
+                                        k+= ";\n";
+                                }
+                                k+= "------------------------------";
+                                k+= "\n";
+                                k+= "Жами суммаси" + " ,       " + itogs;
+                                k+= ";\n";
+                                k+= "Туланди" + " ,            " + s;
+                                k+= ";\n";
+                                k+= "\n";
+                                k+= "Хурмат билан    << ID Group >>";
                                 $.ajax({
                                     url: "{{ route('oplata') }}",
                                     type: 'POST',
@@ -2619,30 +2637,32 @@ $(document).ready(function(){
                                 },
                                 success: function(data) {
                                     if(data.user.chatid){
-                                    var k= "";
+                                        var k= "";
                                         k+= "Салом хурматли" + " " + data.user.name + " " + "сизнинг харидларинггиз ройхати.";
                                         k+= " \n";
+                                        k+= "-------------------------------";
                                         k+= " \n";
                                         for(i = 0;i < data.context.length; i++){
                                             k+= ""
                                             k+= data.context[i]["name"];
-                                            k+= "--" + data.context[i]["soni"];
-                                            k+= "*" + data.context[i]["itog"];
+                                            k+= "   --   " + data.context[i]["soni"];
+                                            k+= " * " + data.context[i]["itog"];
                                             k+= ";\n";
                                         }
+                                        k+= "------------------------------";
                                         k+= "\n";
-                                        k+= "Жами суммаси" + " , " + itogs;
+                                        k+= "Жами суммаси" + " ,       " + itogs;
                                         k+= ";\n";
-                                        k+= "Туланди" + " , " + s;
+                                        k+= "Туланди" + " ,            " + s;
                                         k+= ";\n";
-                                        k+= "Карзинггиз" + " , " + karzs;
+                                        k+= "Карзинггиз" + " ,         " + karzs;
                                         k+= ";\n";
-                                        k+= "Тулаш муддати" + " , " + srok;
+                                        k+= "Тулаш муддати" + " ,      " + srok;
                                         k+= ";\n";
-                                        k+= "Жами карзинггиз" + " , " + data.javob;
+                                        k+= "Жами карзинггиз" + " ,    " + data.javob;
                                         k+= "\n";
                                         k+= "\n";
-                                        k+= "Хурмат билан << ID Group >>";
+                                        k+= "Хурмат билан    << ID Group >>";
                                         $.ajax({
                                             url: "https://api.telegram.org/bot5473083753:AAGZa2nwaz0Ndj53tJskF--Owqxe-ApZdnA/sendMessage",
                                             type: "GET",
@@ -2695,27 +2715,29 @@ $(document).ready(function(){
                                         var k= "";
                                         k+= "Салом хурматли" + " " + data.user.name + " " + "сизнинг харидларинггиз ройхати.";
                                         k+= " \n";
+                                        k+= "-------------------------------";
                                         k+= " \n";
                                         for(i = 0;i < data.context.length; i++){
                                             k+= ""
                                             k+= data.context[i]["name"];
-                                            k+= "--" + data.context[i]["soni"];
-                                            k+= "*" + data.context[i]["itog"];
+                                            k+= "   --   " + data.context[i]["soni"];
+                                            k+= " * " + data.context[i]["itog"];
                                             k+= ";\n";
                                         }
+                                        k+= "------------------------------";
                                         k+= "\n";
-                                        k+= "Жами суммаси" + " , " + itogs;
+                                        k+= "Жами суммаси" + " ,       " + itogs;
                                         k+= ";\n";
-                                        k+= "Туланди" + " , " + s;
+                                        k+= "Туланди" + " ,            " + s;
                                         k+= ";\n";
-                                        k+= "Карзинггиз" + " , " + karzs;
+                                        k+= "Карзинггиз" + " ,         " + karzs;
                                         k+= ";\n";
-                                        k+= "Тулаш муддати" + " , " + srok;
+                                        k+= "Тулаш муддати" + " ,      " + srok;
                                         k+= ";\n";
-                                        k+= "Жами карзинггиз" + " , " + data.javob;
+                                        k+= "Жами карзинггиз" + " ,    " + data.javob;
                                         k+= "\n";
                                         k+= "\n";
-                                        k+= "Хурмат билан << ID Group >>";
+                                        k+= "Хурмат билан    << ID Group >>";
                                         $.ajax({
                                             url: "{{ route('oplatadok') }}",
                                             type: 'POST',
@@ -2775,26 +2797,32 @@ $(document).ready(function(){
                             },
                             success: function(data) {
                                 if(data.user.chatid){
-                                var k= "";
-                                    k+= "Салом хурматли" + " " + data.user.name + " " + "сизнинг харидларинггиз ройхати.";
-                                    k+= " \n";
-                                    k+= " \n";
-                                    for(i = 0;i < data.context.length; i++){
-                                        k+= ""
-                                        k+= data.context[i]["name"];
-                                        k+= "--" + data.context[i]["soni"];
-                                        k+= "*" + data.context[i]["itog"];
+                                    var k= "";
+                                        k+= "Салом хурматли" + " " + data.user.name + " " + "сизнинг харидларинггиз ройхати.";
+                                        k+= " \n";
+                                        k+= "-------------------------------";
+                                        k+= " \n";
+                                        for(i = 0;i < data.context.length; i++){
+                                            k+= ""
+                                            k+= data.context[i]["name"];
+                                            k+= "   --   " + data.context[i]["soni"];
+                                            k+= " * " + data.context[i]["itog"];
+                                            k+= ";\n";
+                                        }
+                                        k+= "------------------------------";
+                                        k+= "\n";
+                                        k+= "Жами суммаси" + " ,       " + itogs;
                                         k+= ";\n";
-                                    }
-                                    k+= "\n";
-                                    k+= "Жами суммаси" + " , " + itogs;
-                                    k+= ";\n";
-                                    k+= "Туланди" + " , " + s;
-                                    k+= ";\n";                                  
-                                    k+= "Жами карзинггиз" + " , " + data.javob;
-                                    k+= "\n";
-                                    k+= "\n";
-                                    k+= "Хурмат билан << ID Group >>";
+                                        k+= "Туланди" + " ,            " + s;
+                                        k+= ";\n";
+                                        k+= "Карзинггиз" + " ,         " + karzs;
+                                        k+= ";\n";
+                                        k+= "Тулаш муддати" + " ,      " + srok;
+                                        k+= ";\n";
+                                        k+= "Жами карзинггиз" + " ,    " + data.javob;
+                                        k+= "\n";
+                                        k+= "\n";
+                                        k+= "Хурмат билан    << ID Group >>";
                                     $.ajax({
                                         url: "https://api.telegram.org/bot5473083753:AAGZa2nwaz0Ndj53tJskF--Owqxe-ApZdnA/sendMessage",
                                         type: "GET",
@@ -2845,25 +2873,31 @@ $(document).ready(function(){
                                         });
                                 }else{
                                     var k= "";
-                                    k+= "Салом хурматли" + " " + data.user.name + " " + "сизнинг харидларинггиз ройхати.";
-                                    k+= " \n";
-                                    k+= " \n";
-                                    for(i = 0;i < data.context.length; i++){
-                                        k+= ""
+                                        k+= "Салом хурматли" + " " + data.user.name + " " + "сизнинг харидларинггиз ройхати.";
+                                        k+= " \n";
+                                        k+= "-------------------------------";
+                                        k+= " \n";
+                                        for(i = 0;i < data.context.length; i++){
+                                            k+= ""
                                             k+= data.context[i]["name"];
-                                            k+= "--" + data.context[i]["soni"];
-                                            k+= "*" + data.context[i]["itog"];
+                                            k+= "   --   " + data.context[i]["soni"];
+                                            k+= " * " + data.context[i]["itog"];
                                             k+= ";\n";
-                                    }
-                                    k+= "\n";
-                                    k+= "Жами суммаси" + " , " + itogs;
-                                    k+= ";\n";
-                                    k+= "Туланди" + " , " + s;
-                                    k+= ";\n";                                  
-                                    k+= "Жами карзинггиз" + " , " + data.javob;
-                                    k+= "\n";
-                                    k+= "\n";
-                                    k+= "Хурмат билан << ID Group >>";
+                                        }
+                                        k+= "------------------------------";
+                                        k+= "\n";
+                                        k+= "Жами суммаси" + " ,       " + itogs;
+                                        k+= ";\n";
+                                        k+= "Туланди" + " ,            " + s;
+                                        k+= ";\n";
+                                        k+= "Карзинггиз" + " ,         " + karzs;
+                                        k+= ";\n";
+                                        k+= "Тулаш муддати" + " ,      " + srok;
+                                        k+= ";\n";
+                                        k+= "Жами карзинггиз" + " ,    " + data.javob;
+                                        k+= "\n";
+                                        k+= "\n";
+                                        k+= "Хурмат билан    << ID Group >>";
                                     $.ajax({
                                         url: "{{ route('oplatadok') }}",
                                         type: 'POST',
@@ -2916,23 +2950,25 @@ $(document).ready(function(){
                             },
                             success: function(data) {
                                 var k= "";
-                                    k+= "Салом хурматли мижоз сизнинг харидларинггиз ройхати.";
-                                    k+= " \n";
-                                    k+= " \n";
-                                    for(i = 0;i < data.context.length; i++){
-                                        k+= ""
-                                            k+= data.context[i]["name"];
-                                            k+= "--" + data.context[i]["soni"];
-                                            k+= "*" + data.context[i]["itog"];
-                                            k+= ";\n";
-                                    }
-                                    k+= "\n";
-                                    k+= "Жами суммаси" + " , " + itogs;
-                                    k+= ";\n";
-                                    k+= "Туланди" + " , " + s;
-                                    k+= "\n";
-                                    k+= "\n";
-                                    k+= "Хурмат билан << ID Group >>";
+                                k+= "Салом хурматли мижоз сизнинг харидларинггиз ройхати.";
+                                k+= " \n";
+                                k+= "------------------------------";
+                                k+= " \n";
+                                for(i = 0;i < data.context.length; i++){
+                                    k+= ""
+                                        k+= data.context[i]["name"];
+                                        k+= "     --     " + data.context[i]["soni"];
+                                        k+= "  *  " + data.context[i]["itog"];
+                                        k+= ";\n";
+                                }
+                                k+= "------------------------------";
+                                k+= "\n";
+                                k+= "Жами суммаси" + " ,       " + itogs;
+                                k+= ";\n";
+                                k+= "Туланди" + " ,            " + s;
+                                k+= ";\n";
+                                k+= "\n";
+                                k+= "Хурмат билан    << ID Group >>";
                                 $.ajax({
                                     url: "{{ route('oplatadok') }}",
                                     type: 'POST',
