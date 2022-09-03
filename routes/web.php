@@ -322,3 +322,4 @@ Route::get('garizantal', [KlentController::class, 'garizantal'])->name('garizant
 Route::get('garizantalshuc', [KlentController::class, 'garizantalshuc'])->name('garizantalshuc');
 Route::get('garizantaldok', [KlentController::class, 'garizantaldok'])->name('garizantaldok');
 Route::get('garizantalshucdok', [KlentController::class, 'garizantalshucdok'])->name('garizantalshucdok');
+Route::get('tbody2clent', [KlentController::class, 'tbody2clent'])->name('tbody2clent');

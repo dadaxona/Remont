@@ -3031,4 +3031,19 @@ class KlentController extends KlentController2
            'data'=> $data 
         ]);
     }
+
+    public function tbody2clent(Request $request)
+    {
+        if($request->ajax()){
+            $name = $request->get("name");
+            if($name){
+                $data = User::where('name', 'Like', '%'.$name.'%')
+                            ->orWhere('tel', 'Like', '%'.$name.'%')
+                            ->get();
+            }else{
+                $data = User::all();
+            }
+            return response()->json($data);
+        }
+    }
 }
