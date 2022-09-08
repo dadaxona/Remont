@@ -929,12 +929,12 @@
             });
         }
 
-        // setInterval(function() {
-        //     srok();
-        //     srokdok();
-        //     srok2();
-        //     srok2dok();
-        // }, 5000);
+        setInterval(function() {
+            srok();
+            srokdok();
+            srok2();
+            srok2dok();
+        }, 5000);
     </script>
     <script src="toastr/toastr.min.js"></script>
     <script src="bootstrap-5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>

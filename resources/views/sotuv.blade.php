@@ -138,29 +138,19 @@
         <div class="row">
         <div class="card col-9">
             <div class="extr25552 scrolll2">
-                <div class="row">
-                    <div class="col-4">
-                        <a class="btn btn-success mt-2 p-1" href="#" onclick="event.preventDefault(); document.getElementById('expo').submit();">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
-                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                            <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
-                            </svg>
-                            Excel
-                        </a>
-                        <a class="btn btn-danger mt-2 p-1" href="#" onclick="event.preventDefault(); document.getElementById('deelet').submit();">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-                                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
-                            </svg>
-                            Все удалить
-                        </a>
-                    </div>
-                    <div class="col-1"></div>
-                    <div class="col-3 mt-3 "></div>
-                    <div class="col-3 mt-3 ">
-                        <a class="d-flex"><h5>Клент имя:</h5> <h4 class="clnam mx-3"></h4></a>
-                    </div>
-                    
-                </div>
+                <a class="btn btn-success mt-2 p-1" href="#" onclick="event.preventDefault(); document.getElementById('expo').submit();">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
+                      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                      <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                    </svg>
+                    Excel
+                  </a>
+                  <a class="btn btn-danger mt-2 p-1" href="#" onclick="event.preventDefault(); document.getElementById('deelet').submit();">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                      </svg>
+                    Все удалить
+                  </a>
                   <form action="{{ route('exports8') }}" method="GET" id="expo">
                 </form>
                 <form action="{{ route('deeletkarzina') }}" method="GET" id="deelet">
@@ -261,17 +251,17 @@
     </div>
 </div>
 <div class="row">
-<div class="card col-8">
+<div class="card col-12">
     <div class="card-header">
         <input type="hidden" id="onval" value="0">
-          <div class="row col-6">
+          <div class="row col-5">
             <div class="col-5 mr-4">
                 <input type="text" name="search" id="search" class="form-control" placeholder="Поиск" /> 
             </div>
-            {{-- <div class="form-check form-switch col-3 mt-1">
+            <div class="form-check form-switch col-3 mt-1">
                 <input class="form-check-input" type="checkbox"  role="switch" id="on">
                 <label class="form-check-label" for="">Склад 2</label>
-            </div> --}}
+            </div>
         </div>
     </div>
         <div class="table-responsive mailbox-messages">
@@ -294,33 +284,8 @@
             </div>
         </div>
     </div>
-<div class="card col-4">
-    <div class="card-header">
-        <input type="hidden" id="onval" value="0">
-          <div class="row col-5">
-            <input type="text" name="search" id="searchclent" class="form-control" placeholder="Поиск" />
-        </div>
-    </div>
-        <div class="table-responsive mailbox-messages">
-            <div class="extr25552 scrolll2">
-                <div class="rty2">
-                    <table class="tab table-hover">
-                        <thead class="">
-                            <tr>
-                                <th>Номи</th>
-                                <th>Тел</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbody2clent">
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>        
 </div>
+</div>        
 </div>
 
 <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -387,9 +352,6 @@
 <div class="modal fade" id="jonatish" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog">
   <div class="modal-content">
-      <div class="text-center mt-3">
-          <h4 id="clentranam"></h4>
-      </div>
     <div class="modal-header" id="exampleModalLabeldokse">
       
     </div>
@@ -402,11 +364,18 @@
                     <input type="text" class="form-control text-right itogsw" name="itogs" id="itogs" disabled>
                 </div>
             </div>
-            <input type="hidden" name="clentra" id="clentra">
+            <div class="mb-3 d-flex">
+                <select name="clentra" id="clentra" class="form-control text-center">
+                    <option value="">Выберите клиент</option>
+                    @foreach ($clents as $item)
+                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="mb-3 d-flex">
                 <div class="col-4">
                     <h5 class="mt-2 mx-2">Наличные:</h5>
-                </div>
+                </div>                    
                <div class="col-6">
                     <input type="text" class="form-control text-right itogsw" name="naqt" id="naqt">
                     <input type="hidden" id="naqttr">
@@ -932,97 +901,55 @@
     $( "#tbody" ).selectable();
   } );
 
-    function tbody2clent(name = '') {
-        $.ajax({
-            url: "{{ route('tbody2clent') }}",
-            method: "GET",
-            data:{name: name},
-            dataType:'json',
-            success:function(data){
-                let rows =  '';
-                data.forEach(room => {
-                rows += `
-                    <tr style="border-bottom: 1px solid;" data-id="${room.id}" data-name="${room.name}" id="pokupka">
-                        <td>${room.name}</td>
-                        <td>${room.tel}</td>             
-                    </tr>
-                `;
-                });
-            $("#tbody2clent").html(rows);
+  $(document).on('change', '#clentra', function(){
+    var id = $(this).val();
+    var kurs2 = $("#kurs2").val();
+    var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srok' />";
+    var itogs = $("#itogs").val();
+    $("#karzs").val(itogs);
+    var karzs = $("#karzs").val();
+    $.ajax({
+        url:"{{ route('usersumma') }}",
+        method:'GET',
+        data:{
+            id:id,
+            karzs: karzs
+        },
+        dataType:'json',
+        success:function(data)
+        {
+            if(data.usd == 1){
+                if(data.summa >= karzs){
+                    let pay = data.summa - karzs;
+                    $("#channgem").html('');
+                    $("#karzs").val('');
+                    $("#exampleModalLabeldokse").html("<span class='modal-title alert alert-success'>Мижоз баланси  " + data.summa + "$  " + "Карз копланади ва Балансида коладиган сумма  " + pay + "$ </span>");
+
+                }else{
+                    let pay2 = karzs - data.summa;
+                    $("#karzs").val(pay2);
+                    $("#naqttr").val(data.summa);
+                    $("#channgem").html(inputdate);
+                    $("#exampleModalLabeldokse").html("<span class='modal-title alert alert-danger'>Мижоз баланси  " + data.summa + "$  " + "Туловни амалга оширолмайди.  " + pay2 + "$  Тулов килиши йоки карзни муддат белгилаган холда амалга ошириши мумкин</span>");
+                }
             }
-        });
-    }
-    tbody2clent();
-    $(document).on("keyup", "#searchclent", function(){
-        var name = $(this).val();
-        tbody2clent(name);
+            else{
+                if(data.summa >= karzs){
+                    let pay3 = data.summa - karzs;
+                    $("#channgem").html('');
+                    $("#karzs").val('');
+                    $("#exampleModalLabeldokse").html("<span class='modal-title alert alert-success'>Мижоз баланси  " + data.summa + " сум  " + "Карз копланади ва Балансида коладиган сумма  " + pay3 + " сум </span>");
+                }else{
+                    let pay4 = karzs - data.summa;
+                    $("#karzs").val(pay4);
+                    $("#naqttr").val(data.summa);
+                    $("#channgem").html(inputdate);
+                    $("#exampleModalLabeldokse").html("<span class='modal-title alert alert-danger'>Мижоз баланси  " + data.summa + " сум  " + "Туловни амалга оширолмайди.  " + pay4 + " сум  Тулов килиши йоки карзни муддат белгилаган холда амалга ошириши мумкин</span>");
+                }
+            }
+        }
     });
-
-    $(document).on("click", "#clbelgilash", function(){
-        var id = $(this).data("id");
-        var name = $(this).data("name");
-       console.log(id, name)
-    });
-
-    $(document).on("click", "#pokupka", function(){
-        var id = $(this).data("id");
-        var name = $(this).data("name");
-        $(".clnam").html(name);
-        $("#clentra").val(id);
-        $("#clentranam").html(name);
-        toastr.success("Танланди");
-    });
-
-
-//   $(document).on('change', '#clentra', function(){
-//     var id = $(this).val();
-//     var kurs2 = $("#kurs2").val();
-//     var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srok' />";
-//     var itogs = $("#itogs").val();
-//     $("#karzs").val(itogs);
-//     var karzs = $("#karzs").val();
-//     $.ajax({
-//         url:"{{ route('usersumma') }}",
-//         method:'GET',
-//         data:{
-//             id:id,
-//             karzs: karzs
-//         },
-//         dataType:'json',
-//         success:function(data)
-//         {
-//             if(data.usd == 1){
-//                 if(data.summa >= karzs){
-//                     let pay = data.summa - karzs;
-//                     $("#channgem").html('');
-//                     $("#karzs").val('');
-//                     $("#exampleModalLabeldokse").html("<span class='modal-title alert alert-success'>Мижоз баланси  " + data.summa + "$  " + "Карз копланади ва Балансида коладиган сумма  " + pay + "$ </span>");
-
-//                 }else{
-//                     let pay2 = karzs - data.summa;
-//                     $("#karzs").val(pay2);
-//                     $("#naqttr").val(data.summa);
-//                     $("#channgem").html(inputdate);
-//                     $("#exampleModalLabeldokse").html("<span class='modal-title alert alert-danger'>Мижоз баланси  " + data.summa + "$  " + "Туловни амалга оширолмайди.  " + pay2 + "$  Тулов килиши йоки карзни муддат белгилаган холда амалга ошириши мумкин</span>");
-//                 }
-//             }
-//             else{
-//                 if(data.summa >= karzs){
-//                     let pay3 = data.summa - karzs;
-//                     $("#channgem").html('');
-//                     $("#karzs").val('');
-//                     $("#exampleModalLabeldokse").html("<span class='modal-title alert alert-success'>Мижоз баланси  " + data.summa + " сум  " + "Карз копланади ва Балансида коладиган сумма  " + pay3 + " сум </span>");
-//                 }else{
-//                     let pay4 = karzs - data.summa;
-//                     $("#karzs").val(pay4);
-//                     $("#naqttr").val(data.summa);
-//                     $("#channgem").html(inputdate);
-//                     $("#exampleModalLabeldokse").html("<span class='modal-title alert alert-danger'>Мижоз баланси  " + data.summa + " сум  " + "Туловни амалга оширолмайди.  " + pay4 + " сум  Тулов килиши йоки карзни муддат белгилаган холда амалга ошириши мумкин</span>");
-//                 }
-//             }
-//         }
-//     });
-//   });
+  });
 
   $(document).on('change', '#clentradok', function(){
     var id = $(this).val();
@@ -1268,6 +1195,7 @@ function kursm(){
             $("#cheg").val(100 - j);
         });
 
+ 
         $(document).on('keyup', '#naqt', function(){
             var itogs = $("#itogs").val();
             var naqt = $("#naqt").val();
@@ -1278,16 +1206,16 @@ function kursm(){
             $("#karzs").val(sss);
             var kar = $("#karzs").val();
             if(kar > 0){
-                var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srokdok' />";
+                var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srok' />";
                 $("#channgem").html(inputdate);
             }
             if(kar < 0){
                 toastr.error("Толов коп толанди");
-                var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srokdok' />";
+                var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srok' />";
                 $("#channgem").html(inputdate);
             }
             if(kar == 0){
-                var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srokdok' />";
+                var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srok' />";
                 $("#channgem").html('');
             }
         });
@@ -1302,16 +1230,16 @@ function kursm(){
             $("#karzs").val(sss);
             var kar = $("#karzs").val();
             if(kar > 0){
-                var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srokdok' />";
+                var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srok' />";
                 $("#channgem").html(inputdate);
             }
             if(kar < 0){
                 toastr.error("Толов коп толанди");
-                var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srokdok' />";
+                var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srok' />";
                 $("#channgem").html(inputdate);
             }
             if(kar == 0){
-                var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srokdok' />";
+                var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srok' />";
                 $("#channgem").html('');
             }
         });
@@ -1326,27 +1254,25 @@ function kursm(){
             $("#karzs").val(sss);
             var kar = $("#karzs").val();
             if(kar > 0){
-                var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srokdok' />";
+                var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srok' />";
                 $("#channgem").html(inputdate);
             }
             if(kar < 0){
                 toastr.error("Толов коп толанди");
-                var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srokdok' />";
+                var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srok' />";
                 $("#channgem").html(inputdate);
             }
             if(kar == 0){
-                var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srokdok' />";
+                var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srok' />";
                 $("#channgem").html('');
             }
         });
-
         $(document).on('click', '#naqtteng', function(){
             var itogs = $("#itogs").val();
             $("#naqt").val(itogs);
             $("#plastik").val('');
             $("#bank").val('');
             $("#karzs").val(0);
-            $("#channgem").html('');
         });
 
         $(document).on('click', '#plastikteng', function(){
@@ -1355,7 +1281,6 @@ function kursm(){
             $("#plastik").val(itogs);
             $("#bank").val('');
             $("#karzs").val(0);
-            $("#channgem").html('');
         }); 
         
         $(document).on('click', '#bankteng', function(){
@@ -1364,7 +1289,6 @@ function kursm(){
             $("#plastik").val('');
             $("#bank").val(itogs);
             $("#karzs").val(0);
-            $("#channgem").html('');
         });               
     });
     
@@ -1495,69 +1419,20 @@ function kursm(){
         $("#tayyor").on('click', function(){
             var itog = $("#itog").val();
             var itog2 = $("#itog2").val();
-            var clentra = $("#clentra").val();
-            if (clentra) {
-                if(itog <= 0 || itog2 <= 0){
-                    toastr.error("Итог 0").fadeOut(1500);
-                }else{
-                    $.ajax({
-                        url: "{{ route('rachot') }}",
-                        type: 'GET',
-                        success: function(data) {
-                            $("#itogs").val(data.itogo);
-                            var inputdate = "<span class='mt-2'>Срок дате:</span><input type='date' class='form-control' id='srok' />";
-                            var itogs = $("#itogs").val();
-                            $("#karzs").val(itogs);
-                            var karzs = $("#karzs").val();
-                            $.ajax({
-                                url:"{{ route('usersumma') }}",
-                                method:'GET',
-                                data:{
-                                    id: clentra,
-                                    karzs: itogs
-                                },
-                                dataType:'json',
-                                success:function(data)
-                                {
-                                    if(data.usd == 1){
-                                        if(data.summa >= karzs){
-                                            let pay = data.summa - karzs;
-                                            $("#channgem").html('');
-                                            $("#karzs").val('');
-                                            $("#exampleModalLabeldokse").html("<span class='modal-title alert alert-success'>Мижоз баланси  " + data.summa + "$  " + "Карз копланади ва Балансида коладиган сумма  " + pay + "$ </span>");
-                                            $("#jonatish").modal("show");
-                                        }else{
-                                            let pay2 = karzs - data.summa;
-                                            $("#karzs").val(pay2);
-                                            $("#naqttr").val(data.summa);
-                                            $("#channgem").html(inputdate);
-                                            $("#exampleModalLabeldokse").html("<span class='modal-title alert alert-danger'>Мижоз баланси  " + data.summa + "$  " + "Туловни амалга оширолмайди.  " + pay2 + "$  Тулов килиши йоки карзни муддат белгилаган холда амалга ошириши мумкин</span>");
-                                            $("#jonatish").modal("show");
-                                        }
-                                    }
-                                    else{
-                                        if(data.summa >= karzs){
-                                            let pay3 = data.summa - karzs;
-                                            $("#channgem").html('');
-                                            $("#karzs").val('');
-                                            $("#exampleModalLabeldokse").html("<span class='modal-title alert alert-success'>Мижоз баланси  " + data.summa + " сум  " + "Карз копланади ва Балансида коладиган сумма  " + pay3 + " сум </span>");
-                                            $("#jonatish").modal("show");
-                                        }else{
-                                            let pay4 = karzs - data.summa;
-                                            $("#karzs").val(pay4);
-                                            $("#naqttr").val(data.summa);
-                                            $("#channgem").html(inputdate);
-                                            $("#exampleModalLabeldokse").html("<span class='modal-title alert alert-danger'>Мижоз баланси  " + data.summa + " сум  " + "Туловни амалга оширолмайди.  " + pay4 + " сум  Тулов килиши йоки карзни муддат белгилаган холда амалга ошириши мумкин</span>");
-                                            $("#jonatish").modal("show");
-                                        }
-                                    }
-                                }
-                            });                      
-                        }
-                    });
-                }                
+            if(itog <= 0 || itog2 <= 0){
+                toastr.error("Итог 0").fadeOut(1500);
             }else{
-                toastr.error("Клент выберите").fadeOut(2500);
+                $.ajax({
+                    url: "{{ route('rachot') }}",
+                    type: 'GET',
+                    success: function(data) {
+                        $("#itogs").val(data.itogo);
+                        $("#karzs").val(data.itogo);
+                        $("#channgem").html('');
+                        $("#exampleModalLabeldokse").html('');
+                        $("#jonatish").modal("show");                        
+                    }
+                });
             }
         });
 
